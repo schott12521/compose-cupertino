@@ -33,6 +33,7 @@ plugins {
 val jvmTarget = findProperty("jvmTarget") as String
 
 val _group = findProperty("group") as String
+val _version = findProperty("version") as String
 
 subprojects {
     if (name.contains("example")) {
@@ -138,6 +139,37 @@ subprojects {
 
     val javadocJar by tasks.registering(Jar::class) {
         archiveClassifier.set("javadoc")
+    }
+
+    group = _group
+    version = _version
+
+    apply(plugin = "maven-publish")
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
+                credentials {
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("gpr") {
+                from(components["kotlin"])
+                groupId = _group
+                artifactId = name
+                version = _version
+
+                artifact(tasks["javadocJar"])
+
+                // Add any other artifacts here, like sources jar if needed
+            }
+        }
     }
 }
 
