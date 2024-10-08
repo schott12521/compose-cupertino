@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import java.util.Properties
 
 /*
  * Copyright (c) 2023. Compose Cupertino project and open source contributors.
@@ -142,16 +143,36 @@ subprojects {
         archiveClassifier.set("javadoc")
     }
 
+    val publishProperties = Properties().apply {
+        load(file("publish.properties").inputStream())
+    }
+
     publishing {
         publications {
-            withType<MavenPublication>().configureEach {
-                if (name == "kotlinMultiplatform" && project.name.startsWith("cupertino")) {
-                    groupId = _group
-                    artifactId = name
-                    version = _version
+            publications.withType<MavenPublication> {
+                artifact(javadocJar)
+                pom {
+                    name.set(this@subprojects.name)
+                    description.set(publishProperties.getProperty("description"))
+                    url.set("https://github.com/schott12521/compose-cupertino")
 
-                    if (tasks.findByName("javadocJar") != null) {
-                        artifact(tasks["javadocJar"])
+                    licenses {
+                        license {
+                            name.set("Apache-2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("schott12521")
+                            name.set("Scott Lanoue")
+                            email.set("schott12521@gmail.com")
+                        }
+                    }
+                    scm {
+                        url.set("https://github.com/schott12521/compose-cupertino")
+                        connection.set("scm:git:git://github.com/schott12521/compose-cupertino.git")
+                        developerConnection.set("scm:git:git://github.com/schott12521/compose-cupertino.git")
                     }
                 }
             }
