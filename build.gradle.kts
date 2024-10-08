@@ -59,7 +59,7 @@ subprojects {
     plugins.apply("com.android.library")
 
     group = _group
-    version = findProperty("version") as String
+    version = _version
 
     kotlin {
         applyDefaultHierarchyTemplate()
@@ -75,7 +75,6 @@ subprojects {
         iosSimulatorArm64()
         macosX64()
         macosArm64()
-
 
         jvm("desktop") {
             compilations.all {
@@ -93,9 +92,7 @@ subprojects {
         }
 
         sourceSets {
-
             val desktopMain by getting
-
             val wasmJsMain by getting
 
             val skikoMain by creating {
@@ -145,11 +142,6 @@ subprojects {
         archiveClassifier.set("javadoc")
     }
 
-    group = _group
-    version = _version
-
-    apply(plugin = "maven-publish")
-
     publishing {
         publications {
             create<MavenPublication>("${name}Publication") {
@@ -159,8 +151,6 @@ subprojects {
                 version = _version
 
                 artifact(tasks["javadocJar"])
-
-                // Add other artifacts like sources jar if needed
             }
         }
 
