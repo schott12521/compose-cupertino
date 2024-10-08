@@ -147,6 +147,19 @@ subprojects {
     apply(plugin = "maven-publish")
 
     publishing {
+        publications {
+            create<MavenPublication>("${name}Publication") {
+                from(components["kotlin"])
+                groupId = _group
+                artifactId = name // Use the module's name as the artifact ID
+                version = _version
+
+                artifact(tasks["javadocJar"])
+
+                // Add other artifacts like sources jar if needed
+            }
+        }
+
         repositories {
             maven {
                 name = "GitHubPackages"
@@ -155,19 +168,6 @@ subprojects {
                     username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                     password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
                 }
-            }
-        }
-
-        publications {
-            create<MavenPublication>("gpr") {
-                from(components["kotlin"])
-                groupId = _group
-                artifactId = name
-                version = _version
-
-                artifact(tasks["javadocJar"])
-
-                // Add any other artifacts here, like sources jar if needed
             }
         }
     }
