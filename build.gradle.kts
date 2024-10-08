@@ -36,10 +36,6 @@ val _group = findProperty("group") as String
 val _version = findProperty("version") as String
 
 subprojects {
-    tasks.withType<GenerateModuleMetadata> {
-        enabled = false
-    }
-
     if (name.contains("example")) {
         tasks.configureEach {
             this.enabled = false
