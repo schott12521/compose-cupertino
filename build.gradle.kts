@@ -36,6 +36,10 @@ val _group = findProperty("group") as String
 val _version = findProperty("version") as String
 
 subprojects {
+    tasks.withType<GenerateModuleMetadata> {
+        enabled = false
+    }
+
     if (name.contains("example")) {
         tasks.configureEach {
             this.enabled = false
@@ -140,10 +144,12 @@ subprojects {
 
     publishing {
         publications {
-            create<MavenPublication>("${name}Publication") {
-                from(components["kotlin"])
+            create<MavenPublication>("kotlinMultiplatform") {
+                if (project.name.startsWith("cupertino")) {
+                    from(components["kotlin"])
+                }
                 groupId = _group
-                artifactId = name // Use the module's name as the artifact ID
+                artifactId = name
                 version = _version
 
                 artifact(tasks["javadocJar"])
