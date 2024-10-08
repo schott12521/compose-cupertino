@@ -144,15 +144,15 @@ subprojects {
 
     publishing {
         publications {
-            create<MavenPublication>("kotlinMultiplatform") {
-                if (project.name.startsWith("cupertino")) {
+            withType<MavenPublication>().configureEach {
+                if (name == "kotlinMultiplatform" && project.name.startsWith("cupertino")) {
                     from(components["kotlin"])
-                }
-                groupId = _group
-                artifactId = name
-                version = _version
+                    groupId = _group
+                    artifactId = name
+                    version = _version
 
-                artifact(tasks["javadocJar"])
+                    artifact(tasks["javadocJar"])
+                }
             }
         }
 
