@@ -1,6 +1,5 @@
 plugins {
     `kotlin-dsl`
-//    `kotlin-dsl-precompiled-script-plugins`
 }
 
 repositories {
@@ -11,7 +10,7 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("com.android.tools.build:gradle:8.7.2")
-    implementation("com.android.tools.build:gradle-api:8.7.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
+    implementation(libs.gradle)
+//    implementation(libs.gradle.api)
+    implementation(libs.kotlin.gradle.plugin)
 }

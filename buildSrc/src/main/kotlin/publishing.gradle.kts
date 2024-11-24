@@ -30,7 +30,7 @@ project.afterEvaluate {
             // For Android, you may need to specify the variant
 
             // Example for Kotlin Multiplatform:
-             from(components["kotlin"])
+            from(components["kotlin"])
 
             pom {
                 name.set(project.name)

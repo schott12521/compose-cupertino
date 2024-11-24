@@ -3,12 +3,13 @@ plugins {
     id("multiplatform-module-convention")
     alias(libs.plugins.composeJB)
     alias(libs.plugins.compose.compiler)
+    id("publishing")
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":cupertino-core"))
+            api(projects.cupertinoCore)
             implementation(compose.runtime)
             implementation(compose.ui)
             implementation(compose.animation)

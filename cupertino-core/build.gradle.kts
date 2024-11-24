@@ -3,6 +3,7 @@ plugins {
     id("multiplatform-module-convention")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.composeJB)
+    id("publishing")
 }
 
 kotlin {

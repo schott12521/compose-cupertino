@@ -8,6 +8,18 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
 
+    targets.all {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    progressiveMode.set(true)
+                    // Disable warnings about expect/actual classes
+                    freeCompilerArgs.addAll("-Xexpect-actual-classes")
+                }
+            }
+        }
+    }
+
     androidTarget {
         compilations.all {
             compileTaskProvider.configure {
