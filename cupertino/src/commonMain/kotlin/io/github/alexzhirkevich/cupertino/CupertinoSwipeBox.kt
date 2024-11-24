@@ -237,7 +237,7 @@ fun CupertinoSwipeBox(
                                 start = CupertinoSectionDefaults.PaddingValues
                                     .calculateStartPadding(LocalLayoutDirection.current),
                                 end = CupertinoSectionDefaults.PaddingValues
-                                        .calculateStartPadding(LocalLayoutDirection.current)
+                                    .calculateStartPadding(LocalLayoutDirection.current)
                             )
                     ) {
                         content()

@@ -16,13 +16,18 @@ dependencyResolutionManagement {
 
 rootProject.name = "compose-cupertino"
 
-startParameter.excludedTaskNames.addAll(listOf(
-    ":example:composeApp:build",
-    ":example:composeApp:assembleDebug",
-    ":example:composeApp:assembleDebugUnitTest",
-    ":example:composeApp:assembleDebugAndroidTest",
-    ":example:composeApp:assemble",
-))
+// Skip the example app when building the libraries
+if (gradle.startParameter.taskNames.none { it.startsWith(":example:composeApp") }) {
+    startParameter.excludedTaskNames.addAll(
+        listOf(
+            ":example:composeApp:build",
+            ":example:composeApp:assembleDebug",
+            ":example:composeApp:assembleDebugUnitTest",
+            ":example:composeApp:assembleDebugAndroidTest",
+            ":example:composeApp:assemble"
+        )
+    )
+}
 
 include(
     ":cupertino",

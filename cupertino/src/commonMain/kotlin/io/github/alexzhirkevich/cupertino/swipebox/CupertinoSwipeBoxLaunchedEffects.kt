@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.unit.Density
@@ -58,16 +59,6 @@ internal fun AnchorsEffect(
     }
 }
 
-/**
- * If swipeBoxState.settledValue == SwipeBoxStates.(Start|End)FullyExpanded,
- *  then we should take the action and dismiss (@see DismissFullyExpandedEffect)
- *
- *  In this function, we checked for the swipeBoxState.currentValue and see if its past
- *      the fully expanded threshold, in which case we launch haptic feedback.
- *
- * TODO there is some "snapping" still applied here, which doesn't make sense because
- *  swipeBoxState.currentValue should only change once we have swiped past an anchor.
- */
 @OptIn(ExperimentalFoundationApi::class)
 @InternalCupertinoApi
 @Composable
@@ -81,28 +72,28 @@ internal fun HapticFeedbackEffect(
     hasTriggeredHapticFeedback: Boolean,
     onHapticFeedbackTriggered: (Boolean) -> Unit
 ) {
-    LaunchedEffect(swipeBoxState.currentValue) {
+    LaunchedEffect(swipeBoxState.currentValue, swipeBoxState.targetValue) {
         if (fullExpansionStart) {
-            if ((swipeBoxState.currentValue == SwipeBoxStates.StartFullyExpanded) && !hasTriggeredHapticFeedback) {
+            if ((swipeBoxState.targetValue == SwipeBoxStates.StartFullyExpanded) && !hasTriggeredHapticFeedback) {
                 hapticFeedback.performHapticFeedback(CupertinoHapticFeedback.ImpactLight)
                 onHapticFeedbackTriggered(true)
                 isFullyExpandedEnd.value = true
             }
 
-            if (swipeBoxState.currentValue != SwipeBoxStates.StartFullyExpanded) {
+            if (swipeBoxState.targetValue != SwipeBoxStates.StartFullyExpanded) {
                 onHapticFeedbackTriggered(false)
                 isFullyExpandedStart.value = false
             }
         }
 
         if (fullExpansionEnd) {
-            if ((swipeBoxState.currentValue == SwipeBoxStates.EndFullyExpanded) && !hasTriggeredHapticFeedback) {
+            if ((swipeBoxState.targetValue == SwipeBoxStates.EndFullyExpanded) && !hasTriggeredHapticFeedback) {
                 hapticFeedback.performHapticFeedback(CupertinoHapticFeedback.ImpactLight)
                 onHapticFeedbackTriggered(true)
                 isFullyExpandedEnd.value = true
             }
 
-            if (swipeBoxState.currentValue != SwipeBoxStates.EndFullyExpanded) {
+            if (swipeBoxState.targetValue != SwipeBoxStates.EndFullyExpanded) {
                 onHapticFeedbackTriggered(false)
                 isFullyExpandedEnd.value = false
             }

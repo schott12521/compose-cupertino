@@ -43,6 +43,7 @@ import RootComponent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -179,6 +180,7 @@ import io.github.alexzhirkevich.cupertino.section.link
 import io.github.alexzhirkevich.cupertino.section.section
 import io.github.alexzhirkevich.cupertino.section.sectionContainerBackground
 import io.github.alexzhirkevich.cupertino.section.sectionTitle
+import io.github.alexzhirkevich.cupertino.swipebox.SwipeBoxStates
 import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import io.github.alexzhirkevich.cupertino.theme.systemBlue
@@ -514,9 +516,13 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
         println("Action triggered with message: $message")
     }
 
+    val openSwipeBoxState = remember { mutableStateOf<AnchoredDraggableState<SwipeBoxStates>?>(null) }
+
     val state0 = rememberCupertinoSwipeBoxState(
         key = "swipeBox0",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         state = state0,
@@ -546,7 +552,9 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
 
     val state1 = rememberCupertinoSwipeBoxState(
         key = "swipeBox1",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         startToEndFullSwipeEnabled = false,
@@ -578,7 +586,9 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
 
     val state2 = rememberCupertinoSwipeBoxState(
         key = "swipeBox2",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         state = state2,
@@ -608,7 +618,9 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
 
     val state3 = rememberCupertinoSwipeBoxState(
         key = "swipeBox3",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         state = state3,
@@ -652,7 +664,9 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
 
     val state4 = rememberCupertinoSwipeBoxState(
         key = "swipeBox4",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         state = state4,
@@ -675,7 +689,9 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
 
     val state5 = rememberCupertinoSwipeBoxState(
         key = "swipeBox5",
-        scrollableState = scrollableState
+        scrollableState = scrollableState,
+        openSwipeBoxState = openSwipeBoxState,
+        coroutineScope = scope
     )
     CupertinoSwipeBox(
         state = state5,

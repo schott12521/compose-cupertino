@@ -12,8 +12,6 @@ internal enum class CupertinoSwipeActionPosition {
     End
 }
 
-internal val LocalSwipeBoxItemDynamicWidth = compositionLocalOf { 1f }
-
 internal val LocalSwipeBoxItemFullSwipe = compositionLocalOf { false }
 
 internal val LocalSwipeActionPosition = compositionLocalOf { CupertinoSwipeActionPosition.Start }
