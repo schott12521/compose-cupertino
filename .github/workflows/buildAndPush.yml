@@ -12,22 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Infer and publish release with Nyx
-        id: nyx
-        uses: mooltiverse/nyx-github-action@main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          command: 'publish'
-          stateFile: '.nyx-state.json'
-          changelogPath: 'CHANGELOG.md'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
@@ -37,9 +29,13 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --build-cache
 
-      - name: Publish to GitHub Packages
-        run: ./gradlew publish
+      - name: Infer and publish release with Nyx
+        id: nyx
+        uses: mooltiverse/nyx-github-action@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NYX_VERBOSITY: 'INFO'
+        with:
+          command: 'publish'
+          stateFile: '.nyx-state.json'
+          changelogPath: 'CHANGELOG.md'
