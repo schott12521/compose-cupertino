@@ -14,7 +14,16 @@
     "enabled": ["release"],
     "release": {
       "gitPush": true,
-      "publish": true
+      "publish": true,
+      "collapseVersions": false,
+      "identifiers": {
+        "stages": [],
+        "qualifiers": []
+      },
+      "matchBranches": ["main"],
+      "publishDraft": false,
+      "publishPreRelease": false,
+      "publishRelease": true
     }
   }
 }
