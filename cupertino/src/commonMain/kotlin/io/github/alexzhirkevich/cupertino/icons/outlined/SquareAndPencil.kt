@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.SquareAndPencil: ImageVector
+val CupertinoIcons.Outlined.SquareAndPencil: ImageVector
     get() {
         if (_squareAndPencil != null) {
             return _squareAndPencil!!

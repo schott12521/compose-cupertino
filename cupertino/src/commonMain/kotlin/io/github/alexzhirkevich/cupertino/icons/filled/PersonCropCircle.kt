@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.PersonCropCircle: ImageVector
+val CupertinoIcons.Filled.PersonCropCircle: ImageVector
     get() {
         if (_personCropCircle != null) {
             return _personCropCircle!!

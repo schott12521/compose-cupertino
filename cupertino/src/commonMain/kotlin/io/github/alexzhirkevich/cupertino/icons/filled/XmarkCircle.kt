@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.XmarkCircle: ImageVector
+val CupertinoIcons.Filled.XmarkCircle: ImageVector
     get() {
         if (_xmarkCircle != null) {
             return _xmarkCircle!!

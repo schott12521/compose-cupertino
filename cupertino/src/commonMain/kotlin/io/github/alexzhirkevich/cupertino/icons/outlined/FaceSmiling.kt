@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.FaceSmiling: ImageVector
+val CupertinoIcons.Outlined.FaceSmiling: ImageVector
     get() {
         if (_faceSmiling != null) {
             return _faceSmiling!!

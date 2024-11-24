@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Play: ImageVector
+val CupertinoIcons.Outlined.Play: ImageVector
     get() {
         if (_play != null) {
             return _play!!

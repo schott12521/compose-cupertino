@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.SquareAndArrowUp: ImageVector
+val CupertinoIcons.Filled.SquareAndArrowUp: ImageVector
     get() {
         if (_squareAndArrowUp != null) {
             return _squareAndArrowUp!!

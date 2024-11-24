@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Cart: ImageVector
+val CupertinoIcons.Outlined.Cart: ImageVector
     get() {
         if (_cart != null) {
             return _cart!!

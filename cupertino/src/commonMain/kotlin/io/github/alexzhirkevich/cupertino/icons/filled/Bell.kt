@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Bell: ImageVector
+val CupertinoIcons.Filled.Bell: ImageVector
     get() {
         if (_bell != null) {
             return _bell!!

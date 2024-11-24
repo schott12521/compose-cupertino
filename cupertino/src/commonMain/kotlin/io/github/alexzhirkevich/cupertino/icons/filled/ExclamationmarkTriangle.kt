@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ExclamationmarkTriangle: ImageVector
+val CupertinoIcons.Filled.ExclamationmarkTriangle: ImageVector
     get() {
         if (_exclamationmarkTriangle != null) {
             return _exclamationmarkTriangle!!

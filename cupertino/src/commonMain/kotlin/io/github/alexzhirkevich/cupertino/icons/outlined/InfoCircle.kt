@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.InfoCircle: ImageVector
+val CupertinoIcons.Outlined.InfoCircle: ImageVector
     get() {
         if (_infoCircle != null) {
             return _infoCircle!!

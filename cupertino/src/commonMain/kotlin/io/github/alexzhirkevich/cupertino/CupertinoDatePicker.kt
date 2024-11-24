@@ -225,7 +225,7 @@ class CupertinoDatePickerState private constructor(
         else stateData.selectedDateFromWheel.utcTimeMillis
     }
 
-    internal val selectedStartDate: CalendarDate by derivedStateOf() {
+    internal val selectedStartDate: CalendarDate by derivedStateOf {
         if (isManual)
             stateData.calendarModel.getCanonicalDate(mSelectedDateMillis)
         else

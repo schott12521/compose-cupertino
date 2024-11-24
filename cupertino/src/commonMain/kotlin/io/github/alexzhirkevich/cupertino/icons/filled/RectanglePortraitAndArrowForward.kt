@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.RectanglePortraitAndArrowForward: ImageVector
+val CupertinoIcons.Filled.RectanglePortraitAndArrowForward: ImageVector
     get() {
         if (_rectanglePortraitAndArrowForward != null) {
             return _rectanglePortraitAndArrowForward!!
