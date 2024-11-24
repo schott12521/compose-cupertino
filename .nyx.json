@@ -1,0 +1,20 @@
+{
+  "releasePrefix": "v",
+  "services": {
+    "github": {
+      "type": "GITHUB",
+      "options": {
+        "AUTHENTICATION_TOKEN": "{{#environmentVariable}}GH_TOKEN{{/environmentVariable}}",
+        "REPOSITORY_NAME": "ExampleLibrary",
+        "REPOSITORY_OWNER": "schott12521"
+      }
+    }
+  },
+  "releaseTypes": {
+    "enabled": ["release"],
+    "release": {
+      "gitPush": true,
+      "publish": true
+    }
+  }
+}
