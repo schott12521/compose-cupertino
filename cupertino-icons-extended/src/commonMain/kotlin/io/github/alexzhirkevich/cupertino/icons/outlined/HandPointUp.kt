@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.HandPointUp: ImageVector
+val CupertinoIcons.Outlined.HandPointUp: ImageVector
     get() {
         if (_handPointUp != null) {
             return _handPointUp!!

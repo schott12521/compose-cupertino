@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Cloud: ImageVector
+val CupertinoIcons.Outlined.Cloud: ImageVector
     get() {
         if (_cloud != null) {
             return _cloud!!

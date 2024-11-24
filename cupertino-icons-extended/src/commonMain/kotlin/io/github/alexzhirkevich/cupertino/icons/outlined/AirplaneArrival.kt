@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.AirplaneArrival: ImageVector
+val CupertinoIcons.Outlined.AirplaneArrival: ImageVector
     get() {
         if (_airplaneArrival != null) {
             return _airplaneArrival!!

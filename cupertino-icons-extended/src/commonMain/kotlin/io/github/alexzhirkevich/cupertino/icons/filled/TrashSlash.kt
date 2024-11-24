@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.TrashSlash: ImageVector
+val CupertinoIcons.Filled.TrashSlash: ImageVector
     get() {
         if (_trashSlash != null) {
             return _trashSlash!!

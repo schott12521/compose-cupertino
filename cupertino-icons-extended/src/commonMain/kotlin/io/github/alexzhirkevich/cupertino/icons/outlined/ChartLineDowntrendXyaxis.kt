@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ChartLineDowntrendXyaxis: ImageVector
+val CupertinoIcons.Outlined.ChartLineDowntrendXyaxis: ImageVector
     get() {
         if (_chartLineDowntrendXyaxis != null) {
             return _chartLineDowntrendXyaxis!!

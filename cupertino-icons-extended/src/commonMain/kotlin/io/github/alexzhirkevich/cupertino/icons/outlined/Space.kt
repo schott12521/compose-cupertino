@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Space: ImageVector
+val CupertinoIcons.Outlined.Space: ImageVector
     get() {
         if (_space != null) {
             return _space!!

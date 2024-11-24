@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Square3Layers3dDownLeft: ImageVector
+val CupertinoIcons.Outlined.Square3Layers3dDownLeft: ImageVector
     get() {
         if (_square3Layers3dDownLeft != null) {
             return _square3Layers3dDownLeft!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Memories: ImageVector
+val CupertinoIcons.Outlined.Memories: ImageVector
     get() {
         if (_memories != null) {
             return _memories!!

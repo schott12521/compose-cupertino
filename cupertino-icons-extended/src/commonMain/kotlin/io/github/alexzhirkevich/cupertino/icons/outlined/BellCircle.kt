@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.BellCircle: ImageVector
+val CupertinoIcons.Outlined.BellCircle: ImageVector
     get() {
         if (_bellCircle != null) {
             return _bellCircle!!

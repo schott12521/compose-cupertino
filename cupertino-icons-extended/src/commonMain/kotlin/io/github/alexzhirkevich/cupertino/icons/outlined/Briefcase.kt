@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Briefcase: ImageVector
+val CupertinoIcons.Outlined.Briefcase: ImageVector
     get() {
         if (_briefcase != null) {
             return _briefcase!!

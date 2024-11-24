@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Menucard: ImageVector
+val CupertinoIcons.Filled.Menucard: ImageVector
     get() {
         if (_menucard != null) {
             return _menucard!!

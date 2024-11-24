@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.MinusCircle: ImageVector
+val CupertinoIcons.Outlined.MinusCircle: ImageVector
     get() {
         if (_minusCircle != null) {
             return _minusCircle!!

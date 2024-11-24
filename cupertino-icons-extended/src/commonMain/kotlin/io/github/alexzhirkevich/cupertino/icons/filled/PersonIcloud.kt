@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.PersonIcloud: ImageVector
+val CupertinoIcons.Filled.PersonIcloud: ImageVector
     get() {
         if (_personIcloud != null) {
             return _personIcloud!!

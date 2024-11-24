@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Flag2Crossed: ImageVector
+val CupertinoIcons.Filled.Flag2Crossed: ImageVector
     get() {
         if (_flag2Crossed != null) {
             return _flag2Crossed!!

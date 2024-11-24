@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.WebCamera: ImageVector
+val CupertinoIcons.Outlined.WebCamera: ImageVector
     get() {
         if (_webCamera != null) {
             return _webCamera!!

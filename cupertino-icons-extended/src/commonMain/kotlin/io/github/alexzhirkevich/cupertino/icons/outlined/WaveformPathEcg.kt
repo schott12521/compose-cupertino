@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.WaveformPathEcg: ImageVector
+val CupertinoIcons.Outlined.WaveformPathEcg: ImageVector
     get() {
         if (_waveformPathEcg != null) {
             return _waveformPathEcg!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.WaveformAndMagnifyingglass: ImageVector
+val CupertinoIcons.Outlined.WaveformAndMagnifyingglass: ImageVector
     get() {
         if (_waveformAndMagnifyingglass != null) {
             return _waveformAndMagnifyingglass!!

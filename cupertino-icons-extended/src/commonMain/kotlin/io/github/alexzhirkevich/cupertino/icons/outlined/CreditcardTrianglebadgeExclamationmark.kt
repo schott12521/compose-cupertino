@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.CreditcardTrianglebadgeExclamationmark: ImageVector
+val CupertinoIcons.Outlined.CreditcardTrianglebadgeExclamationmark: ImageVector
     get() {
         if (_creditcardTrianglebadgeExclamationmark != null) {
             return _creditcardTrianglebadgeExclamationmark!!

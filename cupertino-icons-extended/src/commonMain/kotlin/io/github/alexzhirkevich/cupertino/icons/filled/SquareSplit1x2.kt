@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.SquareSplit1x2: ImageVector
+val CupertinoIcons.Filled.SquareSplit1x2: ImageVector
     get() {
         if (_squareSplit1x2 != null) {
             return _squareSplit1x2!!

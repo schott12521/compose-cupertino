@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ShieldRighthalfed: ImageVector
+val CupertinoIcons.Filled.ShieldRighthalfed: ImageVector
     get() {
         if (_shieldRighthalfed != null) {
             return _shieldRighthalfed!!

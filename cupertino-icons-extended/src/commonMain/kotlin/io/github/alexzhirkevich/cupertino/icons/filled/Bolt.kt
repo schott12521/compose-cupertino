@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Bolt: ImageVector
+val CupertinoIcons.Filled.Bolt: ImageVector
     get() {
         if (_bolt != null) {
             return _bolt!!

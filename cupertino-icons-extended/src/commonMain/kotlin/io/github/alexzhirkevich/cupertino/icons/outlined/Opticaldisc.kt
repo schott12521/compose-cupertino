@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Opticaldisc: ImageVector
+val CupertinoIcons.Outlined.Opticaldisc: ImageVector
     get() {
         if (_opticaldisc != null) {
             return _opticaldisc!!

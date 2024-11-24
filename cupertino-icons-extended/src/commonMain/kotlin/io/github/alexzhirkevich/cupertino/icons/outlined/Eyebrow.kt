@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Eyebrow: ImageVector
+val CupertinoIcons.Outlined.Eyebrow: ImageVector
     get() {
         if (_eyebrow != null) {
             return _eyebrow!!

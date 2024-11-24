@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Lifepreserver: ImageVector
+val CupertinoIcons.Outlined.Lifepreserver: ImageVector
     get() {
         if (_lifepreserver != null) {
             return _lifepreserver!!

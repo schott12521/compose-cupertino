@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Sterlingsign: ImageVector
+val CupertinoIcons.Outlined.Sterlingsign: ImageVector
     get() {
         if (_sterlingsign != null) {
             return _sterlingsign!!

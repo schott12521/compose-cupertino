@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.IpadHomebutton: ImageVector
+val CupertinoIcons.Outlined.IpadHomebutton: ImageVector
     get() {
         if (_ipadHomebutton != null) {
             return _ipadHomebutton!!

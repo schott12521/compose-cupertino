@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Capslock: ImageVector
+val CupertinoIcons.Outlined.Capslock: ImageVector
     get() {
         if (_capslock != null) {
             return _capslock!!

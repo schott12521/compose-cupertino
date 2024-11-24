@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Grid: ImageVector
+val CupertinoIcons.Outlined.Grid: ImageVector
     get() {
         if (_grid != null) {
             return _grid!!

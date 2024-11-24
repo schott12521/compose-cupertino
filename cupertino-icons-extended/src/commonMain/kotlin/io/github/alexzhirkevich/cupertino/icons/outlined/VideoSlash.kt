@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.VideoSlash: ImageVector
+val CupertinoIcons.Outlined.VideoSlash: ImageVector
     get() {
         if (_videoSlash != null) {
             return _videoSlash!!

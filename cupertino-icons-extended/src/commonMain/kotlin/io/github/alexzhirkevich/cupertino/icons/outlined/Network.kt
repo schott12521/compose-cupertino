@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Network: ImageVector
+val CupertinoIcons.Outlined.Network: ImageVector
     get() {
         if (_network != null) {
             return _network!!

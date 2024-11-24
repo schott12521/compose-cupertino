@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Earpods: ImageVector
+val CupertinoIcons.Outlined.Earpods: ImageVector
     get() {
         if (_earpods != null) {
             return _earpods!!

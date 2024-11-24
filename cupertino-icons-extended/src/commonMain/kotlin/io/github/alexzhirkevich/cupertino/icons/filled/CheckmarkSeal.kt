@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.CheckmarkSeal: ImageVector
+val CupertinoIcons.Filled.CheckmarkSeal: ImageVector
     get() {
         if (_checkmarkSeal != null) {
             return _checkmarkSeal!!

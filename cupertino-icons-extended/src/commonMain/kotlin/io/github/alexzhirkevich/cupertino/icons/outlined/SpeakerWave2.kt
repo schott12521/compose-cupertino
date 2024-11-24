@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.SpeakerWave2: ImageVector
+val CupertinoIcons.Outlined.SpeakerWave2: ImageVector
     get() {
         if (_speakerWave2 != null) {
             return _speakerWave2!!

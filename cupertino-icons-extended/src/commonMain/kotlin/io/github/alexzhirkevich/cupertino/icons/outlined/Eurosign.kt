@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Eurosign: ImageVector
+val CupertinoIcons.Outlined.Eurosign: ImageVector
     get() {
         if (_eurosign != null) {
             return _eurosign!!

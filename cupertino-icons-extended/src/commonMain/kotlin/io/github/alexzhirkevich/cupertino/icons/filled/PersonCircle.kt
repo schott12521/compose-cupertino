@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.PersonCircle: ImageVector
+val CupertinoIcons.Filled.PersonCircle: ImageVector
     get() {
         if (_personCircle != null) {
             return _personCircle!!

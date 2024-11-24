@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.RectangleStack: ImageVector
+val CupertinoIcons.Filled.RectangleStack: ImageVector
     get() {
         if (_rectangleStack != null) {
             return _rectangleStack!!

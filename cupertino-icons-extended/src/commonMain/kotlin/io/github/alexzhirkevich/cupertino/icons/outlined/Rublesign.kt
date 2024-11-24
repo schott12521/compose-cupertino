@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Rublesign: ImageVector
+val CupertinoIcons.Outlined.Rublesign: ImageVector
     get() {
         if (_rublesign != null) {
             return _rublesign!!

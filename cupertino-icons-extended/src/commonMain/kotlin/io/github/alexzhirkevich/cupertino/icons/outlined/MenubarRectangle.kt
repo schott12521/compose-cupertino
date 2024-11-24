@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.MenubarRectangle: ImageVector
+val CupertinoIcons.Outlined.MenubarRectangle: ImageVector
     get() {
         if (_menubarRectangle != null) {
             return _menubarRectangle!!

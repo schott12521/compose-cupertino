@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.MicSlash: ImageVector
+val CupertinoIcons.Outlined.MicSlash: ImageVector
     get() {
         if (_micSlash != null) {
             return _micSlash!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Centsign: ImageVector
+val CupertinoIcons.Outlined.Centsign: ImageVector
     get() {
         if (_centsign != null) {
             return _centsign!!

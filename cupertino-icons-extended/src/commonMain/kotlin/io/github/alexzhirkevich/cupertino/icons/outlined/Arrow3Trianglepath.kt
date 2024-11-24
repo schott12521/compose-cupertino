@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Arrow3Trianglepath: ImageVector
+val CupertinoIcons.Outlined.Arrow3Trianglepath: ImageVector
     get() {
         if (_arrow3Trianglepath != null) {
             return _arrow3Trianglepath!!

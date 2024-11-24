@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.FolderBadgePlus: ImageVector
+val CupertinoIcons.Filled.FolderBadgePlus: ImageVector
     get() {
         if (_folderBadgePlus != null) {
             return _folderBadgePlus!!

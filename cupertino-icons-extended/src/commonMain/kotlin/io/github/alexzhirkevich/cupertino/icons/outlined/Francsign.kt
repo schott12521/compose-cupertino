@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Francsign: ImageVector
+val CupertinoIcons.Outlined.Francsign: ImageVector
     get() {
         if (_francsign != null) {
             return _francsign!!

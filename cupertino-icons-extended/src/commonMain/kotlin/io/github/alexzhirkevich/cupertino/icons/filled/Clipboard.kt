@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Clipboard: ImageVector
+val CupertinoIcons.Filled.Clipboard: ImageVector
     get() {
         if (_clipboard != null) {
             return _clipboard!!

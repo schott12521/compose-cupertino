@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Bookmark: ImageVector
+val CupertinoIcons.Outlined.Bookmark: ImageVector
     get() {
         if (_bookmark != null) {
             return _bookmark!!

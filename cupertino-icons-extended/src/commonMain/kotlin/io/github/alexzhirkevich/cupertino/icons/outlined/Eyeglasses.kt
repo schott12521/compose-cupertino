@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Eyeglasses: ImageVector
+val CupertinoIcons.Outlined.Eyeglasses: ImageVector
     get() {
         if (_eyeglasses != null) {
             return _eyeglasses!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.EllipsisCircle: ImageVector
+val CupertinoIcons.Outlined.EllipsisCircle: ImageVector
     get() {
         if (_ellipsisCircle != null) {
             return _ellipsisCircle!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.InfoSquare: ImageVector
+val CupertinoIcons.Filled.InfoSquare: ImageVector
     get() {
         if (_infoSquare != null) {
             return _infoSquare!!

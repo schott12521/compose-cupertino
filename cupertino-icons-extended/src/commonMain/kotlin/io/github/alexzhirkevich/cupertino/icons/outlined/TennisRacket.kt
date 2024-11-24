@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.TennisRacket: ImageVector
+val CupertinoIcons.Outlined.TennisRacket: ImageVector
     get() {
         if (_tennisRacket != null) {
             return _tennisRacket!!

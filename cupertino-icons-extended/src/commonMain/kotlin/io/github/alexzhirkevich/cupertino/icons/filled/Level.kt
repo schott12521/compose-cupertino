@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Level: ImageVector
+val CupertinoIcons.Filled.Level: ImageVector
     get() {
         if (_level != null) {
             return _level!!

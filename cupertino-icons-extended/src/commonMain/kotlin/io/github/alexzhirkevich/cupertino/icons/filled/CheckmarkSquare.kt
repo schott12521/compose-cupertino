@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.CheckmarkSquare: ImageVector
+val CupertinoIcons.Filled.CheckmarkSquare: ImageVector
     get() {
         if (_checkmarkSquare != null) {
             return _checkmarkSquare!!

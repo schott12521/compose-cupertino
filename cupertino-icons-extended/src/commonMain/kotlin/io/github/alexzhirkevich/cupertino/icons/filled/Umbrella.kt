@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Umbrella: ImageVector
+val CupertinoIcons.Filled.Umbrella: ImageVector
     get() {
         if (_umbrella != null) {
             return _umbrella!!

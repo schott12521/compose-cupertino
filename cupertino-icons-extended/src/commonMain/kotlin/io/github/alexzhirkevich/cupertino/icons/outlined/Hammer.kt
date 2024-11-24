@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Hammer: ImageVector
+val CupertinoIcons.Outlined.Hammer: ImageVector
     get() {
         if (_hammer != null) {
             return _hammer!!

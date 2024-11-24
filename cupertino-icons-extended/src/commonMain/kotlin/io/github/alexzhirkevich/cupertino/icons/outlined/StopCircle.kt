@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.StopCircle: ImageVector
+val CupertinoIcons.Outlined.StopCircle: ImageVector
     get() {
         if (_stopCircle != null) {
             return _stopCircle!!

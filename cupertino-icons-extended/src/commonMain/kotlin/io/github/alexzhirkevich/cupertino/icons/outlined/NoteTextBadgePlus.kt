@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.NoteTextBadgePlus: ImageVector
+val CupertinoIcons.Outlined.NoteTextBadgePlus: ImageVector
     get() {
         if (_noteTextBadgePlus != null) {
             return _noteTextBadgePlus!!

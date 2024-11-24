@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Newspaper: ImageVector
+val CupertinoIcons.Filled.Newspaper: ImageVector
     get() {
         if (_newspaper != null) {
             return _newspaper!!

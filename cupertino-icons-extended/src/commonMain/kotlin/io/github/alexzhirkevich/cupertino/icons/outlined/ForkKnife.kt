@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ForkKnife: ImageVector
+val CupertinoIcons.Outlined.ForkKnife: ImageVector
     get() {
         if (_forkKnife != null) {
             return _forkKnife!!

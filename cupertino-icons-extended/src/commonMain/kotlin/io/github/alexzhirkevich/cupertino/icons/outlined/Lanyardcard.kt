@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Lanyardcard: ImageVector
+val CupertinoIcons.Outlined.Lanyardcard: ImageVector
     get() {
         if (_lanyardcard != null) {
             return _lanyardcard!!

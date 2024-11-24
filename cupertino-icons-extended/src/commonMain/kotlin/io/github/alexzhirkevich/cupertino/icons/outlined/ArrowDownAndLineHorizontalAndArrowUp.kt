@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ArrowDownAndLineHorizontalAndArrowUp: ImageVector
+val CupertinoIcons.Outlined.ArrowDownAndLineHorizontalAndArrowUp: ImageVector
     get() {
         if (_arrowDownAndLineHorizontalAndArrowUp != null) {
             return _arrowDownAndLineHorizontalAndArrowUp!!

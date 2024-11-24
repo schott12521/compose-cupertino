@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.FlagCheckered2Crossed: ImageVector
+val CupertinoIcons.Outlined.FlagCheckered2Crossed: ImageVector
     get() {
         if (_flagCheckered2Crossed != null) {
             return _flagCheckered2Crossed!!

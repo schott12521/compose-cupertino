@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.BookClosed: ImageVector
+val CupertinoIcons.Outlined.BookClosed: ImageVector
     get() {
         if (_bookClosed != null) {
             return _bookClosed!!

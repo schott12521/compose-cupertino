@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.QuestionmarkSquare: ImageVector
+val CupertinoIcons.Filled.QuestionmarkSquare: ImageVector
     get() {
         if (_questionmarkSquare != null) {
             return _questionmarkSquare!!

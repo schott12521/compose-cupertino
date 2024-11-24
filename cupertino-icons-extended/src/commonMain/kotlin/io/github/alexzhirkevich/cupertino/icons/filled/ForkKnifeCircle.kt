@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ForkKnifeCircle: ImageVector
+val CupertinoIcons.Filled.ForkKnifeCircle: ImageVector
     get() {
         if (_forkKnifeCircle != null) {
             return _forkKnifeCircle!!

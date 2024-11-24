@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ScribbleVariable: ImageVector
+val CupertinoIcons.Outlined.ScribbleVariable: ImageVector
     get() {
         if (_scribbleVariable != null) {
             return _scribbleVariable!!

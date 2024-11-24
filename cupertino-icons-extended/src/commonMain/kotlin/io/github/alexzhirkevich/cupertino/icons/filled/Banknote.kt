@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Banknote: ImageVector
+val CupertinoIcons.Filled.Banknote: ImageVector
     get() {
         if (_banknote != null) {
             return _banknote!!

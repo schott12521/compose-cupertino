@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Forward: ImageVector
+val CupertinoIcons.Outlined.Forward: ImageVector
     get() {
         if (_forward != null) {
             return _forward!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.WifiSlash: ImageVector
+val CupertinoIcons.Outlined.WifiSlash: ImageVector
     get() {
         if (_wifiSlash != null) {
             return _wifiSlash!!

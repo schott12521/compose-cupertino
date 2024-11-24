@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.BirthdayCake: ImageVector
+val CupertinoIcons.Outlined.BirthdayCake: ImageVector
     get() {
         if (_birthdayCake != null) {
             return _birthdayCake!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.SpeakerSlash: ImageVector
+val CupertinoIcons.Filled.SpeakerSlash: ImageVector
     get() {
         if (_speakerSlash != null) {
             return _speakerSlash!!

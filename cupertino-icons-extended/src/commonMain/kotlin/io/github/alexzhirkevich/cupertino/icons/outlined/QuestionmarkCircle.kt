@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.QuestionmarkCircle: ImageVector
+val CupertinoIcons.Outlined.QuestionmarkCircle: ImageVector
     get() {
         if (_questionmarkCircle != null) {
             return _questionmarkCircle!!

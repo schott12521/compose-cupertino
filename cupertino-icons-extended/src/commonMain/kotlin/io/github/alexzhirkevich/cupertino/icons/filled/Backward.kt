@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Backward: ImageVector
+val CupertinoIcons.Filled.Backward: ImageVector
     get() {
         if (_backward != null) {
             return _backward!!

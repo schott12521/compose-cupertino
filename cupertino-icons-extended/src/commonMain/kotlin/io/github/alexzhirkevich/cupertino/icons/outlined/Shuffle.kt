@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Shuffle: ImageVector
+val CupertinoIcons.Outlined.Shuffle: ImageVector
     get() {
         if (_shuffle != null) {
             return _shuffle!!

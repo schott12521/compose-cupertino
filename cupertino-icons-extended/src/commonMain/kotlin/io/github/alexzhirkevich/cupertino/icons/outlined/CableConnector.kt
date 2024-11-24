@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.CableConnector: ImageVector
+val CupertinoIcons.Outlined.CableConnector: ImageVector
     get() {
         if (_cableConnector != null) {
             return _cableConnector!!

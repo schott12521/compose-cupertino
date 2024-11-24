@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.CheckmarkIcloud: ImageVector
+val CupertinoIcons.Outlined.CheckmarkIcloud: ImageVector
     get() {
         if (_checkmarkIcloud != null) {
             return _checkmarkIcloud!!

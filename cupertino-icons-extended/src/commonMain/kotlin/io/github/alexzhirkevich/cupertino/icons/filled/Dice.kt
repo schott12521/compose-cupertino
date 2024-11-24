@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Dice: ImageVector
+val CupertinoIcons.Filled.Dice: ImageVector
     get() {
         if (_dice != null) {
             return _dice!!

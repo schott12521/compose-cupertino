@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.DocPlaintext: ImageVector
+val CupertinoIcons.Filled.DocPlaintext: ImageVector
     get() {
         if (_docPlaintext != null) {
             return _docPlaintext!!

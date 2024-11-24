@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.PhotoTv: ImageVector
+val CupertinoIcons.Outlined.PhotoTv: ImageVector
     get() {
         if (_photoTv != null) {
             return _photoTv!!

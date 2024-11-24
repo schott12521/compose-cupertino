@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ArrowCounterclockwiseCircle: ImageVector
+val CupertinoIcons.Filled.ArrowCounterclockwiseCircle: ImageVector
     get() {
         if (_arrowCounterclockwiseCircle != null) {
             return _arrowCounterclockwiseCircle!!

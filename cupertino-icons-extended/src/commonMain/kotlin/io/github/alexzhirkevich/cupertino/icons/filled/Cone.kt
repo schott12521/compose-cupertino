@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Cone: ImageVector
+val CupertinoIcons.Filled.Cone: ImageVector
     get() {
         if (_cone != null) {
             return _cone!!

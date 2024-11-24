@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Ruler: ImageVector
+val CupertinoIcons.Filled.Ruler: ImageVector
     get() {
         if (_ruler != null) {
             return _ruler!!

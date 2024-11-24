@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.GlobeDesk: ImageVector
+val CupertinoIcons.Filled.GlobeDesk: ImageVector
     get() {
         if (_globeDesk != null) {
             return _globeDesk!!

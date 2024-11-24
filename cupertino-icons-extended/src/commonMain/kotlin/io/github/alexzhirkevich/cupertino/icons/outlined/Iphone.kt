@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Iphone: ImageVector
+val CupertinoIcons.Outlined.Iphone: ImageVector
     get() {
         if (_iphone != null) {
             return _iphone!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Medal: ImageVector
+val CupertinoIcons.Filled.Medal: ImageVector
     get() {
         if (_medal != null) {
             return _medal!!

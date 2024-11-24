@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Balloon: ImageVector
+val CupertinoIcons.Outlined.Balloon: ImageVector
     get() {
         if (_balloon != null) {
             return _balloon!!

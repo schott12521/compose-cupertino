@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.MusicNote: ImageVector
+val CupertinoIcons.Outlined.MusicNote: ImageVector
     get() {
         if (_musicNote != null) {
             return _musicNote!!

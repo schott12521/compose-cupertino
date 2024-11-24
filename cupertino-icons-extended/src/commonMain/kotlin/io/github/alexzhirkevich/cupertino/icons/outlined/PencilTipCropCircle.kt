@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.PencilTipCropCircle: ImageVector
+val CupertinoIcons.Outlined.PencilTipCropCircle: ImageVector
     get() {
         if (_pencilTipCropCircle != null) {
             return _pencilTipCropCircle!!

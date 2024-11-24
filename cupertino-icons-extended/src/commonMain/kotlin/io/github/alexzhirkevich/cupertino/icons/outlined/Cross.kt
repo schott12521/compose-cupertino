@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Cross: ImageVector
+val CupertinoIcons.Outlined.Cross: ImageVector
     get() {
         if (_cross != null) {
             return _cross!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Sparkles: ImageVector
+val CupertinoIcons.Outlined.Sparkles: ImageVector
     get() {
         if (_sparkles != null) {
             return _sparkles!!

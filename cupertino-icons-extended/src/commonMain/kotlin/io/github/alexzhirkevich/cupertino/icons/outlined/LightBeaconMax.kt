@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.LightBeaconMax: ImageVector
+val CupertinoIcons.Outlined.LightBeaconMax: ImageVector
     get() {
         if (_lightBeaconMax != null) {
             return _lightBeaconMax!!

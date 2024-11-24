@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ArrowTriangleBranch: ImageVector
+val CupertinoIcons.Outlined.ArrowTriangleBranch: ImageVector
     get() {
         if (_arrowTriangleBranch != null) {
             return _arrowTriangleBranch!!

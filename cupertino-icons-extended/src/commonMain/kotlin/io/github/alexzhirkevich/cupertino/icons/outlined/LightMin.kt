@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.LightMin: ImageVector
+val CupertinoIcons.Outlined.LightMin: ImageVector
     get() {
         if (_lightMin != null) {
             return _lightMin!!

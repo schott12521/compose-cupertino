@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Airplayaudio: ImageVector
+val CupertinoIcons.Outlined.Airplayaudio: ImageVector
     get() {
         if (_airplayaudio != null) {
             return _airplayaudio!!

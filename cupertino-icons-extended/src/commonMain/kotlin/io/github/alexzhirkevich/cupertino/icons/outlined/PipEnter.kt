@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.PipEnter: ImageVector
+val CupertinoIcons.Outlined.PipEnter: ImageVector
     get() {
         if (_pipEnter != null) {
             return _pipEnter!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Rotate3d: ImageVector
+val CupertinoIcons.Outlined.Rotate3d: ImageVector
     get() {
         if (_rotate3d != null) {
             return _rotate3d!!

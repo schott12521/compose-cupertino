@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Option: ImageVector
+val CupertinoIcons.Outlined.Option: ImageVector
     get() {
         if (_option != null) {
             return _option!!

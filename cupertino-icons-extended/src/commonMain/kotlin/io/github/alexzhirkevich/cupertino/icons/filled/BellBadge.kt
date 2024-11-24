@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.BellBadge: ImageVector
+val CupertinoIcons.Filled.BellBadge: ImageVector
     get() {
         if (_bellBadge != null) {
             return _bellBadge!!

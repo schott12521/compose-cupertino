@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.MoonStars: ImageVector
+val CupertinoIcons.Outlined.MoonStars: ImageVector
     get() {
         if (_moonStars != null) {
             return _moonStars!!

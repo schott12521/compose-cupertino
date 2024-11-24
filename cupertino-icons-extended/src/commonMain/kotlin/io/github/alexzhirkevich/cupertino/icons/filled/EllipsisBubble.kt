@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.EllipsisBubble: ImageVector
+val CupertinoIcons.Filled.EllipsisBubble: ImageVector
     get() {
         if (_ellipsisBubble != null) {
             return _ellipsisBubble!!

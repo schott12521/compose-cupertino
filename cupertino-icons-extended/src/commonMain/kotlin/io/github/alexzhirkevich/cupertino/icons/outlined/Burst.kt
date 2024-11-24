@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Burst: ImageVector
+val CupertinoIcons.Outlined.Burst: ImageVector
     get() {
         if (_burst != null) {
             return _burst!!

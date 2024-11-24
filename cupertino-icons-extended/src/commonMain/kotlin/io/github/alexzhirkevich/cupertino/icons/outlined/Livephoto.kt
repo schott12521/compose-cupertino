@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Livephoto: ImageVector
+val CupertinoIcons.Outlined.Livephoto: ImageVector
     get() {
         if (_livephoto != null) {
             return _livephoto!!

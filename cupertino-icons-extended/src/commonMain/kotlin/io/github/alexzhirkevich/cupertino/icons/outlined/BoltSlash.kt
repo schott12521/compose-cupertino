@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.BoltSlash: ImageVector
+val CupertinoIcons.Outlined.BoltSlash: ImageVector
     get() {
         if (_boltSlash != null) {
             return _boltSlash!!

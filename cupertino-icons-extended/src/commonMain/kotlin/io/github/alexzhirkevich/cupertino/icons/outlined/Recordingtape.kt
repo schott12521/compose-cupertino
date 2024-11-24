@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Recordingtape: ImageVector
+val CupertinoIcons.Outlined.Recordingtape: ImageVector
     get() {
         if (_recordingtape != null) {
             return _recordingtape!!

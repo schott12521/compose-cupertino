@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.SmallcircleedCircle: ImageVector
+val CupertinoIcons.Filled.SmallcircleedCircle: ImageVector
     get() {
         if (_smallcircleedCircle != null) {
             return _smallcircleedCircle!!

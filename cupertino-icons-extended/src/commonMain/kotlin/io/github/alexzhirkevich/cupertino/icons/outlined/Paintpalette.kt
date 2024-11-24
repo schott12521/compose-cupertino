@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Paintpalette: ImageVector
+val CupertinoIcons.Outlined.Paintpalette: ImageVector
     get() {
         if (_paintpalette != null) {
             return _paintpalette!!

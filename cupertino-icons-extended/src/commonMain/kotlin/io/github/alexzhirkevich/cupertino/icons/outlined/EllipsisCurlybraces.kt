@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.EllipsisCurlybraces: ImageVector
+val CupertinoIcons.Outlined.EllipsisCurlybraces: ImageVector
     get() {
         if (_ellipsisCurlybraces != null) {
             return _ellipsisCurlybraces!!

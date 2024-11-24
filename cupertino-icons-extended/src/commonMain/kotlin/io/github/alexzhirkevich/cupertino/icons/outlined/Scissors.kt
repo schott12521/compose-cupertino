@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Scissors: ImageVector
+val CupertinoIcons.Outlined.Scissors: ImageVector
     get() {
         if (_scissors != null) {
             return _scissors!!

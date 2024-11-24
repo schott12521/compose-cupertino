@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ExclamationmarkArrowTriangle2Circlepath: ImageVector
+val CupertinoIcons.Outlined.ExclamationmarkArrowTriangle2Circlepath: ImageVector
     get() {
         if (_exclamationmarkArrowTriangle2Circlepath != null) {
             return _exclamationmarkArrowTriangle2Circlepath!!

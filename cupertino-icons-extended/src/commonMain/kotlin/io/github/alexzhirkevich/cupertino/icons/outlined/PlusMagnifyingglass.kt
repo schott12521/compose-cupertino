@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.PlusMagnifyingglass: ImageVector
+val CupertinoIcons.Outlined.PlusMagnifyingglass: ImageVector
     get() {
         if (_plusMagnifyingglass != null) {
             return _plusMagnifyingglass!!

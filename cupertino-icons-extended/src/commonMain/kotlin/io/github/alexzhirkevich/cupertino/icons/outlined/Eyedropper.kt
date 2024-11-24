@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Eyedropper: ImageVector
+val CupertinoIcons.Outlined.Eyedropper: ImageVector
     get() {
         if (_eyedropper != null) {
             return _eyedropper!!

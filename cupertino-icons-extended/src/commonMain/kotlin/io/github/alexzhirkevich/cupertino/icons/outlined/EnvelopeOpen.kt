@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.EnvelopeOpen: ImageVector
+val CupertinoIcons.Outlined.EnvelopeOpen: ImageVector
     get() {
         if (_envelopeOpen != null) {
             return _envelopeOpen!!

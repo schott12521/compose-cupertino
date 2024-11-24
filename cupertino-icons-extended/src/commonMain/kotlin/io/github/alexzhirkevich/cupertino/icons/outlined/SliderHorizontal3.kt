@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.SliderHorizontal3: ImageVector
+val CupertinoIcons.Outlined.SliderHorizontal3: ImageVector
     get() {
         if (_sliderHorizontal3 != null) {
             return _sliderHorizontal3!!

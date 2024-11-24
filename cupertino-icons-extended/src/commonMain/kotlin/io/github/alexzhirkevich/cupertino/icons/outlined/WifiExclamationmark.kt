@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.WifiExclamationmark: ImageVector
+val CupertinoIcons.Outlined.WifiExclamationmark: ImageVector
     get() {
         if (_wifiExclamationmark != null) {
             return _wifiExclamationmark!!

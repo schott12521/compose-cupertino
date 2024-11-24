@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ArrowTriangle2CirclepathCamera: ImageVector
+val CupertinoIcons.Outlined.ArrowTriangle2CirclepathCamera: ImageVector
     get() {
         if (_arrowTriangle2CirclepathCamera != null) {
             return _arrowTriangle2CirclepathCamera!!

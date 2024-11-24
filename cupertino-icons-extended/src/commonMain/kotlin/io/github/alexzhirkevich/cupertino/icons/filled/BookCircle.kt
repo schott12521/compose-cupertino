@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.BookCircle: ImageVector
+val CupertinoIcons.Filled.BookCircle: ImageVector
     get() {
         if (_bookCircle != null) {
             return _bookCircle!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.PinCircle: ImageVector
+val CupertinoIcons.Outlined.PinCircle: ImageVector
     get() {
         if (_pinCircle != null) {
             return _pinCircle!!

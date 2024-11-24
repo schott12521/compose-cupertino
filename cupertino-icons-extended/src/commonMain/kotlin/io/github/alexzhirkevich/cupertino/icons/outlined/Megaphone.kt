@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Megaphone: ImageVector
+val CupertinoIcons.Outlined.Megaphone: ImageVector
     get() {
         if (_megaphone != null) {
             return _megaphone!!

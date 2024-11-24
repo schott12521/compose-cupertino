@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ExclamationmarkCircle: ImageVector
+val CupertinoIcons.Filled.ExclamationmarkCircle: ImageVector
     get() {
         if (_exclamationmarkCircle != null) {
             return _exclamationmarkCircle!!

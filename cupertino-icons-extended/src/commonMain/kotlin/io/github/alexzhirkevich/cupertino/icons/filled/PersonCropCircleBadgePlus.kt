@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.PersonCropCircleBadgePlus: ImageVector
+val CupertinoIcons.Filled.PersonCropCircleBadgePlus: ImageVector
     get() {
         if (_personCropCircleBadgePlus != null) {
             return _personCropCircleBadgePlus!!

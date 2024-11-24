@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Person2: ImageVector
+val CupertinoIcons.Outlined.Person2: ImageVector
     get() {
         if (_person2 != null) {
             return _person2!!

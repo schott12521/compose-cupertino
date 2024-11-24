@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Homepod: ImageVector
+val CupertinoIcons.Filled.Homepod: ImageVector
     get() {
         if (_homepod != null) {
             return _homepod!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.PowerCircle: ImageVector
+val CupertinoIcons.Filled.PowerCircle: ImageVector
     get() {
         if (_powerCircle != null) {
             return _powerCircle!!

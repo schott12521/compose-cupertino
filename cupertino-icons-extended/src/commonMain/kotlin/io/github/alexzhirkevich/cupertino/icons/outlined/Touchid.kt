@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Touchid: ImageVector
+val CupertinoIcons.Outlined.Touchid: ImageVector
     get() {
         if (_touchid != null) {
             return _touchid!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.ArrowshapeTurnUpLeft: ImageVector
+val CupertinoIcons.Filled.ArrowshapeTurnUpLeft: ImageVector
     get() {
         if (_arrowshapeTurnUpLeft != null) {
             return _arrowshapeTurnUpLeft!!

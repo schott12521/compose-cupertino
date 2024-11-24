@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.BrainHeadProfile: ImageVector
+val CupertinoIcons.Outlined.BrainHeadProfile: ImageVector
     get() {
         if (_brainHeadProfile != null) {
             return _brainHeadProfile!!

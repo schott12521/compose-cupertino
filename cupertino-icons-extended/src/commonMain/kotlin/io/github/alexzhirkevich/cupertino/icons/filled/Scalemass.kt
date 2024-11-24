@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Scalemass: ImageVector
+val CupertinoIcons.Filled.Scalemass: ImageVector
     get() {
         if (_scalemass != null) {
             return _scalemass!!

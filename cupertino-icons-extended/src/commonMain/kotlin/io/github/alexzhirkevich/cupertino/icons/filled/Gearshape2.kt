@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Gearshape2: ImageVector
+val CupertinoIcons.Filled.Gearshape2: ImageVector
     get() {
         if (_gearshape2 != null) {
             return _gearshape2!!

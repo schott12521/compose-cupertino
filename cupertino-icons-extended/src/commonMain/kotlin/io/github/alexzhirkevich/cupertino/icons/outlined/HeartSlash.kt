@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.HeartSlash: ImageVector
+val CupertinoIcons.Outlined.HeartSlash: ImageVector
     get() {
         if (_heartSlash != null) {
             return _heartSlash!!

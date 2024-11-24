@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Graduationcap: ImageVector
+val CupertinoIcons.Outlined.Graduationcap: ImageVector
     get() {
         if (_graduationcap != null) {
             return _graduationcap!!

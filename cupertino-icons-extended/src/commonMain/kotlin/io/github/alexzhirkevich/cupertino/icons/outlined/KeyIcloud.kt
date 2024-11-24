@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.KeyIcloud: ImageVector
+val CupertinoIcons.Outlined.KeyIcloud: ImageVector
     get() {
         if (_keyIcloud != null) {
             return _keyIcloud!!

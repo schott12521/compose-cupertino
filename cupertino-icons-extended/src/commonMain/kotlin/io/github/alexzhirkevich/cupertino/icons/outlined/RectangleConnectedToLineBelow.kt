@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.RectangleConnectedToLineBelow: ImageVector
+val CupertinoIcons.Outlined.RectangleConnectedToLineBelow: ImageVector
     get() {
         if (_rectangleConnectedToLineBelow != null) {
             return _rectangleConnectedToLineBelow!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.CursorarrowRays: ImageVector
+val CupertinoIcons.Outlined.CursorarrowRays: ImageVector
     get() {
         if (_cursorarrowRays != null) {
             return _cursorarrowRays!!

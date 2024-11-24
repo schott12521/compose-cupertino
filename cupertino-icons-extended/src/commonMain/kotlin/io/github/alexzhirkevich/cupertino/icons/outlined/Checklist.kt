@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Checklist: ImageVector
+val CupertinoIcons.Outlined.Checklist: ImageVector
     get() {
         if (_checklist != null) {
             return _checklist!!

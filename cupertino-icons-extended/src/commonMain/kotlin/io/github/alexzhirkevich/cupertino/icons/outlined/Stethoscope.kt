@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Stethoscope: ImageVector
+val CupertinoIcons.Outlined.Stethoscope: ImageVector
     get() {
         if (_stethoscope != null) {
             return _stethoscope!!

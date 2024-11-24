@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Airpodsmax: ImageVector
+val CupertinoIcons.Outlined.Airpodsmax: ImageVector
     get() {
         if (_airpodsmax != null) {
             return _airpodsmax!!

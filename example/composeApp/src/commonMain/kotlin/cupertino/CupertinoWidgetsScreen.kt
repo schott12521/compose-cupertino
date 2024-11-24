@@ -1058,7 +1058,7 @@ private fun SectionScope.SwitchAndProgressBar() {
         }
     }
 
-    SectionItem() {
+    SectionItem {
         var v by remember {
             mutableStateOf("")
         }
@@ -1263,7 +1263,7 @@ private fun SectionScope.ButtonsExample() {
         }
     }
 
-    SectionItem() {
+    SectionItem {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -1297,7 +1297,7 @@ private fun SectionScope.ButtonsExample() {
         }
     }
 
-    SectionItem() {
+    SectionItem {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {

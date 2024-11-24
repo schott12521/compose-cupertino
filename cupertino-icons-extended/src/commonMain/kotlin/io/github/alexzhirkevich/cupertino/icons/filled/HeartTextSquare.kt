@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.HeartTextSquare: ImageVector
+val CupertinoIcons.Filled.HeartTextSquare: ImageVector
     get() {
         if (_heartTextSquare != null) {
             return _heartTextSquare!!

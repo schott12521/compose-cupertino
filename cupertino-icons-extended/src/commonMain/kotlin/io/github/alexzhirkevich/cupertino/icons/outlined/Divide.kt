@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Divide: ImageVector
+val CupertinoIcons.Outlined.Divide: ImageVector
     get() {
         if (_divide != null) {
             return _divide!!

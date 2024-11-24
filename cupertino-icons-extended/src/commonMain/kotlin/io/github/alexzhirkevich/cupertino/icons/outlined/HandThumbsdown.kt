@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.HandThumbsdown: ImageVector
+val CupertinoIcons.Outlined.HandThumbsdown: ImageVector
     get() {
         if (_handThumbsdown != null) {
             return _handThumbsdown!!

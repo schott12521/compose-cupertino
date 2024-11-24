@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.XmarkSeal: ImageVector
+val CupertinoIcons.Outlined.XmarkSeal: ImageVector
     get() {
         if (_xmarkSeal != null) {
             return _xmarkSeal!!

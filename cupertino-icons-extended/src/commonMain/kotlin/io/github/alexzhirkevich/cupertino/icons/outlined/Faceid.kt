@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Faceid: ImageVector
+val CupertinoIcons.Outlined.Faceid: ImageVector
     get() {
         if (_faceid != null) {
             return _faceid!!

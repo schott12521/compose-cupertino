@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.SquareStack3dUp: ImageVector
+val CupertinoIcons.Outlined.SquareStack3dUp: ImageVector
     get() {
         if (_squareStack3dUp != null) {
             return _squareStack3dUp!!

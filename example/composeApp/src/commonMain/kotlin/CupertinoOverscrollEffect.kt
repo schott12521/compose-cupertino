@@ -139,8 +139,8 @@ class CupertinoOverscrollEffect(
 
     private fun NestedScrollSource.toCupertinoScrollSource(): CupertinoScrollSource? =
         when (this) {
-            NestedScrollSource.Drag -> CupertinoScrollSource.DRAG
-            NestedScrollSource.Fling -> CupertinoScrollSource.FLING
+            NestedScrollSource.UserInput -> CupertinoScrollSource.DRAG
+            NestedScrollSource.SideEffect -> CupertinoScrollSource.FLING
             else -> null
         }
 

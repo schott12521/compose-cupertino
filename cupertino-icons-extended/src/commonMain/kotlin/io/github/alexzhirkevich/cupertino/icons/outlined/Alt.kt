@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Alt: ImageVector
+val CupertinoIcons.Outlined.Alt: ImageVector
     get() {
         if (_alt != null) {
             return _alt!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Scroll: ImageVector
+val CupertinoIcons.Outlined.Scroll: ImageVector
     get() {
         if (_scroll != null) {
             return _scroll!!

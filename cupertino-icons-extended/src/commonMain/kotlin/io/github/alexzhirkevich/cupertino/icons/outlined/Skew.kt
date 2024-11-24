@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Skew: ImageVector
+val CupertinoIcons.Outlined.Skew: ImageVector
     get() {
         if (_skew != null) {
             return _skew!!

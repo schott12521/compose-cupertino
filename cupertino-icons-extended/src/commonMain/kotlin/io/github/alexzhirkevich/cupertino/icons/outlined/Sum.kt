@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Sum: ImageVector
+val CupertinoIcons.Outlined.Sum: ImageVector
     get() {
         if (_sum != null) {
             return _sum!!

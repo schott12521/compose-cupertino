@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Binoculars: ImageVector
+val CupertinoIcons.Filled.Binoculars: ImageVector
     get() {
         if (_binoculars != null) {
             return _binoculars!!

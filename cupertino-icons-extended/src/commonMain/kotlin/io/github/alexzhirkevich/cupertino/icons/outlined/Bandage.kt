@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Bandage: ImageVector
+val CupertinoIcons.Outlined.Bandage: ImageVector
     get() {
         if (_bandage != null) {
             return _bandage!!

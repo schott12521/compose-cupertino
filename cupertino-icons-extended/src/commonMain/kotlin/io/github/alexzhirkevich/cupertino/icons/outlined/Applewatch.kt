@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Applewatch: ImageVector
+val CupertinoIcons.Outlined.Applewatch: ImageVector
     get() {
         if (_applewatch != null) {
             return _applewatch!!

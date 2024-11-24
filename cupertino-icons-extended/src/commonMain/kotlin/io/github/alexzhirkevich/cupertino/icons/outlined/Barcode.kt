@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Barcode: ImageVector
+val CupertinoIcons.Outlined.Barcode: ImageVector
     get() {
         if (_barcode != null) {
             return _barcode!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Wind: ImageVector
+val CupertinoIcons.Outlined.Wind: ImageVector
     get() {
         if (_wind != null) {
             return _wind!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.RectangleArrowtriangle2Outward: ImageVector
+val CupertinoIcons.Outlined.RectangleArrowtriangle2Outward: ImageVector
     get() {
         if (_rectangleArrowtriangle2Outward != null) {
             return _rectangleArrowtriangle2Outward!!

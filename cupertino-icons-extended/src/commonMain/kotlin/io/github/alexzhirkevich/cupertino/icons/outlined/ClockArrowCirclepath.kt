@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.ClockArrowCirclepath: ImageVector
+val CupertinoIcons.Outlined.ClockArrowCirclepath: ImageVector
     get() {
         if (_clockArrowCirclepath != null) {
             return _clockArrowCirclepath!!

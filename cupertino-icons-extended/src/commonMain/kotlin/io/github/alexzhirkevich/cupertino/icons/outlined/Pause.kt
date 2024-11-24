@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Pause: ImageVector
+val CupertinoIcons.Outlined.Pause: ImageVector
     get() {
         if (_pause != null) {
             return _pause!!

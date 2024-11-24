@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.Volleyball: ImageVector
+val CupertinoIcons.Filled.Volleyball: ImageVector
     get() {
         if (_volleyball != null) {
             return _volleyball!!

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Outlined.Waveform: ImageVector
+val CupertinoIcons.Outlined.Waveform: ImageVector
     get() {
         if (_waveform != null) {
             return _waveform!!

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 
-public val CupertinoIcons.Filled.HeadphonesCircle: ImageVector
+val CupertinoIcons.Filled.HeadphonesCircle: ImageVector
     get() {
         if (_headphonesCircle != null) {
             return _headphonesCircle!!
