@@ -1,6 +1,8 @@
 {
   "releasePrefix": "v",
-  "services": {
+  "preset":"extended",
+  "initialVersion":"0.0.0",
+  "services":{
     "github": {
       "type": "GITHUB",
       "options": {
@@ -9,5 +11,8 @@
         "REPOSITORY_OWNER": "schott12521"
       }
     }
-  }
+  },
+  "summaryFile":".nyx-summary.txt",
+  "stateFile":".nyx-state.json",
+  "verbosity":"INFO"
 }

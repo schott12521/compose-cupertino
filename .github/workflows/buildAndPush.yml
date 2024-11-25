@@ -36,7 +36,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NYX_VERBOSITY: 'INFO'
         with:
+          configurationFile: '.nyx.json'
           command: 'publish'
-          preset: 'extended'
           releaseLenient: 'true'
           changelogPath: 'CHANGELOG.md'
