@@ -28,6 +28,7 @@ kotlin {
                 }
             }
         }
+        publishLibraryVariants("release")
     }
 
     iosArm64()
