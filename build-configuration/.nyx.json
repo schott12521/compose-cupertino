@@ -21,7 +21,7 @@
     "enabled": ["release"],
     "items": {
       "release": {
-        "gitPush": true,
+        "gitPush": "origin",
         "publish": true,
         "releaseName": "release",
         "description": "Stable release",
