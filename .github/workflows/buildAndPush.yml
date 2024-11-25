@@ -26,21 +26,17 @@ jobs:
         with:
           gradle-version: 8.9
 
-      - name: Build with Gradle
-        run: ./gradlew build --build-cache
-
       - name: Infer release with Nyx
         id: nyx
         uses: mooltiverse/nyx-github-action@main
         env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NYX_VERBOSITY: 'INFO'
         with:
           releasePrefix: 'v'
           command: 'infer'
 
       - name: Publish with Gradle
-        run: ./gradlew publish -Pversion=${{ steps.nyx.outputs.version }}
+        run: ./gradlew publish -Pversion=${{ steps.nyx.outputs.version }} --build-cache
         env:
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
