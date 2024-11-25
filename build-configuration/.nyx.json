@@ -21,7 +21,7 @@
     "enabled": ["release"],
     "items": {
       "release": {
-        "identifiers": false
+        "identifiers": []
       }
     }
   }
