@@ -1,9 +1,9 @@
 {
   "initialVersion": "0.1.4",
   "preset": "simple",
-  "releaseLenient": true,
   "scheme": "SEMVER",
   "verbosity": "INFO",
+  "releaseLenient": true,
   "commitMessageConventions": {
     "enabled": ["conventional"],
     "items": {
@@ -14,6 +14,20 @@
           "minor": "^feat",
           "patch": "^fix|chore|docs|style|refactor|test|perf"
         }
+      }
+    }
+  },
+  "releaseTypes": {
+    "enabled": ["release"],
+    "items": {
+      "release": {
+        "gitPush": true,
+        "publish": true,
+        "releaseName": "release",
+        "description": "Stable release",
+        "collapseVersions": false,
+        "buildMetadata": "",
+        "preRelease": ""
       }
     }
   }
