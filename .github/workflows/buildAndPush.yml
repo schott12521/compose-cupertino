@@ -37,10 +37,10 @@ jobs:
           NYX_VERBOSITY: 'INFO'
         with:
           releasePrefix: 'v'
-          command: 'infer'
+          command: 'publish'
 
-      - name: Publish with Gradle
-        run: ./gradlew publish -Pversion=${{ steps.nyx.outputs.version }}
-        env:
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Publish with Gradle
+#        run: ./gradlew publish -Pversion=${{ steps.nyx.outputs.version }}
+#        env:
+#          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
