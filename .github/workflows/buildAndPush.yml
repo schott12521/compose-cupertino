@@ -17,14 +17,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up the cache to store and retrieve the Nyx state
+        uses: actions/cache@v3
+        with:
+          path: |
+            .nyx-state.json
+          key: $-nyx-state
+          restore-keys: $-nyx-state
+
       - name: Infer release with Nyx
         id: nyx
         uses: mooltiverse/nyx-github-action@main
         env:
           NYX_VERBOSITY: 'INFO'
         with:
-          releasePrefix: 'v'
           command: 'infer'
+          stateFile: .nyx-state.json
+          changelogPath: CHANGELOG.md
 
       - name: Echo the output
         run: echo The release version is ${{ steps.nyx.outputs.version }}
@@ -49,9 +58,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.9
-
-      - name: Print version # This step uses the version inferred by Nyx in another job
-        run: echo The inferred release version is ${{ needs.infer-release.outputs.version }}
 
       - name: Publish with Gradle
         run: ./gradlew publish -Pversion=$VERSION --build-cache
