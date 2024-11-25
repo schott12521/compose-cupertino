@@ -32,7 +32,7 @@ jobs:
           NYX_VERBOSITY: 'INFO'
         with:
           configurationFile: 'build-configuration/.nyx.json'
-          command: 'infer'
+          command: 'mark'
           stateFile: .nyx-state.json
           changelogPath: CHANGELOG.md
 
