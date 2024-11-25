@@ -8,6 +8,8 @@ on:
 jobs:
   infer-release:
     runs-on: ubuntu-latest # Use Linux for the Nyx action
+    outputs:
+      version: ${{ steps.nyx.outputs.version }}
 
     steps:
       - name: Checkout code
@@ -49,7 +51,7 @@ jobs:
           gradle-version: 8.9
 
       - name: Print version # This step uses the version inferred by Nyx in another job
-        run: echo The inferred release version is ${{needs.infer-release.outputs.version}}
+        run: echo The inferred release version is ${{ needs.infer-release.outputs.version }}
 
       - name: Publish with Gradle
         run: ./gradlew publish -Pversion=$VERSION --build-cache
