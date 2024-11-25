@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest # Use Linux for the Nyx action
     outputs:
       version: ${{ steps.nyx.outputs.version }}
+      changelog: ${{ steps.nyx.outputs.changelog }}
 
     steps:
       - name: Checkout code
@@ -74,5 +75,5 @@ jobs:
           commitish: main
           body: |
             ## Changes in this release
-            ${{ steps.nyx.outputs.changelog }}
+            ${{ needs.nyx.infer-release.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
