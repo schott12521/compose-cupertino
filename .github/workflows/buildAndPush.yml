@@ -31,7 +31,7 @@ jobs:
         env:
           NYX_VERBOSITY: 'INFO'
         with:
-          configurationFile: '../build-configuration/.nyx.json'
+          configurationFile: 'build-configuration/.nyx.json'
           command: 'infer'
           stateFile: .nyx-state.json
           changelogPath: CHANGELOG.md
