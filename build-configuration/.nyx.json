@@ -1,5 +1,5 @@
 {
-  "initialVersion": "0.1.4",
+  "initialVersion": "0.1.5",
   "preset": "simple",
   "scheme": "SEMVER",
   "verbosity": "INFO",
