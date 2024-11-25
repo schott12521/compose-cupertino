@@ -17,7 +17,7 @@ project.afterEvaluate {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
+                url = uri("https://maven.pkg.github.com/schott12521/ExampleLibrary")
                 credentials {
                     username = findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                     password = findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
@@ -35,7 +35,7 @@ project.afterEvaluate {
             pom {
                 name.set(project.name)
                 description.set("A description for ${project.name}")
-                url.set("https://github.com/schott12521/compose-cupertino")
+                url.set("https://github.com/schott12521/ExampleLibrary")
                 description.set(publishProperties.getProperty("description"))
 
                 licenses {
@@ -57,9 +57,9 @@ project.afterEvaluate {
                     }
                 }
                 scm {
-                    connection.set("scm:git:https://github.com/schott12521/compose-cupertino.git")
-                    developerConnection.set("scm:git:ssh://github.com/schott12521/compose-cupertino.git")
-                    url.set("https://github.com/schott12521/compose-cupertino")
+                    connection.set("scm:git:https://github.com/schott12521/ExampleLibrary.git")
+                    developerConnection.set("scm:git:ssh://github.com/schott12521/ExampleLibrary.git")
+                    url.set("https://github.com/schott12521/ExampleLibrary")
                 }
             }
         }
