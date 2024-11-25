@@ -35,6 +35,8 @@ jobs:
           command: 'infer'
           stateFile: .nyx-state.json
           changelogPath: CHANGELOG.md
+          releaseTypes:
+            enabled: 'minor,major,patch'
 
       - name: Echo the output
         run: echo The release version is ${{ steps.nyx.outputs.version }}
