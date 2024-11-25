@@ -21,13 +21,10 @@
     "enabled": ["release"],
     "items": {
       "release": {
-        "gitPush": "origin",
-        "publish": true,
-        "releaseName": "release",
-        "description": "Stable release",
         "collapseVersions": false,
-        "buildMetadata": "",
-        "preRelease": ""
+        "gitPush": true,
+        "publish": true,
+        "identifiers": false
       }
     }
   }
