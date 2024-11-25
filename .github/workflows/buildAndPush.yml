@@ -40,7 +40,8 @@ jobs:
         run: echo The release version is ${{ steps.nyx.outputs.version }}
 
   build-and-publish:
-    runs-on: macos-13 # Use macOS for the rest of the steps
+#    runs-on: macos-13 # Use macOS for the rest of the steps
+    runs-on: self-hosted
     needs: infer-release # Wait for the Nyx job to complete
 
     steps:
