@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest # Use Linux for the Nyx action
     outputs:
       version: ${{ steps.nyx.outputs.version }}
-      changelog: ${{ steps.nyx.outputs.changelog }}
 
     steps:
       - name: Checkout code
@@ -32,10 +31,10 @@ jobs:
         env:
           NYX_VERBOSITY: 'INFO'
         with:
+          configurationFile: '../build-configuration/.nyx.json'
           command: 'infer'
           stateFile: .nyx-state.json
           changelogPath: CHANGELOG.md
-          releaseTypesEnabled: 'minor,major,patch'
 
       - name: Echo the output
         run: echo The release version is ${{ steps.nyx.outputs.version }}
@@ -67,14 +66,3 @@ jobs:
           VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@main
-        with:
-          tag: ${{ needs.infer-release.outputs.version }}
-          name: Release ${{ needs.infer-release.outputs.version }}
-          commitish: main
-          body: |
-            ## Changes in this release
-            ${{ needs.nyx.infer-release.outputs.changelog }}
-          token: ${{ secrets.GITHUB_TOKEN }}

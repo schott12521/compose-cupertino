@@ -1,0 +1,20 @@
+{
+  "initialVersion": "0.1.4",
+  "preset": "simple",
+  "releaseLenient": true,
+  "scheme": "SEMVER",
+  "verbosity": "INFO",
+  "commitMessageConventions": {
+    "enabled": ["conventional"],
+    "items": {
+      "conventional": {
+        "expression": "^(?<type>feat|fix|chore|docs|style|refactor|test|perf)(\\((?<scope>[a-zA-Z0-9_\\-]+)\\))?: (?<description>.+)$",
+        "bumpExpressions": {
+          "major": "^feat!|BREAKING CHANGE",
+          "minor": "^feat",
+          "patch": "^fix|chore|docs|style|refactor|test|perf"
+        }
+      }
+    }
+  }
+}
