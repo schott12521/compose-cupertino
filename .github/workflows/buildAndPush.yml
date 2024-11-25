@@ -36,7 +36,7 @@ jobs:
           command: 'infer'
 
       - name: Save version as output
-        run: echo "version=${{ steps.nyx.outputs.version }}" >> $GITHUB_ENV
+        run: echo the inferred version is ${{ steps.nyx.outputs.version }}
 
   build-and-publish:
     runs-on: macos-latest # Use macOS for the rest of the steps
@@ -62,6 +62,6 @@ jobs:
       - name: Publish with Gradle
         run: ./gradlew publish -Pversion=$VERSION --build-cache
         env:
-          VERSION: ${{ env.version }}
+          VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
