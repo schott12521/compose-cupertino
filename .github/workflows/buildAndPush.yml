@@ -56,8 +56,8 @@ jobs:
       - name: "🌊 Create GitHub Release"
         uses: ncipollo/release-action@v1.14.0
         with:
-          tag_name: ${{ steps.nyx.outputs.version }}
-          release_name: Release ${{ steps.nyx.outputs.version }}
+          tag: ${{ steps.nyx.outputs.version }}
+          name: Release ${{ steps.nyx.outputs.version }}
           bodyFile: latest-changelog.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
