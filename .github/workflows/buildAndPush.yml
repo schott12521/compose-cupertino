@@ -39,7 +39,7 @@ jobs:
         run: echo The release version is ${{ steps.nyx.outputs.version }}
 
   build-and-publish:
-    runs-on: macos-13
+    runs-on: self-hosted
     needs: infer-release
 
     steps:
@@ -47,17 +47,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
-      - name: Cache Gradle and KMP Build Outputs
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            build # Cache KMP build outputs
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -71,7 +60,7 @@ jobs:
           gradle-version: 8.9
 
       - name: Publish with Gradle
-        run: ./gradlew publish -Pversion=$VERSION --build-cache --daemon --parallel
+        run: ./gradlew publish -Pversion=$VERSION --build-cache --daemon --parallel --scan
         env:
           VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
@@ -85,7 +74,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Create Git Tag
         run: |
@@ -107,6 +96,6 @@ jobs:
         with:
           tag_name: ${{ needs.infer-release.outputs.version }}
           release_name: Release ${{ needs.infer-release.outputs.version }}
-          bodyFile: ${{ steps.changelog.outputs.body }}
+          bodyFile: latest-changelog.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
