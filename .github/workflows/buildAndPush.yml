@@ -37,5 +37,8 @@ jobs:
           NYX_VERBOSITY: 'INFO'
         with:
           command: 'publish'
+          preset: 'extended'
+          releaseLenient: 'true'
           stateFile: '.nyx-state.json'
           changelogPath: 'CHANGELOG.md'
+          summaryFile: '.nyx-summary.txt'
