@@ -61,7 +61,7 @@ jobs:
           gradle-version: 8.9
 
       - name: Publish with Gradle
-        run: ./gradlew publish -Pversion=$VERSION --build-cache
+        run: ./gradlew publish -Pversion=$VERSION --build-cache --daemon --parallel
         env:
           VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
