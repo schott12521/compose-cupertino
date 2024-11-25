@@ -21,9 +21,6 @@
     "enabled": ["release"],
     "items": {
       "release": {
-        "collapseVersions": false,
-        "gitPush": true,
-        "publish": true,
         "identifiers": false
       }
     }
