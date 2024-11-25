@@ -38,6 +38,10 @@ jobs:
         with:
           releasePrefix: 'v'
           command: 'publish'
+          preset: 'extended'
+          releaseLenient: 'true'
+          stateFile: '.nyx-state.json'
+          summaryFile: '.nyx-summary.txt'
 
 #      - name: Publish with Gradle
 #        run: ./gradlew publish -Pversion=${{ steps.nyx.outputs.version }}

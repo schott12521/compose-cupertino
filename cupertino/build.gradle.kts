@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.composeJB)
     alias(libs.plugins.compose.compiler)
-    id("publishing")
+    id("publishing-convention")
 }
 
 kotlin {
