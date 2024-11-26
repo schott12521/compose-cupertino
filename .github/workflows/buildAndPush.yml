@@ -17,6 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
+#      - name: "🤑 Cache Nyx state"
+#        uses: actions/cache@v3
+#        with:
+#          path: .nyx-state.json
+#          key: ${{ runner.os }}-nyx-state
+#          restore-keys: ${{ runner.os }}-nyx-state
+
       - name: "🤔 Infer release with Nyx, make changelog"
         id: nyx
         uses: mooltiverse/nyx-github-action@main
