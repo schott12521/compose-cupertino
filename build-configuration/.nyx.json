@@ -1,20 +1,10 @@
 {
-  "preset": "simple",
+  "preset": "extended",
   "scheme": "SEMVER",
   "verbosity": "INFO",
   "releaseLenient": true,
   "commitMessageConventions": {
-    "enabled": ["conventional"],
-    "items": {
-      "conventional": {
-        "expression": "^(feat|fix|chore|docs|style|refactor|test|perf)(\\([a-zA-Z0-9_\\-]+\\))?: .+$",
-        "bumpExpressions": {
-          "major": "^feat!|BREAKING CHANGE",
-          "minor": "^feat",
-          "patch": "^fix|chore|docs|style|refactor|test|perf"
-        }
-      }
-    }
+    "enabled": ["conventionalCommitsForMerge"]
   },
   "releaseTypes": {
     "enabled": ["release"],
