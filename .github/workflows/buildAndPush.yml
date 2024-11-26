@@ -85,7 +85,7 @@ jobs:
           path: "**/build/**/*.jar"
 
   build-and-publish:
-    runs-on: self-hosted
+    runs-on: macos-13
     needs: infer-release
 
     steps:
