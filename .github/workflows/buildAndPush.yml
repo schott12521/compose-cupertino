@@ -83,17 +83,6 @@ jobs:
         with:
           gradle-version: 8.9
 
-      - name: "🤑 Cache Gradle dependencies"
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-caches-
-            ${{ runner.os }}-
-
       - name: "🌎 Publish with Gradle"
         run: ./gradlew publish -Pversion=$VERSION --build-cache --daemon --parallel --scan
         env:
