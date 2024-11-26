@@ -7,7 +7,7 @@
     "enabled": ["conventional"],
     "items": {
       "conventional": {
-        "expression": "^(?<type>feat|fix|chore|docs|style|refactor|test|perf)(\\((?<scope>[a-zA-Z0-9_\\-]+)\\))?: (?<description>.+)$",
+        "expression": "^(feat|fix|chore|docs|style|refactor|test|perf)(\\([a-zA-Z0-9_\\-]+\\))?: .+$",
         "bumpExpressions": {
           "major": "^feat!|BREAKING CHANGE",
           "minor": "^feat",
