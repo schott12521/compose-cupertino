@@ -59,7 +59,7 @@ jobs:
         run: ./gradlew build
         env:
           VERSION: ${{ steps.nyx.outputs.version }}
-        # Upload artifacts for the next job
+          
       - name: "📤 Upload build artifacts"
         uses: actions/upload-artifact@v3
         with:
