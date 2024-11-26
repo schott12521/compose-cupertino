@@ -17,13 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "🤑 Cache Nyx state"
-        uses: actions/cache@v3
-        with:
-          path: .nyx-state.json
-          key: ${{ runner.os }}-nyx-state
-          restore-keys: ${{ runner.os }}-nyx-state
-
       - name: "🤔 Infer release with Nyx, make changelog"
         id: nyx
         uses: mooltiverse/nyx-github-action@main
@@ -32,7 +25,6 @@ jobs:
         with:
           configurationFile: 'build-configuration/.nyx.json'
           command: 'make'
-          stateFile: .nyx-state.json
           changelogPath: CHANGELOG.md
 
       - name: "🟢 Release version is ${{ steps.nyx.outputs.version }}"
