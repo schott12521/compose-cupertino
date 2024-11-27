@@ -25,7 +25,6 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
  * limitations under the License.
  */
 
-@OptIn(ExperimentalDecomposeApi::class)
 fun DesktopApp() {
     val lifecycle = LifecycleRegistry()
 

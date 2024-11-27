@@ -441,7 +441,6 @@ internal actual object PlatformDateFormat {
 
 private fun Int.toStringWithLeadingZero(): String = if (this >= 10) toString() else "0$this"
 
-@Suppress("UnsafeCastFromDynamic")
 // handle an exception in js because it's not propagated to wasm
 internal fun getFirstDayOfWeek(locale: String): Int =
     js(

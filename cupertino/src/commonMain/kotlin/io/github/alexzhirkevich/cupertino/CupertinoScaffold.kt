@@ -449,7 +449,7 @@ object CupertinoScaffoldDefaults {
  */
 @kotlin.jvm.JvmInline
 value class FabPosition internal constructor(
-    @Suppress("unused") private val value: Int,
+    private val value: Int,
 ) {
     companion object {
         /**
