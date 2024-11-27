@@ -11,7 +11,7 @@ For now this package is only available via github packages.
 Add the following to your settings.gradle.kts, making sure that you have set or provided mavenUser and mavenPassword to your github username and a Personal Access Token.
 ```
 maven {
-    url = uri("https://maven.pkg.github.com/schott12521/ExampleLibrary")
+    url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
     credentials {
         username = mavenUser
         password = mavenPassword
