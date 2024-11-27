@@ -39,31 +39,32 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import io.github.alexzhirkevich.cupertino.theme.DefaultAlpha
 import io.github.alexzhirkevich.cupertino.theme.Shapes
+import io.github.alexzhirkevich.cupertino.theme.Typography
 
 enum class CupertinoButtonSize(
     val shape: (Shapes) -> Shape,
     val textStyle: (Typography) -> TextStyle = { it.body },
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 ) {
     Small(
         shape = { CircleShape },
         textStyle = { it.subhead },
-        contentPadding = PaddingValues(12.dp, 6.dp),
+        contentPadding = PaddingValues(12.dp, 6.dp)
     ),
     Regular(
         shape = { it.small },
         textStyle = { it.body },
-        contentPadding = PaddingValues(16.dp, 10.dp),
+        contentPadding = PaddingValues(16.dp, 10.dp)
     ),
     Large(
         shape = { it.medium },
         textStyle = { it.body },
-        contentPadding = PaddingValues(24.dp, 18.dp),
+        contentPadding = PaddingValues(24.dp, 18.dp)
     ),
     ExtraLarge(
         shape = { CircleShape },
         textStyle = Large.textStyle,
-        contentPadding = Large.contentPadding,
+        contentPadding = Large.contentPadding
     ),
 }
 
@@ -79,18 +80,17 @@ fun CupertinoButton(
     shape: Shape = size.shape(CupertinoTheme.shapes),
     contentPadding: PaddingValues = size.contentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
+
     val pressed by interactionSource.collectIsPressedAsState()
 
     val animatedAlpha by animateFloatAsState(
-        targetValue =
-            if (pressed) {
-                CupertinoButtonTokens.PressedPlainButonAlpha
-            } else {
-                1f
-            },
+        targetValue = if (pressed)
+            CupertinoButtonTokens.PressedPlainButonAlpha
+        else 1f
     )
+
 
     val indicationColor by rememberUpdatedState(colors.indicationColor)
 
@@ -102,7 +102,7 @@ fun CupertinoButton(
         color = colors.containerColor(enabled).value,
         contentColor = colors.contentColor(enabled).value,
         border = border,
-        interactionSource = interactionSource,
+        interactionSource = interactionSource
     ) {
         ProvideTextStyle(value = size.textStyle(CupertinoTheme.typography)) {
             Row(
@@ -111,19 +111,15 @@ fun CupertinoButton(
                     .padding(contentPadding)
                     .graphicsLayer {
                         if (colors.isPlain && enabled) {
-                            alpha =
-                                if (pressed) {
-                                    CupertinoButtonTokens.PressedPlainButonAlpha
-                                } else {
-                                    animatedAlpha
-                                }
+                            alpha = if (pressed)
+                                CupertinoButtonTokens.PressedPlainButonAlpha
+                            else animatedAlpha
                         }
                     },
-                horizontalArrangement =
-                    Arrangement
-                        .spacedBy(8.dp, Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement
+                    .spacedBy(8.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
-                content = content,
+                content = content
             )
         }
     }
@@ -138,35 +134,32 @@ fun CupertinoIconButton(
     colors: CupertinoButtonColors = plainButtonColors(),
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     CupertinoButton(
         onClick = onClick,
-        modifier =
-            modifier
-                .size(CupertinoButtonTokens.IconButtonSize),
+        modifier = modifier
+            .size(CupertinoButtonTokens.IconButtonSize),
         enabled = enabled,
         colors = colors,
         size = CupertinoButtonSize.Regular,
         shape = CircleShape,
         border = border,
         interactionSource = interactionSource,
-        contentPadding =
-            if (colors.isPlain) {
-                ZeroPadding
-            } else {
-                PaddingValues(8.dp)
-            },
+        contentPadding = if (colors.isPlain)
+            ZeroPadding
+        else PaddingValues(8.dp),
         content = {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 content()
             }
-        },
+        }
     )
 }
+
 
 @Immutable
 class CupertinoButtonColors internal constructor(
@@ -175,7 +168,7 @@ class CupertinoButtonColors internal constructor(
     private val disabledContainerColor: Color,
     private val disabledContentColor: Color,
     internal val indicationColor: Color,
-    internal val isPlain: Boolean = false,
+    internal val isPlain: Boolean = false
 ) {
     /**
      * Represents the container color for this button, depending on [enabled].
@@ -183,7 +176,9 @@ class CupertinoButtonColors internal constructor(
      * @param enabled whether the button is enabled
      */
     @Composable
-    fun containerColor(enabled: Boolean): State<Color> = rememberUpdatedState(if (enabled) containerColor else disabledContainerColor)
+    fun containerColor(enabled: Boolean): State<Color> {
+        return rememberUpdatedState(if (enabled) containerColor else disabledContainerColor)
+    }
 
     /**
      * Represents the content color for this button, depending on [enabled].
@@ -191,7 +186,9 @@ class CupertinoButtonColors internal constructor(
      * @param enabled whether the button is enabled
      */
     @Composable
-    fun contentColor(enabled: Boolean): State<Color> = rememberUpdatedState(if (enabled) contentColor else disabledContentColor)
+    fun contentColor(enabled: Boolean): State<Color> {
+        return rememberUpdatedState(if (enabled) contentColor else disabledContentColor)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -214,8 +211,10 @@ class CupertinoButtonColors internal constructor(
     }
 }
 
+
 @Immutable
 object CupertinoButtonDefaults {
+
     /**
      * Tinted button with .bordered SwiftUI style with default gray tint
      * */
@@ -226,15 +225,14 @@ object CupertinoButtonDefaults {
         containerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = CupertinoColors.DefaultAlpha,
-    ): CupertinoButtonColors =
-        CupertinoButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = CupertinoColors.DefaultAlpha
+    ): CupertinoButtonColors = CupertinoButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor,
+    )
 
     /**
      * SwiftUI .borderless button
@@ -246,16 +244,15 @@ object CupertinoButtonDefaults {
         containerColor: Color = Color.Transparent,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = Color.Transparent,
-        indicationColor: Color = Color.Transparent,
-    ): CupertinoButtonColors =
-        CupertinoButtonColors(
-            isPlain = true,
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = Color.Transparent
+    ): CupertinoButtonColors = CupertinoButtonColors(
+        isPlain = true,
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor
+    )
 
     /**
      * Filled button with .borderedProminent SwiftUI style
@@ -267,15 +264,14 @@ object CupertinoButtonDefaults {
         containerColor: Color = CupertinoTheme.colorScheme.accent,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = contentColor.copy(alpha = .2f),
-    ): CupertinoButtonColors =
-        CupertinoButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = contentColor.copy(alpha = .2f)
+    ): CupertinoButtonColors = CupertinoButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor
+    )
 
     /**
      * Tinted button with .bordered SwiftUI style and [contentColor] tint
@@ -287,15 +283,14 @@ object CupertinoButtonDefaults {
         containerColor: Color = contentColor.copy(alpha = CupertinoButtonTokens.BorderedButtonAlpha),
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = contentColor.copy(alpha = .15f),
-    ): CupertinoButtonColors =
-        CupertinoButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = contentColor.copy(alpha = .15f)
+    ): CupertinoButtonColors = CupertinoButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor,
+    )
 
     /**
      * Filled button with .borderedProminent SwiftUI style
@@ -304,37 +299,34 @@ object CupertinoButtonDefaults {
     @ReadOnlyComposable
     @Deprecated(
         "Use filledButtonColors instead",
-        replaceWith =
-            ReplaceWith(
-                "filledButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-                "io.github.alexzhirkevich.cupertino.filledButtonColors",
-            ),
+        replaceWith = ReplaceWith(
+            "filledButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
+            "io.github.alexzhirkevich.cupertino.filledButtonColors"
+        )
     )
     fun borderedProminentButtonColors(
         contentColor: Color = Color.White,
         containerColor: Color = CupertinoTheme.colorScheme.accent,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = contentColor.copy(alpha = .2f),
-    ): CupertinoButtonColors =
-        filledButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = contentColor.copy(alpha = .2f)
+    ): CupertinoButtonColors = filledButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor
+    )
 
     /**
      * Tinted button with .bordered SwiftUI style and [contentColor] tint
      * */
     @Deprecated(
         "Use tintedButtonColors instead",
-        replaceWith =
-            ReplaceWith(
-                "tintedButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-                "io.github.alexzhirkevich.cupertino.tintedButtonColors",
-            ),
+        replaceWith = ReplaceWith(
+            "tintedButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
+            "io.github.alexzhirkevich.cupertino.tintedButtonColors"
+        )
     )
     @Composable
     @ReadOnlyComposable
@@ -343,26 +335,24 @@ object CupertinoButtonDefaults {
         containerColor: Color = contentColor.copy(alpha = CupertinoButtonTokens.BorderedButtonAlpha),
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = contentColor.copy(alpha = .15f),
-    ): CupertinoButtonColors =
-        tintedButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = contentColor.copy(alpha = .15f)
+    ): CupertinoButtonColors = tintedButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor,
+    )
 
     /**
      * SwiftUI .borderless button
      * */
     @Deprecated(
         "Use plainButtonColors instead",
-        replaceWith =
-            ReplaceWith(
-                "plainButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-                "io.github.alexzhirkevich.cupertino.plainButtonColors",
-            ),
+        replaceWith = ReplaceWith(
+            "plainButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
+            "io.github.alexzhirkevich.cupertino.plainButtonColors"
+        )
     )
     @Composable
     @ReadOnlyComposable
@@ -371,26 +361,24 @@ object CupertinoButtonDefaults {
         containerColor: Color = Color.Transparent,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = Color.Transparent,
-        indicationColor: Color = Color.Transparent,
-    ): CupertinoButtonColors =
-        plainButtonColors(
-            contentColor = contentColor,
-            containerColor = containerColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = Color.Transparent
+    ): CupertinoButtonColors = plainButtonColors(
+        contentColor = contentColor,
+        containerColor = containerColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor
+    )
 
     /**
      * Tinted button with .bordered SwiftUI with default tint
      * */
     @Deprecated(
         "Use grayButtonColors instead",
-        replaceWith =
-            ReplaceWith(
-                "grayButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-                "io.github.alexzhirkevich.cupertino.grayButtonColors",
-            ),
+        replaceWith = ReplaceWith(
+            "grayButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
+            "io.github.alexzhirkevich.cupertino.grayButtonColors"
+        )
     )
     @Composable
     @ReadOnlyComposable
@@ -399,15 +387,14 @@ object CupertinoButtonDefaults {
         containerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
         disabledContentColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         disabledContainerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicationColor: Color = CupertinoColors.DefaultAlpha,
-    ): CupertinoButtonColors =
-        grayButtonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainerColor,
-            disabledContentColor = disabledContentColor,
-            indicationColor = indicationColor,
-        )
+        indicationColor: Color = CupertinoColors.DefaultAlpha
+    ): CupertinoButtonColors = grayButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+        indicationColor = indicationColor,
+    )
 }
 
 internal object CupertinoButtonTokens {
