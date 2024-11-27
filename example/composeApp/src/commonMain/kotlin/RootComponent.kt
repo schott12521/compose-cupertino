@@ -26,34 +26,44 @@ import sections.DefaultSectionsComponent
 import sections.SectionsComponent
 
 interface RootComponent : ComponentContext {
-
     val stack: Value<ChildStack<*, Child>>
 
-    val accentColor : State<Pair<Color,Color>>
+    val accentColor: State<Pair<Color, Color>>
 
-    val isInvertLayoutDirection : State<Boolean>
+    val isInvertLayoutDirection: State<Boolean>
 
-    val isDark : State<Boolean>
+    val isDark: State<Boolean>
 
     val isMaterial: State<Boolean>
 
-    val backDispatcher : BackDispatcher
+    val backDispatcher: BackDispatcher
 
     fun onBack()
 
     sealed interface Child {
-        class Cupertino(val component: CupertinoWidgetsComponent) : Child
-        class Adaptive(val component: AdaptiveWidgetsComponent) : Child
-        class Icons(val component: IconsComponent) : Child
-        class Sections(val component: SectionsComponent) : Child
+        class Cupertino(
+            val component: CupertinoWidgetsComponent,
+        ) : Child
+
+        class Adaptive(
+            val component: AdaptiveWidgetsComponent,
+        ) : Child
+
+        class Icons(
+            val component: IconsComponent,
+        ) : Child
+
+        class Sections(
+            val component: SectionsComponent,
+        ) : Child
     }
 }
 
 class RootViewModel : InstanceKeeper.Instance {
-
-    val accentColors = mutableStateOf(
-        CupertinoColors.systemBlue(false) to CupertinoColors.systemBlue(true)
-    )
+    val accentColors =
+        mutableStateOf(
+            CupertinoColors.systemBlue(false) to CupertinoColors.systemBlue(true),
+        )
 
     val invertLayoutDirection = mutableStateOf(false)
 
@@ -62,13 +72,16 @@ class RootViewModel : InstanceKeeper.Instance {
     val isMaterial = mutableStateOf(false)
 }
 
-class DefaultRootComponent(context: ComponentContext) : RootComponent, ComponentContext by context {
-
+class DefaultRootComponent(
+    context: ComponentContext,
+) : RootComponent,
+    ComponentContext by context {
     private val navigation = StackNavigation<Config>()
 
-    private val model = instanceKeeper.getOrCreate {
-        RootViewModel()
-    }
+    private val model =
+        instanceKeeper.getOrCreate {
+            RootViewModel()
+        }
 
     override val accentColor: State<Pair<Color, Color>>
         get() = model.accentColors
@@ -79,74 +92,81 @@ class DefaultRootComponent(context: ComponentContext) : RootComponent, Component
     override val isDark: State<Boolean>
         get() = model.isDark
 
-
     override val isMaterial: State<Boolean>
         get() = model.isMaterial
 
+    override val backDispatcher: BackDispatcher =
+        (backHandler as? BackDispatcher)
+            ?: BackDispatcher()
 
-    override val backDispatcher : BackDispatcher = (backHandler as? BackDispatcher) ?:
-        BackDispatcher()
-
-    override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
-        source = navigation,
-        serializer = Config.serializer(),
-        initialConfiguration = Config.Cupertino,
-        handleBackButton = true,
-        childFactory = ::child
-    )
+    override val stack: Value<ChildStack<*, RootComponent.Child>> =
+        childStack(
+            source = navigation,
+            serializer = Config.serializer(),
+            initialConfiguration = Config.Cupertino,
+            handleBackButton = true,
+            childFactory = ::child,
+        )
 
     override fun onBack() {
         navigation.pop()
     }
 
-    private fun child(config: Config, context: ComponentContext): RootComponent.Child =
-        when(config) {
-            Config.Adaptive -> RootComponent.Child.Adaptive(
-                DefaultAdaptiveWidgetsComponent(
-                    context = context,
-                    onNavigateBack = this::onBack,
-                    isMaterial = model.isMaterial
+    private fun child(
+        config: Config,
+        context: ComponentContext,
+    ): RootComponent.Child =
+        when (config) {
+            Config.Adaptive ->
+                RootComponent.Child.Adaptive(
+                    DefaultAdaptiveWidgetsComponent(
+                        context = context,
+                        onNavigateBack = this::onBack,
+                        isMaterial = model.isMaterial,
+                    ),
                 )
-            )
 
-            Config.Cupertino -> RootComponent.Child.Cupertino(
-                DefaultCupertinoWidgetsComponent(
-                    context = context,
-                    onAccentColorChanged = { light, dark ->
-                        model.accentColors.value = light to dark
-                    },
-                    onNavigate = {
-                         val screen = when (it){
-                             RootComponent.Child.Adaptive::class -> Config.Adaptive
-                             RootComponent.Child.Icons::class -> Config.Icons
-                             RootComponent.Child.Sections::class -> Config.Sections
-                             else -> return@DefaultCupertinoWidgetsComponent
-                         }
-                        navigation.push(screen)
-                    },
-                    dark = model.isDark,
-                    invertLayoutDirection = model.invertLayoutDirection
+            Config.Cupertino ->
+                RootComponent.Child.Cupertino(
+                    DefaultCupertinoWidgetsComponent(
+                        context = context,
+                        onAccentColorChanged = { light, dark ->
+                            model.accentColors.value = light to dark
+                        },
+                        onNavigate = {
+                            val screen =
+                                when (it) {
+                                    RootComponent.Child.Adaptive::class -> Config.Adaptive
+                                    RootComponent.Child.Icons::class -> Config.Icons
+                                    RootComponent.Child.Sections::class -> Config.Sections
+                                    else -> return@DefaultCupertinoWidgetsComponent
+                                }
+                            navigation.push(screen)
+                        },
+                        dark = model.isDark,
+                        invertLayoutDirection = model.invertLayoutDirection,
+                    ),
                 )
-            )
 
-            Config.Icons -> RootComponent.Child.Icons(
-                DefaultIconsComponent(
-                    context = context,
-                    onNavigateBack = this::onBack
+            Config.Icons ->
+                RootComponent.Child.Icons(
+                    DefaultIconsComponent(
+                        context = context,
+                        onNavigateBack = this::onBack,
+                    ),
                 )
-            )
 
-            Config.Sections -> RootComponent.Child.Sections(
-                DefaultSectionsComponent(
-                    context = context,
-                    onNavigateBack = this::onBack
+            Config.Sections ->
+                RootComponent.Child.Sections(
+                    DefaultSectionsComponent(
+                        context = context,
+                        onNavigateBack = this::onBack,
+                    ),
                 )
-            )
         }
 
     @Serializable
     private sealed interface Config {
-
         @Serializable
         data object Cupertino : Config
 

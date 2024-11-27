@@ -48,11 +48,11 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 
 @Immutable
 object CupertinoSectionDefaults {
-
-    val PaddingValues = PaddingValues(
-        horizontal = CupertinoSectionTokens.HorizontalPadding,
-        vertical = CupertinoSectionTokens.VerticalPadding
-    )
+    val PaddingValues =
+        PaddingValues(
+            horizontal = CupertinoSectionTokens.HorizontalPadding,
+            vertical = CupertinoSectionTokens.VerticalPadding,
+        )
 
     val DividerPadding = CupertinoSectionTokens.HorizontalPadding
 
@@ -64,73 +64,95 @@ object CupertinoSectionDefaults {
         @ReadOnlyComposable
         get() = CupertinoTheme.colorScheme.secondarySystemGroupedBackground
 
-    val EnterTransition = slideInVertically { -it } +
+    val EnterTransition =
+        slideInVertically { -it } +
             expandVertically(expandFrom = Alignment.Bottom)
 
-    val ExitTransition = slideOutVertically { -it } +
+    val ExitTransition =
+        slideOutVertically { -it } +
             shrinkVertically(shrinkTowards = Alignment.Top)
 
     @Composable
     @ReadOnlyComposable
     fun paddingValues(
         style: SectionStyle,
-        includePaddingBetweenSections: Boolean
+        includePaddingBetweenSections: Boolean,
     ): PaddingValues {
-        val default = if (style.inset && style.grouped)
-            PaddingValues
-        else ZeroPaddingValues
+        val default =
+            if (style.inset && style.grouped) {
+                PaddingValues
+            } else {
+                ZeroPaddingValues
+            }
 
-        return if (includePaddingBetweenSections)
+        return if (includePaddingBetweenSections) {
             default.copy(
                 top = CupertinoSectionTokens.SplitPadding,
-                bottom = CupertinoSectionTokens.SplitPadding
-            ) else default
+                bottom = CupertinoSectionTokens.SplitPadding,
+            )
+        } else {
+            default
+        }
     }
 
     @Composable
     @ReadOnlyComposable
     fun shape(style: SectionStyle = LocalSectionStyle.current): CornerBasedShape =
-        if (style.grouped && style.inset)
+        if (style.grouped && style.inset) {
             CupertinoTheme.shapes.medium
-        else RoundedCornerShape(0)
+        } else {
+            RoundedCornerShape(0)
+        }
 
     @Composable
     @ReadOnlyComposable
-    fun titleColor(style: SectionStyle) = if (style == SectionStyle.Sidebar)
-        CupertinoTheme.colorScheme.label else
-        CupertinoTheme.colorScheme.secondaryLabel
+    fun titleColor(style: SectionStyle) =
+        if (style == SectionStyle.Sidebar) {
+            CupertinoTheme.colorScheme.label
+        } else {
+            CupertinoTheme.colorScheme.secondaryLabel
+        }
 
     @Composable
     @ReadOnlyComposable
     fun titleTextStyle(style: SectionStyle = LocalSectionStyle.current) =
         when {
-            style == SectionStyle.Sidebar -> CupertinoTheme.typography.title3.copy(
-                fontWeight = FontWeight.Bold
-            )
+            style == SectionStyle.Sidebar ->
+                CupertinoTheme.typography.title3.copy(
+                    fontWeight = FontWeight.Bold,
+                )
             style.grouped -> CupertinoTheme.typography.footnote
-            else ->CupertinoTheme.typography.subhead
-                .copy(fontWeight = FontWeight.SemiBold)
+            else ->
+                CupertinoTheme.typography.subhead
+                    .copy(fontWeight = FontWeight.SemiBold)
         }
 
     @Composable
     @ReadOnlyComposable
     fun captionTextStyle(style: SectionStyle = LocalSectionStyle.current) =
-        if (style.grouped)
+        if (style.grouped) {
             CupertinoTheme.typography.footnote
-        else CupertinoTheme.typography.body
+        } else {
+            CupertinoTheme.typography.body
+        }
 
     @Composable
     @ReadOnlyComposable
     fun captionColor(style: SectionStyle = LocalSectionStyle.current) =
-        if (style.grouped)
+        if (style.grouped) {
             CupertinoTheme.colorScheme.secondaryLabel
-        else CupertinoTheme.colorScheme.label
+        } else {
+            CupertinoTheme.colorScheme.label
+        }
 
     @Composable
     @ReadOnlyComposable
-    fun containerColor(style: SectionStyle) = if (style.shouldFillContainer)
-        Color else
-        CupertinoTheme.colorScheme.systemGroupedBackground
+    fun containerColor(style: SectionStyle) =
+        if (style.shouldFillContainer) {
+            Color
+        } else {
+            CupertinoTheme.colorScheme.systemGroupedBackground
+        }
 
     @Composable
     fun PickerButton(
@@ -143,15 +165,19 @@ object CupertinoSectionDefaults {
         title: @Composable () -> Unit,
     ) {
         Box(
-            modifier = modifier
-                .clip(shape)
-                .background(containerColor.takeOrElse { CupertinoTheme.colorScheme.quaternarySystemFill })
-                .padding(horizontal = 12.dp, vertical = 6.dp)
+            modifier =
+                modifier
+                    .clip(shape)
+                    .background(containerColor.takeOrElse { CupertinoTheme.colorScheme.quaternarySystemFill })
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
         ) {
             CompositionLocalProvider(
-                LocalContentColor provides if (expanded)
-                    activeContentColor.takeOrElse { CupertinoTheme.colorScheme.accent }
-                else contentColor.takeOrElse { CupertinoTheme.colorScheme.label }
+                LocalContentColor provides
+                    if (expanded) {
+                        activeContentColor.takeOrElse { CupertinoTheme.colorScheme.accent }
+                    } else {
+                        contentColor.takeOrElse { CupertinoTheme.colorScheme.label }
+                    },
             ) {
                 title()
             }
@@ -164,45 +190,47 @@ object CupertinoSectionDefaults {
     @Composable
     fun LabelChevron() {
         CupertinoIcon(
-            imageVector = if (LocalLayoutDirection.current == LayoutDirection.Ltr)
-                CupertinoIcons.Default.ChevronBackward else CupertinoIcons.Default.ChevronForward,
+            imageVector =
+                if (LocalLayoutDirection.current == LayoutDirection.Ltr) {
+                    CupertinoIcons.Default.ChevronBackward
+                } else {
+                    CupertinoIcons.Default.ChevronForward
+                },
             contentDescription = null,
-            modifier = Modifier
-                .height(CupertinoIconDefaults.SmallSize)
-                .rotate(180f)
+            modifier =
+                Modifier
+                    .height(CupertinoIconDefaults.SmallSize)
+                    .rotate(180f),
         )
     }
 
-
     @Composable
     fun TextFieldClearButton(
-        visible : Boolean,
-        onClick : () -> Unit
+        visible: Boolean,
+        onClick: () -> Unit,
     ) {
         AnimatedVisibility(
             visible = visible,
             enter = fadeIn() + scaleIn(initialScale = .75f),
-            exit = fadeOut() + scaleOut(targetScale = .75f)
+            exit = fadeOut() + scaleOut(targetScale = .75f),
         ) {
             CupertinoIcon(
                 imageVector = CupertinoIcons.Filled.XmarkCircle,
                 contentDescription = "Clear",
-                modifier = Modifier
-                    .pointerInput(0){
-                        detectTapGestures {
-                            onClick()
-                        }
-                    }
-                    .size(CupertinoIconDefaults.MediumSize),
-                tint = CupertinoTheme.colorScheme.tertiaryLabel
+                modifier =
+                    Modifier
+                        .pointerInput(0) {
+                            detectTapGestures {
+                                onClick()
+                            }
+                        }.size(CupertinoIconDefaults.MediumSize),
+                tint = CupertinoTheme.colorScheme.tertiaryLabel,
             )
         }
     }
 }
 
-
 internal object CupertinoSectionTokens {
-
     val SplitPadding = 12.dp
     val InlinePadding = 6.dp
     val VerticalPadding = 8.dp

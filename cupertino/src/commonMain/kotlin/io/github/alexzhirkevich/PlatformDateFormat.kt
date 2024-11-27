@@ -4,33 +4,33 @@
 package io.github.alexzhirkevich
 
 internal expect object PlatformDateFormat {
-
-
-    val firstDayOfWeek : Int
+    val firstDayOfWeek: Int
 
     /**
      * Localized by platform weekdays
      * */
-    fun weekdayNames(locale: CalendarLocale) : List<Pair<String, String>>
+    fun weekdayNames(locale: CalendarLocale): List<Pair<String, String>>
 
-    fun monthsNames(locale: CalendarLocale) : List<String>
+    fun monthsNames(locale: CalendarLocale): List<String>
 
     fun formatWithPattern(
         utcTimeMillis: Long,
         pattern: String,
-        locale: CalendarLocale
+        locale: CalendarLocale,
     ): String
 
     fun formatWithSkeleton(
         utcTimeMillis: Long,
         skeleton: String,
-        locale: CalendarLocale
+        locale: CalendarLocale,
     ): String
 
-    fun parse(date: String, pattern: String): CalendarDate?
+    fun parse(
+        date: String,
+        pattern: String,
+    ): CalendarDate?
 
     fun getDateInputFormat(locale: CalendarLocale): DateInputFormat
 
-    fun is24HourFormat(locale: CalendarLocale) : Boolean
-
+    fun is24HourFormat(locale: CalendarLocale): Boolean
 }

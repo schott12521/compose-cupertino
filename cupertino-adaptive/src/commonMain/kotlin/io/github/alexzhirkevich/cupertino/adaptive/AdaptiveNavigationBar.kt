@@ -24,7 +24,6 @@ import io.github.alexzhirkevich.cupertino.CupertinoNavigationBar
 import io.github.alexzhirkevich.cupertino.CupertinoNavigationBarDefaults
 import io.github.alexzhirkevich.cupertino.CupertinoNavigationBarItem
 import io.github.alexzhirkevich.cupertino.CupertinoNavigationBarItemColors
-import io.github.alexzhirkevich.cupertino.CupertinoTopAppBarDefaults
 import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
 
 @OptIn(ExperimentalCupertinoApi::class)
@@ -34,12 +33,13 @@ fun AdaptiveNavigationBar(
     modifier: Modifier = Modifier,
     windowInsets: WindowInsets = NavigationBarDefaults.windowInsets,
     adaptation: AdaptationScope<CupertinoNavigationBarAdaptation, MaterialNavigationBarAdaptation>.() -> Unit = {},
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            NavigationBarAdaptation()
-        },
+        adaptation =
+            remember {
+                NavigationBarAdaptation()
+            },
         adaptationScope = adaptation,
         cupertino = {
             CupertinoNavigationBar(
@@ -49,7 +49,7 @@ fun AdaptiveNavigationBar(
                 isTransparent = it.isTransparent,
                 isTranslucent = it.isTranslucent,
                 divider = it.divider,
-                content = content
+                content = content,
             )
         },
         material = {
@@ -59,9 +59,9 @@ fun AdaptiveNavigationBar(
                 contentColor = it.contentColor,
                 tonalElevation = it.tonalElevation,
                 windowInsets = windowInsets,
-                content = content
+                content = content,
             )
-        }
+        },
     )
 }
 
@@ -79,9 +79,10 @@ fun RowScope.AdaptiveNavigationBarItem(
     adaptation: AdaptationScope<CupertinoNavigationBarItemAdaptation, MaterialNavigationBarItemAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            NavigationBarItemAdaptation()
-        },
+        adaptation =
+            remember {
+                NavigationBarItemAdaptation()
+            },
         adaptationScope = adaptation,
         cupertino = {
             CupertinoNavigationBarItem(
@@ -106,64 +107,61 @@ fun RowScope.AdaptiveNavigationBarItem(
                 label = label,
                 alwaysShowLabel = alwaysShowLabel,
                 colors = it.colors,
-                interactionSource = interactionSource
+                interactionSource = interactionSource,
             )
-        }
+        },
     )
 }
 
 class MaterialNavigationBarAdaptation internal constructor(
-    containerColor : Color,
-    contentColor : Color,
+    containerColor: Color,
+    contentColor: Color,
     tonalElevation: Dp = NavigationBarDefaults.Elevation,
 ) {
-    var containerColor : Color by mutableStateOf(containerColor)
-    var contentColor : Color by mutableStateOf(contentColor)
+    var containerColor: Color by mutableStateOf(containerColor)
+    var contentColor: Color by mutableStateOf(contentColor)
     var tonalElevation: Dp by mutableStateOf(tonalElevation)
 }
 
 @OptIn(ExperimentalCupertinoApi::class)
 class CupertinoNavigationBarAdaptation internal constructor(
-    containerColor : Color,
+    containerColor: Color,
     isTransparent: Boolean = false,
     isTranslucent: Boolean = true,
-    divider : @Composable () -> Unit = { CupertinoNavigationBarDefaults.divider() }
+    divider: @Composable () -> Unit = { CupertinoNavigationBarDefaults.divider() },
 ) {
-    var containerColor : Color by mutableStateOf(containerColor)
+    var containerColor: Color by mutableStateOf(containerColor)
     var isTransparent: Boolean by mutableStateOf(isTransparent)
     var isTranslucent: Boolean by mutableStateOf(isTranslucent)
-    var divider : @Composable () -> Unit by mutableStateOf(divider)
+    var divider: @Composable () -> Unit by mutableStateOf(divider)
 }
 
 @Stable
 class MaterialNavigationBarItemAdaptation internal constructor(
-    colors : NavigationBarItemColors,
+    colors: NavigationBarItemColors,
 ) {
-    var colors : NavigationBarItemColors by mutableStateOf(colors)
+    var colors: NavigationBarItemColors by mutableStateOf(colors)
 }
 
 @Stable
 @OptIn(ExperimentalCupertinoApi::class)
 class CupertinoNavigationBarItemAdaptation internal constructor(
-    colors : CupertinoNavigationBarItemColors,
-){
-    var colors : CupertinoNavigationBarItemColors by mutableStateOf(colors)
+    colors: CupertinoNavigationBarItemColors,
+) {
+    var colors: CupertinoNavigationBarItemColors by mutableStateOf(colors)
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Stable
-private class NavigationBarAdaptation :
-    Adaptation<CupertinoNavigationBarAdaptation, MaterialNavigationBarAdaptation>() {
-
+private class NavigationBarAdaptation : Adaptation<CupertinoNavigationBarAdaptation, MaterialNavigationBarAdaptation>() {
     @OptIn(ExperimentalCupertinoApi::class)
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoNavigationBarAdaptation {
-
         val containerColor = CupertinoNavigationBarDefaults.containerColor
 
         return remember(containerColor) {
             CupertinoNavigationBarAdaptation(
-                containerColor = containerColor
+                containerColor = containerColor,
             )
         }
     }
@@ -176,37 +174,33 @@ private class NavigationBarAdaptation :
         return remember(containerColor) {
             MaterialNavigationBarAdaptation(
                 containerColor = containerColor,
-                contentColor = contentColor
+                contentColor = contentColor,
             )
         }
     }
 }
 
 @Stable
-private class NavigationBarItemAdaptation :
-    Adaptation<CupertinoNavigationBarItemAdaptation, MaterialNavigationBarItemAdaptation>() {
-
+private class NavigationBarItemAdaptation : Adaptation<CupertinoNavigationBarItemAdaptation, MaterialNavigationBarItemAdaptation>() {
     @OptIn(ExperimentalCupertinoApi::class)
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoNavigationBarItemAdaptation {
-
         val colors = CupertinoNavigationBarDefaults.itemColors()
 
         return remember(colors) {
             CupertinoNavigationBarItemAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialNavigationBarItemAdaptation {
-
         val colors = NavigationBarItemDefaults.colors()
 
         return remember(colors) {
             MaterialNavigationBarItemAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }

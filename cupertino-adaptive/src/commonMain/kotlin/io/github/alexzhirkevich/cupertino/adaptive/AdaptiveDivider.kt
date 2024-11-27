@@ -34,44 +34,46 @@ import io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider
 import io.github.alexzhirkevich.cupertino.CupertinoVerticalDivider
 
 @Deprecated(
-    replaceWith = ReplaceWith(
-        "AdaptiveHorizontalDivider(modifier,adaptation)",
-        "io.github.alexzhirkevich.cupertino.adaptive.AdaptiveHorizontalDivider"
-    ),
-    message = "Use AdaptiveHorizontalDivider instead")
+    replaceWith =
+        ReplaceWith(
+            "AdaptiveHorizontalDivider(modifier,adaptation)",
+            "io.github.alexzhirkevich.cupertino.adaptive.AdaptiveHorizontalDivider",
+        ),
+    message = "Use AdaptiveHorizontalDivider instead",
+)
 @Composable
 @ExperimentalAdaptiveApi
 fun AdaptiveDivider(
     modifier: Modifier = Modifier,
-    adaptation: AdaptationScope<DividerAdaptation,DividerAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<DividerAdaptation, DividerAdaptation>.() -> Unit = {},
 ) = AdaptiveHorizontalDivider(modifier, adaptation)
-
 
 @Composable
 @ExperimentalAdaptiveApi
 fun AdaptiveHorizontalDivider(
     modifier: Modifier = Modifier,
-    adaptation: AdaptationScope<DividerAdaptation,DividerAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<DividerAdaptation, DividerAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            DividerAdaptationScope()
-        },
+        adaptation =
+            remember {
+                DividerAdaptationScope()
+            },
         adaptationScope = adaptation,
         material = {
             HorizontalDivider(
                 modifier = modifier,
                 thickness = it.thickness,
-                color = it.color
+                color = it.color,
             )
         },
         cupertino = {
             CupertinoHorizontalDivider(
                 modifier = modifier,
                 thickness = it.thickness,
-                color = it.color
+                color = it.color,
             )
-        }
+        },
     )
 }
 
@@ -79,41 +81,40 @@ fun AdaptiveHorizontalDivider(
 @ExperimentalAdaptiveApi
 fun AdaptiveVerticalDivider(
     modifier: Modifier = Modifier,
-    adaptation: AdaptationScope<DividerAdaptation,DividerAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<DividerAdaptation, DividerAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            DividerAdaptationScope()
-        },
+        adaptation =
+            remember {
+                DividerAdaptationScope()
+            },
         adaptationScope = adaptation,
         material = {
             VerticalDivider(
                 modifier = modifier,
                 thickness = it.thickness,
-                color = it.color
+                color = it.color,
             )
         },
         cupertino = {
             CupertinoVerticalDivider(
                 modifier = modifier,
                 thickness = it.thickness,
-                color = it.color
+                color = it.color,
             )
-        }
+        },
     )
 }
 
 @ExperimentalAdaptiveApi
 private class DividerAdaptationScope : Adaptation<DividerAdaptation, DividerAdaptation>() {
-
     @Composable
     override fun rememberCupertinoAdaptation(): DividerAdaptation {
-
         val color = CupertinoDividerDefaults.color
         return remember(color) {
             DividerAdaptation(
                 color = color,
-                thickness = CupertinoDividerDefaults.Thickness
+                thickness = CupertinoDividerDefaults.Thickness,
             )
         }
     }
@@ -125,7 +126,7 @@ private class DividerAdaptationScope : Adaptation<DividerAdaptation, DividerAdap
         return remember(color) {
             DividerAdaptation(
                 color = color,
-                thickness = DividerDefaults.Thickness
+                thickness = DividerDefaults.Thickness,
             )
         }
     }
@@ -134,7 +135,7 @@ private class DividerAdaptationScope : Adaptation<DividerAdaptation, DividerAdap
 @Stable
 class DividerAdaptation internal constructor(
     color: Color,
-    thickness: Dp
+    thickness: Dp,
 ) {
     var color: Color by mutableStateOf(color)
     var thickness: Dp by mutableStateOf(thickness)

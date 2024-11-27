@@ -5,7 +5,6 @@ package io.github.alexzhirkevich.cupertino
 // Copyright 2023, Christopher Banes and the Haze project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -38,13 +37,15 @@ fun Modifier.haze(
     backgroundColor: Color,
     tint: Color = HazeDefaults.tint(backgroundColor),
     blurRadius: Dp = HazeDefaults.blurRadius,
-): Modifier = this then HazeNodeElement(
-    areas = area.toList(),
-    tint = tint,
-    backgroundColor = backgroundColor,
-    blurRadius = blurRadius,
-    density = LocalDensity.current
-)
+): Modifier =
+    this then
+        HazeNodeElement(
+            areas = area.toList(),
+            tint = tint,
+            backgroundColor = backgroundColor,
+            blurRadius = blurRadius,
+            density = LocalDensity.current,
+        )
 
 /**
  * Default values for the [haze] modifiers.
@@ -72,17 +73,16 @@ internal data class HazeNodeElement(
     val backgroundColor: Color,
     val tint: Color,
     val blurRadius: Dp,
-    val density: Density
+    val density: Density,
 ) : ModifierNodeElement<HazeNode>() {
-    override fun create(): HazeNode {
-        return HazeNode(
+    override fun create(): HazeNode =
+        HazeNode(
             areas = areas,
             backgroundColor = backgroundColor,
             tint = tint,
             blurRadius = blurRadius,
-            density = density
+            density = density,
         )
-    }
 
     override fun update(node: HazeNode) {
         node.update(
@@ -107,7 +107,7 @@ internal expect class HazeNode(
     backgroundColor: Color,
     tint: Color,
     blurRadius: Dp,
-    density: Density
+    density: Density,
 ) : Modifier.Node {
     fun update(
         areas: List<Rect>,

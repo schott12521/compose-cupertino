@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import io.github.alexzhirkevich.cupertino.CupertinoButton
 import io.github.alexzhirkevich.cupertino.CupertinoButtonColors
-import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.filledButtonColors
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.plainButtonColors
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.tintedButtonColors
@@ -43,12 +42,15 @@ fun AdaptiveButton(
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     adaptation: AdaptationScope<CupertinoButtonAdaptation, MaterialButtonAdaptation>.() -> Unit = {},
-    content: @Composable() (RowScope.() -> Unit)
+    content:
+        @Composable()
+        (RowScope.() -> Unit),
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            ButtonAdaptation(type = ButtonType.Filled)
-        },
+        adaptation =
+            remember {
+                ButtonAdaptation(type = ButtonType.Filled)
+            },
         adaptationScope = adaptation,
         material = {
             Button(
@@ -59,9 +61,9 @@ fun AdaptiveButton(
                 interactionSource = interactionSource,
                 content = content,
                 contentPadding = it.contentPadding,
-                shape =  it.shape,
+                shape = it.shape,
                 colors = it.colors,
-                elevation = it.elevation
+                elevation = it.elevation,
             )
         },
         cupertino = {
@@ -74,10 +76,10 @@ fun AdaptiveButton(
                 content = content,
                 size = it.size,
                 contentPadding = it.contentPadding ?: it.size.contentPadding,
-                shape =  it.shape ?: it.size.shape(CupertinoTheme.shapes),
-                colors = it.colors
+                shape = it.shape ?: it.size.shape(CupertinoTheme.shapes),
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
@@ -94,12 +96,15 @@ fun AdaptiveTextButton(
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     adaptation: AdaptationScope<CupertinoButtonAdaptation, MaterialButtonAdaptation>.() -> Unit = {},
-    content: @Composable() (RowScope.() -> Unit)
+    content:
+        @Composable()
+        (RowScope.() -> Unit),
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            ButtonAdaptation(type = ButtonType.Text)
-        },
+        adaptation =
+            remember {
+                ButtonAdaptation(type = ButtonType.Text)
+            },
         adaptationScope = adaptation,
         material = {
             TextButton(
@@ -110,9 +115,9 @@ fun AdaptiveTextButton(
                 interactionSource = interactionSource,
                 content = content,
                 contentPadding = it.contentPadding,
-                shape =  it.shape,
+                shape = it.shape,
                 colors = it.colors,
-                elevation = it.elevation
+                elevation = it.elevation,
             )
         },
         cupertino = {
@@ -125,10 +130,10 @@ fun AdaptiveTextButton(
                 content = content,
                 size = it.size,
                 contentPadding = it.contentPadding ?: it.size.contentPadding,
-                shape =  it.shape ?: it.size.shape(CupertinoTheme.shapes),
-                colors = it.colors
+                shape = it.shape ?: it.size.shape(CupertinoTheme.shapes),
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
@@ -145,12 +150,15 @@ fun AdaptiveTonalButton(
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     adaptation: AdaptationScope<CupertinoButtonAdaptation, MaterialButtonAdaptation>.() -> Unit = {},
-    content: @Composable() (RowScope.() -> Unit)
+    content:
+        @Composable()
+        (RowScope.() -> Unit),
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            ButtonAdaptation(type = ButtonType.Tonal)
-        },
+        adaptation =
+            remember {
+                ButtonAdaptation(type = ButtonType.Tonal)
+            },
         adaptationScope = adaptation,
         material = {
             FilledTonalButton(
@@ -161,9 +169,9 @@ fun AdaptiveTonalButton(
                 interactionSource = interactionSource,
                 content = content,
                 contentPadding = it.contentPadding,
-                shape =  it.shape,
+                shape = it.shape,
                 colors = it.colors,
-                elevation = it.elevation
+                elevation = it.elevation,
             )
         },
         cupertino = {
@@ -176,19 +184,18 @@ fun AdaptiveTonalButton(
                 content = content,
                 size = it.size,
                 contentPadding = it.contentPadding ?: it.size.contentPadding,
-                shape =  it.shape ?: it.size.shape(CupertinoTheme.shapes),
-                colors = it.colors
+                shape = it.shape ?: it.size.shape(CupertinoTheme.shapes),
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
-
 @Stable
 class CupertinoButtonAdaptation internal constructor(
-    colors : CupertinoButtonColors,
+    colors: CupertinoButtonColors,
 ) {
-    var colors : CupertinoButtonColors by mutableStateOf(colors)
+    var colors: CupertinoButtonColors by mutableStateOf(colors)
     var size: CupertinoButtonSize by mutableStateOf(CupertinoButtonSize.Regular)
     var shape: Shape? by mutableStateOf(null)
     var contentPadding: PaddingValues? by mutableStateOf(null)
@@ -196,10 +203,10 @@ class CupertinoButtonAdaptation internal constructor(
 
 @Stable
 class MaterialButtonAdaptation internal constructor(
-    colors : ButtonColors,
+    colors: ButtonColors,
     elevation: ButtonElevation?,
     shape: Shape,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
 ) {
     var colors: ButtonColors by mutableStateOf(colors)
     var elevation: ButtonElevation? by mutableStateOf(elevation)
@@ -208,26 +215,27 @@ class MaterialButtonAdaptation internal constructor(
 }
 
 private enum class ButtonType {
-    Filled, Text, Tonal
+    Filled,
+    Text,
+    Tonal,
 }
 
 @ExperimentalAdaptiveApi
 private class ButtonAdaptation(
-    private val type: ButtonType
+    private val type: ButtonType,
 ) : Adaptation<CupertinoButtonAdaptation, MaterialButtonAdaptation>() {
-
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoButtonAdaptation {
+        val colors =
+            when (type) {
+                ButtonType.Filled ->
+                    filledButtonColors()
 
-        val colors = when (type) {
-            ButtonType.Filled -> filledButtonColors(
-            )
+                ButtonType.Text ->
+                    plainButtonColors()
 
-            ButtonType.Text -> plainButtonColors(
-            )
-
-            ButtonType.Tonal -> tintedButtonColors()
-        }
+                ButtonType.Tonal -> tintedButtonColors()
+            }
 
         return remember(colors) {
             CupertinoButtonAdaptation(
@@ -238,11 +246,12 @@ private class ButtonAdaptation(
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialButtonAdaptation {
-        val colors = when(type) {
-            ButtonType.Filled -> ButtonDefaults.buttonColors()
-            ButtonType.Text -> ButtonDefaults.textButtonColors()
-            ButtonType.Tonal -> ButtonDefaults.filledTonalButtonColors()
-        }
+        val colors =
+            when (type) {
+                ButtonType.Filled -> ButtonDefaults.buttonColors()
+                ButtonType.Text -> ButtonDefaults.textButtonColors()
+                ButtonType.Tonal -> ButtonDefaults.filledTonalButtonColors()
+            }
 
         val elevation = ButtonDefaults.buttonElevation()
         val shape = ButtonDefaults.shape
@@ -252,7 +261,7 @@ private class ButtonAdaptation(
                 colors = colors,
                 elevation = elevation,
                 shape = shape,
-                contentPadding = ButtonDefaults.ContentPadding
+                contentPadding = ButtonDefaults.ContentPadding,
             )
         }
     }

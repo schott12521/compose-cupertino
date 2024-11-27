@@ -12,10 +12,10 @@ actual fun CupertinoDateTimePickerNative(
     state: CupertinoDateTimePickerState,
     modifier: Modifier,
     style: DatePickerStyle,
-    containerColor : Color
+    containerColor: Color,
 ) = CupertinoDateTimePicker(
     state = state,
     style = style,
     containerColor = containerColor,
-    modifier = modifier
+    modifier = modifier,
 )

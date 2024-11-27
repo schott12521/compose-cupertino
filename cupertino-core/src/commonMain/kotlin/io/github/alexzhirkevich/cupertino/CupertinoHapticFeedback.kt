@@ -15,16 +15,15 @@ expect fun rememberCupertinoHapticFeedback(): HapticFeedback
  * */
 @InternalCupertinoApi
 object CupertinoHapticFeedback {
+    val SelectionChanged: HapticFeedbackType = HapticFeedbackType(1001)
 
-    val SelectionChanged : HapticFeedbackType = HapticFeedbackType(1001)
+    val Success: HapticFeedbackType = HapticFeedbackType(2001)
+    val Warning: HapticFeedbackType = HapticFeedbackType(2002)
+    val Error: HapticFeedbackType = HapticFeedbackType(2003)
 
-    val Success : HapticFeedbackType = HapticFeedbackType(2001)
-    val Warning : HapticFeedbackType = HapticFeedbackType(2002)
-    val Error : HapticFeedbackType = HapticFeedbackType(2003)
-
-    val ImpactLight : HapticFeedbackType = HapticFeedbackType(3001)
-    val ImpactMedium : HapticFeedbackType = HapticFeedbackType(3002)
-    val ImpactHeavy : HapticFeedbackType = HapticFeedbackType(3003)
-    val ImpactRigid : HapticFeedbackType = HapticFeedbackType(3004)
-    val ImpactSoft : HapticFeedbackType = HapticFeedbackType(3005)
+    val ImpactLight: HapticFeedbackType = HapticFeedbackType(3001)
+    val ImpactMedium: HapticFeedbackType = HapticFeedbackType(3002)
+    val ImpactHeavy: HapticFeedbackType = HapticFeedbackType(3003)
+    val ImpactRigid: HapticFeedbackType = HapticFeedbackType(3004)
+    val ImpactSoft: HapticFeedbackType = HapticFeedbackType(3005)
 }

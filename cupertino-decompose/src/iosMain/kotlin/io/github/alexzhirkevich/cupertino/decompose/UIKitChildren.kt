@@ -1,7 +1,6 @@
 
 
-@file: Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-
+@file:Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
 package io.github.alexzhirkevich.cupertino.decompose
 
@@ -51,81 +50,80 @@ fun <C : Any, T : Any> UIKitChildren(
     stack: Value<ChildStack<C, T>>,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    configuration : ComposeUIViewControllerConfiguration.() -> Unit = {
+    configuration: ComposeUIViewControllerConfiguration.() -> Unit = {
         onFocusBehavior = OnFocusBehavior.DoNothing
         platformLayers = false
     },
     content: @Composable (child: Child.Created<C, T>) -> Unit,
 ) {
-
     val compositionLocalContext = rememberUpdatedState(currentCompositionLocalContext)
     val updatedOnBack by rememberUpdatedState(onBack)
     val updatedConfiguration by rememberUpdatedState(configuration)
     val updatedContent by rememberUpdatedState(content)
 
-    val navController = remember(stack) {
-        NavController(
-            compositionLocalContext = compositionLocalContext,
-            stack = stack,
-            onBack = {
-                updatedOnBack.invoke()
-            },
-            configuration = {
-                updatedConfiguration.invoke(this)
-            },
-            content = {
-                updatedContent(it)
-            },
-        )
-    }
+    val navController =
+        remember(stack) {
+            NavController(
+                compositionLocalContext = compositionLocalContext,
+                stack = stack,
+                onBack = {
+                    updatedOnBack.invoke()
+                },
+                configuration = {
+                    updatedConfiguration.invoke(this)
+                },
+                content = {
+                    updatedContent(it)
+                },
+            )
+        }
 
     navController.Content(modifier)
 
-    DisposableEffect(navController){
+    DisposableEffect(navController) {
         onDispose {
             navController.release()
         }
     }
 }
 
-private class UIViewControllerWrapper<C: Any,T : Any>(
-    val item : Child.Created<C,T>,
-    private val onBack : () -> Unit,
+private class UIViewControllerWrapper<C : Any, T : Any>(
+    val item: Child.Created<C, T>,
+    private val onBack: () -> Unit,
     private val compositionLocalContext: State<CompositionLocalContext>,
     private val configuration: ComposeUIViewControllerConfiguration.() -> Unit,
     private val content: @Composable () -> Unit,
-) : UIViewController(null,null), UIGestureRecognizerDelegateProtocol {
-
+) : UIViewController(null, null),
+    UIGestureRecognizerDelegateProtocol {
     @OptIn(ExperimentalForeignApi::class, InternalCupertinoApi::class)
     override fun loadView() {
         super.loadView()
-        val controller = ComposeUIViewController(
-            configure = {
-                configuration.invoke(this)
-            }
-        ) {
-
-            val foundationContext = currentCompositionLocalContext
-
-            CompositionLocalProvider(
-                compositionLocalContext.value,
+        val controller =
+            ComposeUIViewController(
+                configure = {
+                    configuration.invoke(this)
+                },
             ) {
+                val foundationContext = currentCompositionLocalContext
+
                 CompositionLocalProvider(
-                    context = foundationContext,
-                ){
-
-                    if (isInitializedCupertinoTheme()) {
-                        SystemBarAppearance(CupertinoTheme.colorScheme.isDark, this)
-                    }
-
+                    compositionLocalContext.value,
+                ) {
                     CompositionLocalProvider(
-                        LocalHapticFeedback provides rememberCupertinoHapticFeedback(),
-                        LocalUIViewController provides this,
-                        content = content
-                    )
+                        context = foundationContext,
+                    ) {
+                        if (isInitializedCupertinoTheme()) {
+                            SystemBarAppearance(CupertinoTheme.colorScheme.isDark, this)
+                        }
+
+                        CompositionLocalProvider(
+                            LocalHapticFeedback provides rememberCupertinoHapticFeedback(),
+                            LocalUIViewController provides this,
+                            content = content,
+                        )
+                    }
                 }
             }
-        }
 
         controller.willMoveToParentViewController(this)
         controller.view.setFrame(view.frame)
@@ -159,32 +157,33 @@ private class UIViewControllerWrapper<C: Any,T : Any>(
     }
 }
 
-private class NavController<C : Any,T : Any>(
+private class NavController<C : Any, T : Any>(
     private val compositionLocalContext: State<CompositionLocalContext>,
-    stack : Value<ChildStack<C,T>>,
+    stack: Value<ChildStack<C, T>>,
     private val onBack: () -> Unit,
     private val configuration: ComposeUIViewControllerConfiguration.() -> Unit,
     private val content: @Composable (child: Child.Created<C, T>) -> Unit,
-) : UINavigationController(nibName = null, bundle = null), UIGestureRecognizerDelegateProtocol {
-
+) : UINavigationController(nibName = null, bundle = null),
+    UIGestureRecognizerDelegateProtocol {
     init {
         navigationBarHidden = true
     }
 
-    private val cancellation = stack.subscribe {
-        onChanged(it)
-    }
+    private val cancellation =
+        stack.subscribe {
+            onChanged(it)
+        }
 
     @Composable
     fun Content(modifier: Modifier) {
-
         UIKitViewController(
             factory = { this },
             modifier = modifier,
-            properties = UIKitInteropProperties(
-                isInteractive = true,
-                isNativeAccessibilityEnabled = true
-            )
+            properties =
+                UIKitInteropProperties(
+                    isInteractive = true,
+                    isNativeAccessibilityEnabled = true,
+                ),
         )
     }
 
@@ -193,38 +192,36 @@ private class NavController<C : Any,T : Any>(
         interactivePopGestureRecognizer?.delegate = this
     }
 
-    override fun gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer): Boolean {
-        return viewControllers.size > 1
-    }
+    override fun gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer): Boolean = viewControllers.size > 1
 
     fun release() {
         cancellation.cancel()
     }
 
     private fun onChanged(stack: ChildStack<C, T>) {
+        val controllers =
+            viewControllers
+                .filterIsInstance<UIViewControllerWrapper<C, T>>()
 
-        val controllers = viewControllers
-            .filterIsInstance<UIViewControllerWrapper<C, T>>()
-
-        val newControllers = stack.items.fastMap {
-            controllers.fastFirstOrNull { c -> c.item.instance === it.instance }
-                ?: makeUIViewController(it)
-        }
+        val newControllers =
+            stack.items.fastMap {
+                controllers.fastFirstOrNull { c -> c.item.instance === it.instance }
+                    ?: makeUIViewController(it)
+            }
 
         if (controllers != newControllers) {
             setViewControllers(newControllers, animated = true)
         }
     }
 
-    private fun makeUIViewController(
-        item: Child.Created<C, T>
-    ) = UIViewControllerWrapper(
-        onBack = onBack,
-        compositionLocalContext = compositionLocalContext,
-        content = {
-            content(item)
-        },
-        item = item,
-        configuration = configuration
-    )
+    private fun makeUIViewController(item: Child.Created<C, T>) =
+        UIViewControllerWrapper(
+            onBack = onBack,
+            compositionLocalContext = compositionLocalContext,
+            content = {
+                content(item)
+            },
+            item = item,
+            configuration = configuration,
+        )
 }

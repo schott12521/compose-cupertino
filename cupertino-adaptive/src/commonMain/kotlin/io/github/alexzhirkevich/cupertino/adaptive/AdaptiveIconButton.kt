@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import io.github.alexzhirkevich.cupertino.CupertinoButtonColors
-import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.filledButtonColors
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.plainButtonColors
 import io.github.alexzhirkevich.cupertino.CupertinoIconButton
@@ -28,12 +27,13 @@ fun AdaptiveIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     adaptation: AdaptationScope<CupertinoIconButtonAdaptation, MaterialIconButtonAdaptation>.() -> Unit = {},
-    content: @Composable (() -> Unit)
+    content: @Composable (() -> Unit),
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            IconButtonAdaptation(isFilled = false)
-        },
+        adaptation =
+            remember {
+                IconButtonAdaptation(isFilled = false)
+            },
         adaptationScope = adaptation,
         material = {
             IconButton(
@@ -52,9 +52,9 @@ fun AdaptiveIconButton(
                 enabled = enabled,
                 interactionSource = interactionSource,
                 content = content,
-                colors = it.colors
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
@@ -66,12 +66,13 @@ fun AdaptiveFilledIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     adaptation: AdaptationScope<CupertinoIconButtonAdaptation, MaterialIconButtonAdaptation>.() -> Unit = {},
-    content: @Composable (() -> Unit)
+    content: @Composable (() -> Unit),
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            IconButtonAdaptation(isFilled = true)
-        },
+        adaptation =
+            remember {
+                IconButtonAdaptation(isFilled = true)
+            },
         adaptationScope = adaptation,
         material = {
             FilledIconButton(
@@ -90,40 +91,38 @@ fun AdaptiveFilledIconButton(
                 enabled = enabled,
                 interactionSource = interactionSource,
                 content = content,
-                colors = it.colors
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
 @Stable
 class CupertinoIconButtonAdaptation internal constructor(
-    colors : CupertinoButtonColors,
+    colors: CupertinoButtonColors,
 ) {
-    var colors : CupertinoButtonColors by mutableStateOf(colors)
+    var colors: CupertinoButtonColors by mutableStateOf(colors)
 }
 
 @Stable
 class MaterialIconButtonAdaptation internal constructor(
-    colors : IconButtonColors
-){
-    var colors : IconButtonColors by mutableStateOf(colors)
-
+    colors: IconButtonColors,
+) {
+    var colors: IconButtonColors by mutableStateOf(colors)
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
 private class IconButtonAdaptation(
-    private val isFilled : Boolean
+    private val isFilled: Boolean,
 ) : Adaptation<CupertinoIconButtonAdaptation, MaterialIconButtonAdaptation>() {
-
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoIconButtonAdaptation {
-        val colors = if (isFilled)
-            filledButtonColors(
-            )
-        else
-            plainButtonColors(
-            )
+        val colors =
+            if (isFilled) {
+                filledButtonColors()
+            } else {
+                plainButtonColors()
+            }
 
         return remember(colors) {
             CupertinoIconButtonAdaptation(
@@ -134,9 +133,12 @@ private class IconButtonAdaptation(
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialIconButtonAdaptation {
-        val colors = if (isFilled) {
-            IconButtonDefaults.filledIconButtonColors()
-        } else IconButtonDefaults.iconButtonColors()
+        val colors =
+            if (isFilled) {
+                IconButtonDefaults.filledIconButtonColors()
+            } else {
+                IconButtonDefaults.iconButtonColors()
+            }
 
         return remember(colors) {
             MaterialIconButtonAdaptation(

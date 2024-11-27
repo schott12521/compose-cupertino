@@ -5,17 +5,6 @@ package io.github.alexzhirkevich.cupertino.adaptive
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.lightColorScheme as materialLightColorScheme
-import androidx.compose.material3.Shapes as MaterialShapes
-import androidx.compose.material3.ColorScheme as MaterialColorScheme
-import androidx.compose.material3.Typography as MaterialTypography
-
-import io.github.alexzhirkevich.cupertino.theme.ColorScheme as CupertinoColorScheme
-import io.github.alexzhirkevich.cupertino.theme.Typography as CupertinoTypography
-import io.github.alexzhirkevich.cupertino.theme.Shapes as CupertinoShapes
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.lightColorScheme as cupertinoLightColorScheme
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -24,12 +13,21 @@ import io.github.alexzhirkevich.LocalContentColorProvider
 import io.github.alexzhirkevich.LocalTextStyleProvider
 import io.github.alexzhirkevich.cupertino.CupertinoIcon
 import io.github.alexzhirkevich.cupertino.CupertinoText
-
+import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import androidx.compose.material3.ColorScheme as MaterialColorScheme
 import androidx.compose.material3.LocalContentColor as MaterialLocalContentColor
 import androidx.compose.material3.LocalTextStyle as MaterialLocalTextStyle
+import androidx.compose.material3.Shapes as MaterialShapes
+import androidx.compose.material3.Typography as MaterialTypography
+import androidx.compose.material3.lightColorScheme as materialLightColorScheme
+import io.github.alexzhirkevich.cupertino.theme.ColorScheme as CupertinoColorScheme
+import io.github.alexzhirkevich.cupertino.theme.Shapes as CupertinoShapes
+import io.github.alexzhirkevich.cupertino.theme.Typography as CupertinoTypography
+import io.github.alexzhirkevich.cupertino.theme.lightColorScheme as cupertinoLightColorScheme
 
 enum class Theme {
-    Cupertino, Material3
+    Cupertino,
+    Material3,
 }
 
 /**
@@ -62,13 +60,13 @@ fun AdaptiveTheme(
                 MaterialTheme(
                     colorScheme = material.colorScheme,
                     shapes = material.shapes,
-                    typography = material.typography
+                    typography = material.typography,
                 ) {
                     CupertinoTheme(
                         colorScheme = cupertino.colorScheme,
                         shapes = cupertino.shapes,
                         typography = cupertino.typography,
-                        content = content
+                        content = content,
                     )
                 }
             }
@@ -77,13 +75,13 @@ fun AdaptiveTheme(
                 CupertinoTheme(
                     colorScheme = cupertino.colorScheme,
                     shapes = cupertino.shapes,
-                    typography = cupertino.typography
+                    typography = cupertino.typography,
                 ) {
                     MaterialTheme(
                         colorScheme = material.colorScheme,
                         shapes = material.shapes,
                         typography = material.typography,
-                        content = content
+                        content = content,
                     )
                 }
             }
@@ -109,11 +107,12 @@ fun AdaptiveTheme(
 @ExperimentalAdaptiveApi
 @Deprecated(
     message = "Use variant with theme specs instead of lambdas",
-    replaceWith = ReplaceWith(
-        "AdaptiveTheme(target, MaterialThemeSpec.Default(), CupertinoThemeSpec.Default(), content)",
-        "io.github.alexzhirkevich.cupertino.adaptive.MaterialThemeSpec",
-        "io.github.alexzhirkevich.cupertino.adaptive.CupertinoThemeSpec",
-    )
+    replaceWith =
+        ReplaceWith(
+            "AdaptiveTheme(target, MaterialThemeSpec.Default(), CupertinoThemeSpec.Default(), content)",
+            "io.github.alexzhirkevich.cupertino.adaptive.MaterialThemeSpec",
+            "io.github.alexzhirkevich.cupertino.adaptive.CupertinoThemeSpec",
+        ),
 )
 @Composable
 fun AdaptiveTheme(
@@ -150,23 +149,21 @@ fun AdaptiveTheme(
 @Immutable
 @ExperimentalAdaptiveApi
 class MaterialThemeSpec(
-    val colorScheme : MaterialColorScheme = materialLightColorScheme(),
-    val shapes : MaterialShapes = MaterialShapes(),
-    val typography : MaterialTypography = MaterialTypography(),
+    val colorScheme: MaterialColorScheme = materialLightColorScheme(),
+    val shapes: MaterialShapes = MaterialShapes(),
+    val typography: MaterialTypography = MaterialTypography(),
 ) {
     fun copy(
         colorScheme: MaterialColorScheme = this.colorScheme,
         shapes: MaterialShapes = this.shapes,
-        typography: MaterialTypography = this.typography
+        typography: MaterialTypography = this.typography,
     ) = MaterialThemeSpec(
         colorScheme = colorScheme,
         shapes = shapes,
-        typography = typography
+        typography = typography,
     )
 
-    override fun toString(): String {
-        return "MaterialThemeSpec(colorScheme=$colorScheme, shapes=$shapes, typography=$typography)"
-    }
+    override fun toString(): String = "MaterialThemeSpec(colorScheme=$colorScheme, shapes=$shapes, typography=$typography)"
 
     companion object {
         @Composable
@@ -181,23 +178,22 @@ class MaterialThemeSpec(
 @Immutable
 @ExperimentalAdaptiveApi
 class CupertinoThemeSpec(
-    val colorScheme : CupertinoColorScheme = cupertinoLightColorScheme(),
-    val shapes : CupertinoShapes = CupertinoShapes(),
-    val typography : CupertinoTypography = CupertinoTypography()
+    val colorScheme: CupertinoColorScheme = cupertinoLightColorScheme(),
+    val shapes: CupertinoShapes = CupertinoShapes(),
+    val typography: CupertinoTypography = CupertinoTypography(),
 ) {
     fun copy(
-        colorScheme : CupertinoColorScheme = this.colorScheme,
-        shapes : CupertinoShapes = this.shapes,
-        typography : CupertinoTypography = this.typography
+        colorScheme: CupertinoColorScheme = this.colorScheme,
+        shapes: CupertinoShapes = this.shapes,
+        typography: CupertinoTypography = this.typography,
     ) = CupertinoThemeSpec(
         colorScheme = colorScheme,
         shapes = shapes,
-        typography = typography
+        typography = typography,
     )
 
-    override fun toString(): String {
-        return "CupertinoThemeSpec(colorScheme=$colorScheme, shapes=$shapes, typography=$typography)"
-    }
+    override fun toString(): String = "CupertinoThemeSpec(colorScheme=$colorScheme, shapes=$shapes, typography=$typography)"
+
     companion object {
         @Composable
         fun Default(
@@ -208,17 +204,17 @@ class CupertinoThemeSpec(
     }
 }
 
-
 /**
  * Theme declared as a target in [AdaptiveTheme]
  * */
 @ExperimentalAdaptiveApi
-val currentTheme : Theme
+val currentTheme: Theme
     @Composable
     get() = LocalTheme.current
 
-internal expect val DefaultTheme : Theme
+internal expect val DefaultTheme: Theme
 
-internal val LocalTheme = staticCompositionLocalOf<Theme> {
-    error("Adaptive theme is not provided. Please add AdaptiveTheme { } to the root of your composable hierarchy")
-}
+internal val LocalTheme =
+    staticCompositionLocalOf<Theme> {
+        error("Adaptive theme is not provided. Please add AdaptiveTheme { } to the root of your composable hierarchy")
+    }

@@ -27,16 +27,15 @@ import io.github.alexzhirkevich.cupertino.theme.systemGray7
  * */
 @Composable
 expect fun CupertinoAlertDialogNative(
-    onDismissRequest : () -> Unit,
+    onDismissRequest: () -> Unit,
     title: String?,
     message: String? = null,
-    containerColor : Color = CupertinoColors.systemGray7,
+    containerColor: Color = CupertinoColors.systemGray7,
     shape: Shape = CupertinoDialogsDefaults.Shape,
     properties: DialogProperties = DialogProperties(),
     buttonsOrientation: Orientation = Orientation.Horizontal,
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 )
-
 
 /**
  * Native analog for the compose [CupertinoActionSheet].
@@ -52,27 +51,25 @@ expect fun CupertinoAlertDialogNative(
  * */
 @Composable
 expect fun CupertinoActionSheetNative(
-    visible : Boolean,
-    onDismissRequest : () -> Unit,
-    title : String? = null,
-    message : String? = null,
-    containerColor : Color = CupertinoColors.systemGray7,
-    secondaryContainerColor : Color = CupertinoTheme.colorScheme.tertiarySystemBackground,
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: String? = null,
+    message: String? = null,
+    containerColor: Color = CupertinoColors.systemGray7,
+    secondaryContainerColor: Color = CupertinoTheme.colorScheme.tertiarySystemBackground,
     properties: DialogProperties = DialogProperties(),
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 )
 
-
 interface NativeAlertDialogActionsScope {
-
     /**
      * Alert controller button
      * */
     fun action(
-        onClick : () -> Unit,
-        style : AlertActionStyle = AlertActionStyle.Default,
-        enabled : Boolean = true,
-        title : String
+        onClick: () -> Unit,
+        style: AlertActionStyle = AlertActionStyle.Default,
+        enabled: Boolean = true,
+        title: String,
     )
 }
 
@@ -80,75 +77,68 @@ interface NativeAlertDialogActionsScope {
  * Alert controller button with default style
  * */
 fun NativeAlertDialogActionsScope.default(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : String
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: String,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Default,
     enabled = enabled,
-    title = title
+    title = title,
 )
 
 /**
  * Alert controller button with destructive style
  * */
 fun NativeAlertDialogActionsScope.destructive(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : String
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: String,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Destructive,
     enabled = enabled,
-    title = title
+    title = title,
 )
 
 /**
  * Alert controller button with cancel style
  * */
 fun NativeAlertDialogActionsScope.cancel(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : String
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: String,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Cancel,
     enabled = enabled,
-    title = title
+    title = title,
 )
-
-
-
 
 internal class CupertinoAlertDialogButtonNative(
     val onClick: () -> Unit,
     val style: AlertActionStyle,
-    val enabled : Boolean,
-    val title: String
+    val enabled: Boolean,
+    val title: String,
 )
 
-
-internal fun AlertDialogActionsScope.fromNative(
-    native : NativeAlertDialogActionsScope.() -> Unit
-) {
-
+internal fun AlertDialogActionsScope.fromNative(native: NativeAlertDialogActionsScope.() -> Unit) {
     val buttons = mutableListOf<CupertinoAlertDialogButtonNative>()
 
     object : NativeAlertDialogActionsScope {
         override fun action(
             onClick: () -> Unit,
             style: AlertActionStyle,
-            enabled : Boolean,
-            title: String
+            enabled: Boolean,
+            title: String,
         ) {
             buttons.add(
                 CupertinoAlertDialogButtonNative(
                     onClick = onClick,
                     style = style,
                     title = title,
-                    enabled = enabled
-                )
+                    enabled = enabled,
+                ),
             )
         }
     }.apply(native)
@@ -157,7 +147,7 @@ internal fun AlertDialogActionsScope.fromNative(
         action(
             onClick = it.onClick,
             style = it.style,
-            enabled = it.enabled
+            enabled = it.enabled,
         ) {
             CupertinoText(it.title)
         }

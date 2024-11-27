@@ -29,45 +29,46 @@ import io.github.alexzhirkevich.cupertino.cupertinoTween
 
 @ExperimentalDecomposeApi
 @Composable
-fun <C : Any,T : Any> cupertinoPredictiveBackAnimation(
+fun <C : Any, T : Any> cupertinoPredictiveBackAnimation(
     backHandler: BackHandler,
-    onBack : () -> Unit,
-    fallbackAnimation: StackAnimation<C, T>? = stackAnimation(
-        animator = cupertinoStackAnimator(),
-        disableInputDuringAnimation = true
+    onBack: () -> Unit,
+    fallbackAnimation: StackAnimation<C, T>? =
+        stackAnimation(
+            animator = cupertinoStackAnimator(),
+            disableInputDuringAnimation = true,
+        ),
+): StackAnimation<C, T> =
+    predictiveBackAnimation(
+        backHandler = backHandler,
+        fallbackAnimation = fallbackAnimation,
+        onBack = onBack,
+        selector = { initialBackEvent, _, _ ->
+            cupertinoPredictiveBackAnimatable(
+                initialBackEvent = initialBackEvent,
+            )
+        },
     )
-) : StackAnimation<C,T> = predictiveBackAnimation(
-    backHandler = backHandler,
-    fallbackAnimation  = fallbackAnimation,
-    onBack = onBack,
-    selector = { initialBackEvent, _, _ ->
-        cupertinoPredictiveBackAnimatable(
-            initialBackEvent = initialBackEvent
-        )
-    }
-)
-
 
 @ExperimentalDecomposeApi
-fun cupertinoPredictiveBackAnimatable(
-    initialBackEvent: BackEvent
-) : PredictiveBackAnimatable =  CupertinoPredictiveBackAnimatable(
-    initialBackEvent = initialBackEvent
-)
+fun cupertinoPredictiveBackAnimatable(initialBackEvent: BackEvent): PredictiveBackAnimatable =
+    CupertinoPredictiveBackAnimatable(
+        initialBackEvent = initialBackEvent,
+    )
 
 @OptIn(ExperimentalDecomposeApi::class)
 internal class CupertinoPredictiveBackAnimatable(
     initialBackEvent: BackEvent,
 ) : PredictiveBackAnimatable {
-
     private val progressAnimatable = Animatable(initialValue = initialBackEvent.progress)
 
     private var swipeEdge by mutableStateOf(initialBackEvent.swipeEdge)
 
-    override val exitModifier: Modifier = Modifier
-        .cupertinoPredictiveExit { progressAnimatable.value }
-    override val enterModifier: Modifier get() = Modifier
-        .cupertinoPredictiveEnter { progressAnimatable.value }
+    override val exitModifier: Modifier =
+        Modifier
+            .cupertinoPredictiveExit { progressAnimatable.value }
+    override val enterModifier: Modifier get() =
+        Modifier
+            .cupertinoPredictiveEnter { progressAnimatable.value }
 
     override suspend fun animate(event: BackEvent) {
         swipeEdge = event.swipeEdge
@@ -85,59 +86,63 @@ internal class CupertinoPredictiveBackAnimatable(
 }
 
 fun cupertinoStackAnimator(
-    animationSpec: FiniteAnimationSpec<Float> = cupertinoTween(
-        durationMillis = 500
-    )
-) : StackAnimator = stackAnimator(
-    animationSpec = animationSpec,
-) { factor, direction, content ->
-    content(
-        Modifier.composed {
+    animationSpec: FiniteAnimationSpec<Float> =
+        cupertinoTween(
+            durationMillis = 500,
+        ),
+): StackAnimator =
+    stackAnimator(
+        animationSpec = animationSpec,
+    ) { factor, direction, content ->
+        content(
+            Modifier.composed {
+                val layoutDirection = LocalLayoutDirection.current
 
-            val layoutDirection = LocalLayoutDirection.current
+                graphicsLayer {
+                    translationX = size.width *
+                        when (direction) {
+                            Direction.ENTER_FRONT,
+                            Direction.EXIT_FRONT,
+                            -> factor
 
-            graphicsLayer {
-                translationX = size.width * when (direction) {
-                    Direction.ENTER_FRONT,
-                    Direction.EXIT_FRONT -> factor
+                            else -> factor * SlideFactor
+                        }
 
-                    else -> factor * SlideFactor
+                    if (layoutDirection == LayoutDirection.Rtl) {
+                        translationX = -translationX
+                    }
                 }
+            },
+        )
+    }
 
-                if (layoutDirection == LayoutDirection.Rtl)
-                    translationX = -translationX
+fun Modifier.cupertinoPredictiveEnter(progress: () -> Float): Modifier =
+    composed {
+        val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+
+        graphicsLayer {
+            translationX = (progress() - 1f) * SlideFactor * size.width
+
+            if (isRtl) {
+                translationX = -translationX
+            }
+        }.drawWithContent {
+            drawContent()
+            drawRect(Color.Black, alpha = ((1f - progress()) * SlideFactor).coerceIn(0f, 1f))
+        }
+    }
+
+fun Modifier.cupertinoPredictiveExit(progress: () -> Float): Modifier =
+    composed {
+        val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+
+        graphicsLayer {
+            translationX = progress() * size.width
+
+            if (isRtl) {
+                translationX = -translationX
             }
         }
-    )
-}
-
-fun Modifier.cupertinoPredictiveEnter(progress: () -> Float) : Modifier = composed {
-
-    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
-
-    graphicsLayer {
-        translationX = (progress() - 1f) * SlideFactor * size.width
-
-        if (isRtl)
-            translationX = -translationX
-
-    }.drawWithContent {
-        drawContent()
-        drawRect(Color.Black, alpha = ((1f - progress()) * SlideFactor).coerceIn(0f, 1f))
     }
-}
 
-fun Modifier.cupertinoPredictiveExit(progress: () -> Float) : Modifier = composed {
-
-    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
-
-    graphicsLayer {
-        translationX = progress() * size.width
-
-        if (isRtl)
-            translationX = -translationX
-    }
-}
-
-
-private const val SlideFactor =.25f
+private const val SlideFactor = .25f

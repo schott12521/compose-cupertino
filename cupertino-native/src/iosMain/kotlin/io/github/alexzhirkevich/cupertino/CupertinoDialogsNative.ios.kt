@@ -20,20 +20,18 @@ import platform.UIKit.UIAlertActionStyleDestructive
 import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleActionSheet
 import platform.UIKit.UIAlertControllerStyleAlert
-import platform.darwin.dispatch_async
-import platform.darwin.dispatch_get_main_queue
 
 @Composable
 @NonRestartableComposable
 actual fun CupertinoAlertDialogNative(
-    onDismissRequest : () -> Unit,
+    onDismissRequest: () -> Unit,
     title: String?,
     message: String?,
-    containerColor : Color,
+    containerColor: Color,
     shape: Shape,
     properties: DialogProperties,
     buttonsOrientation: Orientation,
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) = UIAlertController(
     onDismissRequest = onDismissRequest,
     title = title,
@@ -44,14 +42,14 @@ actual fun CupertinoAlertDialogNative(
 
 @Composable
 actual fun CupertinoActionSheetNative(
-    visible : Boolean,
-    onDismissRequest : () -> Unit,
-    title : String?,
-    message : String?,
-    containerColor : Color,
-    secondaryContainerColor : Color,
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: String?,
+    message: String?,
+    containerColor: Color,
+    secondaryContainerColor: Color,
     properties: DialogProperties,
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) {
     if (visible) {
         UIAlertController(
@@ -74,14 +72,15 @@ internal fun UIAlertController(
     style: UIAlertActionStyle,
     buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) {
-    val buttonsList = remember {
-        NativeAlertDialogButtonsScopeImpl(onDismissRequest = {
-            if (!isAlertControllerBeingDismissed) {
-                isAlertControllerBeingDismissed = true
-                onDismissRequest()
-            }
-        }).apply(buttons).buttons
-    }
+    val buttonsList =
+        remember {
+            NativeAlertDialogButtonsScopeImpl(onDismissRequest = {
+                if (!isAlertControllerBeingDismissed) {
+                    isAlertControllerBeingDismissed = true
+                    onDismissRequest()
+                }
+            }).apply(buttons).buttons
+        }
 
     val titles = buttonsList.fastMap { it.title }
     val styles = buttonsList.fastMap { it.style }
@@ -89,15 +88,16 @@ internal fun UIAlertController(
     key(titles, styles) {
         PresentationController(
             factory = {
-                UIAlertController.alertControllerWithTitle(
-                    title = title,
-                    message = message,
-                    preferredStyle = style
-                ).apply {
-                    buttonsList.fastForEach {
-                        addAction(it)
+                UIAlertController
+                    .alertControllerWithTitle(
+                        title = title,
+                        message = message,
+                        preferredStyle = style,
+                    ).apply {
+                        buttonsList.fastForEach {
+                            addAction(it)
+                        }
                     }
-                }
             },
             update = {
                 setTitle(title)
@@ -113,7 +113,8 @@ internal fun UIAlertController(
                 }
             },
             onDismissRequest = onDismissRequest,
-            title, message
+            title,
+            message,
         )
     }
 }
@@ -121,30 +122,31 @@ internal fun UIAlertController(
 private class NativeAlertDialogButtonsScopeImpl(
     val onDismissRequest: () -> Unit,
 ) : NativeAlertDialogActionsScope {
-
-    val buttons  = mutableListOf<UIAlertAction>()
+    val buttons = mutableListOf<UIAlertAction>()
 
     override fun action(
         onClick: () -> Unit,
         style: AlertActionStyle,
         enabled: Boolean,
-        title: String
+        title: String,
     ) {
-        buttons += UIAlertAction.actionWithTitle(
-            title = title,
-            style = style.ui,
-            handler = {
-                onClick()
-                onDismissRequest()
-            }
-        ).apply {
-            setEnabled(enabled)
-        }
+        buttons +=
+            UIAlertAction
+                .actionWithTitle(
+                    title = title,
+                    style = style.ui,
+                    handler = {
+                        onClick()
+                        onDismissRequest()
+                    },
+                ).apply {
+                    setEnabled(enabled)
+                }
     }
 }
 
-internal val AlertActionStyle.ui : UIAlertActionStyle get() =
-    when(this){
+internal val AlertActionStyle.ui: UIAlertActionStyle get() =
+    when (this) {
         AlertActionStyle.Default -> UIAlertActionStyleDefault
         AlertActionStyle.Cancel -> UIAlertActionStyleCancel
         AlertActionStyle.Destructive -> UIAlertActionStyleDestructive

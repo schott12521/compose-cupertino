@@ -20,70 +20,75 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 
-internal val LocalSeparatorColor = compositionLocalOf {
-    Color.Unspecified
-}
+internal val LocalSeparatorColor =
+    compositionLocalOf {
+        Color.Unspecified
+    }
 
 @Composable
 @Deprecated(
-    replaceWith = ReplaceWith(
-        "CupertinoHorizontalDivider(modifier,thickness,color)",
-        "io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider"
-    ),
-    message = "Use CupertinoHorizontalDivider instead")
+    replaceWith =
+        ReplaceWith(
+            "CupertinoHorizontalDivider(modifier,thickness,color)",
+            "io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider",
+        ),
+    message = "Use CupertinoHorizontalDivider instead",
+)
 fun CupertinoDivider(
     modifier: Modifier = Modifier,
-    thickness : Dp = CupertinoDividerDefaults.Thickness,
-    color : Color = CupertinoDividerDefaults.color
+    thickness: Dp = CupertinoDividerDefaults.Thickness,
+    color: Color = CupertinoDividerDefaults.color,
 ) = CupertinoHorizontalDivider(modifier, thickness, color)
 
 @Composable
 fun CupertinoHorizontalDivider(
     modifier: Modifier = Modifier,
-    thickness : Dp = CupertinoDividerDefaults.Thickness,
-    color : Color = CupertinoDividerDefaults.color
+    thickness: Dp = CupertinoDividerDefaults.Thickness,
+    color: Color = CupertinoDividerDefaults.color,
 ) {
-
-    val targetThickness = if (thickness == Dp.Hairline) {
-        (1f / LocalDensity.current.density).dp
-    } else {
-        thickness
-    }
+    val targetThickness =
+        if (thickness == Dp.Hairline) {
+            (1f / LocalDensity.current.density).dp
+        } else {
+            thickness
+        }
     Spacer(
         modifier
             .fillMaxWidth()
             .height(targetThickness)
-            .background(color = color)
+            .background(color = color),
     )
 }
 
 @Composable
 fun CupertinoVerticalDivider(
     modifier: Modifier = Modifier,
-    thickness : Dp = CupertinoDividerDefaults.Thickness,
-    color : Color = CupertinoDividerDefaults.color
+    thickness: Dp = CupertinoDividerDefaults.Thickness,
+    color: Color = CupertinoDividerDefaults.color,
 ) {
-    val targetThickness = if (thickness == Dp.Hairline) {
-        (1f / LocalDensity.current.density).dp
-    } else {
-        thickness
-    }
+    val targetThickness =
+        if (thickness == Dp.Hairline) {
+            (1f / LocalDensity.current.density).dp
+        } else {
+            thickness
+        }
 
     Spacer(
         modifier
             .fillMaxHeight()
             .width(targetThickness)
-            .background(color = color)
+            .background(color = color),
     )
 }
 
 @Stable
 object CupertinoDividerDefaults {
     val Thickness = Dp.Hairline
-    val color : Color
+    val color: Color
         @Composable
         @ReadOnlyComposable
-        get() = LocalSeparatorColor.current.takeOrElse {
-            CupertinoTheme.colorScheme.opaqueSeparator
-        }
-    }
+        get() =
+            LocalSeparatorColor.current.takeOrElse {
+                CupertinoTheme.colorScheme.opaqueSeparator
+            }
+}

@@ -27,40 +27,37 @@ import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.LocalContentColor
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 
-
 @Composable
 fun CupertinoSurface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
     color: Color = CupertinoTheme.colorScheme.systemBackground,
-    shadowElevation : Dp = 0.dp,
+    shadowElevation: Dp = 0.dp,
     contentColor: Color = LocalContentColor.current,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalContentColor provides contentColor,
-        LocalContainerColor provides color
+        LocalContainerColor provides color,
     ) {
         Box(
-            modifier = modifier
-                .graphicsLayer {
-                    this.shape = shape
-                    this.shadowElevation = shadowElevation.toPx()
-                    this.clip = true
-                }
-                .background(color)
-                .semantics(mergeDescendants = false) {
-                    isTraversalGroup = true
-                }
-                .pointerInput(Unit) {},
-            propagateMinConstraints = true
+            modifier =
+                modifier
+                    .graphicsLayer {
+                        this.shape = shape
+                        this.shadowElevation = shadowElevation.toPx()
+                        this.clip = true
+                    }.background(color)
+                    .semantics(mergeDescendants = false) {
+                        isTraversalGroup = true
+                    }.pointerInput(Unit) {},
+            propagateMinConstraints = true,
         ) {
             content()
         }
     }
 }
 
-
 @Composable
 fun CupertinoSurface(
     onClick: () -> Unit,
@@ -72,64 +69,67 @@ fun CupertinoSurface(
     border: BorderStroke? = null,
     indication: Indication? = LocalIndication.current,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-
     Box(
-        modifier = modifier
-            .clip(shape)
-            .background(color)
-            .let {
-                if (border != null)
-                    it.border(border, shape)
-                else it
-            }
-            .clickable(
-                interactionSource = interactionSource,
-                indication = indication,
-                enabled = enabled,
-                onClick = onClick
-            ),
-        propagateMinConstraints = true
+        modifier =
+            modifier
+                .clip(shape)
+                .background(color)
+                .let {
+                    if (border != null) {
+                        it.border(border, shape)
+                    } else {
+                        it
+                    }
+                }.clickable(
+                    interactionSource = interactionSource,
+                    indication = indication,
+                    enabled = enabled,
+                    onClick = onClick,
+                ),
+        propagateMinConstraints = true,
     ) {
         CompositionLocalProvider(
             LocalContentColor provides contentColor,
             LocalContainerColor provides color,
-            content = content
+            content = content,
         )
     }
 }
 
 @Deprecated(
     "Use CupertinoSurface instead",
-    replaceWith = ReplaceWith(
-        "CupertinoSurface(modifier,shape,color,shadowElevation,contentColor,content)",
-        "io.github.alexzhirkevich.cupertino.CupertinoSurface"
-    )
+    replaceWith =
+        ReplaceWith(
+            "CupertinoSurface(modifier,shape,color,shadowElevation,contentColor,content)",
+            "io.github.alexzhirkevich.cupertino.CupertinoSurface",
+        ),
 )
 @Composable
 fun Surface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
     color: Color = CupertinoTheme.colorScheme.systemBackground,
-    shadowElevation : Dp = 0.dp,
+    shadowElevation: Dp = 0.dp,
     contentColor: Color = LocalContentColor.current,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) = CupertinoSurface(
     modifier = modifier,
     shape = shape,
     color = color,
     shadowElevation = shadowElevation,
     contentColor = contentColor,
-    content = content
+    content = content,
 )
 
 @Deprecated(
     "Use CupertinoSurface instead",
-    replaceWith = ReplaceWith(
-        "CupertinoSurface(onClick,modifier,enabled,shape,color,contentColor,border,indication,interactionSource,content)",
-        "io.github.alexzhirkevich.cupertino.CupertinoSurface"
-    )
+    replaceWith =
+        ReplaceWith(
+            "CupertinoSurface(onClick,modifier,enabled,shape,color,contentColor,border,indication,interactionSource,content)",
+            "io.github.alexzhirkevich.cupertino.CupertinoSurface",
+        ),
 )
 @Composable
 fun Surface(
@@ -142,7 +142,7 @@ fun Surface(
     border: BorderStroke? = null,
     indication: Indication? = LocalIndication.current,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) = CupertinoSurface(
     onClick = onClick,
     modifier = modifier,
@@ -153,5 +153,5 @@ fun Surface(
     border = border,
     indication = indication,
     interactionSource = interactionSource,
-    content = content
+    content = content,
 )

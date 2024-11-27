@@ -70,7 +70,6 @@ import io.github.alexzhirkevich.cupertino.theme.systemRed
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 
-
 /**
  * State of the [CupertinoSearchTextField]
  *
@@ -85,12 +84,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 fun rememberCupertinoSearchTextFieldState(
     initiallyExpanded: Boolean = true,
     scrollableState: ScrollableState? = null,
-    collapse : (CupertinoSearchTextFieldState) -> Boolean = { !it.isFocused },
-    blockScrollWhenFocusedAndEmpty : Boolean = true,
-) : CupertinoSearchTextFieldState {
-
+    collapse: (CupertinoSearchTextFieldState) -> Boolean = { !it.isFocused },
+    blockScrollWhenFocusedAndEmpty: Boolean = true,
+): CupertinoSearchTextFieldState {
     val density = LocalDensity.current
-
 
     val updatedCollapse by rememberUpdatedState(collapse)
 
@@ -154,20 +151,23 @@ fun CupertinoSearchTextField(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current,
-    keyboardOptions: KeyboardOptions = remember {
-        KeyboardOptions(imeAction = ImeAction.Search)
-    },
+    keyboardOptions: KeyboardOptions =
+        remember {
+            KeyboardOptions(imeAction = ImeAction.Search)
+        },
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     placeholder: @Composable () -> Unit = {
         CupertinoText("Search")
     },
-    cancelButton: @Composable() (() -> Unit)? = {
+    cancelButton:
+        @Composable()
+        (() -> Unit)? = {
         CupertinoSearchTextFieldDefaults
             .cancelButton(
                 onValueChange = onValueChange,
-                interactionSource = interactionSource
+                interactionSource = interactionSource,
             )
     },
     leadingIcon: @Composable () -> Unit = {
@@ -175,15 +175,13 @@ fun CupertinoSearchTextField(
     },
     trailingIcon: @Composable () -> Unit = {},
 ) {
-
     val focusManager = LocalFocusManager.current
 
     val density = LocalDensity.current
 
-
     val heightDp by remember(state) {
         derivedStateOf {
-            val fraction = (1f - state.progress * (1 + state.paddingToHeight)).coerceIn(0f,1f)
+            val fraction = (1f - state.progress * (1 + state.paddingToHeight)).coerceIn(0f, 1f)
             with(density) { state.maxHeightPx.toDp() * fraction }
         }
     }
@@ -192,14 +190,17 @@ fun CupertinoSearchTextField(
 
     val padding by remember(state, paddingValues, layoutDirection) {
         derivedStateOf {
-            val fraction = if (state.progress <  1 - state.paddingToHeight)
-                1f
-            else (1f - (state.progress - (1 - state.paddingToHeight)) / (1 - state.paddingToHeight)).coerceIn(0f,1f)
+            val fraction =
+                if (state.progress < 1 - state.paddingToHeight) {
+                    1f
+                } else {
+                    (1f - (state.progress - (1 - state.paddingToHeight)) / (1 - state.paddingToHeight)).coerceIn(0f, 1f)
+                }
 
             paddingValues.copy(
                 layoutDirection = layoutDirection,
                 top = paddingValues.calculateTopPadding() * fraction,
-                bottom = paddingValues.calculateBottomPadding() * fraction
+                bottom = paddingValues.calculateBottomPadding() * fraction,
             )
         }
     }
@@ -227,38 +228,44 @@ fun CupertinoSearchTextField(
         }
     }
 
-    LaunchedEffect(paddingValues, state.maxHeightPx,density) {
+    LaunchedEffect(paddingValues, state.maxHeightPx, density) {
         density.run {
-            val v = (paddingValues.calculateBottomPadding() + paddingValues.calculateTopPadding())
+            val v =
+                (paddingValues.calculateBottomPadding() + paddingValues.calculateTopPadding())
                     .toPx() / state.maxHeightPx
 
-            if (v >= .95f)
+            if (v >= .95f) {
                 state.paddingToHeight = 0f
-            else state.paddingToHeight = v
+            } else {
+                state.paddingToHeight = v
+            }
         }
     }
 
     val totalHeight by remember {
         derivedStateOf {
             heightDp +
-                    padding.calculateBottomPadding() +
-                    padding.calculateTopPadding()
+                padding.calculateBottomPadding() +
+                padding.calculateTopPadding()
         }
     }
     Row(
-        modifier = modifier
-            .height(totalHeight)
-            .padding(paddingValues),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .height(totalHeight)
+                .padding(paddingValues),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        val alpha = Modifier.graphicsLayer {
-            alpha = ((1f - state.progress * 4 / (1 - state.paddingToHeight) ) ).coerceIn(0f, 1f)
-        }
+        val alpha =
+            Modifier.graphicsLayer {
+                alpha = ((1f - state.progress * 4 / (1 - state.paddingToHeight))).coerceIn(0f, 1f)
+            }
 
         CupertinoBorderedTextField(
-            modifier = Modifier
-                .weight(1f)
-                .focusable(),
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .focusable(),
             value = value,
             onValueChange = onValueChange,
             enabled = enabled,
@@ -290,14 +297,13 @@ fun CupertinoSearchTextField(
             },
         )
 
-
         if (cancelButton != null) {
             CompositionLocalProvider(
-                LocalContentColor provides colors.cursorColor(false).value
+                LocalContentColor provides colors.cursorColor(false).value,
             ) {
                 CancelButton(
                     state = state,
-                    content = cancelButton
+                    content = cancelButton,
                 )
             }
         }
@@ -307,7 +313,7 @@ fun CupertinoSearchTextField(
 @Composable
 private fun RowScope.CancelButton(
     state: CupertinoSearchTextFieldState,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val progressIsZero by remember {
         derivedStateOf {
@@ -317,45 +323,50 @@ private fun RowScope.CancelButton(
 
     AnimatedVisibility(
         visible = state.isFocused && progressIsZero,
-        enter = fadeIn() +
+        enter =
+            fadeIn() +
                 expandHorizontally(expandFrom = Alignment.Start, clip = false),
-        exit = fadeOut() +
-                shrinkHorizontally(shrinkTowards = Alignment.Start, clip = false)
+        exit =
+            fadeOut() +
+                shrinkHorizontally(shrinkTowards = Alignment.Start, clip = false),
     ) {
-
         content()
     }
 }
 
 @Immutable
 object CupertinoSearchTextFieldDefaults {
-
     val shape: Shape
         @Composable
         @ReadOnlyComposable
         get() = CupertinoTheme.shapes.medium
 
-    val PaddingValues = PaddingValues(
-        horizontal = CupertinoSectionTokens.HorizontalPadding
-    )
+    val PaddingValues =
+        PaddingValues(
+            horizontal = CupertinoSectionTokens.HorizontalPadding,
+        )
 
     @Composable
     fun leadingIcon(
         imageVector: ImageVector = CupertinoIcons.Outlined.MagnifyingGlass,
         rotateWithLayoutDirection: Boolean = true,
     ) {
-
         val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
         CupertinoIcon(
-            modifier = Modifier
-                .size(CupertinoSearchTextFieldTokens.LeadingIconSize)
-                .graphicsLayer {
-                    rotationY = if (isRtl && rotateWithLayoutDirection)
-                        180f else 0f
-                },
+            modifier =
+                Modifier
+                    .size(CupertinoSearchTextFieldTokens.LeadingIconSize)
+                    .graphicsLayer {
+                        rotationY =
+                            if (isRtl && rotateWithLayoutDirection) {
+                                180f
+                            } else {
+                                0f
+                            }
+                    },
             imageVector = imageVector,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 
@@ -370,7 +381,6 @@ object CupertinoSearchTextFieldDefaults {
         interactionSource: MutableInteractionSource,
         content: @Composable RowScope.() -> Unit = { CupertinoText("Cancel") },
     ) {
-
         val focusManager = LocalFocusManager.current
 
         CupertinoButton(
@@ -382,7 +392,7 @@ object CupertinoSearchTextFieldDefaults {
                 onValueChange("")
                 focusManager.clearFocus(true)
             },
-            content = content
+            content = content,
         )
     }
 
@@ -393,9 +403,12 @@ object CupertinoSearchTextFieldDefaults {
         unfocusedTextColor: Color = CupertinoTheme.colorScheme.label,
         disabledTextColor: Color = CupertinoTheme.colorScheme.secondaryLabel,
         errorTextColor: Color = CupertinoColors.systemRed,
-        focusedContainerColor: Color = if (isDark())
-            CupertinoTheme.colorScheme.tertiarySystemFill
-        else CupertinoTheme.colorScheme.quaternarySystemFill,
+        focusedContainerColor: Color =
+            if (isDark()) {
+                CupertinoTheme.colorScheme.tertiarySystemFill
+            } else {
+                CupertinoTheme.colorScheme.quaternarySystemFill
+            },
         unfocusedContainerColor: Color = focusedContainerColor,
         disabledContainerColor: Color = unfocusedContainerColor,
         errorContainerColor: Color = disabledContainerColor,
@@ -419,35 +432,36 @@ object CupertinoSearchTextFieldDefaults {
         unfocusedPlaceholderColor: Color = focusedPlaceholderColor,
         disabledPlaceholderColor: Color = CupertinoTheme.colorScheme.tertiaryLabel,
         errorPlaceholderColor: Color = focusedPlaceholderColor,
-    ): CupertinoTextFieldColors = CupertinoTextFieldColors(
-        focusedTextColor = focusedTextColor,
-        unfocusedTextColor = unfocusedTextColor,
-        disabledTextColor = disabledTextColor,
-        errorTextColor = errorTextColor,
-        focusedContainerColor = focusedContainerColor,
-        unfocusedContainerColor = unfocusedContainerColor,
-        disabledContainerColor = disabledContainerColor,
-        errorContainerColor = errorContainerColor,
-        cursorColor = cursorColor,
-        errorCursorColor = errorCursorColor,
-        textSelectionColors = selectionColors,
-        focusedIndicatorColor = focusedBorderColor,
-        unfocusedIndicatorColor = unfocusedBorderColor,
-        disabledIndicatorColor = disabledBorderColor,
-        errorIndicatorColor = errorBorderColor,
-        focusedLeadingIconColor = focusedLeadingIconColor,
-        unfocusedLeadingIconColor = unfocusedLeadingIconColor,
-        disabledLeadingIconColor = disabledLeadingIconColor,
-        errorLeadingIconColor = errorLeadingIconColor,
-        focusedTrailingIconColor = focusedTrailingIconColor,
-        unfocusedTrailingIconColor = unfocusedTrailingIconColor,
-        disabledTrailingIconColor = disabledTrailingIconColor,
-        errorTrailingIconColor = errorTrailingIconColor,
-        focusedPlaceholderColor = focusedPlaceholderColor,
-        unfocusedPlaceholderColor = unfocusedPlaceholderColor,
-        disabledPlaceholderColor = disabledPlaceholderColor,
-        errorPlaceholderColor = errorPlaceholderColor,
-    )
+    ): CupertinoTextFieldColors =
+        CupertinoTextFieldColors(
+            focusedTextColor = focusedTextColor,
+            unfocusedTextColor = unfocusedTextColor,
+            disabledTextColor = disabledTextColor,
+            errorTextColor = errorTextColor,
+            focusedContainerColor = focusedContainerColor,
+            unfocusedContainerColor = unfocusedContainerColor,
+            disabledContainerColor = disabledContainerColor,
+            errorContainerColor = errorContainerColor,
+            cursorColor = cursorColor,
+            errorCursorColor = errorCursorColor,
+            textSelectionColors = selectionColors,
+            focusedIndicatorColor = focusedBorderColor,
+            unfocusedIndicatorColor = unfocusedBorderColor,
+            disabledIndicatorColor = disabledBorderColor,
+            errorIndicatorColor = errorBorderColor,
+            focusedLeadingIconColor = focusedLeadingIconColor,
+            unfocusedLeadingIconColor = unfocusedLeadingIconColor,
+            disabledLeadingIconColor = disabledLeadingIconColor,
+            errorLeadingIconColor = errorLeadingIconColor,
+            focusedTrailingIconColor = focusedTrailingIconColor,
+            unfocusedTrailingIconColor = unfocusedTrailingIconColor,
+            disabledTrailingIconColor = disabledTrailingIconColor,
+            errorTrailingIconColor = errorTrailingIconColor,
+            focusedPlaceholderColor = focusedPlaceholderColor,
+            unfocusedPlaceholderColor = unfocusedPlaceholderColor,
+            disabledPlaceholderColor = disabledPlaceholderColor,
+            errorPlaceholderColor = errorPlaceholderColor,
+        )
 }
 
 internal object CupertinoSearchTextFieldTokens {
@@ -457,12 +471,11 @@ internal object CupertinoSearchTextFieldTokens {
 }
 
 class CupertinoSearchTextFieldState internal constructor(
-    initiallyExpanded : Boolean,
-    blockScrollWhenSearchIsFocusedAndEmpty : Boolean,
+    initiallyExpanded: Boolean,
+    blockScrollWhenSearchIsFocusedAndEmpty: Boolean,
     private val collapse: (CupertinoSearchTextFieldState) -> Boolean,
     private val scrollableState: ScrollableState?,
-)  {
-
+) {
     /**
      * Nested scroll connection that should be applied to scrollable container or it's host.
      * Allows to collapse the text field during scrolling
@@ -471,7 +484,7 @@ class CupertinoSearchTextFieldState internal constructor(
         CupertinoSearchTextFieldNestedScroll(
             state = this,
             scrollableState = scrollableState,
-            blockScrollWhenSearchIsFocusedAndEmpty = blockScrollWhenSearchIsFocusedAndEmpty
+            blockScrollWhenSearchIsFocusedAndEmpty = blockScrollWhenSearchIsFocusedAndEmpty,
         )
 
     /**
@@ -487,8 +500,6 @@ class CupertinoSearchTextFieldState internal constructor(
     var isFocused: Boolean by mutableStateOf(false)
         private set
 
-
-
     internal var canScroll: Boolean by mutableStateOf(true)
 
     internal var maxHeightPx by mutableStateOf(0f)
@@ -497,13 +508,11 @@ class CupertinoSearchTextFieldState internal constructor(
 
     private var collapsedBy by mutableStateOf(0f)
 
-
     internal fun setFocused(focused: Boolean) {
         this.isFocused = focused
     }
 
     internal fun onScroll(available: Float): Float {
-
         val oldCollapsed = collapsedBy
 
         val newCollapsedBy = (oldCollapsed - available).coerceIn(0f, maxHeightPx)
@@ -517,14 +526,12 @@ class CupertinoSearchTextFieldState internal constructor(
         return 0f
     }
 
-
     internal suspend fun onRelease(): Velocity {
-
         // text field can't be collapsed if scrollable state can't be scrolled
-        val willBeExpanded = scrollableState
-            ?.let { !it.canScrollForward && !it.canScrollBackward } == true ||
-            collapsedBy / (1 - paddingToHeight) <= maxHeightPx * .75
-
+        val willBeExpanded =
+            scrollableState
+                ?.let { !it.canScrollForward && !it.canScrollBackward } == true ||
+                collapsedBy / (1 - paddingToHeight) <= maxHeightPx * .75
 
         animate(progress, if (willBeExpanded) 0f else 1f) { v, _ ->
             progress = v
@@ -536,22 +543,22 @@ class CupertinoSearchTextFieldState internal constructor(
     }
 }
 
-
 private class CupertinoSearchTextFieldNestedScroll(
     private val state: CupertinoSearchTextFieldState,
-    private val blockScrollWhenSearchIsFocusedAndEmpty : Boolean,
+    private val blockScrollWhenSearchIsFocusedAndEmpty: Boolean,
     private val scrollableState: ScrollableState?,
 ) : NestedScrollConnection {
-
-    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-
+    override fun onPreScroll(
+        available: Offset,
+        source: NestedScrollSource,
+    ): Offset {
         //  consume all scroll when scroll is blocked
-        if (blockScrollWhenSearchIsFocusedAndEmpty && !state.canScroll){
+        if (blockScrollWhenSearchIsFocusedAndEmpty && !state.canScroll) {
             return available
         }
 
         // search should collapse after scrollable container reached top
-        if (available.y > 0 && scrollableState?.canScrollBackward == true){
+        if (available.y > 0 && scrollableState?.canScrollBackward == true) {
             return Offset.Zero
         }
         return Offset(0f, state.onScroll(available.y))
@@ -560,11 +567,13 @@ private class CupertinoSearchTextFieldNestedScroll(
     override fun onPostScroll(
         consumed: Offset,
         available: Offset,
-        source: NestedScrollSource
-    ): Offset = super.onPostScroll(consumed, available, source) +
+        source: NestedScrollSource,
+    ): Offset =
+        super.onPostScroll(consumed, available, source) +
             onPreScroll(available, source)
 
-    override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-        return state.onRelease()
-    }
+    override suspend fun onPostFling(
+        consumed: Velocity,
+        available: Velocity,
+    ): Velocity = state.onRelease()
 }

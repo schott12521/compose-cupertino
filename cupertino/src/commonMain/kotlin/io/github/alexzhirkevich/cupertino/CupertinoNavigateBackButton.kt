@@ -32,14 +32,18 @@ fun CupertinoNavigateBackButton(
     enabled: Boolean = true,
     size: CupertinoButtonSize = CupertinoButtonSize.Regular,
     shape: Shape = size.shape(CupertinoTheme.shapes),
-    colors: CupertinoButtonColors = plainButtonColors(
-    ),
+    colors: CupertinoButtonColors =
+        plainButtonColors(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = PaddingValues(8.dp, 4.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    icon: ImageVector = if (LocalLayoutDirection.current == LayoutDirection.Ltr)
-        CupertinoIcons.Default.ChevronBackward else CupertinoIcons.Default.ChevronForward,
-    title: @Composable RowScope.() -> Unit
+    icon: ImageVector =
+        if (LocalLayoutDirection.current == LayoutDirection.Ltr) {
+            CupertinoIcons.Default.ChevronBackward
+        } else {
+            CupertinoIcons.Default.ChevronForward
+        },
+    title: @Composable RowScope.() -> Unit,
 ) {
     CupertinoButton(
         modifier = modifier,
@@ -49,20 +53,20 @@ fun CupertinoNavigateBackButton(
         border = border,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
-        colors = colors
+        colors = colors,
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             CupertinoIcon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier
-                    .height(CupertinoIconDefaults.MediumSize)
-                    .padding(end = 6.dp)
+                modifier =
+                    Modifier
+                        .height(CupertinoIconDefaults.MediumSize)
+                        .padding(end = 6.dp),
             )
             title()
         }
     }
 }
-

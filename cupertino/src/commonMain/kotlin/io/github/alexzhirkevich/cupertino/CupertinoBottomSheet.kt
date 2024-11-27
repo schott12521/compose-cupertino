@@ -54,18 +54,20 @@ import kotlin.jvm.JvmName
 @ExperimentalCupertinoApi
 fun CupertinoBottomSheetContent(
     modifier: Modifier = Modifier,
-    containerColor: Color = LocalContainerColor.current.takeOrElse {
-        CupertinoBottomSheetDefaults.containerColor
-    },
-    contentColor: Color = LocalContentColor.current.takeOrElse {
-        CupertinoBottomSheetDefaults.contentColor
-    },
-    appBarsAlpha : Float = LocalAppBarsBlurAlpha.current,
-    appBarsBlurRadius : Dp = LocalAppBarsBlurRadius.current,
-    hasNavigationTitle : Boolean = false,
-    topBar : @Composable () -> Unit = {},
-    bottomBar : @Composable () -> Unit = {},
-    content : @Composable (PaddingValues) -> Unit
+    containerColor: Color =
+        LocalContainerColor.current.takeOrElse {
+            CupertinoBottomSheetDefaults.containerColor
+        },
+    contentColor: Color =
+        LocalContentColor.current.takeOrElse {
+            CupertinoBottomSheetDefaults.contentColor
+        },
+    appBarsAlpha: Float = LocalAppBarsBlurAlpha.current,
+    appBarsBlurRadius: Dp = LocalAppBarsBlurRadius.current,
+    hasNavigationTitle: Boolean = false,
+    topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     CupertinoScaffold(
         modifier = modifier,
@@ -76,22 +78,22 @@ fun CupertinoBottomSheetContent(
         hasNavigationTitle = hasNavigationTitle,
         topBar = {
             Box(
-                Modifier.pointerInput(0){}
+                Modifier.pointerInput(0) {},
             ) {
                 topBar()
             }
         },
-        bottomBar =  bottomBar,
-        contentWindowInsets = CupertinoScaffoldDefaults.contentWindowInsets.union(
-            WindowInsets(bottom = CupertinoBottomSheetTokens.MaxOverflow)
-        ),
-        content = content
+        bottomBar = bottomBar,
+        contentWindowInsets =
+            CupertinoScaffoldDefaults.contentWindowInsets.union(
+                WindowInsets(bottom = CupertinoBottomSheetTokens.MaxOverflow),
+            ),
+        content = content,
     )
 }
 
 @Immutable
 object CupertinoBottomSheetDefaults {
-
     val ShadowElevation: Dp = 4.dp
 
     val contentColor: Color
@@ -107,11 +109,11 @@ object CupertinoBottomSheetDefaults {
     val shape: Shape
         @Composable
         @ReadOnlyComposable
-        get() = CupertinoTheme.shapes.large.copy(
-            bottomStart = CornerSize(0),
-            bottomEnd = CornerSize(0)
-        )
-
+        get() =
+            CupertinoTheme.shapes.large.copy(
+                bottomStart = CornerSize(0),
+                bottomEnd = CornerSize(0),
+            )
 
     @Composable
     fun DragHandle(
@@ -119,20 +121,22 @@ object CupertinoBottomSheetDefaults {
         width: Dp = DragHandleWidth,
         height: Dp = DragHandleHeight,
         shape: Shape = CircleShape,
-        color: Color = CupertinoTheme.colorScheme.systemFill
+        color: Color = CupertinoTheme.colorScheme.systemFill,
     ) {
         CupertinoSurface(
-            modifier = modifier
-                .padding(vertical = DragHandlePadding),
+            modifier =
+                modifier
+                    .padding(vertical = DragHandlePadding),
             shape = shape,
-            color = color
+            color = color,
         ) {
             Spacer(
-                modifier = Modifier
-                    .size(
-                        width = width,
-                        height = height
-                    )
+                modifier =
+                    Modifier
+                        .size(
+                            width = width,
+                            height = height,
+                        ),
             )
         }
     }
@@ -144,7 +148,6 @@ object CupertinoBottomSheetDefaults {
 @Stable
 @Immutable
 enum class PresentationContentInteraction {
-
     /**
      * Sheet won't change detent with nested scrolling
      * */
@@ -153,7 +156,7 @@ enum class PresentationContentInteraction {
     /**
      * Sheet will change detent with nested scrolling
      * */
-    Resize
+    Resize,
 }
 
 /**
@@ -162,11 +165,13 @@ enum class PresentationContentInteraction {
 @Serializable
 @Immutable
 sealed interface PresentationDetent {
-
     /**
      * Calculate sheet offset using [density] and sheet max [height]
      * */
-    fun calculate(density: Density, height: Float): Float
+    fun calculate(
+        density: Density,
+        height: Float,
+    ): Float
 
     /**
      * The biggest detent for modal presentation. Adds a size reduce effect for
@@ -175,7 +180,10 @@ sealed interface PresentationDetent {
     @Immutable
     @Serializable
     data object Large : PresentationDetent {
-        override fun calculate(density: Density, height: Float): Float {
+        override fun calculate(
+            density: Density,
+            height: Float,
+        ): Float {
             return height + Float.MIN_VALUE // large always be the biggest
         }
     }
@@ -193,24 +201,18 @@ sealed interface PresentationDetent {
     @Immutable
     @Serializable(with = HeightSerializer::class)
     class Height(
-        internal val height: Dp
+        internal val height: Dp,
     ) : PresentationDetent {
+        override fun hashCode(): Int = height.hashCode()
 
-        override fun hashCode(): Int {
-            return height.hashCode()
-        }
+        override fun equals(other: Any?): Boolean = height == (other as? Height)?.height
 
-        override fun equals(other: Any?): Boolean {
-            return height == (other as? Height)?.height
-        }
+        override fun calculate(
+            density: Density,
+            height: Float,
+        ): Float = (density.run { this@Height.height.toPx() } * height).coerceAtMost(height)
 
-        override fun calculate(density: Density, height: Float): Float {
-            return (density.run { this@Height.height.toPx() } * height).coerceAtMost(height)
-        }
-
-        override fun toString(): String {
-            return "Height(height=$height)"
-        }
+        override fun toString(): String = "Height(height=$height)"
     }
 
     /**
@@ -219,37 +221,30 @@ sealed interface PresentationDetent {
     @Immutable
     @Serializable
     class Fraction(
-        private val fraction: Float
+        private val fraction: Float,
     ) : PresentationDetent {
-
         init {
             require(fraction in 0f..1f) {
                 "fraction must be between 0 and 1"
             }
         }
 
-        override fun hashCode(): Int {
-            return fraction.hashCode()
-        }
+        override fun hashCode(): Int = fraction.hashCode()
 
-        override fun equals(other: Any?): Boolean {
-            return fraction == (other as? Fraction)?.fraction
-        }
+        override fun equals(other: Any?): Boolean = fraction == (other as? Fraction)?.fraction
 
-        override fun toString(): String {
-            return "Fraction(fraction=$fraction)"
-        }
+        override fun toString(): String = "Fraction(fraction=$fraction)"
 
-        override fun calculate(density: Density, height: Float): Float {
-            return fraction * height
-        }
+        override fun calculate(
+            density: Density,
+            height: Float,
+        ): Float = fraction * height
     }
 }
 
 @Serializable
 @Immutable
 sealed interface CupertinoSheetValue {
-
     /**
      * Sheet is hidden
      * */
@@ -262,19 +257,14 @@ sealed interface CupertinoSheetValue {
      * */
     @Serializable
     @Immutable
-    class PartiallyExpanded(val detent: PresentationDetent) : CupertinoSheetValue {
+    class PartiallyExpanded(
+        val detent: PresentationDetent,
+    ) : CupertinoSheetValue {
+        override fun equals(other: Any?): Boolean = detent == (other as? PartiallyExpanded)?.detent
 
-        override fun equals(other: Any?): Boolean {
-            return detent == (other as? PartiallyExpanded)?.detent
-        }
+        override fun hashCode(): Int = detent.hashCode()
 
-        override fun hashCode(): Int {
-            return detent.hashCode()
-        }
-
-        override fun toString(): String {
-            return "PartiallyExpanded(detent = $detent)"
-        }
+        override fun toString(): String = "PartiallyExpanded(detent = $detent)"
     }
 
     /**
@@ -290,7 +280,6 @@ sealed interface CupertinoSheetValue {
  * */
 @Immutable
 sealed interface PresentationStyle {
-
     /**
      * Fullscreen presentation. This sheet cannot be swiped
      * */
@@ -311,10 +300,10 @@ sealed interface PresentationStyle {
         val detents: Set<PresentationDetent> = setOf(PresentationDetent.Large),
         val contentInteraction: PresentationContentInteraction = PresentationContentInteraction.Resize,
         val isBackgroundInteractive: (PresentationDetent) -> Boolean = { false },
-        val dismissOnClickOutside : Boolean = true
+        val dismissOnClickOutside: Boolean = true,
     ) : PresentationStyle {
         init {
-            require(detents.isNotEmpty()){
+            require(detents.isNotEmpty()) {
                 "Modal predentation style must have at least one detent"
             }
         }
@@ -341,9 +330,8 @@ sealed interface PresentationStyle {
             return result
         }
 
-        override fun toString(): String {
-            return "Modal(detents=$detents, contentInteraction=$contentInteraction,  dismissOnClickOutside=$dismissOnClickOutside)"
-        }
+        override fun toString(): String =
+            "Modal(detents=$detents, contentInteraction=$contentInteraction,  dismissOnClickOutside=$dismissOnClickOutside)"
     }
 }
 
@@ -365,8 +353,10 @@ class CupertinoSheetState(
     init {
         require(
             initialValue !is CupertinoSheetValue.PartiallyExpanded ||
-                            (presentationStyle is PresentationStyle.Modal &&
-                                    presentationStyle.detents.any { it == initialValue.detent })
+                (
+                    presentationStyle is PresentationStyle.Modal &&
+                        presentationStyle.detents.any { it == initialValue.detent }
+                ),
         ) {
             "initialValue must be presented in modal detents"
         }
@@ -419,11 +409,12 @@ class CupertinoSheetState(
      * Whether the modal bottom sheet has a partially expanded state defined.
      */
     internal val hasPartiallyExpandedState: Boolean
-        get() = (presentationStyle as? PresentationStyle.Modal)?.detents?.let {
-            it.size > 1
-        } == true
+        get() =
+            (presentationStyle as? PresentationStyle.Modal)?.detents?.let {
+                it.size > 1
+            } == true
 
-    internal var expandedDetent : PresentationDetent? by mutableStateOf(null)
+    internal var expandedDetent: PresentationDetent? by mutableStateOf(null)
 
     /**
      * Fully expand the bottom sheet with animation and suspend until it is fully expanded or
@@ -441,12 +432,12 @@ class CupertinoSheetState(
      * @throws [CancellationException] if the animation is interrupted
      * @throws [IllegalStateException] if [skipPartiallyExpanded] is set to true
      */
-    suspend fun partialExpand(detent : PresentationDetent) {
-        require(presentationStyle is PresentationStyle.Modal){
+    suspend fun partialExpand(detent: PresentationDetent) {
+        require(presentationStyle is PresentationStyle.Modal) {
             "Sheet can be partially expanded only in Modal PresentationStyle"
         }
 
-        require(presentationStyle.detents.any { it == detent }){
+        require(presentationStyle.detents.any { it == detent }) {
             "Detent $detent is not in detents list"
         }
         animateTo(CupertinoSheetValue.PartiallyExpanded(detent))
@@ -458,13 +449,17 @@ class CupertinoSheetState(
      * @throws [CancellationException] if the animation is interrupted
      */
     suspend fun show() {
-        val targetValue = when (presentationStyle) {
-            is PresentationStyle.Fullscreen -> CupertinoSheetValue.Expanded
-            is PresentationStyle.Modal -> if (presentationStyle.detents.size == 1)
-                CupertinoSheetValue.Expanded
-            else swipeableState.anchors.keys.firstOrNull { it is CupertinoSheetValue.PartiallyExpanded }
-                ?: CupertinoSheetValue.Expanded
-        }
+        val targetValue =
+            when (presentationStyle) {
+                is PresentationStyle.Fullscreen -> CupertinoSheetValue.Expanded
+                is PresentationStyle.Modal ->
+                    if (presentationStyle.detents.size == 1) {
+                        CupertinoSheetValue.Expanded
+                    } else {
+                        swipeableState.anchors.keys.firstOrNull { it is CupertinoSheetValue.PartiallyExpanded }
+                            ?: CupertinoSheetValue.Expanded
+                    }
+            }
         animateTo(targetValue)
     }
 
@@ -489,7 +484,7 @@ class CupertinoSheetState(
      */
     internal suspend fun animateTo(
         targetValue: CupertinoSheetValue,
-        velocity: Float = swipeableState.lastVelocity
+        velocity: Float = swipeableState.lastVelocity,
     ) {
         swipeableState.animateTo(targetValue, velocity)
     }
@@ -522,12 +517,13 @@ class CupertinoSheetState(
         swipeableState.settle(velocity)
     }
 
-    internal var swipeableState = SwipeableV2State(
-        initialValue = initialValue,
-        animationSpec = cupertinoTween(),
-        confirmValueChange = confirmValueChange,
-        positionalThreshold = { .5f * it }
-    )
+    internal var swipeableState =
+        SwipeableV2State(
+            initialValue = initialValue,
+            animationSpec = cupertinoTween(),
+            confirmValueChange = confirmValueChange,
+            positionalThreshold = { .5f * it },
+        )
 
     internal val offset: Float? get() = swipeableState.offset
 
@@ -546,146 +542,161 @@ class CupertinoSheetState(
                     initialValue = Json.decodeFromString(savedValue),
                     confirmValueChange = confirmValueChange,
                 )
-            }
+            },
         )
     }
 }
+
 @Composable
 fun rememberCupertinoSheetState(
     initialValue: CupertinoSheetValue = CupertinoSheetValue.Hidden,
     presentationStyle: PresentationStyle = PresentationStyle.Modal(),
     confirmValueChange: (CupertinoSheetValue) -> Boolean = { true },
 ): CupertinoSheetState {
-
     val updatedConfirm by rememberUpdatedState(confirmValueChange)
 
     return rememberSaveable(
         presentationStyle,
-        saver = CupertinoSheetState.Saver(
-            presentationStyle = presentationStyle,
-            confirmValueChange = {
-                updatedConfirm.invoke(it)
-            }
-        )
+        saver =
+            CupertinoSheetState.Saver(
+                presentationStyle = presentationStyle,
+                confirmValueChange = {
+                    updatedConfirm.invoke(it)
+                },
+            ),
     ) {
         CupertinoSheetState(
             initialValue = initialValue,
             confirmValueChange = {
                 updatedConfirm.invoke(it)
             },
-            presentationStyle = presentationStyle
+            presentationStyle = presentationStyle,
         )
     }
 }
 
 private class HeightSerializer : KSerializer<PresentationDetent.Height> {
-
     override val descriptor: SerialDescriptor
         get() = Float.serializer().descriptor
 
-    override fun deserialize(decoder: Decoder): PresentationDetent.Height {
-        return PresentationDetent.Height(decoder.decodeFloat().dp)
-    }
+    override fun deserialize(decoder: Decoder): PresentationDetent.Height = PresentationDetent.Height(decoder.decodeFloat().dp)
 
-    override fun serialize(encoder: Encoder, value: PresentationDetent.Height) {
+    override fun serialize(
+        encoder: Encoder,
+        value: PresentationDetent.Height,
+    ) {
         encoder.encodeFloat(value.height.value)
     }
-
 }
 
 internal fun ConsumeSwipeWithinBottomSheetBoundsNestedScrollConnection(
     sheetState: CupertinoSheetState,
     orientation: Orientation,
-    onFling: (velocity: Float) -> Unit
-): NestedScrollConnection = object : NestedScrollConnection {
+    onFling: (velocity: Float) -> Unit,
+): NestedScrollConnection =
+    object : NestedScrollConnection {
+        private val enabled: Boolean
+            get() =
+                sheetState.presentationStyle.let {
+                    it is PresentationStyle.Modal && it.contentInteraction == PresentationContentInteraction.Resize
+                }
 
-    private val enabled : Boolean
-        get() = sheetState.presentationStyle.let {
-            it is PresentationStyle.Modal && it.contentInteraction == PresentationContentInteraction.Resize
+        override fun onPreScroll(
+            available: Offset,
+            source: NestedScrollSource,
+        ): Offset {
+            if (!enabled) {
+                return Offset.Zero
+            }
+            val delta = available.toFloat()
+
+            return if (delta < 0 && source == NestedScrollSource.UserInput) {
+                sheetState.swipeableState.dispatchRawDelta(delta).toOffset()
+            } else {
+                Offset.Zero
+            }
         }
 
-    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        if (!enabled)
-            return Offset.Zero
-        val delta = available.toFloat()
+        override fun onPostScroll(
+            consumed: Offset,
+            available: Offset,
+            source: NestedScrollSource,
+        ): Offset {
+            if (!enabled) {
+                return Offset.Zero
+            }
 
-        return if (delta < 0 && source == NestedScrollSource.UserInput) {
-            sheetState.swipeableState.dispatchRawDelta(delta).toOffset()
-        } else {
-            Offset.Zero
+            return if (source == NestedScrollSource.UserInput) {
+                sheetState.swipeableState.dispatchRawDelta(available.toFloat()).toOffset()
+            } else {
+                Offset.Zero
+            }
         }
-    }
 
-    override fun onPostScroll(
-        consumed: Offset,
-        available: Offset,
-        source: NestedScrollSource
-    ): Offset {
-        if (!enabled)
-            return Offset.Zero
+        override suspend fun onPreFling(available: Velocity): Velocity {
+            if (!enabled) {
+                return Velocity.Zero
+            }
 
-        return if (source == NestedScrollSource.UserInput) {
-            sheetState.swipeableState.dispatchRawDelta(available.toFloat()).toOffset()
-        } else {
-            Offset.Zero
+            val toFling = available.toFloat()
+            val currentOffset = sheetState.requireOffset()
+            return if (toFling < 0 && currentOffset > sheetState.swipeableState.minOffset) {
+                onFling(toFling)
+                // since we go to the anchor with tween settling, consume all for the best UX
+                available
+            } else {
+                Velocity.Zero
+            }
         }
-    }
 
-    override suspend fun onPreFling(available: Velocity): Velocity {
+        override suspend fun onPostFling(
+            consumed: Velocity,
+            available: Velocity,
+        ): Velocity {
+            if (!enabled) {
+                return Velocity.Zero
+            }
 
-        if (!enabled)
-            return Velocity.Zero
-
-        val toFling = available.toFloat()
-        val currentOffset = sheetState.requireOffset()
-        return if (toFling < 0 && currentOffset > sheetState.swipeableState.minOffset) {
-            onFling(toFling)
-            // since we go to the anchor with tween settling, consume all for the best UX
-            available
-        } else {
-            Velocity.Zero
+            onFling(available.toFloat())
+            return available
         }
+
+        private fun Float.toOffset(): Offset =
+            Offset(
+                x = if (orientation == Orientation.Horizontal) this else 0f,
+                y = if (orientation == Orientation.Vertical) this else 0f,
+            )
+
+        @JvmName("velocityToFloat")
+        private fun Velocity.toFloat() = if (orientation == Orientation.Horizontal) x else y
+
+        @JvmName("offsetToFloat")
+        private fun Offset.toFloat(): Float = if (orientation == Orientation.Horizontal) x else y
     }
-
-    override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-        if (!enabled)
-            return Velocity.Zero
-
-        onFling(available.toFloat())
-        return available
-    }
-
-    private fun Float.toOffset(): Offset = Offset(
-        x = if (orientation == Orientation.Horizontal) this else 0f,
-        y = if (orientation == Orientation.Vertical) this else 0f
-    )
-
-    @JvmName("velocityToFloat")
-    private fun Velocity.toFloat() = if (orientation == Orientation.Horizontal) x else y
-
-    @JvmName("offsetToFloat")
-    private fun Offset.toFloat(): Float = if (orientation == Orientation.Horizontal) x else y
-}
 
 internal val CupertinoSheetState.isBackgroundInteractive: Boolean
-    get() = with(targetValue) {
+    get() =
+        with(targetValue) {
 
-        if (this == CupertinoSheetValue.Hidden)
-            return true
+            if (this == CupertinoSheetValue.Hidden) {
+                return true
+            }
 
-        if (presentationStyle !is PresentationStyle.Modal)
-            return false
+            if (presentationStyle !is PresentationStyle.Modal) {
+                return false
+            }
 
-        if (this is CupertinoSheetValue.PartiallyExpanded) {
-            return presentationStyle.isBackgroundInteractive(detent)
+            if (this is CupertinoSheetValue.PartiallyExpanded) {
+                return presentationStyle.isBackgroundInteractive(detent)
+            }
+
+            // this is CupertinoSheetValue.Expanded
+
+            expandedDetent?.let {
+                presentationStyle.isBackgroundInteractive(it)
+            } == true
         }
 
-        //this is CupertinoSheetValue.Expanded
-
-        expandedDetent?.let {
-            presentationStyle.isBackgroundInteractive(it)
-        } == true
-    }
 internal object CupertinoBottomSheetTokens {
     internal val MaxOverflow = 5.dp
 }

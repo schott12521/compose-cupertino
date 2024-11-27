@@ -16,9 +16,9 @@ actual fun CupertinoDateTimePickerNative(
     state: CupertinoDateTimePickerState,
     modifier: Modifier,
     style: DatePickerStyle,
-    containerColor : Color
+    containerColor: Color,
 ) {
-    LaunchedEffect(state){
+    LaunchedEffect(state) {
         state.isManual = true
     }
 

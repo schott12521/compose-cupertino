@@ -8,6 +8,4 @@ import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 import io.github.alexzhirkevich.cupertino.named
 
 @Composable
-internal actual fun systemImage(name : String) : Painter? {
-    return runCatching { CupertinoIcons.named(name) }.getOrNull()
-}
+internal actual fun systemImage(name: String): Painter? = runCatching { CupertinoIcons.named(name) }.getOrNull()

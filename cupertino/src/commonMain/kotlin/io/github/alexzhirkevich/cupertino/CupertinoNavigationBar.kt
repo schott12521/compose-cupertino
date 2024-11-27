@@ -43,7 +43,6 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 inline val ScrollableState.isNavigationBarTransparent: Boolean
     get() = !canScrollForward
 
-
 /**
  * Navigation bar itself does not produce cupertino thin material glass effect.
  * This effect works only inside [CupertinoScaffold], [CupertinoBottomSheetScaffold], [CupertinoBottomSheetContent].
@@ -63,9 +62,9 @@ fun cupertinoTranslucentBottomBarColor(
     isTranslucent: Boolean,
     isTransparent: Boolean,
 ): Color {
-
-    if (!isTranslucent)
+    if (!isTranslucent) {
         return color
+    }
 
     val appBarsState = LocalAppBarsState.current ?: return color
 
@@ -120,21 +119,21 @@ fun CupertinoNavigationBar(
     divider: @Composable () -> Unit = {
         CupertinoNavigationBarDefaults.divider()
     },
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
-
-    val color = cupertinoTranslucentBottomBarColor(
-        color = containerColor,
-        isTranslucent = isTranslucent,
-        isTransparent = isTransparent
-    )
+    val color =
+        cupertinoTranslucentBottomBarColor(
+            color = containerColor,
+            isTranslucent = isTranslucent,
+            isTransparent = isTransparent,
+        )
 
     CupertinoSurface(
         modifier = modifier,
-        color = color
+        color = color,
     ) {
         Column(
-            Modifier.windowInsetsPadding(windowInsets)
+            Modifier.windowInsetsPadding(windowInsets),
         ) {
             if (!isTransparent) {
                 divider()
@@ -145,7 +144,7 @@ fun CupertinoNavigationBar(
                     .height(CupertinoNavigationBarTokens.Height)
                     .selectableGroup(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                content = content
+                content = content,
             )
         }
     }
@@ -177,9 +176,8 @@ fun RowScope.CupertinoNavigationBarItem(
     alwaysShowLabel: Boolean = true,
     pressIndicationEnabled: Boolean = false,
     colors: CupertinoNavigationBarItemColors = CupertinoNavigationBarDefaults.itemColors(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
-
     val pressed by interactionSource.collectIsPressedAsState()
 
     Column(
@@ -190,31 +188,32 @@ fun RowScope.CupertinoNavigationBarItem(
                 enabled = enabled,
                 role = Role.Tab,
                 interactionSource = interactionSource,
-                indication = null
-            )
-            .weight(1f)
+                indication = null,
+            ).weight(1f)
             .padding(top = 6.dp)
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(6.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-
         val iconColor = colors.iconColor(selected, enabled)
         val textColor = colors.textColor(selected, enabled)
 
         ProvideTextStyle(
-            value = CupertinoTheme.typography.caption2
+            value = CupertinoTheme.typography.caption2,
         ) {
-            val alpha = if (pressIndicationEnabled && pressed && !selected)
-                textColor.alpha * CupertinoButtonTokens.PressedPlainButonAlpha
-            else textColor.alpha
+            val alpha =
+                if (pressIndicationEnabled && pressed && !selected) {
+                    textColor.alpha * CupertinoButtonTokens.PressedPlainButonAlpha
+                } else {
+                    textColor.alpha
+                }
 
             CompositionLocalProvider(
-                LocalContentColor provides iconColor.copy(alpha = alpha)
+                LocalContentColor provides iconColor.copy(alpha = alpha),
             ) {
                 Box(
                     modifier = Modifier.size(CupertinoIconDefaults.MediumSize),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     icon()
                 }
@@ -244,13 +243,15 @@ class CupertinoNavigationBarItemColors internal constructor(
      * @param enabled whether the item is enabled
      */
     @Composable
-    internal fun iconColor(selected: Boolean, enabled: Boolean): Color {
-        return when {
+    internal fun iconColor(
+        selected: Boolean,
+        enabled: Boolean,
+    ): Color =
+        when {
             !enabled -> disabledIconColor
             selected -> selectedIconColor
             else -> unselectedIconColor
         }
-    }
 
     /**
      * Represents the text color for this item, depending on whether it is [selected].
@@ -259,13 +260,15 @@ class CupertinoNavigationBarItemColors internal constructor(
      * @param enabled whether the item is enabled
      */
     @Composable
-    internal fun textColor(selected: Boolean, enabled: Boolean): Color {
-        return when {
+    internal fun textColor(
+        selected: Boolean,
+        enabled: Boolean,
+    ): Color =
+        when {
             !enabled -> disabledTextColor
             selected -> selectedTextColor
             else -> unselectedTextColor
         }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -291,11 +294,9 @@ class CupertinoNavigationBarItemColors internal constructor(
     }
 }
 
-
 @ExperimentalCupertinoApi
 @Immutable
 object CupertinoNavigationBarDefaults {
-
     /**
      * Default container color of the [CupertinoNavigationBar]
      *
@@ -326,7 +327,7 @@ object CupertinoNavigationBarDefaults {
         unselectedIconColor = unselectedIconColor,
         unselectedTextColor = unselectedTextColor,
         disabledIconColor = disabledIconColor,
-        disabledTextColor = disabledTextColor
+        disabledTextColor = disabledTextColor,
     )
 
     @Composable

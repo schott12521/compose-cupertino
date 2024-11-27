@@ -43,7 +43,7 @@ actual fun CupertinoDatePickerNative(
     state: CupertinoDatePickerState,
     modifier: Modifier,
     style: DatePickerStyle,
-    containerColor : Color,
+    containerColor: Color,
 ) {
     LaunchedEffect(0) {
         state.isManual = true
@@ -57,38 +57,39 @@ actual fun CupertinoDatePickerNative(
         modifier = modifier,
         mode = UIDatePickerMode.UIDatePickerModeDate,
         style = style,
-        containerColor = containerColor
+        containerColor = containerColor,
     )
 }
-
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 internal fun CupertinoDatePickerNativeImpl(
     millis: Long,
     mode: UIDatePickerMode,
-    onChange : (Long) -> Unit,
+    onChange: (Long) -> Unit,
     modifier: Modifier,
     style: DatePickerStyle,
-    containerColor : Color,
+    containerColor: Color,
 ) {
-
     val updatedOnChange by rememberUpdatedState(onChange)
 
-    val datePicker = remember {
-        DatePicker(
-            millis = millis,
-            mode = mode,
-            style = style,
-        ) {
-            updatedOnChange(it)
+    val datePicker =
+        remember {
+            DatePicker(
+                millis = millis,
+                mode = mode,
+                style = style,
+            ) {
+                updatedOnChange(it)
+            }
         }
-    }
 
-    val size = remember(datePicker) {
-        datePicker.sizeThatFits(cValue { CGSizeZero })
-            .useContents { DpSize(width.dp, height.dp) }
-    }
+    val size =
+        remember(datePicker) {
+            datePicker
+                .sizeThatFits(cValue { CGSizeZero })
+                .useContents { DpSize(width.dp, height.dp) }
+        }
 
     val dark = CupertinoTheme.colorScheme.isDark
 
@@ -98,22 +99,25 @@ internal fun CupertinoDatePickerNativeImpl(
                 applyTheme(dark)
             }
         },
-        modifier = modifier
-            .size(size),
+        modifier =
+            modifier
+                .size(size),
         update = {
-            it.preferredDatePickerStyle = when (style) {
-                is DatePickerStyle.Wheel -> UIDatePickerStyle.UIDatePickerStyleWheels
-                is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
-            }
+            it.preferredDatePickerStyle =
+                when (style) {
+                    is DatePickerStyle.Wheel -> UIDatePickerStyle.UIDatePickerStyleWheels
+                    is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
+                }
             it.setDate(NSDate.dateWithTimeIntervalSince1970(millis / 1000.0), animated = false)
 //            it.date = NSDate.dateWithTimeIntervalSince1970(millis / 1000.0)
             (it.subviews.firstOrNull() as UIView?)?.backgroundColor = containerColor.toUIColor()
             it.applyTheme(dark)
         },
-        properties = UIKitInteropProperties(
-            isInteractive = true,
-            isNativeAccessibilityEnabled = true
-        )
+        properties =
+            UIKitInteropProperties(
+                isInteractive = true,
+                isNativeAccessibilityEnabled = true,
+            ),
     )
 }
 
@@ -122,35 +126,36 @@ private class DatePicker(
     millis: Long,
     mode: UIDatePickerMode,
     style: DatePickerStyle,
-    private val onChange: (Long) -> Unit
-) : UIDatePicker(CGRectMake(0.0,0.0,0.0,0.0)){
+    private val onChange: (Long) -> Unit,
+) : UIDatePicker(CGRectMake(0.0, 0.0, 0.0, 0.0)) {
     init {
         timeZone = NSTimeZone.timeZoneWithName("UTC")
         locale = NSLocale.currentLocale
         setDate(
-            date = NSDate.dateWithTimeIntervalSince1970(
-                millis / 1000.0
-            ),
-            animated = false
+            date =
+                NSDate.dateWithTimeIntervalSince1970(
+                    millis / 1000.0,
+                ),
+            animated = false,
         )
         datePickerMode = mode
-        preferredDatePickerStyle = when (style) {
-            is DatePickerStyle.Wheel -> UIDatePickerStyle.UIDatePickerStyleWheels
-            is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
-        }
+        preferredDatePickerStyle =
+            when (style) {
+                is DatePickerStyle.Wheel -> UIDatePickerStyle.UIDatePickerStyleWheels
+                is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
+            }
 //                setFrame(sizeThatFits(cValue { CGSizeZero }))
         addTarget(
             target = this,
             action = NSSelectorFromString("changed:"),
-            forControlEvents = UIControlEventValueChanged
+            forControlEvents = UIControlEventValueChanged,
         )
     }
-
 
     @OptIn(BetaInteropApi::class)
     @ObjCAction
     @Suppress("UNUSED")
-    fun changed(v : DatePicker){
+    fun changed(v: DatePicker) {
         onChange((v.date.timeIntervalSince1970 * 1000).toLong())
     }
 }

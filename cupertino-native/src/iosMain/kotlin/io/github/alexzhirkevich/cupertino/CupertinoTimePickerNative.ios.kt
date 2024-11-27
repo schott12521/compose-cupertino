@@ -22,16 +22,17 @@ import platform.UIKit.UIDatePickerMode
 actual fun CupertinoTimePickerNative(
     state: CupertinoTimePickerState,
     modifier: Modifier,
-    height : Dp,
-    containerColor : Color
+    height: Dp,
+    containerColor: Color,
 ) {
-    LaunchedEffect(state){
+    LaunchedEffect(state) {
         state.isManual = true
     }
 
     val millis by remember(state) {
         derivedStateOf {
-            Clock.System.now()
+            Clock.System
+                .now()
                 .toLocalDateTime(TimeZone.UTC)
                 .date
                 .atStartOfDayIn(TimeZone.UTC)
@@ -50,7 +51,7 @@ actual fun CupertinoTimePickerNative(
             state.manualMinute = (rem % MinutesInHour).toInt()
         },
         style = DatePickerStyle.Wheel(),
-        containerColor = containerColor
+        containerColor = containerColor,
     )
 }
 

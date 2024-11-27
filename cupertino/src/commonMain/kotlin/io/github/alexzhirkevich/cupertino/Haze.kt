@@ -33,18 +33,19 @@ internal fun Modifier.haze(
     tint: Color = HazeDefaults.tint(backgroundColor),
     blurRadius: Dp = HazeDefaults.blurRadius,
     cornerRadius: Dp = 0.dp,
-): Modifier = haze(
-    *area,
-    tint = tint,
-    backgroundColor = backgroundColor,
-    blurRadius = blurRadius,
+): Modifier =
+    haze(
+        *area,
+        tint = tint,
+        backgroundColor = backgroundColor,
+        blurRadius = blurRadius,
 //    cornerRadius = cornerRadius
-)
+    )
 
 /**
  * Default values for the [haze] modifiers.
 // */
-//internal object HazeDefaults {
+// internal object HazeDefaults {
 //    /**
 //     * Default blur radius. Larger values produce a stronger blur effect.
 //     */
@@ -59,4 +60,4 @@ internal fun Modifier.haze(
 //     * Default builder for the 'tint' color. Transforms the provided [color].
 //     */
 //    fun tint(color: Color): Color = color.copy(alpha = tintAlpha)
-//}
+// }

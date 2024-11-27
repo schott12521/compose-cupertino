@@ -70,29 +70,30 @@ fun CupertinoTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     contentAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    colors: CupertinoTextFieldColors = CupertinoTextFieldDefaults.colors()
+    colors: CupertinoTextFieldColors = CupertinoTextFieldDefaults.colors(),
 ) {
     // If color is not provided via the text style, use content color as a default
-    val textColor = textStyle.color.takeOrElse {
-        colors.textColor(enabled, isError, interactionSource).value
-    }
+    val textColor =
+        textStyle.color.takeOrElse {
+            colors.textColor(enabled, isError, interactionSource).value
+        }
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
 
     CompositionLocalProvider(
-        LocalTextSelectionColors provides colors.selectionColors
+        LocalTextSelectionColors provides colors.selectionColors,
     ) {
-
         var layoutResult by remember {
             mutableStateOf<TextLayoutResult?>(null)
         }
 
         BasicTextField(
             value = value,
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = CupertinoTextFieldDefaults.MinWidth,
-                    minHeight = CupertinoTextFieldDefaults.MinHeight
-                ),
+            modifier =
+                Modifier
+                    .defaultMinSize(
+                        minWidth = CupertinoTextFieldDefaults.MinWidth,
+                        minHeight = CupertinoTextFieldDefaults.MinHeight,
+                    ),
             onValueChange = onValueChange,
             enabled = enabled,
             readOnly = readOnly,
@@ -122,7 +123,7 @@ fun CupertinoTextField(
                     textLayoutResult = layoutResult,
                     trailingIcon = trailingIcon,
                 )
-            }
+            },
         )
     }
 }
@@ -147,16 +148,17 @@ fun CupertinoTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     contentAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    colors: CupertinoTextFieldColors = CupertinoTextFieldDefaults.colors()
+    colors: CupertinoTextFieldColors = CupertinoTextFieldDefaults.colors(),
 ) {
     // If color is not provided via the text style, use content color as a default
-    val textColor = textStyle.color.takeOrElse {
-        colors.textColor(enabled, isError, interactionSource).value
-    }
+    val textColor =
+        textStyle.color.takeOrElse {
+            colors.textColor(enabled, isError, interactionSource).value
+        }
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
 
     CompositionLocalProvider(
-        LocalTextSelectionColors provides colors.selectionColors
+        LocalTextSelectionColors provides colors.selectionColors,
     ) {
         var layoutResult by remember {
             mutableStateOf<TextLayoutResult?>(null)
@@ -164,11 +166,12 @@ fun CupertinoTextField(
 
         BasicTextField(
             value = value,
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = CupertinoTextFieldDefaults.MinWidth,
-                    minHeight = CupertinoTextFieldDefaults.MinHeight
-                ),
+            modifier =
+                Modifier
+                    .defaultMinSize(
+                        minWidth = CupertinoTextFieldDefaults.MinWidth,
+                        minHeight = CupertinoTextFieldDefaults.MinHeight,
+                    ),
             onValueChange = onValueChange,
             enabled = enabled,
             readOnly = readOnly,
@@ -198,7 +201,7 @@ fun CupertinoTextField(
                     textLayoutResult = layoutResult,
                     trailingIcon = trailingIcon,
                 )
-            }
+            },
         )
     }
 }
@@ -226,7 +229,7 @@ fun CupertinoBorderedTextField(
     strokeWidth: Dp = CupertinoBorderedTextFieldDefaults.StrokeWidth,
     paddingValues: PaddingValues = CupertinoBorderedTextFieldDefaults.PaddingValues,
     contentAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    colors: CupertinoTextFieldColors = CupertinoBorderedTextFieldDefaults.colors()
+    colors: CupertinoTextFieldColors = CupertinoBorderedTextFieldDefaults.colors(),
 ) {
     Border(
         modifier = modifier,
@@ -236,7 +239,7 @@ fun CupertinoBorderedTextField(
         interactionSource = interactionSource,
         colors = colors,
         shape = shape,
-        paddingValues = paddingValues
+        paddingValues = paddingValues,
     ) {
         CupertinoTextField(
             modifier = Modifier,
@@ -257,7 +260,7 @@ fun CupertinoBorderedTextField(
             minLines = minLines,
             interactionSource = interactionSource,
             contentAlignment = contentAlignment,
-            colors = colors
+            colors = colors,
         )
     }
 }
@@ -285,7 +288,7 @@ fun CupertinoBorderedTextField(
     strokeWidth: Dp = CupertinoBorderedTextFieldDefaults.StrokeWidth,
     paddingValues: PaddingValues = CupertinoBorderedTextFieldDefaults.PaddingValues,
     contentAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    colors: CupertinoTextFieldColors = CupertinoBorderedTextFieldDefaults.colors()
+    colors: CupertinoTextFieldColors = CupertinoBorderedTextFieldDefaults.colors(),
 ) {
     Border(
         modifier = modifier,
@@ -295,7 +298,7 @@ fun CupertinoBorderedTextField(
         interactionSource = interactionSource,
         colors = colors,
         shape = shape,
-        paddingValues = paddingValues
+        paddingValues = paddingValues,
     ) {
         CupertinoTextField(
             value = value,
@@ -315,7 +318,7 @@ fun CupertinoBorderedTextField(
             minLines = minLines,
             interactionSource = interactionSource,
             contentAlignment = contentAlignment,
-            colors = colors
+            colors = colors,
         )
     }
 }
@@ -348,7 +351,7 @@ class CupertinoTextFieldColors internal constructor(
     private val focusedPlaceholderColor: Color,
     private val unfocusedPlaceholderColor: Color,
     private val disabledPlaceholderColor: Color,
-    private val errorPlaceholderColor: Color
+    private val errorPlaceholderColor: Color,
 ) {
     /**
      * Represents the color used for the leading icon of this text field.
@@ -362,7 +365,7 @@ class CupertinoTextFieldColors internal constructor(
     internal fun leadingIconColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
@@ -372,7 +375,7 @@ class CupertinoTextFieldColors internal constructor(
                 isError -> errorLeadingIconColor
                 focused -> focusedLeadingIconColor
                 else -> unfocusedLeadingIconColor
-            }
+            },
         )
     }
 
@@ -388,7 +391,7 @@ class CupertinoTextFieldColors internal constructor(
     internal fun trailingIconColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
@@ -398,7 +401,7 @@ class CupertinoTextFieldColors internal constructor(
                 isError -> errorTrailingIconColor
                 focused -> focusedTrailingIconColor
                 else -> unfocusedTrailingIconColor
-            }
+            },
         )
     }
 
@@ -414,16 +417,17 @@ class CupertinoTextFieldColors internal constructor(
     internal fun indicatorColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
-        val targetValue = when {
-            !enabled -> disabledIndicatorColor
-            isError -> errorIndicatorColor
-            focused -> focusedIndicatorColor
-            else -> unfocusedIndicatorColor
-        }
+        val targetValue =
+            when {
+                !enabled -> disabledIndicatorColor
+                isError -> errorIndicatorColor
+                focused -> focusedIndicatorColor
+                else -> unfocusedIndicatorColor
+            }
         return rememberUpdatedState(targetValue)
     }
 
@@ -439,16 +443,17 @@ class CupertinoTextFieldColors internal constructor(
     internal fun containerColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
-        val targetValue = when {
-            !enabled -> disabledContainerColor
-            isError -> errorContainerColor
-            focused -> focusedContainerColor
-            else -> unfocusedContainerColor
-        }
+        val targetValue =
+            when {
+                !enabled -> disabledContainerColor
+                isError -> errorContainerColor
+                focused -> focusedContainerColor
+                else -> unfocusedContainerColor
+            }
         return rememberUpdatedState(targetValue)
     }
 
@@ -464,16 +469,17 @@ class CupertinoTextFieldColors internal constructor(
     internal fun placeholderColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
-        val targetValue = when {
-            !enabled -> disabledPlaceholderColor
-            isError -> errorPlaceholderColor
-            focused -> focusedPlaceholderColor
-            else -> unfocusedPlaceholderColor
-        }
+        val targetValue =
+            when {
+                !enabled -> disabledPlaceholderColor
+                isError -> errorPlaceholderColor
+                focused -> focusedPlaceholderColor
+                else -> unfocusedPlaceholderColor
+            }
         return rememberUpdatedState(targetValue)
     }
 
@@ -489,16 +495,17 @@ class CupertinoTextFieldColors internal constructor(
     internal fun textColor(
         enabled: Boolean,
         isError: Boolean,
-        interactionSource: InteractionSource
+        interactionSource: InteractionSource,
     ): State<Color> {
         val focused by interactionSource.collectIsFocusedAsState()
 
-        val targetValue = when {
-            !enabled -> disabledTextColor
-            isError -> errorTextColor
-            focused -> focusedTextColor
-            else -> unfocusedTextColor
-        }
+        val targetValue =
+            when {
+                !enabled -> disabledTextColor
+                isError -> errorTextColor
+                focused -> focusedTextColor
+                else -> unfocusedTextColor
+            }
         return rememberUpdatedState(targetValue)
     }
 
@@ -508,9 +515,7 @@ class CupertinoTextFieldColors internal constructor(
      * @param isError whether the text field's current value is in error
      */
     @Composable
-    internal fun cursorColor(isError: Boolean): State<Color> {
-        return rememberUpdatedState(if (isError) errorCursorColor else cursorColor)
-    }
+    internal fun cursorColor(isError: Boolean): State<Color> = rememberUpdatedState(if (isError) errorCursorColor else cursorColor)
 
     /**
      * Represents the colors used for text selection in this text field.
@@ -588,9 +593,7 @@ class CupertinoTextFieldColors internal constructor(
 
 @Immutable
 object CupertinoBorderedTextFieldDefaults {
-
-
-    val StrokeWidth : Dp = 1.dp
+    val StrokeWidth: Dp = 1.dp
 
     /** Default shape for an [CupertinoTextField]. */
     val shape: Shape
@@ -694,12 +697,10 @@ object CupertinoBorderedTextFieldDefaults {
             disabledPlaceholderColor = disabledPlaceholderColor,
             errorPlaceholderColor = errorPlaceholderColor,
         )
-
 }
 
 @Immutable
-object CupertinoTextFieldDefaults  {
-
+object CupertinoTextFieldDefaults {
     /**
      * The default min width applied to an [CupertinoTextField].
      * Note that you can override it by applying Modifier.heightIn directly on a text field.
@@ -721,7 +722,6 @@ object CupertinoTextFieldDefaults  {
      * The default thickness of the border in [CupertinoTextField] in focused state.
      */
     val FocusedBorderThickness = 2.dp
-
 
     /**
      * Creates a [CupertinoTextFieldColors] that represents the default input text, container, and content
@@ -831,25 +831,29 @@ object CupertinoTextFieldDefaults  {
         placeholder: @Composable (() -> Unit)? = null,
         leadingIcon: @Composable (() -> Unit)? = null,
         trailingIcon: @Composable (() -> Unit)? = null,
-        colors: CupertinoTextFieldColors = colors()
+        colors: CupertinoTextFieldColors = colors(),
     ) {
-        val alignment = if (textLayoutResult != null && textLayoutResult.lineCount > 1)
-            contentAlignment else Alignment.CenterVertically
+        val alignment =
+            if (textLayoutResult != null && textLayoutResult.lineCount > 1) {
+                contentAlignment
+            } else {
+                Alignment.CenterVertically
+            }
 
         Row(
             modifier = modifier,
             verticalAlignment = alignment,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-
             Box(Modifier.padding(IconsPadding)) {
-
                 CompositionLocalProvider(
-                    LocalContentColor provides colors.leadingIconColor(
-                        enabled = enabled,
-                        isError = isError,
-                        interactionSource = interactionSource
-                    ).value
+                    LocalContentColor provides
+                        colors
+                            .leadingIconColor(
+                                enabled = enabled,
+                                isError = isError,
+                                interactionSource = interactionSource,
+                            ).value,
                 ) {
                     leadingIcon?.invoke()
                 }
@@ -859,11 +863,13 @@ object CupertinoTextFieldDefaults  {
                 innerTextField()
                 if (valueIsEmpty && placeholder != null) {
                     CompositionLocalProvider(
-                        LocalContentColor provides colors.placeholderColor(
-                            enabled = enabled,
-                            isError = isError,
-                            interactionSource = interactionSource
-                        ).value
+                        LocalContentColor provides
+                            colors
+                                .placeholderColor(
+                                    enabled = enabled,
+                                    isError = isError,
+                                    interactionSource = interactionSource,
+                                ).value,
                     ) {
                         placeholder()
                     }
@@ -872,11 +878,13 @@ object CupertinoTextFieldDefaults  {
 
             Box(Modifier.padding(IconsPadding)) {
                 CompositionLocalProvider(
-                    LocalContentColor provides colors.trailingIconColor(
-                        enabled = enabled,
-                        isError = isError,
-                        interactionSource = interactionSource
-                    ).value
+                    LocalContentColor provides
+                        colors
+                            .trailingIconColor(
+                                enabled = enabled,
+                                isError = isError,
+                                interactionSource = interactionSource,
+                            ).value,
                 ) {
                     trailingIcon?.invoke()
                 }
@@ -889,21 +897,21 @@ object CupertinoTextFieldDefaults  {
 private fun Border(
     modifier: Modifier,
     strokeWidth: Dp,
-    enabled : Boolean,
+    enabled: Boolean,
     isError: Boolean,
     interactionSource: MutableInteractionSource,
     colors: CupertinoTextFieldColors,
     shape: Shape,
     paddingValues: PaddingValues,
-    textField : @Composable () -> Unit
+    textField: @Composable () -> Unit,
 ) {
     Box(
         modifier
             .clip(shape)
             .border(strokeWidth, colors.indicatorColor(enabled, isError, interactionSource).value, shape)
             .background(colors.containerColor(enabled, isError, interactionSource).value)
-            .padding(paddingValues)
-    ){
+            .padding(paddingValues),
+    ) {
         textField()
     }
 }
@@ -915,18 +923,19 @@ private fun animateBorderStrokeAsState(
     interactionSource: InteractionSource,
     colors: CupertinoTextFieldColors,
     focusedBorderThickness: Dp,
-    unfocusedBorderThickness: Dp
+    unfocusedBorderThickness: Dp,
 ): State<BorderStroke> {
     val focused by interactionSource.collectIsFocusedAsState()
     val indicatorColor = colors.indicatorColor(enabled, isError, interactionSource)
     val targetThickness = if (focused) focusedBorderThickness else unfocusedBorderThickness
-    val animatedThickness = if (enabled) {
-        animateDpAsState(targetThickness, tween(durationMillis = AnimationDuration))
-    } else {
-        rememberUpdatedState(unfocusedBorderThickness)
-    }
+    val animatedThickness =
+        if (enabled) {
+            animateDpAsState(targetThickness, tween(durationMillis = AnimationDuration))
+        } else {
+            rememberUpdatedState(unfocusedBorderThickness)
+        }
     return rememberUpdatedState(
-        BorderStroke(animatedThickness.value, SolidColor(indicatorColor.value))
+        BorderStroke(animatedThickness.value, SolidColor(indicatorColor.value)),
     )
 }
 

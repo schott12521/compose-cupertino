@@ -11,7 +11,7 @@ import com.arkivanov.essenty.backhandler.BackDispatcher
 actual fun ActualPredictiveBackGestureOverlay(
     backDispatcher: BackDispatcher,
     modifier: Modifier,
-    content: @Composable () -> Unit
-) = Box(modifier){
+    content: @Composable () -> Unit,
+) = Box(modifier) {
     content()
 }

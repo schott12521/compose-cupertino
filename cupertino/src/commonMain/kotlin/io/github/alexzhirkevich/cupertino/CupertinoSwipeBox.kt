@@ -2,7 +2,6 @@
 
 package io.github.alexzhirkevich.cupertino
 
-
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -39,13 +38,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.cupertino.section.CupertinoSectionDefaults
 import io.github.alexzhirkevich.cupertino.swipebox.AnchorsEffect
+import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeActionPosition
+import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeBoxActionsBuilder
 import io.github.alexzhirkevich.cupertino.swipebox.DismissFullyExpandedEffect
 import io.github.alexzhirkevich.cupertino.swipebox.HapticFeedbackEffect
 import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeActionPosition
-import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeBoxState
-import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeActionPosition
-import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeBoxActionsBuilder
 import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeBoxItemFullSwipe
+import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeBoxState
 import io.github.alexzhirkevich.cupertino.swipebox.SwipeBoxStates
 import io.github.alexzhirkevich.cupertino.swipebox.rememberCupertinoSwipeBoxState
 import kotlin.math.roundToInt
@@ -57,10 +56,11 @@ object CupertinoSwipeBoxDefaults {
     val velocityThreshold = Float.POSITIVE_INFINITY
     val actionItemWidth = 84.dp
     val actionItemHeight = 72.dp
-    val animationSpec: SpringSpec<Float> = SpringSpec(
-        stiffness = Spring.StiffnessMedium,
-        dampingRatio = Spring.DampingRatioNoBouncy
-    )
+    val animationSpec: SpringSpec<Float> =
+        SpringSpec(
+            stiffness = Spring.StiffnessMedium,
+            dampingRatio = Spring.DampingRatioNoBouncy,
+        )
 }
 
 /**
@@ -89,7 +89,7 @@ fun CupertinoSwipeBox(
     startToEndFullSwipeEnabled: Boolean = CupertinoSwipeBoxDefaults.allowFullSwipe,
     endToStartFullSwipeEnabled: Boolean = CupertinoSwipeBoxDefaults.allowFullSwipe,
     actionItemBuilder: CupertinoSwipeBoxActionsBuilder.() -> Unit,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val density = LocalDensity.current
     var parentWidth by remember { mutableStateOf(0) }
@@ -119,7 +119,7 @@ fun CupertinoSwipeBox(
         density = density,
         amountOfStartActionItems = startActionsSize,
         amountOfEndActionItems = endActionsSize,
-        actionItemWidth = itemWidth
+        actionItemWidth = itemWidth,
     ) { anchorsInitialized = it }
 
     HapticFeedbackEffect(
@@ -129,7 +129,7 @@ fun CupertinoSwipeBox(
         isFullyExpandedEnd = isFullyExpandedEnd,
         swipeBoxState = state,
         hapticFeedback = hapticFeedback,
-        hasTriggeredHapticFeedback = hasTriggeredHapticFeedback
+        hasTriggeredHapticFeedback = hasTriggeredHapticFeedback,
     ) { hasTriggeredHapticFeedback = it }
 
     DismissFullyExpandedEffect(
@@ -139,20 +139,21 @@ fun CupertinoSwipeBox(
         isEndActionItemSupplied = isEndActionItemSupplied,
         fullExpansionEnd = endToStartFullSwipeEnabled,
         startFullExpansionOnClick = startFullSwipeAction,
-        endFullExpansionOnClick = endFullSwipeAction
+        endFullExpansionOnClick = endFullSwipeAction,
     )
 
     CompositionLocalProvider(
-        LocalSwipeBoxState provides state
+        LocalSwipeBoxState provides state,
     ) {
         Box(
-            modifier = modifier.then(
-                Modifier
-                    .fillMaxSize()
-                    .onGloballyPositioned { coordinates ->
-                        parentWidth = coordinates.size.width
-                    }
-            )
+            modifier =
+                modifier.then(
+                    Modifier
+                        .fillMaxSize()
+                        .onGloballyPositioned { coordinates ->
+                            parentWidth = coordinates.size.width
+                        },
+                ),
         ) {
             val offset by remember {
                 derivedStateOf {
@@ -162,22 +163,24 @@ fun CupertinoSwipeBox(
 
             if (offset > 0 && isStartActionItemSupplied) {
                 CompositionLocalProvider(
-                    LocalSwipeActionPosition provides CupertinoSwipeActionPosition.Start
+                    LocalSwipeActionPosition provides CupertinoSwipeActionPosition.Start,
                 ) {
                     Box(
-                        modifier = Modifier
-                            .height(height)
-                            .width(with(density) { offset.toDp() })
-                            .align(Alignment.CenterStart)
+                        modifier =
+                            Modifier
+                                .height(height)
+                                .width(with(density) { offset.toDp() })
+                                .align(Alignment.CenterStart),
                     ) {
                         Row(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             actionItems.startActions.forEachIndexed { index, swipeAction ->
                                 CompositionLocalProvider(
-                                    LocalSwipeBoxItemFullSwipe provides (index == 0)
+                                    LocalSwipeBoxItemFullSwipe provides (index == 0),
                                 ) {
                                     key(swipeAction.key) {
                                         swipeAction.content.let { it() }
@@ -191,23 +194,25 @@ fun CupertinoSwipeBox(
 
             if (offset < 0 && isEndActionItemSupplied) {
                 CompositionLocalProvider(
-                    LocalSwipeActionPosition provides CupertinoSwipeActionPosition.End
+                    LocalSwipeActionPosition provides CupertinoSwipeActionPosition.End,
                 ) {
                     Box(
-                        modifier = Modifier
-                            .height(height)
-                            .width(with(density) { -offset.toDp() })
-                            .align(Alignment.CenterEnd)
+                        modifier =
+                            Modifier
+                                .height(height)
+                                .width(with(density) { -offset.toDp() })
+                                .align(Alignment.CenterEnd),
                     ) {
                         Row(
-                            modifier = Modifier
-                                .fillMaxSize(),
+                            modifier =
+                                Modifier
+                                    .fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.End
+                            horizontalArrangement = Arrangement.End,
                         ) {
                             actionItems.endActions.forEachIndexed { index, swipeAction ->
                                 CompositionLocalProvider(
-                                    LocalSwipeBoxItemFullSwipe provides (index == actionItems.endActions.lastIndex)
+                                    LocalSwipeBoxItemFullSwipe provides (index == actionItems.endActions.lastIndex),
                                 ) {
                                     key(swipeAction.key) {
                                         swipeAction.content.let { it() }
@@ -221,24 +226,28 @@ fun CupertinoSwipeBox(
 
             if (anchorsInitialized) {
                 Box(
-                    modifier = Modifier
-                        .offset { IntOffset(state.requireOffset().roundToInt(), 0) }
-                        .anchoredDraggable(
-                            state = state,
-                            orientation = Orientation.Horizontal
-                        )
+                    modifier =
+                        Modifier
+                            .offset { IntOffset(state.requireOffset().roundToInt(), 0) }
+                            .anchoredDraggable(
+                                state = state,
+                                orientation = Orientation.Horizontal,
+                            ),
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .height(height)
-                            .background(LocalContainerColor.current)
-                            .padding(
-                                start = CupertinoSectionDefaults.PaddingValues
-                                    .calculateStartPadding(LocalLayoutDirection.current),
-                                end = CupertinoSectionDefaults.PaddingValues
-                                    .calculateStartPadding(LocalLayoutDirection.current)
-                            )
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .height(height)
+                                .background(LocalContainerColor.current)
+                                .padding(
+                                    start =
+                                        CupertinoSectionDefaults.PaddingValues
+                                            .calculateStartPadding(LocalLayoutDirection.current),
+                                    end =
+                                        CupertinoSectionDefaults.PaddingValues
+                                            .calculateStartPadding(LocalLayoutDirection.current),
+                                ),
                     ) {
                         content()
                     }

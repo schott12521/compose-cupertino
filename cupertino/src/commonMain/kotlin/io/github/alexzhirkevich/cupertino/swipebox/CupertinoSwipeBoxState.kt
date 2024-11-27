@@ -11,8 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalDensity
-import io.github.alexzhirkevich.cupertino.InternalCupertinoApi
 import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxDefaults
+import io.github.alexzhirkevich.cupertino.InternalCupertinoApi
 import kotlinx.coroutines.CoroutineScope
 
 enum class SwipeBoxStates {
@@ -27,7 +27,7 @@ enum class SwipeBoxStates {
  * TODO javadocs
  *
  */
-@OptIn(ExperimentalFoundationApi::class, InternalCupertinoApi::class,)
+@OptIn(ExperimentalFoundationApi::class, InternalCupertinoApi::class)
 @Composable
 fun rememberCupertinoSwipeBoxState(
     key: Any? = null,
@@ -41,25 +41,26 @@ fun rememberCupertinoSwipeBoxState(
 ): AnchoredDraggableState<SwipeBoxStates> {
     val density = LocalDensity.current
 
-    val anchoredDraggableState =  remember(key) {
-        AnchoredDraggableState(
-            initialValue = initialValue,
-            snapAnimationSpec = animationSpec,
-            decayAnimationSpec = splineBasedDecay(density),
-            positionalThreshold = positionalThreshold,
-            velocityThreshold = { velocityThreshold }
-        )
-    }
+    val anchoredDraggableState =
+        remember(key) {
+            AnchoredDraggableState(
+                initialValue = initialValue,
+                snapAnimationSpec = animationSpec,
+                decayAnimationSpec = splineBasedDecay(density),
+                positionalThreshold = positionalThreshold,
+                velocityThreshold = { velocityThreshold },
+            )
+        }
 
     ScrollEffect(
         scrollableState = scrollableState,
-        swipeBoxState = anchoredDraggableState
+        swipeBoxState = anchoredDraggableState,
     )
 
     ObserverGlobalSwipeBoxListenerEffect(
         state = anchoredDraggableState,
         openSwipeBoxState = openSwipeBoxState,
-        coroutineScope = coroutineScope
+        coroutineScope = coroutineScope,
     )
 
     return anchoredDraggableState

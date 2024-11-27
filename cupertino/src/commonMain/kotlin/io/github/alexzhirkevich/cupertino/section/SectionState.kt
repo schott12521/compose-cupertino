@@ -14,15 +14,16 @@ import androidx.compose.runtime.setValue
 @Composable
 fun rememberSectionState(
     initiallyCollapsed: Boolean = false,
-    canCollapse: Boolean = true
-) : SectionState = rememberSaveable(
-    saver = SectionState.Saver()
-){
-    SectionState(
-        initiallyCollapsed = initiallyCollapsed,
-        canCollapse = canCollapse
-    )
-}
+    canCollapse: Boolean = true,
+): SectionState =
+    rememberSaveable(
+        saver = SectionState.Saver(),
+    ) {
+        SectionState(
+            initiallyCollapsed = initiallyCollapsed,
+            canCollapse = canCollapse,
+        )
+    }
 
 /**
  * Section state is used to manage collapsing behavior and state of sections with [SectionStyle.Sidebar]
@@ -30,7 +31,7 @@ fun rememberSectionState(
 @Stable
 class SectionState(
     initiallyCollapsed: Boolean,
-    canCollapse : Boolean
+    canCollapse: Boolean,
 ) {
     var isCollapsed by mutableStateOf(initiallyCollapsed)
         private set
@@ -38,9 +39,11 @@ class SectionState(
     var canCollapse by mutableStateOf(canCollapse)
 
     fun toggle() {
-        if (isCollapsed)
+        if (isCollapsed) {
             expand()
-        else collapse()
+        } else {
+            collapse()
+        }
     }
 
     fun collapse() {
@@ -60,9 +63,9 @@ class SectionState(
                 restore = {
                     SectionState(
                         initiallyCollapsed = it[0],
-                        canCollapse = it[1]
+                        canCollapse = it[1],
                     )
-                }
+                },
             )
     }
 }

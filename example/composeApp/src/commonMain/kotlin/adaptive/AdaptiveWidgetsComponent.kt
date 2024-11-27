@@ -22,10 +22,8 @@ import com.arkivanov.decompose.ComponentContext
  * limitations under the License.
  */
 
-
 interface AdaptiveWidgetsComponent {
-
-    val isMaterial : State<Boolean>
+    val isMaterial: State<Boolean>
 
     fun onThemeChanged()
 
@@ -34,10 +32,10 @@ interface AdaptiveWidgetsComponent {
 
 class DefaultAdaptiveWidgetsComponent(
     context: ComponentContext,
-    private val onNavigateBack : () -> Unit,
-    override val isMaterial: MutableState<Boolean>
-) : AdaptiveWidgetsComponent, ComponentContext by context {
-
+    private val onNavigateBack: () -> Unit,
+    override val isMaterial: MutableState<Boolean>,
+) : AdaptiveWidgetsComponent,
+    ComponentContext by context {
     override fun onNavigateBack() {
         onNavigateBack.invoke()
     }

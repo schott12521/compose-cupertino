@@ -7,7 +7,5 @@ object CupertinoIcons {
 
     object Outlined
 
-
     val Default = Outlined
 }
-
