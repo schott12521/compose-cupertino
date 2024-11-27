@@ -14,7 +14,8 @@ expect fun CupertinoDateTimePickerNative(
     state: CupertinoDateTimePickerState,
     modifier: Modifier = Modifier,
     style: DatePickerStyle = DatePickerStyle.Wheel(),
-    containerColor : Color = LocalContainerColor.current.takeOrElse {
-        CupertinoTheme.colorScheme.secondarySystemGroupedBackground
-    }
+    containerColor: Color =
+        LocalContainerColor.current.takeOrElse {
+            CupertinoTheme.colorScheme.secondarySystemGroupedBackground
+        },
 )

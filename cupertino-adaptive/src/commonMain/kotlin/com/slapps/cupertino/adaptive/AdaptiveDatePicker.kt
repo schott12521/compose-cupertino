@@ -33,19 +33,22 @@ import com.slapps.cupertino.LocalContainerColor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 
-@OptIn(ExperimentalCupertinoApi::class, ExperimentalMaterial3Api::class,
-    InternalCupertinoApi::class
+@OptIn(
+    ExperimentalCupertinoApi::class,
+    ExperimentalMaterial3Api::class,
+    InternalCupertinoApi::class,
 )
 @ExperimentalAdaptiveApi
 @Composable
 fun AdaptiveDatePicker(
-    state : CupertinoDatePickerState,
+    state: CupertinoDatePickerState,
     modifier: Modifier = Modifier,
-    adaptation: AdaptationScope<CupertinoDatePickerAdaptation, MaterialDatePickerAdaptation>. () -> Unit = {}
+    adaptation: AdaptationScope<CupertinoDatePickerAdaptation, MaterialDatePickerAdaptation>.() -> Unit = {},
 ) {
-    val materialState = key(state) {
-        rememberDatePickerState(state.selectedDateMillis)
-    }
+    val materialState =
+        key(state) {
+            rememberDatePickerState(state.selectedDateMillis)
+        }
 
     LaunchedEffect(state, materialState) {
         snapshotFlow {
@@ -57,7 +60,7 @@ fun AdaptiveDatePicker(
         }
     }
 
-    LaunchedEffect(state ,materialState){
+    LaunchedEffect(state, materialState) {
         snapshotFlow {
             materialState.selectedDateMillis
         }.filterNotNull().collectLatest {
@@ -68,16 +71,17 @@ fun AdaptiveDatePicker(
     }
 
     AdaptiveWidget(
-        adaptation = remember(materialState) {
-            DatePickerAdaptation(materialState)
-        },
+        adaptation =
+            remember(materialState) {
+                DatePickerAdaptation(materialState)
+            },
         adaptationScope = adaptation,
         cupertino = {
             CupertinoDatePicker(
                 modifier = modifier,
                 state = state,
                 style = it.style,
-                containerColor = it.containerColor
+                containerColor = it.containerColor,
             )
         },
         material = {
@@ -95,31 +99,31 @@ fun AdaptiveDatePicker(
                 dateFormatter = it.dateFormatter,
                 title = it.title,
                 headline = it.headline,
-                showModeToggle = it.showModeToggle
+                showModeToggle = it.showModeToggle,
             )
-        }
+        },
     )
 }
 
 @Stable
 class CupertinoDatePickerAdaptation internal constructor(
-    style : DatePickerStyle,
-    containerColor: Color
+    style: DatePickerStyle,
+    containerColor: Color,
 ) {
-    var style : DatePickerStyle by mutableStateOf(style)
+    var style: DatePickerStyle by mutableStateOf(style)
     var containerColor: Color by mutableStateOf(containerColor)
 }
 
 @Stable
 @OptIn(ExperimentalMaterial3Api::class)
 class MaterialDatePickerAdaptation internal constructor(
-    state : DatePickerState,
-    colors : DatePickerColors,
+    state: DatePickerState,
+    colors: DatePickerColors,
     dateFormatter: DatePickerFormatter = DatePickerDefaults.dateFormatter(),
     title: (@Composable () -> Unit)? = {
         DatePickerDefaults.DatePickerTitle(
             displayMode = state.displayMode,
-            modifier = Modifier.padding(DatePickerTitlePadding)
+            modifier = Modifier.padding(DatePickerTitlePadding),
         )
     },
     headline: (@Composable () -> Unit)? = {
@@ -127,13 +131,13 @@ class MaterialDatePickerAdaptation internal constructor(
             selectedDateMillis = state.selectedDateMillis,
             displayMode = state.displayMode,
             dateFormatter = dateFormatter,
-            modifier = Modifier.padding(DatePickerHeadlinePadding)
+            modifier = Modifier.padding(DatePickerHeadlinePadding),
         )
     },
     showModeToggle: Boolean = true,
 ) {
-    internal val state : DatePickerState by mutableStateOf(state)
-    var colors : DatePickerColors by mutableStateOf(colors)
+    internal val state: DatePickerState by mutableStateOf(state)
+    var colors: DatePickerColors by mutableStateOf(colors)
     var dateFormatter: DatePickerFormatter by mutableStateOf(dateFormatter)
     var title: (@Composable () -> Unit)? by mutableStateOf(title)
     var headline: (@Composable () -> Unit)? by mutableStateOf(headline)
@@ -146,15 +150,14 @@ private val DatePickerHeadlinePadding = PaddingValues(start = 24.dp, end = 12.dp
 @ExperimentalAdaptiveApi
 @OptIn(ExperimentalMaterial3Api::class)
 private class DatePickerAdaptation(
-    private val state: DatePickerState
+    private val state: DatePickerState,
 ) : Adaptation<CupertinoDatePickerAdaptation, MaterialDatePickerAdaptation>() {
-
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoDatePickerAdaptation {
         val style = DatePickerStyle.Pager()
         val containerColor = LocalContainerColor.current
 
-        return remember(style,containerColor) {
+        return remember(style, containerColor) {
             CupertinoDatePickerAdaptation(style, containerColor)
         }
     }

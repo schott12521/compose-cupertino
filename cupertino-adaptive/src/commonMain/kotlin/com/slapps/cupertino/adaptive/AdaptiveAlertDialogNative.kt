@@ -22,7 +22,6 @@ import com.slapps.cupertino.NativeAlertDialogActionsScope
 import com.slapps.cupertino.theme.CupertinoColors
 import com.slapps.cupertino.theme.systemGray7
 
-
 @ExperimentalAdaptiveApi
 @Composable
 fun AdaptiveAlertDialogNative(
@@ -30,8 +29,8 @@ fun AdaptiveAlertDialogNative(
     title: String,
     message: String,
     properties: DialogProperties = DialogProperties(),
-    adaptation : AdaptationScope<CupertinoAlertAdaptationNative, MaterialAlertAdaptationNative>.() -> Unit = {},
-    buttons: NativeAlertDialogActionsScope.() -> Unit
+    adaptation: AdaptationScope<CupertinoAlertAdaptationNative, MaterialAlertAdaptationNative>.() -> Unit = {},
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) {
     AdaptiveWidget(
         adaptation = remember { AlertDialogAdaptationNative() },
@@ -41,110 +40,110 @@ fun AdaptiveAlertDialogNative(
                 onDismissRequest = onDismissRequest,
                 title = title,
                 message = message,
-                containerColor = it.containerColor.takeOrElse {
-                    CupertinoColors.systemGray7
-                },
+                containerColor =
+                    it.containerColor.takeOrElse {
+                        CupertinoColors.systemGray7
+                    },
                 shape = it.shape,
                 properties = properties,
                 buttonsOrientation = it.buttonsOrientation,
-                buttons = buttons
+                buttons = buttons,
             )
         },
         material = { m ->
 
-            val scope = remember(buttons) {
-                AdaptiveAlertDialogButtonScopeNative().apply(buttons)
-            }
+            val scope =
+                remember(buttons) {
+                    AdaptiveAlertDialogButtonScopeNative().apply(buttons)
+                }
 
             AlertDialog(
                 onDismissRequest = onDismissRequest,
                 confirmButton = {
-                    val btn = scope.buttons
-                        .fastFirstOrNull { it.style != AlertActionStyle.Cancel }
-                        ?: return@AlertDialog
+                    val btn =
+                        scope.buttons
+                            .fastFirstOrNull { it.style != AlertActionStyle.Cancel }
+                            ?: return@AlertDialog
 
                     m.confirmButton.invoke(
                         btn.style,
                         btn.enabled,
                         btn.onClick,
-                        btn.title
+                        btn.title,
                     )
                 },
-                dismissButton = scope.buttons
-                    .fastFirstOrNull { it.style == AlertActionStyle.Cancel }
-                    ?.let {
-                        {
-                            m.confirmButton.invoke(
-                                it.style,
-                                it.enabled,
-                                it.onClick,
-                                it.title
-                            )
-                        }
-                    },
+                dismissButton =
+                    scope.buttons
+                        .fastFirstOrNull { it.style == AlertActionStyle.Cancel }
+                        ?.let {
+                            {
+                                m.confirmButton.invoke(
+                                    it.style,
+                                    it.enabled,
+                                    it.onClick,
+                                    it.title,
+                                )
+                            }
+                        },
                 shape = m.shape,
                 title = m.title.let { { it(title) } },
                 text = m.text.let { { it(message) } },
-                containerColor = m.containerColor.takeOrElse {
-                    AlertDialogDefaults.containerColor
-                },
-                properties = properties
+                containerColor =
+                    m.containerColor.takeOrElse {
+                        AlertDialogDefaults.containerColor
+                    },
+                properties = properties,
             )
-        }
+        },
     )
 }
 
 class MaterialAlertAdaptationNative internal constructor(
-
     var confirmButton: @Composable (
-        style : AlertActionStyle,
-        enabled : Boolean,
-        onClick : () -> Unit,
-        title: String
+        style: AlertActionStyle,
+        enabled: Boolean,
+        onClick: () -> Unit,
+        title: String,
     ) -> Unit = { _, enabled, onClick, t ->
         Button(
             enabled = enabled,
             onClick = onClick,
-        ){
+        ) {
             Text(t)
         }
     },
-
     var dismissButton: @Composable (
-        style : AlertActionStyle,
-        enabled : Boolean,
-        onClick : () -> Unit,
-        title: String
+        style: AlertActionStyle,
+        enabled: Boolean,
+        onClick: () -> Unit,
+        title: String,
     ) -> Unit = { _, enabled, onClick, t ->
         TextButton(
             enabled = enabled,
             onClick = onClick,
-        ){
+        ) {
             Text(t)
         }
     },
-
-    var title : @Composable (String) -> Unit = {
+    var title: @Composable (String) -> Unit = {
         Text(it)
     },
-    var text : @Composable (String) -> Unit = {
+    var text: @Composable (String) -> Unit = {
         Text(it)
     },
     var containerColor: Color,
-    var shape : Shape
+    var shape: Shape,
 )
 
 class CupertinoAlertAdaptationNative internal constructor(
     var containerColor: Color,
-    var shape : Shape,
-    var buttonsOrientation: Orientation = CupertinoDialogsDefaults.ButtonOrientation
+    var shape: Shape,
+    var buttonsOrientation: Orientation = CupertinoDialogsDefaults.ButtonOrientation,
 )
-
 
 @ExperimentalAdaptiveApi
 @Stable
-private class AlertDialogAdaptationNative :
-    Adaptation<CupertinoAlertAdaptationNative, MaterialAlertAdaptationNative>() {
+private class AlertDialogAdaptationNative : Adaptation<CupertinoAlertAdaptationNative, MaterialAlertAdaptationNative>() {
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoAlertAdaptationNative {
         val containerColor = CupertinoDialogsDefaults.ContainerColor
@@ -153,21 +152,20 @@ private class AlertDialogAdaptationNative :
         return remember(containerColor, shape) {
             CupertinoAlertAdaptationNative(
                 containerColor = containerColor,
-                shape = shape
+                shape = shape,
             )
         }
     }
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialAlertAdaptationNative {
-
         val containerColor = AlertDialogDefaults.containerColor
         val shape = AlertDialogDefaults.shape
 
-        return remember(containerColor,shape) {
+        return remember(containerColor, shape) {
             MaterialAlertAdaptationNative(
                 containerColor = containerColor,
-                shape = shape
+                shape = shape,
             )
         }
     }
@@ -177,25 +175,24 @@ private class AdaptiveAlertDialogButtonDataNative(
     val onClick: () -> Unit,
     val style: AlertActionStyle,
     val enabled: Boolean,
-    val title: String
+    val title: String,
 )
 
 private class AdaptiveAlertDialogButtonScopeNative : NativeAlertDialogActionsScope {
-
     val buttons = mutableListOf<AdaptiveAlertDialogButtonDataNative>()
 
     override fun action(
         onClick: () -> Unit,
         style: AlertActionStyle,
         enabled: Boolean,
-        title: String
+        title: String,
     ) {
-        buttons += AdaptiveAlertDialogButtonDataNative(
-            onClick = onClick,
-            style = style,
-            enabled = enabled,
-            title = title
-        )
+        buttons +=
+            AdaptiveAlertDialogButtonDataNative(
+                onClick = onClick,
+                style = style,
+                enabled = enabled,
+                title = title,
+            )
     }
 }
-

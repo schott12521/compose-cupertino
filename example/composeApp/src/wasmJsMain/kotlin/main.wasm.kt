@@ -4,5 +4,3 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 fun main() {
     WasmApp()
 }
-
-

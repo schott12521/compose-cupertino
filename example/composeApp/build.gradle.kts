@@ -21,11 +21,11 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "shared"
@@ -36,22 +36,24 @@ kotlin {
             export("com.arkivanov.essenty:lifecycle:${libs.versions.essenty}")
         }
     }
-    
+
     jvm("desktop")
-    
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(project.rootDir.path)
-                        add(project.projectDir.path)
+                devServer =
+                    (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                        static =
+                            (static ?: mutableListOf()).apply {
+                                // Serve sources to debug inside browser
+                                add(project.rootDir.path)
+                                add(project.projectDir.path)
+                            }
                     }
-                }
                 sourceMaps = true
             }
         }
@@ -90,7 +92,6 @@ kotlin {
             implementation(compose.desktop.currentOs)
         }
     }
-
 }
 
 android {

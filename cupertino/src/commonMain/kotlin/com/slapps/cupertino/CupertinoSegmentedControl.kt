@@ -57,7 +57,6 @@ import com.slapps.cupertino.theme.White
 import com.slapps.cupertino.theme.isDark
 import com.slapps.cupertino.theme.systemGray8
 
-
 /**
  * Sliding segmented control
  *
@@ -76,8 +75,8 @@ import com.slapps.cupertino.theme.systemGray8
 fun CupertinoSegmentedControl(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
-    colors : CupertinoSegmentedControlColors = CupertinoSegmentedControlDefaults.colors(),
-    shape : Shape = CupertinoSegmentedControlDefaults.shape,
+    colors: CupertinoSegmentedControlColors = CupertinoSegmentedControlDefaults.colors(),
+    shape: Shape = CupertinoSegmentedControlDefaults.shape,
     paddingValues: PaddingValues = CupertinoSegmentedControlDefaults.PaddingValues,
     indicator: @Composable (tabPositions: List<TabPosition>) -> Unit = @Composable { tabPositions ->
         CupertinoSegmentedControlIndicator(
@@ -85,21 +84,21 @@ fun CupertinoSegmentedControl(
             tabPositions = tabPositions,
             color = colors.indicatorColor,
             shape = shape,
-            separatorColor = colors.separatorColor
+            separatorColor = colors.separatorColor,
         )
     },
-    tabs: @Composable () -> Unit
+    tabs: @Composable () -> Unit,
 ) {
-
     CompositionLocalProvider(
-        LocalSelectedInteractionSource provides mutableStateOf(null)
+        LocalSelectedInteractionSource provides mutableStateOf(null),
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
-            modifier = modifier
-                .padding(paddingValues)
-                .heightIn(min = CupertinoSegmentedControlTokens.MinHeight)
-                .clip(shape),
+            modifier =
+                modifier
+                    .padding(paddingValues)
+                    .heightIn(min = CupertinoSegmentedControlTokens.MinHeight)
+                    .clip(shape),
             containerColor = colors.containerColor,
             contentColor = colors.contentColor,
             indicator = indicator,
@@ -107,7 +106,6 @@ fun CupertinoSegmentedControl(
         )
     }
 }
-
 
 /**
  * Sliding indicator of the [CupertinoSegmentedControl]
@@ -126,59 +124,58 @@ fun CupertinoSegmentedControlIndicator(
     modifier: Modifier = Modifier,
     shape: Shape = CupertinoTheme.shapes.small,
     color: Color = CupertinoSegmentedControlDefaults.colors().indicatorColor,
-    separatorColor : Color = CupertinoTheme.colorScheme.separator,
+    separatorColor: Color = CupertinoTheme.colorScheme.separator,
 ) {
-
     val isSmall = isTabSelectedAndPressed()
 
     val animatedSize by animateFloatAsState(if (isSmall) .95f else 1f)
 
     Spacer(
-        modifier = Modifier
-            .drawBehind {
-                tabPositions
-                    .dropLast(1)
-                    .fastForEach {
-                        translate(
-                            left = it.right.toPx(),
-                            top = size.height * 0.2f
-                        ) {
-                            drawLine(
-                                color = separatorColor,
-                                start = Offset.Zero,
-                                end = Offset(0f, size.height * 0.6f)
-                            )
+        modifier =
+            Modifier
+                .drawBehind {
+                    tabPositions
+                        .dropLast(1)
+                        .fastForEach {
+                            translate(
+                                left = it.right.toPx(),
+                                top = size.height * 0.2f,
+                            ) {
+                                drawLine(
+                                    color = separatorColor,
+                                    start = Offset.Zero,
+                                    end = Offset(0f, size.height * 0.6f),
+                                )
+                            }
                         }
+                }.graphicsLayer {
+                    if (selectedTabIndex in tabPositions.indices) {
+                        scaleX = animatedSize
+                        scaleY = animatedSize
+
+                        val selectedTabCenter =
+                            tabPositions[selectedTabIndex]
+                                .let {
+                                    it.left + it.width / 2
+                                }.toPx()
+
+                        transformOrigin =
+                            TransformOrigin(
+                                pivotFractionX = selectedTabCenter / size.width,
+                                pivotFractionY = .5f,
+                            )
                     }
-            }
-            .graphicsLayer {
-                if (selectedTabIndex in tabPositions.indices) {
-                    scaleX = animatedSize
-                    scaleY = animatedSize
-
-                    val selectedTabCenter = tabPositions[selectedTabIndex].let {
-                        it.left + it.width / 2
-                    }.toPx()
-
-                    transformOrigin = TransformOrigin(
-                        pivotFractionX = selectedTabCenter / size.width,
-                        pivotFractionY = .5f
-                    )
-                }
-            }
-            .then(modifier)
-            .cupertinoTabIndicatorOffset(
-                tabPositions = tabPositions,
-                selectedTabIndex = selectedTabIndex
-            )
-            .padding(CupertinoSegmentedControlTokens.IndicatorPadding)
-            .shadow(
-                elevation = CupertinoSegmentedControlTokens.IndicatorElevation,
-                shape = shape
-            )
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(color)
+                }.then(modifier)
+                .cupertinoTabIndicatorOffset(
+                    tabPositions = tabPositions,
+                    selectedTabIndex = selectedTabIndex,
+                ).padding(CupertinoSegmentedControlTokens.IndicatorPadding)
+                .shadow(
+                    elevation = CupertinoSegmentedControlTokens.IndicatorElevation,
+                    shape = shape,
+                ).fillMaxWidth()
+                .fillMaxHeight()
+                .background(color),
     )
 }
 
@@ -194,16 +191,15 @@ fun CupertinoSegmentedControlIndicator(
 @ExperimentalCupertinoApi
 fun CupertinoSegmentedControlTab(
     onClick: () -> Unit,
-    isSelected : Boolean,
+    isSelected: Boolean,
     modifier: Modifier = Modifier,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit,
 ) {
-
     val pressed by interactionSource.collectIsPressedAsState()
 
     val animatedAloha by animateFloatAsState(
-        if (pressed) CupertinoButtonTokens.PressedPlainButonAlpha else 1f
+        if (pressed) CupertinoButtonTokens.PressedPlainButonAlpha else 1f,
     )
 
     val source = LocalSelectedInteractionSource.current
@@ -215,56 +211,55 @@ fun CupertinoSegmentedControlTab(
     }
 
     val animatedScale by animateFloatAsState(
-        if (pressed && isSelected) .9f  else 1f
+        if (pressed && isSelected) .9f else 1f,
     )
 
     Box(
-        modifier = modifier
-            .heightIn(min = CupertinoSegmentedControlTokens.MinHeight)
-            .graphicsLayer {
-                alpha = animatedAloha
-                scaleY = animatedScale
-                scaleX = animatedScale
-            }
-            .clickable(
-                onClick = onClick,
-                indication = null,
-                interactionSource = interactionSource,
-                role = Role.Tab
-            ),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .heightIn(min = CupertinoSegmentedControlTokens.MinHeight)
+                .graphicsLayer {
+                    alpha = animatedAloha
+                    scaleY = animatedScale
+                    scaleX = animatedScale
+                }.clickable(
+                    onClick = onClick,
+                    indication = null,
+                    interactionSource = interactionSource,
+                    role = Role.Tab,
+                ),
+        contentAlignment = Alignment.Center,
     ) {
         ProvideTextStyle(
             CupertinoTheme.typography.caption1.copy(
                 fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Normal,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             ),
-            content = content
+            content = content,
         )
     }
 }
 
 class CupertinoSegmentedControlColors internal constructor(
     val containerColor: Color,
-    val contentColor : Color,
+    val contentColor: Color,
     val indicatorColor: Color,
-    val separatorColor : Color
+    val separatorColor: Color,
 )
 
 internal object CupertinoSegmentedControlTokens {
     val MinHeight = 34.dp
-    val IndicatorElevation : Dp = 4.dp
-    val IndicatorPadding : Dp = 2.dp
+    val IndicatorElevation: Dp = 4.dp
+    val IndicatorPadding: Dp = 2.dp
 }
 
 @Immutable
 object CupertinoSegmentedControlDefaults {
-
-    val PaddingValues : PaddingValues
+    val PaddingValues: PaddingValues
         get() = CupertinoSectionDefaults.PaddingValues
 
-    val shape : Shape
+    val shape: Shape
         @Composable
         @ReadOnlyComposable
         get() = CupertinoTheme.shapes.small
@@ -272,57 +267,60 @@ object CupertinoSegmentedControlDefaults {
     @Composable
     @ReadOnlyComposable
     fun colors(
-        containerColor : Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        indicatorColor: Color = if (isDark())
-            CupertinoColors.systemGray8(true)
-        else CupertinoColors.White,
+        containerColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
+        indicatorColor: Color =
+            if (isDark()) {
+                CupertinoColors.systemGray8(true)
+            } else {
+                CupertinoColors.White
+            },
         contentColor: Color = CupertinoTheme.colorScheme.label,
-        separatorColor: Color = CupertinoTheme.colorScheme.separator
+        separatorColor: Color = CupertinoTheme.colorScheme.separator,
     ) = CupertinoSegmentedControlColors(
         containerColor = containerColor,
         contentColor = contentColor,
         indicatorColor = indicatorColor,
-        separatorColor = separatorColor
+        separatorColor = separatorColor,
     )
 }
-
 
 private val OffsetShift = 10.dp
 
 private fun Modifier.cupertinoTabIndicatorOffset(
     tabPositions: List<TabPosition>,
     selectedTabIndex: Int,
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "tabIndicatorOffset"
-        value = tabPositions[selectedTabIndex]
+): Modifier =
+    composed(
+        inspectorInfo =
+            debugInspectorInfo {
+                name = "tabIndicatorOffset"
+                value = tabPositions[selectedTabIndex]
+            },
+    ) {
+        val isFirst = selectedTabIndex == 0
+        val isLast = selectedTabIndex == tabPositions.lastIndex
+
+        val currentTabPosition = tabPositions[selectedTabIndex]
+
+        val currentTabWidth by animateDpAsState(
+            targetValue =
+                currentTabPosition.width +
+                    if (isFirst || isLast) OffsetShift / 2 else OffsetShift,
+            animationSpec = cupertinoTween(),
+        )
+        val indicatorOffset by animateDpAsState(
+            targetValue = currentTabPosition.left - if (isFirst) 0.dp else OffsetShift / 2,
+            animationSpec = cupertinoTween(),
+        )
+
+        fillMaxWidth()
+            .wrapContentSize(Alignment.CenterStart)
+            .offset(x = indicatorOffset)
+            .width(currentTabWidth)
     }
-) {
-
-    val isFirst = selectedTabIndex == 0
-    val isLast = selectedTabIndex == tabPositions.lastIndex
-
-    val currentTabPosition = tabPositions[selectedTabIndex]
-
-
-    val currentTabWidth by animateDpAsState(
-        targetValue = currentTabPosition.width +
-                if (isFirst || isLast) OffsetShift/2 else OffsetShift,
-        animationSpec = cupertinoTween()
-    )
-    val indicatorOffset by animateDpAsState(
-        targetValue = currentTabPosition.left - if (isFirst) 0.dp else OffsetShift/2,
-        animationSpec = cupertinoTween()
-    )
-
-    fillMaxWidth()
-        .wrapContentSize(Alignment.CenterStart)
-        .offset(x = indicatorOffset)
-        .width(currentTabWidth)
-}
 
 @Composable
-private fun isTabSelectedAndPressed() : Boolean {
+private fun isTabSelectedAndPressed(): Boolean {
     val source = LocalSelectedInteractionSource.current.value ?: return false
 
     return source.collectIsPressedAsState().value

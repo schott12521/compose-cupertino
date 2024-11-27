@@ -18,10 +18,10 @@ publishing {
     }
 }
 
-
-val publishProperties = Properties().apply {
-    load(file("publish.properties").inputStream())
-}
+val publishProperties =
+    Properties().apply {
+        load(file("publish.properties").inputStream())
+    }
 
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")

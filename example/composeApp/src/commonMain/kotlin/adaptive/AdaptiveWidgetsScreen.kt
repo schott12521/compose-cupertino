@@ -68,13 +68,10 @@ import com.slapps.cupertino.rememberCupertinoDatePickerState
 @OptIn(
     ExperimentalAdaptiveApi::class,
     ExperimentalLayoutApi::class,
-    ExperimentalCupertinoApi::class
+    ExperimentalCupertinoApi::class,
 )
 @Composable
-fun AdaptiveWidgetsScreen(
-    component: AdaptiveWidgetsComponent
-) {
-
+fun AdaptiveWidgetsScreen(component: AdaptiveWidgetsComponent) {
     AdaptiveScaffold(
         topBar = {
             AdaptiveTopAppBar(
@@ -89,15 +86,19 @@ fun AdaptiveWidgetsScreen(
                         },
                         material = {
                             IconButton(
-                                onClick = component::onNavigateBack
+                                onClick = component::onNavigateBack,
                             ) {
                                 Icon(
-                                    imageVector = if (LocalLayoutDirection.current == LayoutDirection.Ltr)
-                                        Icons.AutoMirrored.Filled.ArrowBack else Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "Back"
+                                    imageVector =
+                                        if (LocalLayoutDirection.current == LayoutDirection.Ltr) {
+                                            Icons.AutoMirrored.Filled.ArrowBack
+                                        } else {
+                                            Icons.AutoMirrored.Filled.ArrowForward
+                                        },
+                                    contentDescription = "Back",
                                 )
                             }
-                        }
+                        },
                     )
                 },
                 title = {
@@ -110,23 +111,23 @@ fun AdaptiveWidgetsScreen(
                         checked = component.isMaterial.value,
                         onCheckedChange = {
                             component.onThemeChanged()
-                        }
+                        },
                     )
-                }
+                },
             )
         },
         bottomBar = {
             AdaptiveNavigationBar {
-
                 var selected by rememberSaveable {
                     mutableStateOf(0)
                 }
 
-                val content = listOf(
-                    "Profile" to AdaptiveIcons.Outlined.Person,
-                    "Menu" to AdaptiveIcons.Outlined.Menu,
-                    "Settings" to AdaptiveIcons.Outlined.Settings
-                )
+                val content =
+                    listOf(
+                        "Profile" to AdaptiveIcons.Outlined.Person,
+                        "Menu" to AdaptiveIcons.Outlined.Menu,
+                        "Settings" to AdaptiveIcons.Outlined.Settings,
+                    )
 
                 content.forEachIndexed { index, pair ->
                     AdaptiveNavigationBarItem(
@@ -137,38 +138,37 @@ fun AdaptiveWidgetsScreen(
                         icon = {
                             Icon(
                                 imageVector = pair.second,
-                                contentDescription = pair.first
+                                contentDescription = pair.first,
                             )
                         },
                         label = {
                             Text(pair.first)
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     ) {
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                end = 12.dp,
-                top = it.calculateTopPadding() + 12.dp,
-                bottom = it.calculateBottomPadding()
-            ),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            contentPadding =
+                PaddingValues(
+                    start = 12.dp,
+                    end = 12.dp,
+                    top = it.calculateTopPadding() + 12.dp,
+                    bottom = it.calculateBottomPadding(),
+                ),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-
             item {
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     adaptiveIcons().forEach {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = it,
-                            contentDescription = it.name
+                            contentDescription = it.name,
                         )
                     }
                 }
@@ -177,19 +177,19 @@ fun AdaptiveWidgetsScreen(
             item {
                 var checked by remember { mutableStateOf(false) }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     AdaptiveSwitch(
                         checked = checked,
                         onCheckedChange = {
                             checked = it
-                        }
+                        },
                     )
                     AdaptiveSwitch(
                         checked = !checked,
                         onCheckedChange = {
                             checked = !it
-                        }
+                        },
                     )
 
                     AdaptiveCircularProgressIndicator()
@@ -201,7 +201,7 @@ fun AdaptiveWidgetsScreen(
                     mutableStateOf(.5f)
                 }
 
-                AdaptiveSlider(v, {v = it})
+                AdaptiveSlider(v, { v = it })
             }
 
             item {
@@ -209,45 +209,44 @@ fun AdaptiveWidgetsScreen(
                     mutableStateOf(.5f)
                 }
 
-                AdaptiveSlider(v, {v = it},steps = 5)
+                AdaptiveSlider(v, { v = it }, steps = 5)
             }
 
             item {
-
                 var alertVisible by remember {
                     mutableStateOf(false)
                 }
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AdaptiveButton(
                         onClick = {
                             alertVisible = true
-                        }
+                        },
                     ) {
                         Text("Alert")
                     }
-                    AdaptiveTextButton(onClick = {}){
+                    AdaptiveTextButton(onClick = {}) {
                         Text("Text Button")
                     }
 
-                    AdaptiveIconButton(onClick = {}){
+                    AdaptiveIconButton(onClick = {}) {
                         Icon(
                             imageVector = AdaptiveIcons.Outlined.Delete,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                    AdaptiveFilledIconButton(onClick = {}){
+                    AdaptiveFilledIconButton(onClick = {}) {
                         Icon(
                             imageVector = AdaptiveIcons.Outlined.Delete,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 }
 
-                if (alertVisible){
+                if (alertVisible) {
                     AdaptiveAlertDialog(
                         onDismissRequest = {
                             alertVisible = false
@@ -257,16 +256,16 @@ fun AdaptiveWidgetsScreen(
                         },
                         message = {
                             Text("Adaptive Alert Dialog")
-                        }
-                    ){
+                        },
+                    ) {
                         cancel(onClick = {
                             alertVisible = false
-                        }){
+                        }) {
                             Text("Cancel")
                         }
                         default(onClick = {
                             alertVisible = false
-                        }){
+                        }) {
                             Text("OK")
                         }
                     }
@@ -275,7 +274,7 @@ fun AdaptiveWidgetsScreen(
 
             item {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     var a by remember { mutableStateOf(true) }
                     var b by remember { mutableStateOf(false) }
@@ -284,11 +283,12 @@ fun AdaptiveWidgetsScreen(
                     AdaptiveCheckbox(checked = a, onCheckedChange = { a = it })
                     AdaptiveCheckbox(checked = b, onCheckedChange = { b = it })
                     AdaptiveTriStateCheckbox(state = c, onClick = {
-                        c = when (c) {
-                            ToggleableState.On -> ToggleableState.Off
-                            ToggleableState.Off -> ToggleableState.Indeterminate
-                            ToggleableState.Indeterminate -> ToggleableState.On
-                        }
+                        c =
+                            when (c) {
+                                ToggleableState.On -> ToggleableState.Off
+                                ToggleableState.Off -> ToggleableState.Indeterminate
+                                ToggleableState.Indeterminate -> ToggleableState.On
+                            }
                     })
                 }
             }
@@ -303,7 +303,7 @@ fun AdaptiveWidgetsScreen(
                             showModeToggle = false
                             title = null
                         }
-                    }
+                    },
                 )
             }
         }
@@ -311,14 +311,15 @@ fun AdaptiveWidgetsScreen(
 }
 
 @Composable
-private fun adaptiveIcons() = listOf(
-    AdaptiveIcons.Outlined.Add,
-    AdaptiveIcons.Outlined.Create,
-    AdaptiveIcons.Outlined.Share,
-    AdaptiveIcons.Outlined.Settings,
-    AdaptiveIcons.Outlined.Person,
-    AdaptiveIcons.Outlined.AccountCircle,
-    AdaptiveIcons.Outlined.Delete,
-    AdaptiveIcons.Outlined.ThumbUp,
-    AdaptiveIcons.Outlined.Search,
-)
+private fun adaptiveIcons() =
+    listOf(
+        AdaptiveIcons.Outlined.Add,
+        AdaptiveIcons.Outlined.Create,
+        AdaptiveIcons.Outlined.Share,
+        AdaptiveIcons.Outlined.Settings,
+        AdaptiveIcons.Outlined.Person,
+        AdaptiveIcons.Outlined.AccountCircle,
+        AdaptiveIcons.Outlined.Delete,
+        AdaptiveIcons.Outlined.ThumbUp,
+        AdaptiveIcons.Outlined.Search,
+    )

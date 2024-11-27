@@ -18,26 +18,37 @@ val CupertinoIcons.Filled.CircleLefthalfed: ImageVector
         if (_circleLefthalfed != null) {
             return _circleLefthalfed!!
         }
-        _circleLefthalfed = Builder(name = "CircleLefthalfed", defaultWidth = 23.9062.dp,
-                defaultHeight = 23.918.dp, viewportWidth = 23.9062f, viewportHeight =
-                23.918f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
-                moveTo(11.9531f, 23.9062f)
-                curveTo(18.4922f, 23.9062f, 23.9062f, 18.4805f, 23.9062f, 11.9531f)
-                curveTo(23.9062f, 5.4141f, 18.4805f, 0.0f, 11.9531f, 0.0f)
-                curveTo(5.4141f, 0.0f, 0.0f, 5.4141f, 0.0f, 11.9531f)
-                curveTo(0.0f, 18.4805f, 5.4258f, 23.9062f, 11.9531f, 23.9062f)
-                close()
-                moveTo(11.9531f, 21.9141f)
-                lineTo(11.9531f, 1.9922f)
-                curveTo(17.4727f, 1.9922f, 21.9023f, 6.4219f, 21.9141f, 11.9531f)
-                curveTo(21.9258f, 17.4844f, 17.4844f, 21.9141f, 11.9531f, 21.9141f)
-                close()
-            }
-        }
-        .build()
+        _circleLefthalfed =
+            Builder(
+                name = "CircleLefthalfed",
+                defaultWidth = 23.9062.dp,
+                defaultHeight = 23.918.dp,
+                viewportWidth = 23.9062f,
+                viewportHeight =
+                23.918f,
+            ).apply {
+                path(
+                    fill = SolidColor(Color(0xFF000000)),
+                    stroke = null,
+                    strokeLineWidth = 0.0f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero,
+                ) {
+                    moveTo(11.9531f, 23.9062f)
+                    curveTo(18.4922f, 23.9062f, 23.9062f, 18.4805f, 23.9062f, 11.9531f)
+                    curveTo(23.9062f, 5.4141f, 18.4805f, 0.0f, 11.9531f, 0.0f)
+                    curveTo(5.4141f, 0.0f, 0.0f, 5.4141f, 0.0f, 11.9531f)
+                    curveTo(0.0f, 18.4805f, 5.4258f, 23.9062f, 11.9531f, 23.9062f)
+                    close()
+                    moveTo(11.9531f, 21.9141f)
+                    lineTo(11.9531f, 1.9922f)
+                    curveTo(17.4727f, 1.9922f, 21.9023f, 6.4219f, 21.9141f, 11.9531f)
+                    curveTo(21.9258f, 17.4844f, 17.4844f, 21.9141f, 11.9531f, 21.9141f)
+                    close()
+                }
+            }.build()
         return _circleLefthalfed!!
     }
 

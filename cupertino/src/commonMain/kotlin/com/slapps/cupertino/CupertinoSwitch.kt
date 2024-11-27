@@ -75,43 +75,44 @@ import kotlinx.coroutines.flow.filterNotNull
 @OptIn(InternalCupertinoApi::class)
 @Composable
 fun CupertinoSwitch(
-    checked : Boolean,
-    onCheckedChange : (Boolean) -> Unit,
-    modifier : Modifier = Modifier,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
     thumbContent: @Composable (() -> Unit)? = null,
-    colors : CupertinoSwitchColors = CupertinoSwitchDefaults.colors(),
+    colors: CupertinoSwitchColors = CupertinoSwitchDefaults.colors(),
     enabled: Boolean = true,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
-
     val isPressed by interactionSource.collectIsPressedAsState()
     val isHovered by interactionSource.collectIsHoveredAsState()
 
     val animatedAspectRatio by animateFloatAsState(
         targetValue = if (isPressed || isHovered) 1.25f else 1f,
-        animationSpec = AspectRationAnimationSpec
+        animationSpec = AspectRationAnimationSpec,
     )
     val animatedBackground by animateColorAsState(
         targetValue = colors.trackColor(enabled, checked).value,
-        animationSpec = ColorAnimationSpec
+        animationSpec = ColorAnimationSpec,
     )
     val animatedAlignment by animateFloatAsState(
         targetValue = if (checked) 1f else -1f,
-        animationSpec = AlignmentAnimationSpec
+        animationSpec = AlignmentAnimationSpec,
     )
 
     val haptic = LocalHapticFeedback.current
 
-    val positionalThreshold = remember {
-        (CupertinoSwitchDefaults.Width - ThumbPadding * 2) -
+    val positionalThreshold =
+        remember {
+            (CupertinoSwitchDefaults.Width - ThumbPadding * 2) -
                 CupertinoSwitchDefaults.Height
-    }
+        }
 
     val density = LocalDensity.current
 
-    val dragThreshold= density.run {
-        positionalThreshold.toPx()
-    }
+    val dragThreshold =
+        density.run {
+            positionalThreshold.toPx()
+        }
 
     var dragDistance by remember {
         mutableFloatStateOf(0f)
@@ -129,7 +130,7 @@ fun CupertinoSwitch(
 
     LaunchedEffect(dragThreshold) {
         snapshotFlow {
-            when  {
+            when {
                 dragDistance < 0f -> false
                 dragDistance > dragThreshold -> true
                 else -> null
@@ -145,43 +146,41 @@ fun CupertinoSwitch(
                 enabled = enabled,
                 role = Role.Switch,
                 interactionSource = interactionSource,
-                indication = null
-            )
-            .wrapContentSize(Alignment.Center)
+                indication = null,
+            ).wrapContentSize(Alignment.Center)
             .requiredSize(CupertinoSwitchDefaults.Width, CupertinoSwitchDefaults.Height)
             .clip(CupertinoSwitchDefaults.Shape)
             .drawBehind {
                 drawRect(animatedBackground)
-            }
-            .padding(ThumbPadding),
+            }.padding(ThumbPadding),
     ) {
         Box(
             Modifier
                 .fillMaxHeight()
                 .aspectRatio(animatedAspectRatio)
-                .pointerInput(dragThreshold){
+                .pointerInput(dragThreshold) {
                     detectHorizontalDragGestures(
                         onDragStart = {
                             dragDistance = if (updatedChecked) dragThreshold else 0f
                         },
                         onHorizontalDrag = { c, v ->
                             dragDistance += v
-                        }
+                        },
                     )
-                }
-                .align(BiasAlignment.Horizontal(animatedAlignment))
+                }.align(BiasAlignment.Horizontal(animatedAlignment))
                 .let {
                     if (enabled) {
                         it.shadow(
                             elevation = CupertinoSwitchDefaults.EnabledThumbElevation,
-                            shape = CupertinoSwitchDefaults.Shape
+                            shape = CupertinoSwitchDefaults.Shape,
                         )
-                    } else it.clip(CupertinoSwitchDefaults.Shape)
-                }
-                .background(colors.thumbColor(enabled).value)
-        ){
+                    } else {
+                        it.clip(CupertinoSwitchDefaults.Shape)
+                    }
+                }.background(colors.thumbColor(enabled).value),
+        ) {
             CompositionLocalProvider(
-                LocalContentColor provides colors.iconColor(enabled, checked).value
+                LocalContentColor provides colors.iconColor(enabled, checked).value,
             ) {
                 thumbContent?.invoke()
             }
@@ -206,7 +205,7 @@ class CupertinoSwitchColors internal constructor(
     private val disabledCheckedTrackColor: Color,
     private val disabledCheckedIconColor: Color,
     private val disabledUncheckedTrackColor: Color,
-    private val disabledUncheckedIconColor: Color
+    private val disabledUncheckedIconColor: Color,
 ) {
     /**
      * Represents the color used for the switch's thumb, depending on [enabled] and [checked].
@@ -214,15 +213,14 @@ class CupertinoSwitchColors internal constructor(
      * @param enabled whether the Switch is enabled or not
      */
     @Composable
-    internal fun thumbColor(enabled: Boolean): State<Color> {
-        return rememberUpdatedState(
+    internal fun thumbColor(enabled: Boolean): State<Color> =
+        rememberUpdatedState(
             if (enabled) {
                 thumbColor
             } else {
                 disabledThumbColor
-            }
+            },
         )
-    }
 
     /**
      * Represents the color used for the switch's track, depending on [enabled] and [checked].
@@ -231,15 +229,17 @@ class CupertinoSwitchColors internal constructor(
      * @param checked whether the Switch is checked or not
      */
     @Composable
-    internal fun trackColor(enabled: Boolean, checked: Boolean): State<Color> {
-        return rememberUpdatedState(
+    internal fun trackColor(
+        enabled: Boolean,
+        checked: Boolean,
+    ): State<Color> =
+        rememberUpdatedState(
             if (enabled) {
                 if (checked) checkedTrackColor else uncheckedTrackColor
             } else {
                 if (checked) disabledCheckedTrackColor else disabledUncheckedTrackColor
-            }
+            },
         )
-    }
 
     /**
      * Represents the content color passed to the icon if used
@@ -248,15 +248,17 @@ class CupertinoSwitchColors internal constructor(
      * @param checked whether the Switch is checked or not
      */
     @Composable
-    internal fun iconColor(enabled: Boolean, checked: Boolean): State<Color> {
-        return rememberUpdatedState(
+    internal fun iconColor(
+        enabled: Boolean,
+        checked: Boolean,
+    ): State<Color> =
+        rememberUpdatedState(
             if (enabled) {
                 if (checked) checkedIconColor else uncheckedIconColor
             } else {
                 if (checked) disabledCheckedIconColor else disabledUncheckedIconColor
-            }
+            },
         )
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -293,14 +295,13 @@ class CupertinoSwitchColors internal constructor(
 
 @Immutable
 object CupertinoSwitchDefaults {
-
     internal val EnabledThumbElevation = 4.dp
 
-    val Width : Dp = 51.dp
+    val Width: Dp = 51.dp
 
-    val Height : Dp  = 31.dp
+    val Height: Dp = 31.dp
 
-    internal val Shape : CornerBasedShape = CircleShape
+    internal val Shape: CornerBasedShape = CircleShape
 
     @Composable
     @ReadOnlyComposable
@@ -309,26 +310,28 @@ object CupertinoSwitchDefaults {
         disabledThumbColor: Color = thumbColor,
         checkedTrackColor: Color = CupertinoColors.systemGreen,
         checkedIconColor: Color = CupertinoTheme.colorScheme.opaqueSeparator,
-        uncheckedTrackColor: Color = CupertinoColors.Gray.copy(
-            alpha = .33f
-        ),
+        uncheckedTrackColor: Color =
+            CupertinoColors.Gray.copy(
+                alpha = .33f,
+            ),
         uncheckedIconColor: Color = checkedIconColor,
         disabledCheckedTrackColor: Color = checkedTrackColor.copy(alpha = .33f),
         disabledCheckedIconColor: Color = checkedIconColor,
         disabledUncheckedTrackColor: Color = uncheckedTrackColor,
         disabledUncheckedIconColor: Color = checkedIconColor,
-    ) : CupertinoSwitchColors = CupertinoSwitchColors(
-        thumbColor = thumbColor,
-        disabledThumbColor = disabledThumbColor,
-        checkedTrackColor = checkedTrackColor,
-        checkedIconColor = checkedIconColor,
-        uncheckedTrackColor = uncheckedTrackColor,
-        uncheckedIconColor = uncheckedIconColor,
-        disabledCheckedTrackColor = disabledCheckedTrackColor,
-        disabledCheckedIconColor = disabledCheckedIconColor,
-        disabledUncheckedTrackColor = disabledUncheckedTrackColor,
-        disabledUncheckedIconColor = disabledUncheckedIconColor
-    )
+    ): CupertinoSwitchColors =
+        CupertinoSwitchColors(
+            thumbColor = thumbColor,
+            disabledThumbColor = disabledThumbColor,
+            checkedTrackColor = checkedTrackColor,
+            checkedIconColor = checkedIconColor,
+            uncheckedTrackColor = uncheckedTrackColor,
+            uncheckedIconColor = uncheckedIconColor,
+            disabledCheckedTrackColor = disabledCheckedTrackColor,
+            disabledCheckedIconColor = disabledCheckedIconColor,
+            disabledUncheckedTrackColor = disabledUncheckedTrackColor,
+            disabledUncheckedIconColor = disabledUncheckedIconColor,
+        )
 }
 
 private val ThumbPadding = 2.dp

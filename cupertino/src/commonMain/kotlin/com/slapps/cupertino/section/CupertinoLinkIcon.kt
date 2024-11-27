@@ -37,21 +37,22 @@ import com.slapps.cupertino.theme.White
  * */
 @Composable
 fun CupertinoLinkIcon(
-    painter : Painter,
+    painter: Painter,
     modifier: Modifier = Modifier,
     containerColor: Color = CupertinoLabelIconDefaults.ContainerColor,
-    tint : Color = CupertinoLabelIconDefaults.Tint,
+    tint: Color = CupertinoLabelIconDefaults.Tint,
     shape: Shape = CupertinoLabelIconDefaults.Shape,
-    contentDescription : String? = null
-) =  CupertinoIcon(
+    contentDescription: String? = null,
+) = CupertinoIcon(
     painter = painter,
     contentDescription = contentDescription,
     tint = tint,
-    modifier = modifier
-        .clip(shape)
-        .background(containerColor)
-        .padding(6.dp)
-        .size(CupertinoIconDefaults.MediumSize)
+    modifier =
+        modifier
+            .clip(shape)
+            .background(containerColor)
+            .padding(6.dp)
+            .size(CupertinoIconDefaults.MediumSize),
 )
 
 /**
@@ -66,19 +67,19 @@ fun CupertinoLinkIcon(
  * */
 @Composable
 fun CupertinoLinkIcon(
-    imageVector : ImageVector,
+    imageVector: ImageVector,
     modifier: Modifier = Modifier,
     containerColor: Color = CupertinoLabelIconDefaults.ContainerColor,
-    tint : Color = CupertinoLabelIconDefaults.Tint,
+    tint: Color = CupertinoLabelIconDefaults.Tint,
     shape: Shape = CupertinoLabelIconDefaults.Shape,
-    contentDescription : String? = null
+    contentDescription: String? = null,
 ) = CupertinoLinkIcon(
     painter = rememberVectorPainter(imageVector),
     modifier = modifier,
     containerColor = containerColor,
     tint = tint,
     shape = shape,
-    contentDescription = contentDescription
+    contentDescription = contentDescription,
 )
 
 /**
@@ -96,21 +97,20 @@ fun CupertinoLinkIcon(
     bitmap: ImageBitmap,
     modifier: Modifier = Modifier,
     containerColor: Color = CupertinoLabelIconDefaults.ContainerColor,
-    tint : Color = CupertinoLabelIconDefaults.Tint,
+    tint: Color = CupertinoLabelIconDefaults.Tint,
     shape: Shape = CupertinoLabelIconDefaults.Shape,
-    contentDescription : String? = null
+    contentDescription: String? = null,
 ) = CupertinoLinkIcon(
     painter = remember(bitmap) { BitmapPainter(bitmap) },
     modifier = modifier,
     containerColor = containerColor,
     tint = tint,
     shape = shape,
-    contentDescription = contentDescription
+    contentDescription = contentDescription,
 )
 
 @Immutable
 object CupertinoLabelIconDefaults {
-
     val ContainerColor: Color
         @Composable
         @ReadOnlyComposable
@@ -120,7 +120,6 @@ object CupertinoLabelIconDefaults {
         @Composable
         @ReadOnlyComposable
         get() = CupertinoColors.White
-
 
     val Shape: Shape
         @Composable

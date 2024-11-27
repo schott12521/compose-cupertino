@@ -46,9 +46,10 @@ fun AdaptiveSwitch(
     adaptation: AdaptationScope<CupertinoSwitchAdaptation, MaterialSwitchAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            SwitchAdaptation()
-        },
+        adaptation =
+            remember {
+                SwitchAdaptation()
+            },
         adaptationScope = adaptation,
         material = {
             Switch(
@@ -58,7 +59,7 @@ fun AdaptiveSwitch(
                 thumbContent = thumbContent,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
         },
         cupertino = {
@@ -69,45 +70,41 @@ fun AdaptiveSwitch(
                 modifier = modifier,
                 thumbContent = thumbContent,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
 @Stable
 class CupertinoSwitchAdaptation internal constructor(
-    colors : CupertinoSwitchColors
+    colors: CupertinoSwitchColors,
 ) {
     var colors by mutableStateOf(colors)
 }
 
 @Stable
 class MaterialSwitchAdaptation internal constructor(
-    colors : SwitchColors
+    colors: SwitchColors,
 ) {
     var colors by mutableStateOf(colors)
 }
 
 @Stable
-private class SwitchAdaptation :
-    Adaptation<CupertinoSwitchAdaptation, MaterialSwitchAdaptation>() {
-
+private class SwitchAdaptation : Adaptation<CupertinoSwitchAdaptation, MaterialSwitchAdaptation>() {
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoSwitchAdaptation {
-
         val colors = CupertinoSwitchDefaults.colors()
 
         return remember(colors) {
             CupertinoSwitchAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialSwitchAdaptation {
-
         val colors = SwitchDefaults.colors()
 
         return remember(colors) {

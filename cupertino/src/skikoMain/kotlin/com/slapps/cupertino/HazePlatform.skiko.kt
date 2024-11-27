@@ -66,9 +66,10 @@ internal actual class HazeNode actual constructor(
     private var backgroundColor: Color,
     private var tint: Color,
     private var blurRadius: Dp,
-    private val density: Density
-) : Modifier.Node(), LayoutModifierNode, CompositionLocalConsumerModifierNode {
-
+    private val density: Density,
+) : Modifier.Node(),
+    LayoutModifierNode,
+    CompositionLocalConsumerModifierNode {
     private var blurFilter: ImageFilter? = null
 
     override fun onAttach() {
@@ -101,9 +102,10 @@ internal actual class HazeNode actual constructor(
     }
 
     private fun createBlurImageFilter(blurRadius: Dp): ImageFilter {
-        val blurRadiusPx = with(density) {
-            blurRadius.toPx()
-        }
+        val blurRadiusPx =
+            with(density) {
+                blurRadius.toPx()
+            }
         val sigma = BlurEffect.convertRadiusToSigma(blurRadiusPx)
         return ImageFilter.makeBlur(
             sigmaX = sigma,
@@ -112,29 +114,31 @@ internal actual class HazeNode actual constructor(
         )
     }
 
-    private fun createBlurRenderEffect(): RenderEffect? {
-        return areas.asSequence()
+    private fun createBlurRenderEffect(): RenderEffect? =
+        areas
+            .asSequence()
             .filterNot { it.isEmpty }
             .map { area ->
-                val compositeShaderBuilder = RuntimeShaderBuilder(RUNTIME_SHADER).apply {
-                    uniform("rectangle", area.left, area.top, area.right, area.bottom)
-                    uniform("color", tint.red, tint.green, tint.blue, 1f)
-                    uniform("colorShift", tint.alpha)
-                }
+                val compositeShaderBuilder =
+                    RuntimeShaderBuilder(RUNTIME_SHADER).apply {
+                        uniform("rectangle", area.left, area.top, area.right, area.bottom)
+                        uniform("color", tint.red, tint.green, tint.blue, 1f)
+                        uniform("colorShift", tint.alpha)
+                    }
 
                 ImageFilter.makeRuntimeShader(
                     runtimeShaderBuilder = compositeShaderBuilder,
                     shaderNames = arrayOf("content", "blur"),
                     inputs = arrayOf(null, blurFilter),
                 )
-            }
-            .toList()
-            .flatten()?.asComposeRenderEffect()
-    }
+            }.toList()
+            .flatten()
+            ?.asComposeRenderEffect()
 }
 
-private fun Collection<ImageFilter>.flatten(): ImageFilter? = when {
-    isEmpty() -> null
-    size == 1 -> first()
-    else -> ImageFilter.makeMerge(toTypedArray(), null)
-}
+private fun Collection<ImageFilter>.flatten(): ImageFilter? =
+    when {
+        isEmpty() -> null
+        size == 1 -> first()
+        else -> ImageFilter.makeMerge(toTypedArray(), null)
+    }

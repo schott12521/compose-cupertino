@@ -9,7 +9,6 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
-
 /**
  * Scope for customizing [material] and [cupertino] specs of the widget.
  *
@@ -20,8 +19,7 @@ import androidx.compose.runtime.setValue
  * */
 @Stable
 @ExperimentalAdaptiveApi
-sealed interface AdaptationScope<C,M> {
-
+sealed interface AdaptationScope<C, M> {
     /**
      * Customize properties that are exclusive for Cupertino widget or have different default value
      *
@@ -37,12 +35,9 @@ sealed interface AdaptationScope<C,M> {
     fun material(block: @Composable M.() -> Unit)
 }
 
-
-
 @Stable
 @ExperimentalAdaptiveApi
-abstract class Adaptation<C, M> : AdaptationScope<C,M> {
-
+abstract class Adaptation<C, M> : AdaptationScope<C, M> {
     private var cupertino: @Composable C.() -> Unit by mutableStateOf({})
 
     private var material: @Composable M.() -> Unit by mutableStateOf({})
@@ -68,16 +63,14 @@ abstract class Adaptation<C, M> : AdaptationScope<C,M> {
     protected abstract fun rememberMaterialAdaptation(): M
 
     @Composable
-    internal fun rememberUpdatedCupertinoAdaptation(): C {
-        return key(cupertino) {
+    internal fun rememberUpdatedCupertinoAdaptation(): C =
+        key(cupertino) {
             rememberCupertinoAdaptation().apply { cupertino() }
         }
-    }
 
     @Composable
-    internal fun rememberUpdatedMaterialAdaptation(): M {
-        return key(material) {
+    internal fun rememberUpdatedMaterialAdaptation(): M =
+        key(material) {
             rememberMaterialAdaptation().apply { material() }
         }
-    }
 }

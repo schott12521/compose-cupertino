@@ -27,7 +27,10 @@ import kotlinx.coroutines.sync.withLock
  */
 @Stable
 internal class InternalMutatorMutex {
-    private class Mutator(val priority: MutatePriority, val job: Job) {
+    private class Mutator(
+        val priority: MutatePriority,
+        val job: Job,
+    ) {
         fun canInterrupt(other: Mutator) = priority >= other.priority
 
         fun cancel() = job.cancel()
@@ -44,7 +47,9 @@ internal class InternalMutatorMutex {
                     oldMutator?.cancel()
                     break
                 }
-            } else throw CancellationException("Current mutation had a higher priority")
+            } else {
+                throw CancellationException("Current mutation had a higher priority")
+            }
         }
     }
 
@@ -65,7 +70,7 @@ internal class InternalMutatorMutex {
      */
     suspend fun <R> mutate(
         priority: MutatePriority = MutatePriority.Default,
-        block: suspend () -> R
+        block: suspend () -> R,
     ) = coroutineScope {
         val mutator = Mutator(priority, coroutineContext[Job]!!)
 
@@ -104,7 +109,7 @@ internal class InternalMutatorMutex {
     suspend fun <T, R> mutateWith(
         receiver: T,
         priority: MutatePriority = MutatePriority.Default,
-        block: suspend T.() -> R
+        block: suspend T.() -> R,
     ) = coroutineScope {
         val mutator = Mutator(priority, coroutineContext[Job]!!)
 

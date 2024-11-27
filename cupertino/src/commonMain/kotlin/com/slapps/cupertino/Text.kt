@@ -89,29 +89,30 @@ fun CupertinoText(
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalTextStyle.current
+    style: TextStyle = LocalTextStyle.current,
 ) {
-
-    val textColor = color.takeOrElse {
-        style.color.takeOrElse {
-            LocalContentColor.current
+    val textColor =
+        color.takeOrElse {
+            style.color.takeOrElse {
+                LocalContentColor.current
+            }
         }
-    }
     // NOTE(text-perf-review): It might be worthwhile writing a bespoke merge implementation that
     // will avoid reallocating if all of the options here are the defaults
-    val mergedStyle = style.merge(
-        TextStyle(
-            color = textColor,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            textAlign = textAlign,
-            lineHeight = lineHeight,
-            fontFamily = fontFamily,
-            textDecoration = textDecoration,
-            fontStyle = fontStyle,
-            letterSpacing = letterSpacing
+    val mergedStyle =
+        style.merge(
+            TextStyle(
+                color = textColor,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                textAlign = textAlign,
+                lineHeight = lineHeight,
+                fontFamily = fontFamily,
+                textDecoration = textDecoration,
+                fontStyle = fontStyle,
+                letterSpacing = letterSpacing,
+            ),
         )
-    )
     BasicText(
         text,
         modifier,
@@ -120,13 +121,13 @@ fun CupertinoText(
         overflow,
         softWrap,
         maxLines,
-        minLines
+        minLines,
     )
 }
 
 @Deprecated(
     "Maintained for binary compatibility. Use version with minLines instead",
-    level = DeprecationLevel.HIDDEN
+    level = DeprecationLevel.HIDDEN,
 )
 @Composable
 fun CupertinoText(
@@ -145,7 +146,7 @@ fun CupertinoText(
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalTextStyle.current
+    style: TextStyle = LocalTextStyle.current,
 ) {
     CupertinoText(
         text,
@@ -164,7 +165,7 @@ fun CupertinoText(
         maxLines,
         1,
         onTextLayout,
-        style
+        style,
     )
 }
 
@@ -239,28 +240,30 @@ fun CupertinoText(
     minLines: Int = 1,
     inlineContent: Map<String, InlineTextContent> = mapOf(),
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalTextStyle.current
+    style: TextStyle = LocalTextStyle.current,
 ) {
-    val textColor = color.takeOrElse {
-        style.color.takeOrElse {
-            LocalContentColor.current
+    val textColor =
+        color.takeOrElse {
+            style.color.takeOrElse {
+                LocalContentColor.current
+            }
         }
-    }
     // NOTE(text-perf-review): It might be worthwhile writing a bespoke merge implementation that
     // will avoid reallocating if all of the options here are the defaults
-    val mergedStyle = style.merge(
-        TextStyle(
-            color = textColor,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            textAlign = textAlign,
-            lineHeight = lineHeight,
-            fontFamily = fontFamily,
-            textDecoration = textDecoration,
-            fontStyle = fontStyle,
-            letterSpacing = letterSpacing
+    val mergedStyle =
+        style.merge(
+            TextStyle(
+                color = textColor,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                textAlign = textAlign,
+                lineHeight = lineHeight,
+                fontFamily = fontFamily,
+                textDecoration = textDecoration,
+                fontStyle = fontStyle,
+                letterSpacing = letterSpacing,
+            ),
         )
-    )
     BasicText(
         text = text,
         modifier = modifier,
@@ -270,13 +273,13 @@ fun CupertinoText(
         softWrap = softWrap,
         maxLines = maxLines,
         minLines = minLines,
-        inlineContent = inlineContent
+        inlineContent = inlineContent,
     )
 }
 
 @Deprecated(
     "Maintained for binary compatibility. Use version with minLines instead",
-    level = DeprecationLevel.HIDDEN
+    level = DeprecationLevel.HIDDEN,
 )
 @Composable
 fun CupertinoText(
@@ -296,7 +299,7 @@ fun CupertinoText(
     maxLines: Int = Int.MAX_VALUE,
     inlineContent: Map<String, InlineTextContent> = mapOf(),
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalTextStyle.current
+    style: TextStyle = LocalTextStyle.current,
 ) {
     CupertinoText(
         text,
@@ -316,7 +319,7 @@ fun CupertinoText(
         1,
         inlineContent,
         onTextLayout,
-        style
+        style,
     )
 }
 
@@ -328,7 +331,10 @@ fun CupertinoText(
  * @see LocalTextStyle
  */
 @Composable
-fun ProvideTextStyle(value: TextStyle, content: @Composable () -> Unit) {
+fun ProvideTextStyle(
+    value: TextStyle,
+    content: @Composable () -> Unit,
+) {
     val mergedStyle = LocalTextStyle.current.merge(value)
     CompositionLocalProvider(LocalTextStyle provides mergedStyle, content = content)
 }

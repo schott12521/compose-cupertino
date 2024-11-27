@@ -20,20 +20,22 @@ fun <T> CupertinoPickerNative(
     items: List<T>,
     modifier: Modifier = Modifier,
     height: Dp = CupertinoPickerDefaults.Height,
-    containerColor: Color = LocalContainerColor.current.takeOrElse {
-        CupertinoTheme.colorScheme.secondarySystemGroupedBackground
-    },
-    enabled : Boolean = true,
-    content: (T) -> String
+    containerColor: Color =
+        LocalContainerColor.current.takeOrElse {
+            CupertinoTheme.colorScheme.secondarySystemGroupedBackground
+        },
+    enabled: Boolean = true,
+    content: (T) -> String,
 ) {
     UIKitView(
         factory = {
             UIPickerView()
         },
         modifier = modifier.height(height),
-        properties = UIKitInteropProperties(
-            isInteractive = true,
-            isNativeAccessibilityEnabled = true
-        )
+        properties =
+            UIKitInteropProperties(
+                isInteractive = true,
+                isNativeAccessibilityEnabled = true,
+            ),
     )
 }

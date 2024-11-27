@@ -23,7 +23,6 @@ internal class SectionItem(
 
 @Stable
 internal class LazySectionScopeImpl : LazySectionScope {
-
     val items: List<SectionItem>
         get() = _items
 
@@ -36,39 +35,39 @@ internal class LazySectionScopeImpl : LazySectionScope {
         minHeight: Dp,
         content: @Composable (PaddingValues) -> Unit,
     ) {
-        _items += SectionItem(
-            key = key,
-            contentType = contentType,
-            content = {
-                ProvideTextStyle(CupertinoTheme.typography.body) {
-                    Box(
-                        modifier = Modifier
-                            .heightIn(min = minHeight)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        content(it)
+        _items +=
+            SectionItem(
+                key = key,
+                contentType = contentType,
+                content = {
+                    ProvideTextStyle(CupertinoTheme.typography.body) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .heightIn(min = minHeight)
+                                    .fillMaxWidth(),
+                            contentAlignment = Alignment.CenterStart,
+                        ) {
+                            content(it)
+                        }
                     }
-                }
-            },
-            dividerPadding = dividerPadding
-        )
+                },
+                dividerPadding = dividerPadding,
+            )
     }
 
     override fun item(
         key: Any?,
         contentType: Any?,
         dividerPadding: Dp,
-        content: @Composable (PaddingValues) -> Unit
+        content: @Composable (PaddingValues) -> Unit,
     ) {
         item(
             key = key,
             contentType = contentType,
             dividerPadding = dividerPadding,
             minHeight = CupertinoSectionTokens.MinHeight,
-            content = content
+            content = content,
         )
     }
-
 }
-

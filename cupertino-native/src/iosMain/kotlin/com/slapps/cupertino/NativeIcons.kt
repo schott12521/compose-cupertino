@@ -25,11 +25,10 @@ import platform.posix.memcpy
  * @see <a href="https://developer.apple.com/sf-symbols/">SF Symbols</a>
  * */
 @Composable
-fun CupertinoIcons.named(systemName : String) : Painter {
-    return remember(systemName) {
+fun CupertinoIcons.named(systemName: String): Painter =
+    remember(systemName) {
         BitmapPainter(ImageBitmap.systemImage(systemName))
     }
-}
 
 /**
  * Get iOS/iPadOS/macOS system image (SF Symbol) with given [systemName].
@@ -38,19 +37,17 @@ fun CupertinoIcons.named(systemName : String) : Painter {
  * @see <a href="https://developer.apple.com/sf-symbols/">SF Symbols</a>
  * @see CupertinoIcons.named
  * */
-fun ImageBitmap.Companion.systemImage(systemName: String) : ImageBitmap {
-    return requireNotNull(UIImage.systemImageNamed(systemName)) {
+fun ImageBitmap.Companion.systemImage(systemName: String): ImageBitmap =
+    requireNotNull(UIImage.systemImageNamed(systemName)) {
         "Image with name $systemName not found"
     }.toComposeImageBitmap()
-}
-
 
 @OptIn(ExperimentalForeignApi::class)
-fun UIImage.toComposeImageBitmap() : ImageBitmap {
-
-    val bytes = requireNotNull(UIImagePNGRepresentation(this)) {
-        "Failed to get PNG representation of image"
-    }
+fun UIImage.toComposeImageBitmap(): ImageBitmap {
+    val bytes =
+        requireNotNull(UIImagePNGRepresentation(this)) {
+            "Failed to get PNG representation of image"
+        }
 
     val byteArray = ByteArray(bytes.length.toInt())
 
@@ -58,6 +55,7 @@ fun UIImage.toComposeImageBitmap() : ImageBitmap {
         memcpy(it.addressOf(0), bytes.bytes, bytes.length)
     }
 
-    return Image.makeFromEncoded(byteArray)
+    return Image
+        .makeFromEncoded(byteArray)
         .toComposeImageBitmap()
 }

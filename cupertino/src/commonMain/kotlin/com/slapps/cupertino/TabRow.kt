@@ -30,6 +30,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // TODO: Provide M3 tab row asset and docs when available.
+
 /**
  * Material Design fixed tabs.
  *
@@ -106,12 +107,12 @@ internal fun TabRow(
     containerColor: Color,
     contentColor: Color,
     indicator: @Composable (tabPositions: List<TabPosition>) -> Unit,
-    tabs: @Composable () -> Unit
+    tabs: @Composable () -> Unit,
 ) {
     CupertinoSurface(
         modifier = modifier.selectableGroup(),
         color = containerColor,
-        contentColor = contentColor
+        contentColor = contentColor,
     ) {
         SubcomposeLayout(Modifier.fillMaxWidth()) { constraints ->
             val tabRowWidth = constraints.maxWidth
@@ -121,24 +122,27 @@ internal fun TabRow(
             if (tabCount > 0) {
                 tabWidth = (tabRowWidth / tabCount)
             }
-            val tabRowHeight = tabMeasurables.fold(initial = 0) { max, curr ->
-                maxOf(curr.maxIntrinsicHeight(tabWidth), max)
-            }
+            val tabRowHeight =
+                tabMeasurables.fold(initial = 0) { max, curr ->
+                    maxOf(curr.maxIntrinsicHeight(tabWidth), max)
+                }
 
-            val tabPlaceables = tabMeasurables.map {
-                it.measure(
-                    constraints.copy(
-                        minWidth = tabWidth,
-                        maxWidth = tabWidth,
-                        minHeight = tabRowHeight,
-                        maxHeight = tabRowHeight,
+            val tabPlaceables =
+                tabMeasurables.map {
+                    it.measure(
+                        constraints.copy(
+                            minWidth = tabWidth,
+                            maxWidth = tabWidth,
+                            minHeight = tabRowHeight,
+                            maxHeight = tabRowHeight,
+                        ),
                     )
-                )
-            }
+                }
 
-            val tabPositions = List(tabCount) { index ->
-                TabPosition(tabWidth.toDp() * index, tabWidth.toDp())
-            }
+            val tabPositions =
+                List(tabCount) { index ->
+                    TabPosition(tabWidth.toDp() * index, tabWidth.toDp())
+                }
 
             layout(tabRowWidth, tabRowHeight) {
                 subcompose(TabSlots.Indicator) {
@@ -155,7 +159,6 @@ internal fun TabRow(
     }
 }
 
-
 /**
  * Data class that contains information about a tab's position on screen, used for calculating
  * where to place the indicator that shows which tab is selected.
@@ -165,7 +168,10 @@ internal fun TabRow(
  * @property width the width of this tab
  */
 @Immutable
-class TabPosition internal constructor(val left: Dp, val width: Dp) {
+class TabPosition internal constructor(
+    val left: Dp,
+    val width: Dp,
+) {
     val right: Dp get() = left + width
 
     override fun equals(other: Any?): Boolean {
@@ -184,9 +190,7 @@ class TabPosition internal constructor(val left: Dp, val width: Dp) {
         return result
     }
 
-    override fun toString(): String {
-        return "TabPosition(left=$left, right=$right, width=$width)"
-    }
+    override fun toString(): String = "TabPosition(left=$left, right=$right, width=$width)"
 }
 
 /**
@@ -194,7 +198,6 @@ class TabPosition internal constructor(val left: Dp, val width: Dp) {
  */
 @Immutable
 object TabRowDefaults {
-
     /**
      * [Modifier] that takes up all the available width inside the [TabRow], and then animates
      * the offset of the indicator it is applied to, depending on the [currentTabPosition].
@@ -202,33 +205,33 @@ object TabRowDefaults {
      * @param currentTabPosition [TabPosition] of the currently selected tab. This is used to
      * calculate the offset of the indicator this modifier is applied to, as well as its width.
      */
-    fun Modifier.tabIndicatorOffset(
-        currentTabPosition: TabPosition
-    ): Modifier = composed(
-        inspectorInfo = debugInspectorInfo {
-            name = "tabIndicatorOffset"
-            value = currentTabPosition
+    fun Modifier.tabIndicatorOffset(currentTabPosition: TabPosition): Modifier =
+        composed(
+            inspectorInfo =
+                debugInspectorInfo {
+                    name = "tabIndicatorOffset"
+                    value = currentTabPosition
+                },
+        ) {
+            val currentTabWidth by animateDpAsState(
+                targetValue = currentTabPosition.width,
+                animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
+            )
+            val indicatorOffset by animateDpAsState(
+                targetValue = currentTabPosition.left,
+                animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
+            )
+            fillMaxWidth()
+                .wrapContentSize(Alignment.BottomStart)
+                .offset(x = indicatorOffset)
+                .width(currentTabWidth)
         }
-    ) {
-        val currentTabWidth by animateDpAsState(
-            targetValue = currentTabPosition.width,
-            animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-        )
-        val indicatorOffset by animateDpAsState(
-            targetValue = currentTabPosition.left,
-            animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-        )
-        fillMaxWidth()
-            .wrapContentSize(Alignment.BottomStart)
-            .offset(x = indicatorOffset)
-            .width(currentTabWidth)
-    }
 }
 
 private enum class TabSlots {
     Tabs,
     Divider,
-    Indicator
+    Indicator,
 }
 
 /**
@@ -236,7 +239,7 @@ private enum class TabSlots {
  */
 private class ScrollableTabData(
     private val scrollState: ScrollState,
-    private val coroutineScope: CoroutineScope
+    private val coroutineScope: CoroutineScope,
 ) {
     private var selectedTab: Int? = null
 
@@ -244,7 +247,7 @@ private class ScrollableTabData(
         density: Density,
         edgeOffset: Int,
         tabPositions: List<TabPosition>,
-        selectedTab: Int
+        selectedTab: Int,
     ) {
         // Animate if the new tab is different from the old tab, or this is called for the first
         // time (i.e selectedTab is `null`).
@@ -258,7 +261,7 @@ private class ScrollableTabData(
                     coroutineScope.launch {
                         scrollState.animateScrollTo(
                             calculatedOffset,
-                            animationSpec = ScrollableTabRowScrollSpec
+                            animationSpec = ScrollableTabRowScrollSpec,
                         )
                     }
                 }
@@ -274,19 +277,20 @@ private class ScrollableTabData(
     private fun TabPosition.calculateTabOffset(
         density: Density,
         edgeOffset: Int,
-        tabPositions: List<TabPosition>
-    ): Int = with(density) {
-        val totalTabRowWidth = tabPositions.last().right.roundToPx() + edgeOffset
-        val visibleWidth = totalTabRowWidth - scrollState.maxValue
-        val tabOffset = left.roundToPx()
-        val scrollerCenter = visibleWidth / 2
-        val tabWidth = width.roundToPx()
-        val centeredTabOffset = tabOffset - (scrollerCenter - tabWidth / 2)
-        // How much space we have to scroll. If the visible width is <= to the total width, then
-        // we have no space to scroll as everything is always visible.
-        val availableSpace = (totalTabRowWidth - visibleWidth).coerceAtLeast(0)
-        return centeredTabOffset.coerceIn(0, availableSpace)
-    }
+        tabPositions: List<TabPosition>,
+    ): Int =
+        with(density) {
+            val totalTabRowWidth = tabPositions.last().right.roundToPx() + edgeOffset
+            val visibleWidth = totalTabRowWidth - scrollState.maxValue
+            val tabOffset = left.roundToPx()
+            val scrollerCenter = visibleWidth / 2
+            val tabWidth = width.roundToPx()
+            val centeredTabOffset = tabOffset - (scrollerCenter - tabWidth / 2)
+            // How much space we have to scroll. If the visible width is <= to the total width, then
+            // we have no space to scroll as everything is always visible.
+            val availableSpace = (totalTabRowWidth - visibleWidth).coerceAtLeast(0)
+            return centeredTabOffset.coerceIn(0, availableSpace)
+        }
 }
 
 private val ScrollableTabRowMinimumTabWidth = 90.dp
@@ -299,7 +303,8 @@ private val ScrollableTabRowPadding = 52.dp
 /**
  * [AnimationSpec] used when scrolling to a tab that is not fully visible.
  */
-private val ScrollableTabRowScrollSpec: AnimationSpec<Float> = tween(
-    durationMillis = 250,
-    easing = FastOutSlowInEasing
-)
+private val ScrollableTabRowScrollSpec: AnimationSpec<Float> =
+    tween(
+        durationMillis = 250,
+        easing = FastOutSlowInEasing,
+    )

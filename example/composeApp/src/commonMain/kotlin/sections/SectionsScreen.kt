@@ -55,24 +55,22 @@ import com.slapps.cupertino.section.textField
 import com.slapps.cupertino.section.timePicker
 import com.slapps.cupertino.theme.CupertinoTheme
 
-
 @OptIn(ExperimentalCupertinoApi::class)
 @Composable
-fun SectionsScreen(
-    component: SectionsComponent
-) {
-
+fun SectionsScreen(component: SectionsComponent) {
     var isLazy by remember {
         mutableStateOf(true)
     }
 
-    val pagerState = rememberPagerState(
-        pageCount = { 2 }
-    )
+    val pagerState =
+        rememberPagerState(
+            pageCount = { 2 },
+        )
 
-    val toggleState = remember {
-        mutableStateOf(false)
-    }
+    val toggleState =
+        remember {
+            mutableStateOf(false)
+        }
 
     val datePickerState = rememberCupertinoDatePickerState()
     val timePickerState = rememberCupertinoTimePickerState()
@@ -88,28 +86,33 @@ fun SectionsScreen(
         mutableStateOf<SectionStyle?>(null)
     }
 
-    val pickedIndex = remember {
-        mutableStateOf(0)
-    }
+    val pickedIndex =
+        remember {
+            mutableStateOf(0)
+        }
 
-    val textFieldValue = remember {
-        mutableStateOf("")
-    }
+    val textFieldValue =
+        remember {
+            mutableStateOf("")
+        }
 
     val lazyState = rememberLazyListState()
 
     val defaultState = rememberScrollState()
 
-    val currentState = if (isLazy)
-        lazyState
-    else defaultState
+    val currentState =
+        if (isLazy) {
+            lazyState
+        } else {
+            defaultState
+        }
 
     val sectionState = rememberSectionState()
 
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(currentState.isScrollInProgress){
-        if (currentState.isScrollInProgress){
+    LaunchedEffect(currentState.isScrollInProgress) {
+        if (currentState.isScrollInProgress) {
             focusManager.clearFocus()
         }
     }
@@ -131,15 +134,16 @@ fun SectionsScreen(
                 },
                 title = {
                     CupertinoSegmentedControl(
-                        modifier = Modifier
-                            .width(200.dp),
-                        selectedTabIndex = if (isLazy) 0 else 1
+                        modifier =
+                            Modifier
+                                .width(200.dp),
+                        selectedTabIndex = if (isLazy) 0 else 1,
                     ) {
                         CupertinoSegmentedControlTab(
                             isSelected = isLazy,
                             onClick = {
                                 isLazy = true
-                            }
+                            },
                         ) {
                             CupertinoText("Lazy")
                         }
@@ -147,25 +151,24 @@ fun SectionsScreen(
                             isSelected = !isLazy,
                             onClick = {
                                 isLazy = false
-
-                            }
+                            },
                         ) {
                             CupertinoText("Default")
                         }
                     }
-                }
+                },
             )
-        }
+        },
     ) { pv ->
         if (isLazy) {
             LazyColumn(
                 state = lazyState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(CupertinoTheme.colorScheme.systemGroupedBackground),
-            contentPadding = pv
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(CupertinoTheme.colorScheme.systemGroupedBackground),
+                contentPadding = pv,
             ) {
-
                 SectionStyle.values().forEach { style ->
                     section(
                         state = sectionState,
@@ -175,7 +178,7 @@ fun SectionsScreen(
                         },
                         caption = {
                             Caption()
-                        }
+                        },
                     ) {
                         sectionContent(
                             toggle = toggleState,
@@ -184,7 +187,7 @@ fun SectionsScreen(
                             onDatePickerExpanded = { datePickerExpanded = if (it) style else null },
                             timePickerState = timePickerState,
                             timePickerExpanded = timePickerExpanded == style,
-                            onTimePickerExpanded =  {
+                            onTimePickerExpanded = {
                                 timePickerExpanded = if (it) style else null
                             },
                             pickedIndex = pickedIndex,
@@ -192,20 +195,20 @@ fun SectionsScreen(
                             onpickerExpanded = {
                                 pickerExpanded = if (it) style else null
                             },
-                            textFieldValue = textFieldValue
+                            textFieldValue = textFieldValue,
                         )
                     }
                 }
             }
         } else {
             Column(
-                modifier = Modifier
-                    .verticalScroll(defaultState)
-                    .background(CupertinoTheme.colorScheme.systemGroupedBackground)
-                    .fillMaxSize()
-                    .padding(pv)
+                modifier =
+                    Modifier
+                        .verticalScroll(defaultState)
+                        .background(CupertinoTheme.colorScheme.systemGroupedBackground)
+                        .fillMaxSize()
+                        .padding(pv),
             ) {
-
                 SectionStyle.values().forEach { style ->
                     CupertinoSection(
                         state = sectionState,
@@ -215,7 +218,7 @@ fun SectionsScreen(
                         },
                         caption = {
                             Caption()
-                        }
+                        },
                     ) {
                         SectionItem(
                             leadingContent = {
@@ -223,7 +226,7 @@ fun SectionsScreen(
                             },
                             trailingContent = {
                                 Text("Trailing")
-                            }
+                            },
                         ) {
                             Text("Section item")
                         }
@@ -235,7 +238,7 @@ fun SectionsScreen(
 }
 
 @Composable
-private fun Title(style: SectionStyle){
+private fun Title(style: SectionStyle) {
     CupertinoText(
         text = "${style.name} section".sectionTitle(),
     )
@@ -244,7 +247,7 @@ private fun Title(style: SectionStyle){
 @Composable
 private fun Caption() {
     CupertinoText(
-        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus felis sed maximus accumsan."
+        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus felis sed maximus accumsan.",
     )
 }
 
@@ -252,88 +255,88 @@ private fun Caption() {
 private fun LazySectionScope.sectionContent(
     toggle: MutableState<Boolean>,
     datePickerState: CupertinoDatePickerState,
-    datePickerExpanded : Boolean,
-    onDatePickerExpanded : (Boolean) -> Unit,
+    datePickerExpanded: Boolean,
+    onDatePickerExpanded: (Boolean) -> Unit,
     timePickerState: CupertinoTimePickerState,
-    timePickerExpanded : Boolean,
-    onTimePickerExpanded : (Boolean) -> Unit,
-    pickerExpanded : Boolean,
-    pickedIndex : MutableState<Int>,
+    timePickerExpanded: Boolean,
+    onTimePickerExpanded: (Boolean) -> Unit,
+    pickerExpanded: Boolean,
+    pickedIndex: MutableState<Int>,
     onpickerExpanded: (Boolean) -> Unit,
-    textFieldValue : MutableState<String>
-){
+    textFieldValue: MutableState<String>,
+) {
     item {
         CupertinoText(
             text = "Simple text",
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it),
         )
     }
 
     textField(
         value = textFieldValue.value,
         singleLine = true,
-        onValueChange = {textFieldValue.value = it},
+        onValueChange = { textFieldValue.value = it },
         placeholder = {
             Text("Text field")
-        }
+        },
     )
 
     link(
-        onClick = {}
+        onClick = {},
     ) {
         CupertinoText("Clickable label")
     }
     datePicker(
         state = datePickerState,
-        expanded  = datePickerExpanded,
+        expanded = datePickerExpanded,
         onExpandedChange = onDatePickerExpanded,
         title = {
             CupertinoText("Date Picker")
-        }
+        },
     )
     timePicker(
         state = timePickerState,
-        expanded  = timePickerExpanded,
+        expanded = timePickerExpanded,
         onExpandedChange = onTimePickerExpanded,
         title = {
             CupertinoText("Time Picker")
-        }
+        },
     )
 
     dropdownMenu(
         expanded = pickerExpanded,
-        onDismissRequest =  {
+        onDismissRequest = {
             onpickerExpanded(false)
         },
         onClick = {
             onpickerExpanded(true)
         },
-        title =  {
+        title = {
             CupertinoText("Popup picker")
         },
         selectedLabel = {
             CupertinoText(if (pickedIndex.value == 0) "None" else "Item ${pickedIndex.value}")
-        }
-    ){
+        },
+    ) {
         MenuPickerAction(
             isSelected = pickedIndex.value == 0,
             onClick = {
                 pickedIndex.value = 0
                 onpickerExpanded(false)
-            }
+            },
         ) {
             Text("None")
         }
         MenuDivider()
 
-        repeat(7){
+        repeat(7) {
             MenuPickerAction(
                 isSelected = pickedIndex.value == it + 1,
                 onClick = {
                     pickedIndex.value = it + 1
                     onpickerExpanded(false)
-                }
-            ){
+                },
+            ) {
                 Text("Item $it")
             }
         }
@@ -343,7 +346,7 @@ private fun LazySectionScope.sectionContent(
         checked = toggle.value,
         onCheckedChange = {
             toggle.value = it
-        }
+        },
     ) {
         CupertinoText("Toggle")
     }

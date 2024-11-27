@@ -29,6 +29,6 @@ actual fun <C : Any, T : Any> NativeChildren(
         stack = stack,
         modifier = modifier,
         animation = animation,
-        content = content
+        content = content,
     )
 }

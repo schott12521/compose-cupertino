@@ -20,7 +20,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 
 @Composable
-internal actual fun systemMaterialColorScheme(dark : Boolean) : ColorScheme? {
-    val r :ColorScheme?= null // https://github.com/JetBrains/compose-multiplatform/issues/3900
+internal actual fun systemMaterialColorScheme(dark: Boolean): ColorScheme? {
+    val r: ColorScheme? = null // https://github.com/JetBrains/compose-multiplatform/issues/3900
     return r
 }

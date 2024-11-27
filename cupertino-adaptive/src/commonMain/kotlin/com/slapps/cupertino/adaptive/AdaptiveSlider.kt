@@ -57,12 +57,13 @@ fun AdaptiveSlider(
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    adaptation : AdaptationScope<CupertinoSliderAdaptation, MaterialSliderAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<CupertinoSliderAdaptation, MaterialSliderAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember(steps) {
-            SliderAdaptation(steps)
-        },
+        adaptation =
+            remember(steps) {
+                SliderAdaptation(steps)
+            },
         adaptationScope = adaptation,
         material = {
             Slider(
@@ -74,7 +75,7 @@ fun AdaptiveSlider(
                 steps = steps,
                 onValueChangeFinished = onValueChangeFinished,
                 colors = it.colors,
-                interactionSource = interactionSource
+                interactionSource = interactionSource,
             )
         },
         cupertino = {
@@ -87,9 +88,9 @@ fun AdaptiveSlider(
                 steps = steps,
                 onValueChangeFinished = onValueChangeFinished,
                 colors = it.colors,
-                interactionSource = interactionSource
+                interactionSource = interactionSource,
             )
-        }
+        },
     )
 }
 
@@ -124,12 +125,13 @@ fun AdaptiveRangeSlider(
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
-    adaptation : AdaptationScope<CupertinoSliderAdaptation, MaterialSliderAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<CupertinoSliderAdaptation, MaterialSliderAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember(steps) {
-            SliderAdaptation(steps)
-        },
+        adaptation =
+            remember(steps) {
+                SliderAdaptation(steps)
+            },
         adaptationScope = adaptation,
         material = {
             RangeSlider(
@@ -152,44 +154,42 @@ fun AdaptiveRangeSlider(
                 onValueChangeFinished = onValueChangeFinished,
                 colors = it.colors,
             )
-        }
+        },
     )
 }
 
 @Stable
 class CupertinoSliderAdaptation internal constructor(
-    colors : CupertinoSliderColors
+    colors: CupertinoSliderColors,
 ) {
-    var colors : CupertinoSliderColors by mutableStateOf(colors)
+    var colors: CupertinoSliderColors by mutableStateOf(colors)
 }
 
 @Stable
 class MaterialSliderAdaptation internal constructor(
-    colors : SliderColors
+    colors: SliderColors,
 ) {
-    var colors : SliderColors by mutableStateOf(colors)
+    var colors: SliderColors by mutableStateOf(colors)
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Stable
-private class SliderAdaptation(private val steps: Int) :
-    Adaptation<CupertinoSliderAdaptation, MaterialSliderAdaptation>() {
-
+private class SliderAdaptation(
+    private val steps: Int,
+) : Adaptation<CupertinoSliderAdaptation, MaterialSliderAdaptation>() {
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoSliderAdaptation {
-
-        val colors =  CupertinoSliderDefaults.defaultColorsFor(steps)
+        val colors = CupertinoSliderDefaults.defaultColorsFor(steps)
 
         return remember(colors) {
             CupertinoSliderAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }
 
     @Composable
     override fun rememberMaterialAdaptation(): MaterialSliderAdaptation {
-
         val colors = SliderDefaults.colors()
 
         return remember(colors) {

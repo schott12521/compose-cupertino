@@ -11,14 +11,14 @@ import androidx.compose.ui.window.DialogProperties
 @OptIn(ExperimentalCupertinoApi::class)
 @Composable
 actual fun CupertinoAlertDialogNative(
-    onDismissRequest : () -> Unit,
+    onDismissRequest: () -> Unit,
     title: String?,
     message: String?,
-    containerColor : Color,
+    containerColor: Color,
     shape: Shape,
     properties: DialogProperties,
     buttonsOrientation: Orientation,
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) {
     CupertinoAlertDialog(
         onDismissRequest = onDismissRequest,
@@ -28,21 +28,21 @@ actual fun CupertinoAlertDialogNative(
         containerColor = containerColor,
         shape = shape,
         buttonsOrientation = buttonsOrientation,
-        buttons = { fromNative(buttons) }
+        buttons = { fromNative(buttons) },
     )
 }
 
 @OptIn(ExperimentalCupertinoApi::class)
 @Composable
 actual fun CupertinoActionSheetNative(
-    visible : Boolean,
-    onDismissRequest : () -> Unit,
-    title : String?,
-    message : String?,
-    containerColor : Color,
-    secondaryContainerColor : Color,
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: String?,
+    message: String?,
+    containerColor: Color,
+    secondaryContainerColor: Color,
     properties: DialogProperties,
-    buttons : NativeAlertDialogActionsScope.() -> Unit
+    buttons: NativeAlertDialogActionsScope.() -> Unit,
 ) = CupertinoActionSheet(
     visible = visible,
     onDismissRequest = onDismissRequest,
@@ -51,5 +51,5 @@ actual fun CupertinoActionSheetNative(
     message = { CupertinoText(message.orEmpty()) },
     containerColor = containerColor,
     secondaryContainerColor = secondaryContainerColor,
-    buttons = { fromNative(buttons) }
+    buttons = { fromNative(buttons) },
 )

@@ -22,16 +22,17 @@ import androidx.compose.ui.graphics.Color
  *
  * You can provide your own local (for ex. basic Material local) using [LocalContentColorProvider]
  * */
-val LocalContentColor : ProvidableCompositionLocal<Color>
+val LocalContentColor: ProvidableCompositionLocal<Color>
     @Composable
     @ReadOnlyComposable
     get() = LocalContentColorProvider.current
 
+val LocalContentColorProvider =
+    staticCompositionLocalOf {
+        EmptyLocalColor
+    }
 
-val LocalContentColorProvider = staticCompositionLocalOf {
-    EmptyLocalColor
-}
-
-private val EmptyLocalColor = compositionLocalOf {
-    Color.Black
-}
+private val EmptyLocalColor =
+    compositionLocalOf {
+        Color.Black
+    }

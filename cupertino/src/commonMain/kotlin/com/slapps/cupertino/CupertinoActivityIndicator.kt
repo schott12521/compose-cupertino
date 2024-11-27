@@ -47,21 +47,23 @@ import kotlin.math.roundToInt
 @ExperimentalCupertinoApi
 fun CupertinoActivityIndicator(
     modifier: Modifier = Modifier,
-    size : Dp = CupertinoActivityIndicatorDefaults.MinSize,
+    size: Dp = CupertinoActivityIndicatorDefaults.MinSize,
     color: Color = CupertinoColors.Gray,
     count: Int = CupertinoActivityIndicatorDefaults.PathCount,
-    innerRadius : Float = 1/3f,
-    strokeWidth : Dp = Dp.Unspecified,
-    animationSpec: InfiniteRepeatableSpec<Float> = infiniteRepeatable(
-        animation = tween(
-            durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
-            easing = LinearEasing,
+    innerRadius: Float = 1 / 3f,
+    strokeWidth: Dp = Dp.Unspecified,
+    animationSpec: InfiniteRepeatableSpec<Float> =
+        infiniteRepeatable(
+            animation =
+                tween(
+                    durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
+                    easing = LinearEasing,
+                ),
+            repeatMode = RepeatMode.Restart,
         ),
-        repeatMode = RepeatMode.Restart,
-    ),
-    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha
+    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha,
 ) {
-    require(innerRadius in 0f..1f){
+    require(innerRadius in 0f..1f) {
         "innerRaius should be from 0 to 1"
     }
     val animatedPathCount = (count / 2).coerceIn(1, count)
@@ -76,11 +78,11 @@ fun CupertinoActivityIndicator(
     )
 
     Canvas(
-        modifier = modifier
-            .progressSemantics()
-            .size(size),
+        modifier =
+            modifier
+                .progressSemantics()
+                .size(size),
     ) {
-
         val canvasSize = this.size
 
         var canvasWidth = canvasSize.width
@@ -92,26 +94,31 @@ fun CupertinoActivityIndicator(
             canvasHeight = canvasWidth
         }
 
-        val itemWidth = canvasWidth  * (1 - innerRadius)/2
-        val itemHeight = if (strokeWidth.isSpecified)
-            strokeWidth.toPx() else canvasHeight / count
+        val itemWidth = canvasWidth * (1 - innerRadius) / 2
+        val itemHeight =
+            if (strokeWidth.isSpecified) {
+                strokeWidth.toPx()
+            } else {
+                canvasHeight / count
+            }
 
         val cornerRadius = itemWidth.coerceAtMost(itemHeight) / 2
 
         val horizontalOffset = (canvasSize.width - canvasSize.height).coerceAtLeast(0f) / 2
         val verticalOffset = (canvasSize.height - canvasSize.width).coerceAtLeast(0f) / 2
 
-        val topLeftOffset = Offset(
-            x = horizontalOffset + canvasWidth - itemWidth,
-            y = verticalOffset + (canvasHeight - itemHeight) / 2,
-        )
+        val topLeftOffset =
+            Offset(
+                x = horizontalOffset + canvasWidth - itemWidth,
+                y = verticalOffset + (canvasHeight - itemHeight) / 2,
+            )
 
         val itemSize = Size(itemWidth, itemHeight)
 
         for (i in 0..360 step 360 / count) {
             rotate(i.toFloat()) {
                 drawRoundRect(
-                    color = color.copy(alpha = minAlpha.coerceIn(0f,1f)),
+                    color = color.copy(alpha = minAlpha.coerceIn(0f, 1f)),
                     topLeft = topLeftOffset,
                     size = itemSize,
                     cornerRadius = CornerRadius(cornerRadius, cornerRadius),
@@ -122,9 +129,10 @@ fun CupertinoActivityIndicator(
         for (i in 0..animatedPathCount) {
             rotate((angle.toInt() + i) * coefficient) {
                 drawRoundRect(
-                    color = color.copy(
-                        alpha = (1f / (count / 2) * i).coerceIn(0f, 1f),
-                    ),
+                    color =
+                        color.copy(
+                            alpha = (1f / (count / 2) * i).coerceIn(0f, 1f),
+                        ),
                     topLeft = topLeftOffset,
                     size = itemSize,
                     cornerRadius = CornerRadius(cornerRadius, cornerRadius),
@@ -133,7 +141,6 @@ fun CupertinoActivityIndicator(
         }
     }
 }
-
 
 /**
  *
@@ -150,20 +157,22 @@ fun CupertinoActivityIndicator(
 @ExperimentalCupertinoApi
 fun CupertinoActivityIndicator(
     modifier: Modifier = Modifier,
-    progress : Float = 1f,
-    size : Dp = CupertinoActivityIndicatorDefaults.MinSize,
+    progress: Float = 1f,
+    size: Dp = CupertinoActivityIndicatorDefaults.MinSize,
     color: Color = CupertinoColors.Gray,
     count: Int = CupertinoActivityIndicatorDefaults.PathCount,
-    innerRadius : Float = 1/3f,
-    strokeWidth : Dp = Dp.Unspecified,
-    animationSpec: InfiniteRepeatableSpec<Float> = infiniteRepeatable(
-        animation = tween(
-            durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
-            easing = LinearEasing,
+    innerRadius: Float = 1 / 3f,
+    strokeWidth: Dp = Dp.Unspecified,
+    animationSpec: InfiniteRepeatableSpec<Float> =
+        infiniteRepeatable(
+            animation =
+                tween(
+                    durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
+                    easing = LinearEasing,
+                ),
+            repeatMode = RepeatMode.Restart,
         ),
-        repeatMode = RepeatMode.Restart,
-    ),
-    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha
+    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha,
 ) {
     require(innerRadius in 0f..1f) {
         "innerRadius must be from 0 to 1"
@@ -182,7 +191,7 @@ fun CupertinoActivityIndicator(
 
     val rotation by animateFloatAsState(
         targetValue = if (progress < 1f) StartRotation else EndRotation,
-        animationSpec = FinalAnimationSpec
+        animationSpec = FinalAnimationSpec,
     )
 
     val angle by infiniteTransition.animateFloat(
@@ -192,15 +201,15 @@ fun CupertinoActivityIndicator(
     )
 
     Canvas(
-        modifier = modifier
-            .graphicsLayer {
-                rotationZ = if (progress == 1f ) rotation else StartRotation
-            }
+        modifier =
+            modifier
+                .graphicsLayer {
+                    rotationZ = if (progress == 1f) rotation else StartRotation
+                }
 //            .rotate(-90f)
-            .progressSemantics()
-            .size(size),
+                .progressSemantics()
+                .size(size),
     ) {
-
         val canvasSize = this.size
 
         var canvasWidth = canvasSize.width
@@ -213,24 +222,29 @@ fun CupertinoActivityIndicator(
         }
 
         val itemWidth = canvasWidth * (1 - innerRadius) / 2
-        val itemHeight = if (strokeWidth.isSpecified)
-            strokeWidth.toPx() else canvasHeight / count
+        val itemHeight =
+            if (strokeWidth.isSpecified) {
+                strokeWidth.toPx()
+            } else {
+                canvasHeight / count
+            }
 
         val cornerRadius = itemWidth.coerceAtMost(itemHeight) / 2
 
         val horizontalOffset = (canvasSize.width - canvasSize.height).coerceAtLeast(0f) / 2
         val verticalOffset = (canvasSize.height - canvasSize.width).coerceAtLeast(0f) / 2
 
-        val topLeftOffset = Offset(
-            x = horizontalOffset + canvasWidth - itemWidth,
-            y = verticalOffset + (canvasHeight - itemHeight) / 2,
-        )
+        val topLeftOffset =
+            Offset(
+                x = horizontalOffset + canvasWidth - itemWidth,
+                y = verticalOffset + (canvasHeight - itemHeight) / 2,
+            )
 
         val itemSize = Size(itemWidth, itemHeight)
 
-
-        for (i in (0..360 step 360 / count)
-            .take(if (progress== 1f) count else (count * progress/2).toInt())
+        for (
+        i in (0..360 step 360 / count)
+            .take(if (progress == 1f) count else (count * progress / 2).toInt())
         ) {
             rotate(i.toFloat()) {
                 drawRoundRect(
@@ -242,14 +256,14 @@ fun CupertinoActivityIndicator(
             }
         }
 
-
         if (progress == 1f) {
             for (i in 0..animatedPathCount) {
                 rotate((angle.toInt() + i) * coefficient) {
                     drawRoundRect(
-                        color = color.copy(
-                            alpha = (1f / (count / 2) * i).coerceIn(0f, 1f),
-                        ),
+                        color =
+                            color.copy(
+                                alpha = (1f / (count / 2) * i).coerceIn(0f, 1f),
+                            ),
                         topLeft = topLeftOffset,
                         size = itemSize,
                         cornerRadius = CornerRadius(cornerRadius, cornerRadius),
@@ -257,18 +271,18 @@ fun CupertinoActivityIndicator(
                 }
             }
         } else {
-
             for (i in 0..(count * progress).roundToInt()) {
-
                 rotate(i * coefficient) {
                     drawRoundRect(
-                        color = color.copy(
-                            alpha = when {
-                                progress > (i+1) / count.toFloat() -> 1f
-                                progress < i / count -> 0f
-                                else -> if (i == 0) progress / (1f/count) else (progress - i.toFloat()/count)/ (1f/count)
-                            }.coerceIn(0f,1f).takeIf { !it.isNaN() } ?: 0f,
-                        ),
+                        color =
+                            color.copy(
+                                alpha =
+                                    when {
+                                        progress > (i + 1) / count.toFloat() -> 1f
+                                        progress < i / count -> 0f
+                                        else -> if (i == 0) progress / (1f / count) else (progress - i.toFloat() / count) / (1f / count)
+                                    }.coerceIn(0f, 1f).takeIf { !it.isNaN() } ?: 0f,
+                            ),
                         topLeft = topLeftOffset,
                         size = itemSize,
                         cornerRadius = CornerRadius(cornerRadius, cornerRadius),
@@ -281,16 +295,15 @@ fun CupertinoActivityIndicator(
 
 @Immutable
 object CupertinoActivityIndicatorDefaults {
-
-    const val MinAlpha : Float = 0.1f
+    const val MinAlpha: Float = 0.1f
 
     val MinSize = 30.dp
 
-    const val PathCount  : Int = 8
+    const val PathCount: Int = 8
 
-    const val DurationMillis : Int = 1000
+    const val DurationMillis: Int = 1000
 
-    val color : Color
+    val color: Color
         @Composable
         @ReadOnlyComposable
         get() = CupertinoColors.Gray

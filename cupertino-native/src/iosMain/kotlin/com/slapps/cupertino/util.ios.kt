@@ -7,15 +7,21 @@ import platform.UIKit.UIView
 import platform.UIKit.UIViewController
 
 internal fun UIViewController.applyTheme(dark: Boolean) {
-    overrideUserInterfaceStyle = if (dark)
-        UIUserInterfaceStyle.UIUserInterfaceStyleDark
-    else UIUserInterfaceStyle.UIUserInterfaceStyleLight
+    overrideUserInterfaceStyle =
+        if (dark) {
+            UIUserInterfaceStyle.UIUserInterfaceStyleDark
+        } else {
+            UIUserInterfaceStyle.UIUserInterfaceStyleLight
+        }
 }
 
-internal fun UIView.applyTheme(dark : Boolean){
+internal fun UIView.applyTheme(dark: Boolean) {
     listOf(this, superview).forEach {
-        it?.overrideUserInterfaceStyle = if (dark)
-            UIUserInterfaceStyle.UIUserInterfaceStyleDark
-        else UIUserInterfaceStyle.UIUserInterfaceStyleLight
+        it?.overrideUserInterfaceStyle =
+            if (dark) {
+                UIUserInterfaceStyle.UIUserInterfaceStyleDark
+            } else {
+                UIUserInterfaceStyle.UIUserInterfaceStyleLight
+            }
     }
 }

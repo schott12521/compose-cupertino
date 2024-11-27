@@ -17,23 +17,26 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.unit.*
+import kotlinx.coroutines.isActive
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.math.sign
-import kotlinx.coroutines.isActive
 
 private enum class CupertinoScrollSource {
-    DRAG, FLING
+    DRAG,
+    FLING,
 }
 
 private enum class CupertinoOverscrollDirection {
-    UNKNOWN, VERTICAL, HORIZONTAL
+    UNKNOWN,
+    VERTICAL,
+    HORIZONTAL,
 }
 
 private enum class CupertinoSpringAnimationReason {
-    FLING_FROM_OVERSCROLL, POSSIBLE_SPRING_IN_THE_END
+    FLING_FROM_OVERSCROLL,
+    POSSIBLE_SPRING_IN_THE_END,
 }
-
 
 /*
  * Encapsulates internal calculation data representing per-dimension change after drag delta is consumed (or not)
@@ -42,10 +45,9 @@ private enum class CupertinoSpringAnimationReason {
 private data class CupertinoOverscrollAvailableDelta(
     // delta which will be used to perform actual content scroll
     val availableDelta: Float,
-
     // new overscroll value for dimension in context of which calculation returning
     // instance of this type was returned
-    val newOverscrollValue: Float
+    val newOverscrollValue: Float,
 )
 
 /**
@@ -60,7 +62,7 @@ private data class CupertinoOverscrollAvailableDelta(
 class CupertinoOverscrollEffect(
     private val density: Float,
     layoutDirection: LayoutDirection,
-    val applyClip: Boolean
+    val applyClip: Boolean,
 ) : OverscrollEffect {
     /*
      * Direction of scrolling for this overscroll effect, derived from arguments during
@@ -106,14 +108,14 @@ class CupertinoOverscrollEffect(
             // this effect is considered to be in progress
             visibleOverscrollOffset.toOffset().getDistance() > 0.5f
 
-    override val effectModifier = Modifier
-        .onPlaced {
-            scrollSize = it.size.toSize()
-        }
-        .clipIfNeeded()
-        .offset {
-            visibleOverscrollOffset
-        }
+    override val effectModifier =
+        Modifier
+            .onPlaced {
+                scrollSize = it.size.toSize()
+            }.clipIfNeeded()
+            .offset {
+                visibleOverscrollOffset
+            }
 
     private fun Modifier.clipIfNeeded(): Modifier =
         if (applyClip) {
@@ -136,7 +138,7 @@ class CupertinoOverscrollEffect(
     private fun availableDelta(
         delta: Float,
         overscroll: Float,
-        source: CupertinoScrollSource
+        source: CupertinoScrollSource,
     ): CupertinoOverscrollAvailableDelta {
         // if source is fling:
         // 1. no delta will be consumed
@@ -168,7 +170,10 @@ class CupertinoOverscrollEffect(
      * Returns the amount of scroll delta available after user performed scroll inside overscroll area
      * It will update [overscroll] resulting in visual change because of [Modifier.offset] depending on it
      */
-    private fun availableDelta(delta: Offset, source: CupertinoScrollSource): Offset {
+    private fun availableDelta(
+        delta: Offset,
+        source: CupertinoScrollSource,
+    ): Offset {
         val (x, overscrollX) = availableDelta(delta.x, overscrollOffset.x, source)
         val (y, overscrollY) = availableDelta(delta.y, overscrollOffset.y, source)
 
@@ -185,7 +190,7 @@ class CupertinoOverscrollEffect(
     private fun applyToScroll(
         delta: Offset,
         source: CupertinoScrollSource,
-        performScroll: (Offset) -> Offset
+        performScroll: (Offset) -> Offset,
     ): Offset {
         // Calculate how much delta is available after being consumed by scrolling inside overscroll area
         val deltaLeftForPerformScroll = availableDelta(delta, source)
@@ -217,7 +222,7 @@ class CupertinoOverscrollEffect(
     override fun applyToScroll(
         delta: Offset,
         source: NestedScrollSource,
-        performScroll: (Offset) -> Offset
+        performScroll: (Offset) -> Offset,
     ): Offset {
         direction = direction.combinedWith(delta.toCupertinoOverscrollDirection())
 
@@ -228,7 +233,7 @@ class CupertinoOverscrollEffect(
 
     override suspend fun applyToFling(
         velocity: Velocity,
-        performFling: suspend (Velocity) -> Velocity
+        performFling: suspend (Velocity) -> Velocity,
     ) {
         val availableFlingVelocity = playInitialSpringAnimationIfNeeded(velocity)
         val velocityConsumedByFling = performFling(availableFlingVelocity)
@@ -237,7 +242,7 @@ class CupertinoOverscrollEffect(
         playSpringAnimation(
             lastFlingUncosumedDelta.toFloat(),
             postFlingVelocity.toFloat(),
-            CupertinoSpringAnimationReason.POSSIBLE_SPRING_IN_THE_END
+            CupertinoSpringAnimationReason.POSSIBLE_SPRING_IN_THE_END,
         )
     }
 
@@ -260,28 +265,29 @@ class CupertinoOverscrollEffect(
 
     private fun CupertinoOverscrollDirection.combinedWith(other: CupertinoOverscrollDirection): CupertinoOverscrollDirection =
         when (this) {
-            CupertinoOverscrollDirection.UNKNOWN -> when (other) {
-                CupertinoOverscrollDirection.UNKNOWN -> CupertinoOverscrollDirection.UNKNOWN
-                CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
-                CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
-            }
+            CupertinoOverscrollDirection.UNKNOWN ->
+                when (other) {
+                    CupertinoOverscrollDirection.UNKNOWN -> CupertinoOverscrollDirection.UNKNOWN
+                    CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
+                    CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
+                }
 
-            CupertinoOverscrollDirection.VERTICAL -> when (other) {
-                CupertinoOverscrollDirection.UNKNOWN, CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
-                CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
-            }
+            CupertinoOverscrollDirection.VERTICAL ->
+                when (other) {
+                    CupertinoOverscrollDirection.UNKNOWN, CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
+                    CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
+                }
 
-            CupertinoOverscrollDirection.HORIZONTAL -> when (other) {
-                CupertinoOverscrollDirection.UNKNOWN, CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
-                CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
-            }
+            CupertinoOverscrollDirection.HORIZONTAL ->
+                when (other) {
+                    CupertinoOverscrollDirection.UNKNOWN, CupertinoOverscrollDirection.HORIZONTAL -> CupertinoOverscrollDirection.HORIZONTAL
+                    CupertinoOverscrollDirection.VERTICAL -> CupertinoOverscrollDirection.VERTICAL
+                }
         }
 
-    private fun Velocity.toFloat(): Float =
-        toOffset().toFloat()
+    private fun Velocity.toFloat(): Float = toOffset().toFloat()
 
-    private fun Float.toVelocity(): Velocity =
-        toOffset().toVelocity()
+    private fun Float.toVelocity(): Velocity = toOffset().toVelocity()
 
     private fun Offset.toFloat(): Float =
         when (direction) {
@@ -305,7 +311,7 @@ class CupertinoOverscrollEffect(
             playSpringAnimation(
                 unconsumedDelta = 0f,
                 velocity,
-                CupertinoSpringAnimationReason.FLING_FROM_OVERSCROLL
+                CupertinoSpringAnimationReason.FLING_FROM_OVERSCROLL,
             ).toVelocity()
         } else {
             initialVelocity
@@ -315,7 +321,7 @@ class CupertinoOverscrollEffect(
     private suspend fun playSpringAnimation(
         unconsumedDelta: Float,
         initialVelocity: Float,
-        reason: CupertinoSpringAnimationReason
+        reason: CupertinoSpringAnimationReason,
     ): Float {
         val initialValue = overscrollOffset.toFloat() + unconsumedDelta
         val initialSign = sign(initialValue)
@@ -325,26 +331,27 @@ class CupertinoOverscrollEffect(
         // they operated on DPs. Callback value is then scaled back to raw pixels.
         val visibilityThreshold = 0.5f / density
 
-        val spec = when (reason) {
-            CupertinoSpringAnimationReason.FLING_FROM_OVERSCROLL -> {
-                spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = 400f,
-                    visibilityThreshold = visibilityThreshold
-                )
+        val spec =
+            when (reason) {
+                CupertinoSpringAnimationReason.FLING_FROM_OVERSCROLL -> {
+                    spring(
+                        dampingRatio = Spring.DampingRatioLowBouncy,
+                        stiffness = 400f,
+                        visibilityThreshold = visibilityThreshold,
+                    )
+                }
+                CupertinoSpringAnimationReason.POSSIBLE_SPRING_IN_THE_END -> {
+                    spring(
+                        stiffness = 200f,
+                        visibilityThreshold = visibilityThreshold,
+                    )
+                }
             }
-            CupertinoSpringAnimationReason.POSSIBLE_SPRING_IN_THE_END -> {
-                spring(
-                    stiffness = 200f,
-                    visibilityThreshold = visibilityThreshold
-                )
-            }
-        }
 
         AnimationState(
             Float.VectorConverter,
             initialValue / density,
-            initialVelocity / density
+            initialVelocity / density,
         ).animateTo(
             targetValue = 0f,
             animationSpec = spec,
@@ -375,7 +382,7 @@ class CupertinoOverscrollEffect(
     private fun Offset.reverseHorizontalIfNeeded(): Offset =
         Offset(
             if (reverseHorizontal) -x else x,
-            y
+            y,
         )
 
     private fun Offset.rubberBanded(): Offset {
@@ -388,7 +395,7 @@ class CupertinoOverscrollEffect(
 
         return Offset(
             rubberBandedValue(dpOffset.x, dpSize.width, RUBBER_BAND_COEFFICIENT),
-            rubberBandedValue(dpOffset.y, dpSize.height, RUBBER_BAND_COEFFICIENT)
+            rubberBandedValue(dpOffset.y, dpSize.height, RUBBER_BAND_COEFFICIENT),
         ) * density
     }
 
@@ -396,16 +403,17 @@ class CupertinoOverscrollEffect(
      * Maps raw delta offset [value] on an axis within scroll container with [dimension]
      * to actual visible offset
      */
-    private fun rubberBandedValue(value: Float, dimension: Float, coefficient: Float) =
-        sign(value) * (1f - (1f / (abs(value) * coefficient / dimension + 1f))) * dimension
+    private fun rubberBandedValue(
+        value: Float,
+        dimension: Float,
+        coefficient: Float,
+    ) = sign(value) * (1f - (1f / (abs(value) * coefficient / dimension + 1f))) * dimension
 
     companion object Companion {
         private const val RUBBER_BAND_COEFFICIENT = 0.55f
     }
 }
 
-private fun Velocity.toOffset(): Offset =
-    Offset(x, y)
+private fun Velocity.toOffset(): Offset = Offset(x, y)
 
-private fun Offset.toVelocity(): Velocity =
-    Velocity(x, y)
+private fun Offset.toVelocity(): Velocity = Velocity(x, y)

@@ -25,19 +25,19 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
  * limitations under the License.
  */
 
-@OptIn(ExperimentalDecomposeApi::class)
-fun DesktopApp(){
+fun DesktopApp() {
     val lifecycle = LifecycleRegistry()
 
-    val component = DefaultRootComponent(
-        DefaultComponentContext(lifecycle = lifecycle)
-    )
-    val windowState = WindowState(
-        size = DpSize(400.dp, 800.dp)
-    )
+    val component =
+        DefaultRootComponent(
+            DefaultComponentContext(lifecycle = lifecycle),
+        )
+    val windowState =
+        WindowState(
+            size = DpSize(400.dp, 800.dp),
+        )
 
     singleWindowApplication(windowState) {
-
         LifecycleController(lifecycle, windowState)
 
         App(component)

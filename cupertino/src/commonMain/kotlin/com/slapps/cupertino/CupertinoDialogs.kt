@@ -82,18 +82,19 @@ import com.slapps.cupertino.theme.systemRed
  * Style of the Cupertino alert action buttons
  * */
 enum class AlertActionStyle {
-
     /**
      * Default action button
      * */
     Default {
-        override fun apply(style: TextStyle, dark: Boolean): TextStyle {
-            return style.copy(
+        override fun apply(
+            style: TextStyle,
+            dark: Boolean,
+        ): TextStyle =
+            style.copy(
                 fontWeight = FontWeight.Normal,
                 color = CupertinoColors.systemBlue(dark),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
-        }
     },
 
     /**
@@ -101,40 +102,44 @@ enum class AlertActionStyle {
      * with different container color and bolder font
      * */
     Cancel {
-        override fun apply(style: TextStyle, dark: Boolean): TextStyle {
-            return style.copy(
+        override fun apply(
+            style: TextStyle,
+            dark: Boolean,
+        ): TextStyle =
+            style.copy(
                 fontWeight = FontWeight.Bold,
                 color = CupertinoColors.systemBlue(dark),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
-        }
     },
 
     /**
      * Destructive action button. It will be red
      * */
     Destructive {
-        override fun apply(style: TextStyle, dark: Boolean): TextStyle {
-            return style.copy(
+        override fun apply(
+            style: TextStyle,
+            dark: Boolean,
+        ): TextStyle =
+            style.copy(
                 fontWeight = FontWeight.Normal,
                 color = CupertinoColors.systemRed(dark),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
-        }
-    };
+    }, ;
 
-
-    internal abstract fun apply(style: TextStyle, dark: Boolean): TextStyle
+    internal abstract fun apply(
+        style: TextStyle,
+        dark: Boolean,
+    ): TextStyle
 }
 
-
 interface AlertDialogActionsScope {
-
     fun action(
-        onClick : () -> Unit,
-        style : AlertActionStyle = AlertActionStyle.Default,
-        enabled : Boolean = true,
-        title : @Composable () -> Unit
+        onClick: () -> Unit,
+        style: AlertActionStyle = AlertActionStyle.Default,
+        enabled: Boolean = true,
+        title: @Composable () -> Unit,
     )
 }
 
@@ -142,42 +147,42 @@ interface AlertDialogActionsScope {
  * Alert controller button with default style
  * */
 fun AlertDialogActionsScope.default(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : @Composable () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: @Composable () -> Unit,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Default,
     enabled = enabled,
-    title = title
+    title = title,
 )
 
 /**
  * Alert controller button with destructive style
  * */
 fun AlertDialogActionsScope.destructive(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : @Composable () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: @Composable () -> Unit,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Destructive,
     enabled = enabled,
-    title = title
+    title = title,
 )
 
 /**
  * Alert controller button with cancel style
  * */
 fun AlertDialogActionsScope.cancel(
-    onClick : () -> Unit,
-    enabled : Boolean = true,
-    title : @Composable () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    title: @Composable () -> Unit,
 ) = action(
     onClick = onClick,
     style = AlertActionStyle.Cancel,
     enabled = enabled,
-    title = title
+    title = title,
 )
 
 /**
@@ -199,10 +204,10 @@ fun CupertinoAlertDialog(
     message: (@Composable () -> Unit)? = null,
     containerColor: Color = CupertinoDialogsDefaults.ContainerColor,
     shape: Shape = CupertinoDialogsDefaults.Shape,
-    shadowElevation : Dp = CupertinoDialogsTokens.AlertDialogElevation,
+    shadowElevation: Dp = CupertinoDialogsTokens.AlertDialogElevation,
     properties: DialogProperties = DialogProperties(),
     buttonsOrientation: Orientation = CupertinoDialogsDefaults.ButtonOrientation,
-    buttons: AlertDialogActionsScope.() -> Unit
+    buttons: AlertDialogActionsScope.() -> Unit,
 ) {
     AnimatedDialog(
         properties = properties,
@@ -216,35 +221,36 @@ fun CupertinoAlertDialog(
                 .shadow(
                     elevation = shadowElevation,
                     shape = shape,
-                    clip = true
+                    clip = true,
                 ),
-            color = containerColor
+            color = containerColor,
         ) {
             Column(
-                modifier = Modifier
-                    .width(CupertinoDialogsTokens.AlertDialogWidth)
-                    .heightIn(min = CupertinoDialogsTokens.AlertDialogMinHeight)
+                modifier =
+                    Modifier
+                        .width(CupertinoDialogsTokens.AlertDialogWidth)
+                        .heightIn(min = CupertinoDialogsTokens.AlertDialogMinHeight),
             ) {
                 Column(
                     Modifier
                         .padding(CupertinoDialogsTokens.AlertDialogPadding)
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(AlertDialogTitleMessageSpacing),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     ProvideTextStyle(
                         CupertinoTheme.typography.headline.copy(
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         ),
-                        content = title
+                        content = title,
                     )
                     message?.let {
                         ProvideTextStyle(
                             CupertinoTheme.typography.footnote.copy(
                                 textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Normal
+                                fontWeight = FontWeight.Normal,
                             ),
-                            content = it
+                            content = it,
                         )
                     }
                 }
@@ -257,9 +263,9 @@ fun CupertinoAlertDialog(
     }
 }
 
-//@Composable
-//@ExperimentalCupertinoApi
-//fun CupertinoPickerActionSheet(
+// @Composable
+// @ExperimentalCupertinoApi
+// fun CupertinoPickerActionSheet(
 //    onDismissRequest : () -> Unit,
 //    title : (@Composable () -> Unit)? = null,
 //    message : (@Composable () -> Unit)? = null,
@@ -268,7 +274,7 @@ fun CupertinoAlertDialog(
 //    properties: DialogProperties = DialogProperties(),
 //    buttons : AlertDialogButtonsScope.() -> Unit = {},
 //    picker : @Composable () -> Unit,
-//) = CupertinoActionSheet(
+// ) = CupertinoActionSheet(
 //    onDismissRequest = onDismissRequest,
 //    title = title,
 //    message = message,
@@ -283,7 +289,7 @@ fun CupertinoAlertDialog(
 //        }
 //    },
 //    buttons = buttons
-//)
+// )
 //
 
 /**
@@ -301,60 +307,68 @@ fun CupertinoAlertDialog(
 @Composable
 @ExperimentalCupertinoApi
 fun CupertinoActionSheet(
-    visible : Boolean,
-    onDismissRequest : () -> Unit,
-    title : (@Composable () -> Unit)? = null,
-    message : (@Composable () -> Unit)? = null,
-    containerColor : Color = CupertinoDialogsDefaults.ContainerColor,
-    secondaryContainerColor : Color = CupertinoTheme.colorScheme.tertiarySystemBackground,
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: (@Composable () -> Unit)? = null,
+    message: (@Composable () -> Unit)? = null,
+    containerColor: Color = CupertinoDialogsDefaults.ContainerColor,
+    secondaryContainerColor: Color = CupertinoTheme.colorScheme.tertiarySystemBackground,
     properties: DialogProperties = DialogProperties(),
-    content  : (@Composable () -> Unit) ?= null,
-    buttons : AlertDialogActionsScope.() -> Unit,
+    content: (@Composable () -> Unit)? = null,
+    buttons: AlertDialogActionsScope.() -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalContainerColor provides containerColor
+        LocalContainerColor provides containerColor,
     ) {
         DialogSheet(
             visible = visible,
             onDismissRequest = onDismissRequest,
-            dialogProperties = properties
+            dialogProperties = properties,
         ) {
             val hasTitle = title != null || message != null
 
-            val scope = CupertinoActionSheetImpl(
-                hasTitle = hasTitle,
-                primaryContainerColor = containerColor,
-                secondaryContainerColor = secondaryContainerColor,
-            ).apply(buttons)
-
+            val scope =
+                CupertinoActionSheetImpl(
+                    hasTitle = hasTitle,
+                    primaryContainerColor = containerColor,
+                    secondaryContainerColor = secondaryContainerColor,
+                ).apply(buttons)
 
             scope.run {
                 Content {
                     Column {
                         if (hasTitle) {
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        paddingValues = if (message != null && title != null)
-                                            CupertinoDialogsTokens.ActionSheetTitleAndMessagePaddingValues
-                                        else CupertinoDialogsTokens.ActionSheetTitlePaddingValues
-                                    ),
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            paddingValues =
+                                                if (message != null && title != null) {
+                                                    CupertinoDialogsTokens.ActionSheetTitleAndMessagePaddingValues
+                                                } else {
+                                                    CupertinoDialogsTokens.ActionSheetTitlePaddingValues
+                                                },
+                                        ),
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement
-                                    .spacedBy(CupertinoDialogsTokens.ActionSheetTitleMessageSpacing)
+                                verticalArrangement =
+                                    Arrangement
+                                        .spacedBy(CupertinoDialogsTokens.ActionSheetTitleMessageSpacing),
                             ) {
                                 CompositionLocalProvider(
-                                    LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel
+                                    LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel,
                                 ) {
                                     if (title != null) {
                                         ProvideTextStyle(
                                             CupertinoTheme.typography.footnote.copy(
-                                                fontWeight = if (message != null)
-                                                    FontWeight.SemiBold
-                                                else FontWeight.Normal,
+                                                fontWeight =
+                                                    if (message != null) {
+                                                        FontWeight.SemiBold
+                                                    } else {
+                                                        FontWeight.Normal
+                                                    },
                                                 textAlign = TextAlign.Center,
-                                            )
+                                            ),
                                         ) {
                                             title()
                                         }
@@ -363,8 +377,8 @@ fun CupertinoActionSheet(
                                         ProvideTextStyle(
                                             CupertinoTheme.typography.footnote.copy(
                                                 textAlign = TextAlign.Center,
-                                                fontWeight = FontWeight.Normal
-                                            )
+                                                fontWeight = FontWeight.Normal,
+                                            ),
                                         ) {
                                             message()
                                         }
@@ -378,7 +392,7 @@ fun CupertinoActionSheet(
                             }
                             CompositionLocalProvider(
                                 LocalContainerColor provides containerColor,
-                                content = content
+                                content = content,
                             )
                         }
                     }
@@ -390,25 +404,22 @@ fun CupertinoActionSheet(
 
 @Immutable
 object CupertinoDialogsDefaults {
-
-    val ScrimColor : Color
+    val ScrimColor: Color
         @Composable
         @ReadOnlyComposable
         get() = Color.Black.copy(alpha = if (isDark()) .4f else .2f)
 
-    val ButtonOrientation : Orientation =  Orientation.Horizontal
+    val ButtonOrientation: Orientation = Orientation.Horizontal
 
-    val ContainerColor : Color
+    val ContainerColor: Color
         @Composable
         get() = CupertinoColors.systemGray7
 
-    val Shape : CornerBasedShape
+    val Shape: CornerBasedShape
         @Composable
         @ReadOnlyComposable
         get() = CupertinoTheme.shapes.medium
 }
-
-
 
 @Composable
 @ReadOnlyComposable
@@ -416,31 +427,29 @@ internal expect fun FullscreenPopupProperties(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = false,
     usePlatformDefaultWidth: Boolean = true,
-) : PopupProperties
+): PopupProperties
 
-expect val DialogProperties.platformInsets : Boolean
-
+expect val DialogProperties.platformInsets: Boolean
 
 @Composable
 private fun AnimatedDialog(
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
     enterTransition: EnterTransition,
-    scrimColor : Color = CupertinoDialogsDefaults.ScrimColor,
-    content: @Composable BoxScope.() -> Unit
+    scrimColor: Color = CupertinoDialogsDefaults.ScrimColor,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-
     val haptic = LocalHapticFeedback.current
 
     Popup(
         onDismissRequest = onDismissRequest,
-        properties = FullscreenPopupProperties(
-            dismissOnBackPress = properties.dismissOnBackPress,
-            dismissOnClickOutside = properties.dismissOnClickOutside,
-            usePlatformDefaultWidth = false,
-        )
+        properties =
+            FullscreenPopupProperties(
+                dismissOnBackPress = properties.dismissOnBackPress,
+                dismissOnClickOutside = properties.dismissOnClickOutside,
+                usePlatformDefaultWidth = false,
+            ),
     ) {
-
         CompositionLocalProvider(LocalHapticFeedback provides haptic) {
             var visible by remember {
                 mutableStateOf(false)
@@ -454,39 +463,43 @@ private fun AnimatedDialog(
             )
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .drawWithContent {
-                        drawRect(animatedScrimColor)
-                        drawContent()
-                    }
-                    .then(
-                        if (properties.dismissOnClickOutside)
-                            Modifier.pointerInput(0) {
-                                detectTapGestures {
-                                    onDismissRequest()
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .drawWithContent {
+                            drawRect(animatedScrimColor)
+                            drawContent()
+                        }.then(
+                            if (properties.dismissOnClickOutside) {
+                                Modifier.pointerInput(0) {
+                                    detectTapGestures {
+                                        onDismissRequest()
+                                    }
                                 }
-                            } else Modifier
-                    )
-                    .then(
-                        if (properties.platformInsets)
-                        Modifier
-                            .systemBarsPadding()
-                            .imePadding()
-                        else Modifier
-                    )
+                            } else {
+                                Modifier
+                            },
+                        ).then(
+                            if (properties.platformInsets) {
+                                Modifier
+                                    .systemBarsPadding()
+                                    .imePadding()
+                            } else {
+                                Modifier
+                            },
+                        ),
             ) {
                 AnimatedVisibility(
                     visible = visible,
-                    enter = enterTransition
+                    enter = enterTransition,
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        content = content
+                        modifier =
+                            Modifier
+                                .fillMaxSize(),
+                        content = content,
                     )
                 }
-
             }
         }
     }
@@ -497,7 +510,7 @@ private fun DialogSheet(
     visible: Boolean,
     onDismissRequest: () -> Unit,
     dialogProperties: DialogProperties,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AnimatedSheet(
         visible = visible,
@@ -507,7 +520,7 @@ private fun DialogSheet(
         Box(
             Modifier
                 .widthIn(max = CupertinoDialogsTokens.ActionSheetMaxWidth)
-                .align(Alignment.BottomCenter)
+                .align(Alignment.BottomCenter),
         ) {
             content()
         }
@@ -519,33 +532,33 @@ private fun AnimatedSheet(
     visible: Boolean,
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
-    scrimColor : Color = CupertinoDialogsDefaults.ScrimColor,
-    content: @Composable() (BoxScope.() -> Unit)
+    scrimColor: Color = CupertinoDialogsDefaults.ScrimColor,
+    content:
+        @Composable()
+        (BoxScope.() -> Unit),
 ) {
-
     val expandedStates = remember { MutableTransitionState(false) }
 
     expandedStates.targetState = visible
 
     if (expandedStates.currentState || expandedStates.targetState) {
-
         val haptic = LocalHapticFeedback.current
         Popup(
             onDismissRequest = onDismissRequest,
-            properties = FullscreenPopupProperties(
-                dismissOnBackPress = properties.dismissOnBackPress,
-                dismissOnClickOutside = properties.dismissOnClickOutside,
-                usePlatformDefaultWidth = false,
-            )
+            properties =
+                FullscreenPopupProperties(
+                    dismissOnBackPress = properties.dismissOnBackPress,
+                    dismissOnClickOutside = properties.dismissOnClickOutside,
+                    usePlatformDefaultWidth = false,
+                ),
         ) {
             CompositionLocalProvider(LocalHapticFeedback provides haptic) {
-
                 val transition = rememberTransition(expandedStates, "CupertinoSheet")
 
                 val animatedScrimColor by transition.animateColor(
                     transitionSpec = {
                         sheetAnimation()
-                    }
+                    },
                 ) {
                     if (it) scrimColor else scrimColor.copy(alpha = 0f)
                 }
@@ -553,35 +566,38 @@ private fun AnimatedSheet(
                 val transitionProgress by transition.animateFloat(
                     transitionSpec = {
                         sheetAnimation()
-                    }
+                    },
                 ) {
                     if (it) 0f else 1f
                 }
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .drawWithContent {
-                            drawRect(animatedScrimColor)
-                            drawContent()
-                        }
-                        .let {
-                            if (properties.dismissOnClickOutside && visible)
-                                it.pointerInput(0) {
-                                    detectTapGestures {
-                                        onDismissRequest()
-                                    }
-                                } else it
-                        }
-                ) {
-
-                    Box(
-                        modifier = Modifier
+                    modifier =
+                        Modifier
                             .fillMaxSize()
-                            .graphicsLayer {
-                                translationY = size.height * transitionProgress
+                            .drawWithContent {
+                                drawRect(animatedScrimColor)
+                                drawContent()
+                            }.let {
+                                if (properties.dismissOnClickOutside && visible) {
+                                    it.pointerInput(0) {
+                                        detectTapGestures {
+                                            onDismissRequest()
+                                        }
+                                    }
+                                } else {
+                                    it
+                                }
                             },
-                        content = content
+                ) {
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .graphicsLayer {
+                                    translationY = size.height * transitionProgress
+                                },
+                        content = content,
                     )
                 }
             }
@@ -592,14 +608,13 @@ private fun AnimatedSheet(
 private class CupertinoAlertDialogButtonsScopeImpl(
     private val orientation: Orientation,
 ) : AlertDialogActionsScope {
-
     private val buttons = mutableListOf<@Composable () -> Unit>()
 
     override fun action(
         onClick: () -> Unit,
         style: AlertActionStyle,
         enabled: Boolean,
-        title: @Composable () -> Unit
+        title: @Composable () -> Unit,
     ) {
         buttons.add {
             Box(
@@ -608,24 +623,27 @@ private class CupertinoAlertDialogButtonsScopeImpl(
                         enabled = enabled,
                         onClick = onClick,
                         role = Role.Button,
-                    )
-                    .fillMaxSize(),
+                    ).fillMaxSize(),
                 contentAlignment = Alignment.Center,
                 content = {
                     val s = style.apply(CupertinoTheme.typography.body, isDark())
                     ProvideTextStyle(
                         s.copy(
-                            color = if (enabled) s.color
-                            else CupertinoTheme.colorScheme.tertiaryLabel
-                        )
+                            color =
+                                if (enabled) {
+                                    s.color
+                                } else {
+                                    CupertinoTheme.colorScheme.tertiaryLabel
+                                },
+                        ),
                     ) {
                         CompositionLocalProvider(
-                            LocalContentColor provides LocalTextStyle.current.color
+                            LocalContentColor provides LocalTextStyle.current.color,
                         ) {
                             title()
                         }
                     }
-                }
+                },
             )
         }
     }
@@ -633,14 +651,15 @@ private class CupertinoAlertDialogButtonsScopeImpl(
     @Composable
     fun Content() {
         CompositionLocalProvider(
-            LocalSeparatorColor provides BrightSeparatorColor
+            LocalSeparatorColor provides BrightSeparatorColor,
         ) {
             Column {
                 CupertinoHorizontalDivider()
                 if (orientation == Orientation.Horizontal) {
                     Row(
-                        modifier = Modifier
-                            .height(CupertinoDialogsTokens.AlertDialogButtonHeight)
+                        modifier =
+                            Modifier
+                                .height(CupertinoDialogsTokens.AlertDialogButtonHeight),
                     ) {
                         buttons.fastForEachIndexed { i, btn ->
                             Box(Modifier.weight(1f)) {
@@ -654,9 +673,10 @@ private class CupertinoAlertDialogButtonsScopeImpl(
                 } else {
                     buttons.fastForEachIndexed { i, btn ->
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(CupertinoDialogsTokens.AlertDialogButtonHeight)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(CupertinoDialogsTokens.AlertDialogButtonHeight),
                         ) {
                             btn()
                         }
@@ -671,83 +691,94 @@ private class CupertinoAlertDialogButtonsScopeImpl(
 }
 
 private class CupertinoActionSheetImpl(
-    private val hasTitle : Boolean,
-    private val primaryContainerColor : Color,
+    private val hasTitle: Boolean,
+    private val primaryContainerColor: Color,
     private val secondaryContainerColor: Color,
 ) : AlertDialogActionsScope {
-
     private val buttons = mutableListOf<Pair<AlertActionStyle, @Composable () -> Unit>>()
 
     override fun action(
         onClick: () -> Unit,
         style: AlertActionStyle,
         enabled: Boolean,
-        title: @Composable () -> Unit
+        title: @Composable () -> Unit,
     ) {
-        buttons.add(style to {
-            Box(
-                modifier = Modifier
-                    .clickable(
-                        enabled = enabled,
-                        onClick = onClick,
-                        role = Role.Button,
-                    )
-                    .fillMaxWidth()
-                    .heightIn(min = CupertinoDialogsTokens.ActionSheetButtonHeight),
-                contentAlignment = Alignment.Center,
-                content = {
-                    val s =  style.apply(CupertinoTheme.typography.title3, isDark())
-                    ProvideTextStyle(
-                        s.copy(
-                            fontWeight = if (style == AlertActionStyle.Cancel)
-                                FontWeight.SemiBold else FontWeight.Normal,
-                            color = if (enabled)
-                                s.color
-                            else CupertinoTheme.colorScheme.tertiaryLabel
-                        )
-                    ) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides LocalTextStyle.current.color
+        buttons.add(
+            style to {
+                Box(
+                    modifier =
+                        Modifier
+                            .clickable(
+                                enabled = enabled,
+                                onClick = onClick,
+                                role = Role.Button,
+                            ).fillMaxWidth()
+                            .heightIn(min = CupertinoDialogsTokens.ActionSheetButtonHeight),
+                    contentAlignment = Alignment.Center,
+                    content = {
+                        val s = style.apply(CupertinoTheme.typography.title3, isDark())
+                        ProvideTextStyle(
+                            s.copy(
+                                fontWeight =
+                                    if (style == AlertActionStyle.Cancel) {
+                                        FontWeight.SemiBold
+                                    } else {
+                                        FontWeight.Normal
+                                    },
+                                color =
+                                    if (enabled) {
+                                        s.color
+                                    } else {
+                                        CupertinoTheme.colorScheme.tertiaryLabel
+                                    },
+                            ),
                         ) {
-                            title()
+                            CompositionLocalProvider(
+                                LocalContentColor provides LocalTextStyle.current.color,
+                            ) {
+                                title()
+                            }
                         }
-                    }
-                }
-            )
-        })
+                    },
+                )
+            },
+        )
     }
 
     @Composable
     fun Content(title: (@Composable ColumnScope.() -> Unit)? = null) {
         CompositionLocalProvider(
-            LocalSeparatorColor provides BrightSeparatorColor
+            LocalSeparatorColor provides BrightSeparatorColor,
         ) {
             Column(
-                modifier = Modifier
-                    .windowInsetsPadding(CupertinoDialogsTokens.ActionSheetWindowInsets),
+                modifier =
+                    Modifier
+                        .windowInsetsPadding(CupertinoDialogsTokens.ActionSheetWindowInsets),
             ) {
                 CupertinoSurface(
-                    modifier = Modifier
-                        .padding(
-                            start = CupertinoDialogsTokens.ActionSheetSidePadding,
-                            end = CupertinoDialogsTokens.ActionSheetSidePadding,
-                            top = CupertinoDialogsTokens.ActionSheetSidePadding,
-                        ),
+                    modifier =
+                        Modifier
+                            .padding(
+                                start = CupertinoDialogsTokens.ActionSheetSidePadding,
+                                end = CupertinoDialogsTokens.ActionSheetSidePadding,
+                                top = CupertinoDialogsTokens.ActionSheetSidePadding,
+                            ),
                     shape = CupertinoDialogsDefaults.Shape,
-                    color = primaryContainerColor
+                    color = primaryContainerColor,
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .fillMaxWidth(),
                     ) {
-
                         title?.invoke(this)
 
                         buttons
                             .filter { it.first != AlertActionStyle.Cancel }
                             .fastForEachIndexed { i, btn ->
-                                if (i > 0 || hasTitle)
+                                if (i > 0 || hasTitle) {
                                     CupertinoHorizontalDivider()
+                                }
                                 btn.second()
                             }
                     }
@@ -757,14 +788,15 @@ private class CupertinoActionSheetImpl(
                     .filter { it.first == AlertActionStyle.Cancel }
                     .fastForEach {
                         CupertinoSurface(
-                            modifier = Modifier
-                                .padding(
-                                    start = CupertinoDialogsTokens.ActionSheetSidePadding,
-                                    end = CupertinoDialogsTokens.ActionSheetSidePadding,
-                                    top = CupertinoDialogsTokens.ActionSheetSidePadding,
-                                ),
+                            modifier =
+                                Modifier
+                                    .padding(
+                                        start = CupertinoDialogsTokens.ActionSheetSidePadding,
+                                        end = CupertinoDialogsTokens.ActionSheetSidePadding,
+                                        top = CupertinoDialogsTokens.ActionSheetSidePadding,
+                                    ),
                             shape = CupertinoDialogsDefaults.Shape,
-                            color = secondaryContainerColor
+                            color = secondaryContainerColor,
                         ) {
                             it.second()
                         }
@@ -774,46 +806,45 @@ private class CupertinoActionSheetImpl(
     }
 }
 
-private fun <T> Transition.Segment<Boolean>.sheetAnimation() : FiniteAnimationSpec<T> =
+private fun <T> Transition.Segment<Boolean>.sheetAnimation(): FiniteAnimationSpec<T> =
     if (true isTransitioningTo false) {
         tween(
             durationMillis = 150,
-            easing = EaseIn
+            easing = EaseIn,
         )
     } else {
         cupertinoTween()
     }
 
-
-internal object CupertinoDialogsTokens{
-
+internal object CupertinoDialogsTokens {
     val AlertDialogElevation: Dp = 1.dp
     val AlertDialogPadding = CupertinoSectionTokens.HorizontalPadding
-    val AlertDialogWidth : Dp = 270.dp
-    val AlertDialogMinHeight : Dp = 110.dp
-    val AlertDialogTitleMessageSpacing : Dp = 4.dp
-    val AlertDialogButtonHeight : Dp = CupertinoSectionTokens.MinHeight
-
+    val AlertDialogWidth: Dp = 270.dp
+    val AlertDialogMinHeight: Dp = 110.dp
+    val AlertDialogTitleMessageSpacing: Dp = 4.dp
+    val AlertDialogButtonHeight: Dp = CupertinoSectionTokens.MinHeight
 
     val ActionSheetTitlePaddingValues = PaddingValues(12.dp)
 
-    val ActionSheetTitleAndMessagePaddingValues = PaddingValues(
-        top = 12.dp,
-        start = 12.dp,
-        end = 12.dp,
-        bottom = 24.dp
-    )
+    val ActionSheetTitleAndMessagePaddingValues =
+        PaddingValues(
+            top = 12.dp,
+            start = 12.dp,
+            end = 12.dp,
+            bottom = 24.dp,
+        )
 
     val ActionSheetMaxWidth: Dp = 500.dp
     val ActionSheetSidePadding = 8.dp
-    val ActionSheetButtonHeight : Dp = 56.dp
-    val ActionSheetTitleMessageSpacing : Dp = 6.dp
-    val ActionSheetWindowInsets  : WindowInsets
+    val ActionSheetButtonHeight: Dp = 56.dp
+    val ActionSheetTitleMessageSpacing: Dp = 6.dp
+    val ActionSheetWindowInsets: WindowInsets
         @Composable
-        get() = WindowInsets.navigationBars.union(
-        WindowInsets(
-            bottom =
-            ActionSheetSidePadding
-        )
-    )
+        get() =
+            WindowInsets.navigationBars.union(
+                WindowInsets(
+                    bottom =
+                    ActionSheetSidePadding,
+                ),
+            )
 }

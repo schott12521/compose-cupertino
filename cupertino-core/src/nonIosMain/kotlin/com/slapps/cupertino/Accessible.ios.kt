@@ -2,8 +2,8 @@
 
 package com.slapps.cupertino
 
-actual val Accessibility.isHighContrastEnabled : Boolean
+actual val Accessibility.isHighContrastEnabled: Boolean
     get() = false
 
-actual val Accessibility.isReduceTransparencyEnabled : Boolean
+actual val Accessibility.isReduceTransparencyEnabled: Boolean
     get() = false

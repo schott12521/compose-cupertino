@@ -38,37 +38,41 @@ fun AdaptiveSurface(
     shape: Shape = RectangleShape,
     color: Color = Color.Unspecified,
     contentColor: Color = Color.Unspecified,
-    shadowElevation : Dp = 0.dp,
-    content: @Composable () -> Unit
+    shadowElevation: Dp = 0.dp,
+    content: @Composable () -> Unit,
 ) {
     AdaptiveWidget(
         material = {
             Surface(
                 modifier = modifier,
                 shape = shape,
-                color = color.takeOrElse {
-                    MaterialTheme.colorScheme.surface
-                },
-                contentColor = contentColor.takeOrElse {
-                    MaterialTheme.colorScheme.onSurface
-                },
+                color =
+                    color.takeOrElse {
+                        MaterialTheme.colorScheme.surface
+                    },
+                contentColor =
+                    contentColor.takeOrElse {
+                        MaterialTheme.colorScheme.onSurface
+                    },
                 shadowElevation = shadowElevation,
-                content = content
+                content = content,
             )
         },
         cupertino = {
             CupertinoSurface(
                 modifier = modifier,
                 shape = shape,
-                color = color.takeOrElse {
-                    CupertinoTheme.colorScheme.systemBackground
-                },
-                contentColor = contentColor.takeOrElse {
-                    LocalContentColor.current
-                },
+                color =
+                    color.takeOrElse {
+                        CupertinoTheme.colorScheme.systemBackground
+                    },
+                contentColor =
+                    contentColor.takeOrElse {
+                        LocalContentColor.current
+                    },
                 shadowElevation = shadowElevation,
-                content = content
+                content = content,
             )
-        }
+        },
     )
 }

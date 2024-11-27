@@ -8,6 +8,4 @@ import com.slapps.cupertino.icons.CupertinoIcons
 import com.slapps.cupertino.named
 
 @Composable
-internal actual fun systemImage(name : String) : Painter? {
-    return runCatching { CupertinoIcons.named(name) }.getOrNull()
-}
+internal actual fun systemImage(name: String): Painter? = runCatching { CupertinoIcons.named(name) }.getOrNull()

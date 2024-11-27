@@ -6,24 +6,23 @@ package com.slapps.cupertino
 
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 
-
-val HapticFeedbackType.Companion.SelectionChanged : HapticFeedbackType
+val HapticFeedbackType.Companion.SelectionChanged: HapticFeedbackType
     get() = CupertinoHapticFeedback.SelectionChanged
 
-val HapticFeedbackType.Companion.Success : HapticFeedbackType
+val HapticFeedbackType.Companion.Success: HapticFeedbackType
     get() = CupertinoHapticFeedback.Success
-val HapticFeedbackType.Companion.Warning : HapticFeedbackType
+val HapticFeedbackType.Companion.Warning: HapticFeedbackType
     get() = CupertinoHapticFeedback.Warning
-val HapticFeedbackType.Companion.Error : HapticFeedbackType
+val HapticFeedbackType.Companion.Error: HapticFeedbackType
     get() = CupertinoHapticFeedback.Error
 
-val HapticFeedbackType.Companion.ImpactLight : HapticFeedbackType
+val HapticFeedbackType.Companion.ImpactLight: HapticFeedbackType
     get() = CupertinoHapticFeedback.ImpactLight
-val HapticFeedbackType.Companion.ImpactMedium : HapticFeedbackType
+val HapticFeedbackType.Companion.ImpactMedium: HapticFeedbackType
     get() = CupertinoHapticFeedback.ImpactMedium
-val HapticFeedbackType.Companion.ImpactHeavy : HapticFeedbackType
+val HapticFeedbackType.Companion.ImpactHeavy: HapticFeedbackType
     get() = CupertinoHapticFeedback.ImpactHeavy
-val HapticFeedbackType.Companion.ImpactRigid : HapticFeedbackType
+val HapticFeedbackType.Companion.ImpactRigid: HapticFeedbackType
     get() = CupertinoHapticFeedback.ImpactRigid
-val HapticFeedbackType.Companion.ImpactSoft : HapticFeedbackType
+val HapticFeedbackType.Companion.ImpactSoft: HapticFeedbackType
     get() = CupertinoHapticFeedback.ImpactSoft

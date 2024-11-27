@@ -41,17 +41,16 @@ import org.w3c.dom.Document
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun WasmApp() {
-
     val lifecycle = LifecycleRegistry()
 
-    val root = DefaultRootComponent(
-        DefaultComponentContext(lifecycle = lifecycle),
-    )
+    val root =
+        DefaultRootComponent(
+            DefaultComponentContext(lifecycle = lifecycle),
+        )
 
     lifecycle.attachToDocument()
 
     ComposeViewport(document.body!!) {
-
         var mobile by remember {
             mutableStateOf(true)
         }
@@ -61,21 +60,21 @@ fun WasmApp() {
                 .let {
                     if (mobile) {
                         it.widthIn(max = 400.dp)
-                    } else it
-                }
-                .fillMaxSize()
-                .padding(24.dp)
+                    } else {
+                        it
+                    }
+                }.fillMaxSize()
+                .padding(24.dp),
         ) {
-
             Row(
                 Modifier
-                    .align(Alignment.End)
+                    .align(Alignment.End),
             ) {
                 Checkbox(
                     checked = mobile,
                     onCheckedChange = {
                         mobile = it
-                    }
+                    },
                 )
                 Text("Mobile")
             }

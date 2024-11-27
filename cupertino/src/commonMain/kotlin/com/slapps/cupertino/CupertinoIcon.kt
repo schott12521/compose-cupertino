@@ -48,13 +48,13 @@ fun CupertinoIcon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current
+    tint: Color = LocalContentColor.current,
 ) {
     CupertinoIcon(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
         modifier = modifier,
-        tint = tint
+        tint = tint,
     )
 }
 
@@ -81,14 +81,14 @@ fun CupertinoIcon(
     bitmap: ImageBitmap,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current
+    tint: Color = LocalContentColor.current,
 ) {
     val painter = remember(bitmap) { BitmapPainter(bitmap) }
     CupertinoIcon(
         painter = painter,
         contentDescription = contentDescription,
         modifier = modifier,
-        tint = tint
+        tint = tint,
     )
 }
 
@@ -115,7 +115,7 @@ fun CupertinoIcon(
     painter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current
+    tint: Color = LocalContentColor.current,
 ) {
     val colorFilter = if (tint == Color.Unspecified) null else ColorFilter.tint(tint)
     val semantics =
@@ -128,11 +128,12 @@ fun CupertinoIcon(
             Modifier
         }
     Box(
-        modifier = modifier
-            .toolingGraphicsLayer()
-            .defaultSizeFor(painter)
-            .paint(painter, colorFilter = colorFilter, contentScale = ContentScale.Fit)
-            .then(semantics)
+        modifier =
+            modifier
+                .toolingGraphicsLayer()
+                .defaultSizeFor(painter)
+                .paint(painter, colorFilter = colorFilter, contentScale = ContentScale.Fit)
+                .then(semantics),
     )
 }
 
@@ -142,7 +143,7 @@ private fun Modifier.defaultSizeFor(painter: Painter) =
             DefaultIconSizeModifier
         } else {
             Modifier
-        }
+        },
     )
 
 private fun Size.isInfinite() = width.isInfinite() && height.isInfinite()

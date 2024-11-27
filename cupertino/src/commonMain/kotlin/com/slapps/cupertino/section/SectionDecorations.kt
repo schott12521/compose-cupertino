@@ -36,87 +36,104 @@ import com.slapps.cupertino.theme.CupertinoTheme
 internal fun SectionTitle(
     style: SectionStyle,
     state: SectionState?,
-    lazy : Boolean,
-    autoPadding : Boolean = true,
-    content: @Composable (PaddingValues) -> Unit
+    lazy: Boolean,
+    autoPadding: Boolean = true,
+    content: @Composable (PaddingValues) -> Unit,
 ) {
+    val additionalPadding =
+        when {
+            !lazy -> PaddingValues(0.dp)
+            style == SectionStyle.InsetGrouped ->
+                PaddingValues(
+                    horizontal = CupertinoSectionTokens.HorizontalPadding,
+                )
+            else -> PaddingValues(0.dp)
+        }
 
-    val additionalPadding = when {
-        !lazy -> PaddingValues(0.dp)
-        style == SectionStyle.InsetGrouped -> PaddingValues(
-            horizontal = CupertinoSectionTokens.HorizontalPadding
+    val basePadding =
+        PaddingValues(
+            start =
+                if (!lazy && style == SectionStyle.Sidebar) {
+                    0.dp
+                } else {
+                    CupertinoSectionTokens.HorizontalPadding
+                },
+            end = CupertinoSectionTokens.HorizontalPadding,
+            bottom =
+                if (style == SectionStyle.Sidebar) {
+                    CupertinoSectionTokens.InlinePadding * 2
+                } else {
+                    CupertinoSectionTokens.InlinePadding
+                },
         )
-        else -> PaddingValues(0.dp)
-    }
-
-    val basePadding = PaddingValues(
-        start = if (!lazy && style == SectionStyle.Sidebar )
-            0.dp
-        else CupertinoSectionTokens.HorizontalPadding,
-        end = CupertinoSectionTokens.HorizontalPadding,
-        bottom = if (style == SectionStyle.Sidebar)
-            CupertinoSectionTokens.InlinePadding * 2
-        else CupertinoSectionTokens.InlinePadding
-    )
 
     CompositionLocalProvider(
         LocalContentColor provides CupertinoSectionDefaults.titleColor(style),
-        LocalSectionStyle provides style
+        LocalSectionStyle provides style,
     ) {
-        val tapModifier = if (state != null && style == SectionStyle.Sidebar && state.canCollapse)
-            Modifier
-                .fillMaxWidth()
-                .clickable(
-                    onClickLabel = if (state.isCollapsed) "Expand" else "Hide",
-                    interactionSource = remember { MutableInteractionSource() },
-                    onClick = state::toggle,
-                    indication = null
-                )
-        else Modifier
+        val tapModifier =
+            if (state != null && style == SectionStyle.Sidebar && state.canCollapse) {
+                Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        onClickLabel = if (state.isCollapsed) "Expand" else "Hide",
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = state::toggle,
+                        indication = null,
+                    )
+            } else {
+                Modifier
+            }
 
         ProvideTextStyle(CupertinoSectionDefaults.titleTextStyle(style)) {
             Box(
-                modifier = tapModifier
-                    .then(if (autoPadding) Modifier.padding(basePadding) else Modifier)
-                    .then(if (autoPadding) Modifier.padding(additionalPadding) else Modifier),
+                modifier =
+                    tapModifier
+                        .then(if (autoPadding) Modifier.padding(basePadding) else Modifier)
+                        .then(if (autoPadding) Modifier.padding(additionalPadding) else Modifier),
                 contentAlignment = Alignment.CenterStart,
             ) {
                 content(if (!autoPadding) basePadding + additionalPadding else ZeroPadding)
 
                 if (style == SectionStyle.Sidebar && state != null && state.canCollapse) {
-
                     val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
 
                     val rotation by animateFloatAsState(
-                        targetValue = when {
-                            state.isCollapsed -> 0f
-                            isLtr -> 90f
-                            else -> -90f
-                        },
-                        animationSpec = spring(
-                            stiffness = Spring.StiffnessMediumLow,
-                        )
+                        targetValue =
+                            when {
+                                state.isCollapsed -> 0f
+                                isLtr -> 90f
+                                else -> -90f
+                            },
+                        animationSpec =
+                            spring(
+                                stiffness = Spring.StiffnessMediumLow,
+                            ),
                     )
 
                     CupertinoIcon(
-                        imageVector = if (isLtr)
-                            CupertinoIcons.Default.ChevronForward
-                        else CupertinoIcons.Default.ChevronBackward,
-                        contentDescription = "Collapse",
-                        modifier = Modifier
-                            .padding(
-                                end = when {
-                                    !lazy -> 0.dp
-                                    autoPadding -> CupertinoSectionTokens.HorizontalPadding
-                                    else -> CupertinoSectionTokens.HorizontalPadding * 2
-                                }
-                            )
-                            .size(CupertinoIconDefaults.SmallSize)
-                            .align(Alignment.CenterEnd)
-                            .graphicsLayer {
-                                rotationZ = rotation
+                        imageVector =
+                            if (isLtr) {
+                                CupertinoIcons.Default.ChevronForward
+                            } else {
+                                CupertinoIcons.Default.ChevronBackward
                             },
-                        tint = CupertinoTheme.colorScheme.accent
+                        contentDescription = "Collapse",
+                        modifier =
+                            Modifier
+                                .padding(
+                                    end =
+                                        when {
+                                            !lazy -> 0.dp
+                                            autoPadding -> CupertinoSectionTokens.HorizontalPadding
+                                            else -> CupertinoSectionTokens.HorizontalPadding * 2
+                                        },
+                                ).size(CupertinoIconDefaults.SmallSize)
+                                .align(Alignment.CenterEnd)
+                                .graphicsLayer {
+                                    rotationZ = rotation
+                                },
+                        tint = CupertinoTheme.colorScheme.accent,
                     )
                 }
             }
@@ -127,40 +144,42 @@ internal fun SectionTitle(
 private val ZeroPadding = PaddingValues(0.dp)
 
 @Composable
-private operator fun PaddingValues.plus(other : PaddingValues) : PaddingValues{
+private operator fun PaddingValues.plus(other: PaddingValues): PaddingValues {
     val layoutDirection = LocalLayoutDirection.current
 
     return PaddingValues(
         top = calculateTopPadding() + other.calculateTopPadding(),
         bottom = calculateBottomPadding() + other.calculateBottomPadding(),
         start = calculateStartPadding(layoutDirection) + other.calculateStartPadding(layoutDirection),
-        end = calculateEndPadding(layoutDirection) + other.calculateEndPadding(layoutDirection)
+        end = calculateEndPadding(layoutDirection) + other.calculateEndPadding(layoutDirection),
     )
 }
-
 
 @Composable
 internal fun SectionCaption(
     style: SectionStyle,
-    lazy : Boolean,
-    content: @Composable () -> Unit
+    lazy: Boolean,
+    content: @Composable () -> Unit,
 ) {
-
-    val addCorner = if (style.inset && style.grouped && lazy)
-        CupertinoSectionTokens.HorizontalPadding else 0.dp
+    val addCorner =
+        if (style.inset && style.grouped && lazy) {
+            CupertinoSectionTokens.HorizontalPadding
+        } else {
+            0.dp
+        }
 
     CompositionLocalProvider(
         LocalContentColor provides CupertinoSectionDefaults.captionColor(style),
-        LocalSectionStyle provides style
+        LocalSectionStyle provides style,
     ) {
         ProvideTextStyle(CupertinoSectionDefaults.captionTextStyle(style)) {
             Box(
                 Modifier.padding(
                     PaddingValues(
                         horizontal = CupertinoSectionTokens.HorizontalPadding + addCorner,
-                        vertical = CupertinoSectionTokens.InlinePadding
-                    )
-                )
+                        vertical = CupertinoSectionTokens.InlinePadding,
+                    ),
+                ),
             ) {
                 content()
             }
@@ -171,15 +190,21 @@ internal fun SectionCaption(
 @Composable
 internal fun SectionDivider(
     style: SectionStyle,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    if (style.inset && style.grouped)
+    if (style.inset && style.grouped) {
         return
+    }
 
     CupertinoHorizontalDivider(
-        modifier = modifier.padding(
-            start = if (style.grouped)
-                0.dp else CupertinoSectionTokens.HorizontalPadding
-        )
+        modifier =
+            modifier.padding(
+                start =
+                    if (style.grouped) {
+                        0.dp
+                    } else {
+                        CupertinoSectionTokens.HorizontalPadding
+                    },
+            ),
     )
 }

@@ -7,5 +7,4 @@ import androidx.compose.runtime.ReadOnlyComposable
 
 @Composable
 @ReadOnlyComposable
-internal fun isDark() =
-    CupertinoTheme.colorScheme.isDark
+internal fun isDark() = CupertinoTheme.colorScheme.isDark

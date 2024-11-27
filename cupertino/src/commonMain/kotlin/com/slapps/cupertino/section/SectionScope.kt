@@ -77,20 +77,22 @@ fun SectionScope.SectionItem(
     paddingValues: PaddingValues = CupertinoSectionDefaults.PaddingValues,
     leadingContent: @Composable () -> Unit = {},
     trailingContent: @Composable () -> Unit = {},
-    title: @Composable () -> Unit
+    title: @Composable () -> Unit,
 ) = InternalItem {
     Row(
-        modifier = modifier
-            .heightIn(min = CupertinoSectionTokens.MinHeight)
-            .fillMaxWidth()
-            .padding(paddingValues),
+        modifier =
+            modifier
+                .heightIn(min = CupertinoSectionTokens.MinHeight)
+                .fillMaxWidth()
+                .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement
-                .spacedBy(CupertinoSectionTokens.HorizontalPadding)
+            horizontalArrangement =
+                Arrangement
+                    .spacedBy(CupertinoSectionTokens.HorizontalPadding),
         ) {
             leadingContent()
             Box {
@@ -99,7 +101,7 @@ fun SectionScope.SectionItem(
         }
         CompositionLocalProvider(
             LocalContentColor provides CupertinoTheme.colorScheme.tertiaryLabel,
-            trailingContent
+            trailingContent,
         )
     }
 }
@@ -128,8 +130,8 @@ fun SectionScope.SectionLink(
     onClickLabel: String? = null,
     indication: Indication? = LocalIndication.current,
     interactionSource: MutableInteractionSource? = null,
-    caption : @Composable () -> Unit = {},
-    chevron : @Composable () -> Unit = {
+    caption: @Composable () -> Unit = {},
+    chevron: @Composable () -> Unit = {
         CupertinoSectionDefaults.LabelChevron()
     },
     title: @Composable () -> Unit,
@@ -147,7 +149,6 @@ fun SectionScope.SectionLink(
     interactionSource = interactionSource,
     title = title,
 )
-
 
 /**
  * Popup dropdown menu with [title], optional [icon] and [selectedLabel].
@@ -172,36 +173,39 @@ fun SectionScope.SectionDropdownMenu(
     icon: @Composable () -> Unit = {},
     onClickLabel: String? = null,
     interactionSource: MutableInteractionSource? = null,
-    selectedLabel : @Composable () -> Unit = {},
+    selectedLabel: @Composable () -> Unit = {},
     title: @Composable () -> Unit,
-    menu : @Composable (PaddingValues) -> Unit,
+    menu: @Composable (PaddingValues) -> Unit,
 ) = LabelWithCustomChevron(
     modifier = modifier,
     chevron = {
         LabelCaption(selectedLabel)
         Column {
             val defaultPadding = CupertinoDropdownMenuDefaults.PaddingValues
-            val padding = defaultPadding.copy(
-                top = defaultPadding.calculateTopPadding() + CupertinoSectionTokens.VerticalPadding,
-                bottom =  defaultPadding.calculateBottomPadding() + CupertinoSectionTokens.VerticalPadding,
-                start = 0.dp,
-                end = 0.dp
-            )
+            val padding =
+                defaultPadding.copy(
+                    top = defaultPadding.calculateTopPadding() + CupertinoSectionTokens.VerticalPadding,
+                    bottom = defaultPadding.calculateBottomPadding() + CupertinoSectionTokens.VerticalPadding,
+                    start = 0.dp,
+                    end = 0.dp,
+                )
             menu(padding)
 
             CupertinoIcon(
                 imageVector = CupertinoIcons.Default.ChevronUp,
                 contentDescription = null,
                 tint = CupertinoTheme.colorScheme.tertiaryLabel,
-                modifier = Modifier
-                    .size(8.dp)
+                modifier =
+                    Modifier
+                        .size(8.dp),
             )
             CupertinoIcon(
                 imageVector = CupertinoIcons.Default.ChevronDown,
                 contentDescription = null,
                 tint = CupertinoTheme.colorScheme.tertiaryLabel,
-                modifier = Modifier
-                    .size(8.dp)
+                modifier =
+                    Modifier
+                        .size(8.dp),
             )
         }
     },
@@ -217,16 +221,16 @@ fun SectionScope.SectionDropdownMenu(
 @Composable
 fun SectionScope.SectionDatePicker(
     state: CupertinoDatePickerState,
-    expanded : Boolean,
+    expanded: Boolean,
     modifier: Modifier = Modifier,
-    onExpandedChange : (Boolean) -> Unit,
+    onExpandedChange: (Boolean) -> Unit,
     enabled: Boolean = true,
     leadingContent: @Composable () -> Unit = {},
-    buttonColor : Color = Color.Unspecified,
-    button : @Composable (
-        buttonModifier : Modifier,
+    buttonColor: Color = Color.Unspecified,
+    button: @Composable (
+        buttonModifier: Modifier,
         titleModifier: Modifier,
-        text : String
+        text: String,
     ) -> Unit = { buttonModifier, titleModifier, text ->
         CupertinoSectionDefaults.PickerButton(
             modifier = buttonModifier,
@@ -235,12 +239,12 @@ fun SectionScope.SectionDatePicker(
             title = {
                 CupertinoText(
                     text = text,
-                    modifier = titleModifier
+                    modifier = titleModifier,
                 )
-            }
+            },
         )
     },
-    picker : @Composable () -> Unit,
+    picker: @Composable () -> Unit,
     title: @Composable () -> Unit,
 ) = Picker(
     modifier = modifier,
@@ -259,16 +263,16 @@ fun SectionScope.SectionDatePicker(
                     .format(
                         state.stateData.calendarModel,
                         CupertinoDatePickerDefaults.YearAbbrMonthDaySkeleton,
-                        locale
+                        locale,
                     )
             }
         }.value
     },
     content = {
-        Box(Modifier.padding(horizontal = 6.dp)){
+        Box(Modifier.padding(horizontal = 6.dp)) {
             picker()
         }
-    }
+    },
 )
 
 @ExperimentalCupertinoApi
@@ -279,7 +283,7 @@ fun SectionScope.SectionTimePicker(
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    buttonColor : Color = Color.Unspecified,
+    buttonColor: Color = Color.Unspecified,
     leadingContent: @Composable () -> Unit = {},
     button: @Composable (buttonModifier: Modifier, titleModifier: Modifier, text: String) -> Unit =
         { buttonModifier, titleModifier, text ->
@@ -290,12 +294,12 @@ fun SectionScope.SectionTimePicker(
                 title = {
                     CupertinoText(
                         text = text,
-                        modifier = titleModifier
+                        modifier = titleModifier,
                     )
-                }
+                },
             )
         },
-    picker : @Composable () -> Unit,
+    picker: @Composable () -> Unit,
     title: @Composable () -> Unit,
 ) = Picker(
     modifier = modifier,
@@ -308,17 +312,17 @@ fun SectionScope.SectionTimePicker(
     text = {
         remember(state) {
             derivedStateOf {
-                "${state.hour % if (state.is24Hour) 24 else 12}:${state.minute.toStringWithLeadingZero()}" + when {
-                    state.is24Hour -> ""
-                    state.isEvening -> " PM"
-                    else -> " AM"
-                }
+                "${state.hour % if (state.is24Hour) 24 else 12}:${state.minute.toStringWithLeadingZero()}" +
+                    when {
+                        state.is24Hour -> ""
+                        state.isEvening -> " PM"
+                        else -> " AM"
+                    }
             }
         }.value
     },
-    content = picker
+    content = picker,
 )
-
 
 @ExperimentalCupertinoApi
 @Composable
@@ -339,7 +343,7 @@ fun SectionScope.SectionTextField(
             visible = focused && value.isNotEmpty(),
             onClick = {
                 updatedValueChange.invoke("")
-            }
+            },
         )
     },
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -354,15 +358,15 @@ fun SectionScope.SectionTextField(
     modifier = modifier,
     title = {
         ProvideTextStyle(
-            textStyle ?: CupertinoTheme.typography.body
+            textStyle ?: CupertinoTheme.typography.body,
         ) {
             Box(
-                contentAlignment = Alignment.CenterStart
+                contentAlignment = Alignment.CenterStart,
             ) {
-
-                val actualInteractionSource = interactionSource ?: remember {
-                    MutableInteractionSource()
-                }
+                val actualInteractionSource =
+                    interactionSource ?: remember {
+                        MutableInteractionSource()
+                    }
 
                 CupertinoTextField(
                     value = value,
@@ -379,9 +383,10 @@ fun SectionScope.SectionTextField(
                     minLines = minLines,
                     placeholder = placeholder,
                     interactionSource = actualInteractionSource,
-                    trailingIcon = trailingIcon?.let {
-                        { it(actualInteractionSource) }
-                    }
+                    trailingIcon =
+                        trailingIcon?.let {
+                            { it(actualInteractionSource) }
+                        },
                 )
             }
         }
@@ -401,19 +406,23 @@ private fun SectionScope.LabelWithCustomChevron(
     interactionSource: MutableInteractionSource? = null,
     title: @Composable () -> Unit,
 ) = SectionItem(
-    modifier = modifier
-        .clickable(
-            enabled = enabled,
-            onClick = onClick,
-            role = Role.Button,
-            onClickLabel = onClickLabel,
-            interactionSource = interactionSource ?: remember { MutableInteractionSource() },
-            indication = indication
-        ),
+    modifier =
+        modifier
+            .clickable(
+                enabled = enabled,
+                onClick = onClick,
+                role = Role.Button,
+                onClickLabel = onClickLabel,
+                interactionSource = interactionSource ?: remember { MutableInteractionSource() },
+                indication = indication,
+            ),
     title = {
-        val color = if (enabled)
-            CupertinoTheme.colorScheme.label
-        else CupertinoTheme.colorScheme.secondaryLabel
+        val color =
+            if (enabled) {
+                CupertinoTheme.colorScheme.label
+            } else {
+                CupertinoTheme.colorScheme.secondaryLabel
+            }
 
         CompositionLocalProvider(LocalContentColor provides color, title)
     },
@@ -422,31 +431,29 @@ private fun SectionScope.LabelWithCustomChevron(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CupertinoSectionTokens.InlinePadding),
-            content = chevron
+            content = chevron,
         )
-    }
+    },
 )
 
 @Composable
 private fun LabelCaption(content: @Composable () -> Unit) {
     CompositionLocalProvider(
-        LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel
+        LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel,
     ) {
         ProvideTextStyle(CupertinoTheme.typography.body, content = content)
     }
 }
-
-
 
 @ExperimentalCupertinoApi
 @Composable
 private fun SectionScope.ExpandableRow(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit,
-    belowContentExpanded : Boolean,
-    belowContent : @Composable () -> Unit,
-    trailingContent : @Composable () -> Unit,
-    leadingContent : @Composable () -> Unit
+    belowContentExpanded: Boolean,
+    belowContent: @Composable () -> Unit,
+    trailingContent: @Composable () -> Unit,
+    leadingContent: @Composable () -> Unit,
 ) = InternalItem { padding ->
 
     var expandedBeforeAnimation by rememberSaveable {
@@ -455,41 +462,44 @@ private fun SectionScope.ExpandableRow(
 
     Column {
         SectionItem(
-            modifier = modifier
-                .fillMaxWidth()
-                .heightIn(min = CupertinoSectionTokens.MinHeight)
-                .padding(
-                    padding.copy(
-                        top = padding.calculateTopPadding() / 2,
-                        bottom = padding.calculateBottomPadding() / 2
-                    )
-                ),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .heightIn(min = CupertinoSectionTokens.MinHeight)
+                    .padding(
+                        padding.copy(
+                            top = padding.calculateTopPadding() / 2,
+                            bottom = padding.calculateBottomPadding() / 2,
+                        ),
+                    ),
             title = title,
             trailingContent = trailingContent,
-            leadingContent = leadingContent
+            leadingContent = leadingContent,
         )
         if (belowContentExpanded || expandedBeforeAnimation) {
             CupertinoHorizontalDivider(
-                modifier = Modifier
-                    .padding(start = CupertinoSectionDefaults.DividerPadding)
+                modifier =
+                    Modifier
+                        .padding(start = CupertinoSectionDefaults.DividerPadding),
             )
         }
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .animateContentSize(
-                    animationSpec = cupertinoTween(),
-                    finishedListener = { _, _ ->
-                        expandedBeforeAnimation = belowContentExpanded
-                    }
-                )
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .animateContentSize(
+                        animationSpec = cupertinoTween(),
+                        finishedListener = { _, _ ->
+                            expandedBeforeAnimation = belowContentExpanded
+                        },
+                    ),
         ) {
             if (belowContentExpanded) {
                 Box(
                     Modifier.padding(
                         top = padding.calculateTopPadding(),
-                        bottom = padding.calculateBottomPadding()
-                    )
+                        bottom = padding.calculateBottomPadding(),
+                    ),
                 ) {
                     belowContent()
                 }
@@ -502,15 +512,15 @@ private fun SectionScope.ExpandableRow(
 @Composable
 private fun SectionScope.Picker(
     modifier: Modifier = Modifier,
-    expanded : Boolean,
-    text : @Composable () -> String,
-    onExpandedChange : (Boolean) -> Unit,
+    expanded: Boolean,
+    text: @Composable () -> String,
+    onExpandedChange: (Boolean) -> Unit,
     enabled: Boolean = true,
     leadingContent: @Composable () -> Unit = {},
-    button : @Composable (
-        buttonModifier : Modifier,
+    button: @Composable (
+        buttonModifier: Modifier,
         titleModifier: Modifier,
-        text : String
+        text: String,
     ) -> Unit = { buttonModifier, titleModifier, text ->
         CupertinoSectionDefaults.PickerButton(
             modifier = buttonModifier,
@@ -518,12 +528,12 @@ private fun SectionScope.Picker(
             title = {
                 CupertinoText(
                     text = text,
-                    modifier = titleModifier
+                    modifier = titleModifier,
                 )
-            }
+            },
         )
     },
-    content : @Composable () -> Unit,
+    content: @Composable () -> Unit,
     title: @Composable () -> Unit,
 ) = ExpandableRow(
     modifier = modifier,
@@ -534,9 +544,10 @@ private fun SectionScope.Picker(
     trailingContent = {
         val updatedOnExpandedChange by rememberUpdatedState(onExpandedChange)
 
-        val interactionSource = remember {
-            MutableInteractionSource()
-        }
+        val interactionSource =
+            remember {
+                MutableInteractionSource()
+            }
 
         val pressed by interactionSource.collectIsPressedAsState()
 
@@ -545,7 +556,7 @@ private fun SectionScope.Picker(
         val animatedTextAlpha by animateFloatAsState(
             targetValue = if (pressed) CupertinoButtonTokens.PressedPlainButonAlpha else 1f,
             animationSpec = spring(stiffness = Spring.StiffnessLow),
-            label = "Section Date Picker fade animation"
+            label = "Section Date Picker fade animation",
         )
         button(
             Modifier.clickable(
@@ -554,32 +565,33 @@ private fun SectionScope.Picker(
                 indication = null,
                 onClick = {
                     updatedOnExpandedChange(!expanded)
-                }
+                },
             ),
             Modifier.graphicsLayer {
                 alpha = animatedTextAlpha
             },
-            titleText
+            titleText,
         )
-    }
+    },
 )
 
 @Composable
 private fun InternalItem(
-    minHeight : Dp = CupertinoSectionTokens.MinHeight,
-    content : @Composable (PaddingValues) -> Unit
+    minHeight: Dp = CupertinoSectionTokens.MinHeight,
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     val itemsPadding = CupertinoSectionDefaults.PaddingValues
 
     CompositionLocalProvider(
-        LocalContentColor provides CupertinoTheme.colorScheme.label
+        LocalContentColor provides CupertinoTheme.colorScheme.label,
     ) {
         ProvideTextStyle(CupertinoTheme.typography.body) {
             Box(
-                modifier = Modifier
-                    .heightIn(min = minHeight)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.CenterStart
+                modifier =
+                    Modifier
+                        .heightIn(min = minHeight)
+                        .fillMaxWidth(),
+                contentAlignment = Alignment.CenterStart,
             ) {
                 content(itemsPadding)
             }

@@ -17,7 +17,6 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
 internal class CalendarModelImpl : CalendarModel {
-
     override val today: CalendarDate
         get() {
             val localDate = Clock.System.now().toLocalDateTime(systemTZ)
@@ -25,10 +24,11 @@ internal class CalendarModelImpl : CalendarModel {
                 year = localDate.year,
                 month = localDate.monthNumber,
                 dayOfMonth = localDate.dayOfMonth,
-                utcTimeMillis = localDate.date
-                    .atTime(Midnight)
-                    .toInstant(TimeZone.UTC)
-                    .toEpochMilliseconds()
+                utcTimeMillis =
+                    localDate.date
+                        .atTime(Midnight)
+                        .toInstant(TimeZone.UTC)
+                        .toEpochMilliseconds(),
             )
         }
 
@@ -41,66 +41,69 @@ internal class CalendarModelImpl : CalendarModel {
     private val systemTZ
         get() = TimeZone.currentSystemDefault()
 
-    fun weekdayNames(locale: CalendarLocale): List<Pair<String, String>> {
-        return PlatformDateFormat.weekdayNames(locale)
-    }
+    fun weekdayNames(locale: CalendarLocale): List<Pair<String, String>> = PlatformDateFormat.weekdayNames(locale)
 
-    override fun getDateInputFormat(locale: CalendarLocale): DateInputFormat {
-        return PlatformDateFormat
+    override fun getDateInputFormat(locale: CalendarLocale): DateInputFormat =
+        PlatformDateFormat
             .getDateInputFormat(locale)
-    }
 
-    override fun getCanonicalDate(timeInMillis: Long): CalendarDate {
-        return Instant
+    override fun getCanonicalDate(timeInMillis: Long): CalendarDate =
+        Instant
             .fromEpochMilliseconds(timeInMillis)
             .toLocalDateTime(TimeZone.UTC)
             .date
             .atStartOfDayIn(TimeZone.UTC)
             .toCalendarDate(TimeZone.UTC)
-    }
 
-    override fun getMonth(timeInMillis: Long): CalendarMonth {
-        return Instant
+    override fun getMonth(timeInMillis: Long): CalendarMonth =
+        Instant
             .fromEpochMilliseconds(timeInMillis)
             .toCalendarMonth(TimeZone.UTC)
-    }
 
-    override fun getMonth(date: CalendarDate): CalendarMonth {
-        return getMonth(date.utcTimeMillis)
-    }
+    override fun getMonth(date: CalendarDate): CalendarMonth = getMonth(date.utcTimeMillis)
 
-    override fun getMonth(year: Int, month: Int): CalendarMonth {
-        val instant = LocalDate(
-            year = year,
-            monthNumber = month,
-            dayOfMonth = 1,
-        ).atTime(Midnight)
-            .toInstant(TimeZone.UTC)
+    override fun getMonth(
+        year: Int,
+        month: Int,
+    ): CalendarMonth {
+        val instant =
+            LocalDate(
+                year = year,
+                monthNumber = month,
+                dayOfMonth = 1,
+            ).atTime(Midnight)
+                .toInstant(TimeZone.UTC)
 
         return getMonth(instant.toEpochMilliseconds())
     }
 
-    override fun getDate(year: Int, month: Int, day: Int): CalendarDate {
-        return CalendarDate(
+    override fun getDate(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): CalendarDate =
+        CalendarDate(
             year = year,
             month = month,
             dayOfMonth = day,
-            utcTimeMillis = LocalDate(year,month, day)
-                .atStartOfDayIn(TimeZone.UTC)
-                .toEpochMilliseconds()
+            utcTimeMillis =
+                LocalDate(year, month, day)
+                    .atStartOfDayIn(TimeZone.UTC)
+                    .toEpochMilliseconds(),
         )
-    }
 
-    override fun getDayOfWeek(date: CalendarDate): Int {
-        return LocalDate(
+    override fun getDayOfWeek(date: CalendarDate): Int =
+        LocalDate(
             year = date.year,
             monthNumber = date.month,
-            dayOfMonth = date.dayOfMonth
+            dayOfMonth = date.dayOfMonth,
         ).dayOfWeek.isoDayNumber
-    }
 
-    override fun plusMonths(from: CalendarMonth, addedMonthsCount: Int): CalendarMonth {
-        return Instant
+    override fun plusMonths(
+        from: CalendarMonth,
+        addedMonthsCount: Int,
+    ): CalendarMonth =
+        Instant
             .fromEpochMilliseconds(from.startUtcTimeMillis)
             .toLocalDateTime(TimeZone.UTC)
             .date
@@ -108,47 +111,47 @@ internal class CalendarModelImpl : CalendarModel {
             .atTime(Midnight)
             .toInstant(TimeZone.UTC)
             .toCalendarMonth(TimeZone.UTC)
-    }
 
-    override fun minusMonths(from: CalendarMonth, subtractedMonthsCount: Int): CalendarMonth {
-        return plusMonths(from, -subtractedMonthsCount)
-    }
+    override fun minusMonths(
+        from: CalendarMonth,
+        subtractedMonthsCount: Int,
+    ): CalendarMonth = plusMonths(from, -subtractedMonthsCount)
 
     override fun formatWithPattern(
         utcTimeMillis: Long,
         pattern: String,
-        locale: CalendarLocale
-    ): String {
-        return PlatformDateFormat.formatWithPattern(utcTimeMillis, pattern, locale)
-    }
+        locale: CalendarLocale,
+    ): String = PlatformDateFormat.formatWithPattern(utcTimeMillis, pattern, locale)
 
-    override fun parse(date: String, pattern: String): CalendarDate? {
-        return PlatformDateFormat.parse(date, pattern)
-    }
+    override fun parse(
+        date: String,
+        pattern: String,
+    ): CalendarDate? = PlatformDateFormat.parse(date, pattern)
 
-    private fun Instant.toCalendarMonth(
-        timeZone : TimeZone
-    ) : CalendarMonth {
-
+    private fun Instant.toCalendarMonth(timeZone: TimeZone): CalendarMonth {
         val dateTime = toLocalDateTime(timeZone)
 
-        val monthStart = LocalDate(
-            year = dateTime.year,
-            month = dateTime.month,
-            dayOfMonth = 1,
-        )
+        val monthStart =
+            LocalDate(
+                year = dateTime.year,
+                month = dateTime.month,
+                dayOfMonth = 1,
+            )
 
         return CalendarMonth(
             year = dateTime.year,
             month = dateTime.monthNumber,
-            numberOfDays = dateTime.month
-                .numberOfDays(dateTime.year.isLeapYear()),
-            daysFromStartOfWeekToFirstOfMonth = monthStart
-                .daysFromStartOfWeekToFirstOfMonth(),
-            startUtcTimeMillis = monthStart
-                .atTime(Midnight)
-                .toInstant(TimeZone.UTC)
-                .toEpochMilliseconds()
+            numberOfDays =
+                dateTime.month
+                    .numberOfDays(dateTime.year.isLeapYear()),
+            daysFromStartOfWeekToFirstOfMonth =
+                monthStart
+                    .daysFromStartOfWeekToFirstOfMonth(),
+            startUtcTimeMillis =
+                monthStart
+                    .atTime(Midnight)
+                    .toInstant(TimeZone.UTC)
+                    .toEpochMilliseconds(),
         )
     }
 
@@ -156,26 +159,23 @@ internal class CalendarModelImpl : CalendarModel {
         (dayOfWeek.isoDayNumber - firstDayOfWeek).let { if (it >= 0) it else 7 + it }
 }
 
-internal fun Instant.toCalendarDate(
-    timeZone : TimeZone
-) : CalendarDate {
-
+internal fun Instant.toCalendarDate(timeZone: TimeZone): CalendarDate {
     val dateTime = toLocalDateTime(timeZone)
 
     return CalendarDate(
         year = dateTime.year,
         month = dateTime.monthNumber,
         dayOfMonth = dateTime.dayOfMonth,
-        utcTimeMillis = toEpochMilliseconds()
+        utcTimeMillis = toEpochMilliseconds(),
     )
 }
 
-internal val Midnight = LocalTime(0,0)
+internal val Midnight = LocalTime(0, 0)
 
 private fun Int.isLeapYear() = this % 4 == 0 && (this % 100 != 0 || this % 400 == 0)
 
-private fun Month.numberOfDays(isLeap : Boolean) : Int {
-    return when(this){
+private fun Month.numberOfDays(isLeap: Boolean): Int =
+    when (this) {
         Month.FEBRUARY -> if (isLeap) 29 else 28
         Month.JANUARY,
         Month.MARCH,
@@ -183,8 +183,8 @@ private fun Month.numberOfDays(isLeap : Boolean) : Int {
         Month.JULY,
         Month.AUGUST,
         Month.OCTOBER,
-        Month.DECEMBER -> 31
+        Month.DECEMBER,
+        -> 31
 
         else -> 30
     }
-}

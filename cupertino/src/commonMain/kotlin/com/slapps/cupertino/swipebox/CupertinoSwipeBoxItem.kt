@@ -60,7 +60,9 @@ fun RowScope.CupertinoSwipeBoxItem(
     val state = LocalSwipeBoxState.current
     val actionPosition = LocalSwipeActionPosition.current
     val isFullSwipeActionItem = LocalSwipeBoxItemFullSwipe.current
-    val shouldRenderItem = !(state.currentValue == SwipeBoxStates.EndFullyExpanded || state.currentValue == SwipeBoxStates.StartFullyExpanded) || isFullSwipeActionItem
+    val shouldRenderItem =
+        !(state.currentValue == SwipeBoxStates.EndFullyExpanded || state.currentValue == SwipeBoxStates.StartFullyExpanded) ||
+            isFullSwipeActionItem
 
     val zIndex = if (isFullSwipeActionItem) 1f else 0f
 
@@ -71,7 +73,7 @@ fun RowScope.CupertinoSwipeBoxItem(
     // We can't have negative weights, so make it as small as possible
     val animatedWeight by animateFloatAsState(
         targetValue = if (shouldRenderItem) weight else 0.000000001f,
-        animationSpec = cupertinoTween()
+        animationSpec = cupertinoTween(),
     )
 
     val animHorizontalBias by animateFloatAsState(
@@ -82,39 +84,41 @@ fun RowScope.CupertinoSwipeBoxItem(
             (state.currentValue == SwipeBoxStates.Resting) && (actionPosition == CupertinoSwipeActionPosition.Start) -> -1f // Start
             else -> 0f
         },
-        animationSpec = cupertinoTween()
+        animationSpec = cupertinoTween(),
     )
 
     // Set content color and typography style using CompositionLocalProvider
     CompositionLocalProvider(LocalContentColor provides CupertinoColors.White) {
         ProvideTextStyle(CupertinoTheme.typography.footnote) {
             Box(
-                modifier = modifier
-                    .weight(animatedWeight)
-                    .zIndex(zIndex)
-                    .fillMaxSize()
-                    .background(color)
-                    .align(Alignment.CenterVertically)
-                    .clickable(
-                        enabled = enabled,
-                        indication = LocalIndication.current,
-                        interactionSource = interactionSource,
-                        onClick = {
-                            currentOnClick()
-                            if (restoreOnClick) {
-                                coroutineScope.launch {
-                                    state.animateTo(SwipeBoxStates.Resting)
+                modifier =
+                    modifier
+                        .weight(animatedWeight)
+                        .zIndex(zIndex)
+                        .fillMaxSize()
+                        .background(color)
+                        .align(Alignment.CenterVertically)
+                        .clickable(
+                            enabled = enabled,
+                            indication = LocalIndication.current,
+                            interactionSource = interactionSource,
+                            onClick = {
+                                currentOnClick()
+                                if (restoreOnClick) {
+                                    coroutineScope.launch {
+                                        state.animateTo(SwipeBoxStates.Resting)
+                                    }
                                 }
-                            }
-                        },
-                        onClickLabel = onClickLabel,
-                        role = Role.Button
-                    )
-                    .padding(horizontal = 8.dp), // TODO hardcore removal
-                contentAlignment = BiasAlignment(
-                    verticalBias = 0f,
-                    horizontalBias = animHorizontalBias
-                ),
+                            },
+                            onClickLabel = onClickLabel,
+                            role = Role.Button,
+                        ).padding(horizontal = 8.dp),
+                // TODO hardcore removal
+                contentAlignment =
+                    BiasAlignment(
+                        verticalBias = 0f,
+                        horizontalBias = animHorizontalBias,
+                    ),
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -124,7 +128,7 @@ fun RowScope.CupertinoSwipeBoxItem(
                             imageVector = it,
                             contentDescription = onClickLabel,
                             tint = CupertinoColors.White,
-                            modifier = Modifier.requiredSize(20.dp)
+                            modifier = Modifier.requiredSize(20.dp),
                         )
                     }
 

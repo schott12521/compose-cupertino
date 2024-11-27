@@ -35,7 +35,7 @@ import platform.UIKit.setStatusBarStyle
 actual fun SystemBarAppearance(dark: Boolean) {
     SystemBarAppearance(
         dark = dark,
-        viewController = LocalUIViewController.current
+        viewController = LocalUIViewController.current,
     )
 }
 
@@ -44,29 +44,33 @@ private val isIosAtLeast13 = available(OS.Ios to OSVersion(major = 13))
 
 @Composable
 @InternalCupertinoApi
-fun SystemBarAppearance(dark: Boolean, viewController: UIViewController) {
-
-    if (!isIosAtLeast13)
+fun SystemBarAppearance(
+    dark: Boolean,
+    viewController: UIViewController,
+) {
+    if (!isIosAtLeast13) {
         return
+    }
     DisposableEffect(dark) {
-
         val prefInterfaceStyle = viewController.overrideUserInterfaceStyle
 
         val prevStatusBarStyle = UIApplication.sharedApplication.statusBarStyle
 
-        viewController.overrideUserInterfaceStyle = if (dark)
-            UIUserInterfaceStyle.UIUserInterfaceStyleDark
-        else UIUserInterfaceStyle.UIUserInterfaceStyleLight
+        viewController.overrideUserInterfaceStyle =
+            if (dark) {
+                UIUserInterfaceStyle.UIUserInterfaceStyleDark
+            } else {
+                UIUserInterfaceStyle.UIUserInterfaceStyleLight
+            }
 
         if (!isIosAtLeast17) {
             UIApplication.sharedApplication.setStatusBarStyle(
-                if (dark) UIStatusBarStyleLightContent else UIStatusBarStyleDarkContent
+                if (dark) UIStatusBarStyleLightContent else UIStatusBarStyleDarkContent,
             )
             viewController.setNeedsStatusBarAppearanceUpdate()
         }
         onDispose {
             viewController.overrideUserInterfaceStyle = prefInterfaceStyle
-
 
             if (!isIosAtLeast17) {
                 UIApplication.sharedApplication.setStatusBarStyle(prevStatusBarStyle)

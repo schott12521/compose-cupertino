@@ -19,27 +19,24 @@ import platform.UIKit.transitioningDelegate
 import platform.darwin.NSObject
 import platform.darwin.NSUInteger
 
-private val EmptyTransitioningDelegate = object
-    : NSObject(), UIViewControllerTransitioningDelegateProtocol {
-
-    override fun hash(): NSUInteger {
-        return 123u
+private val EmptyTransitioningDelegate =
+    object :
+        NSObject(), UIViewControllerTransitioningDelegateProtocol {
+        override fun hash(): NSUInteger = 123u
     }
-}
 
 @Suppress("UNUSED")
 private class ControllerHolder<T : UIViewController>(
-    val controller : T,
-    val transitioningDelegateProtocol: UIViewControllerTransitioningDelegateProtocol
+    val controller: T,
+    val transitioningDelegateProtocol: UIViewControllerTransitioningDelegateProtocol,
 )
-
 
 @Composable
 internal fun <T : UIViewController> PresentationController(
-    factory : () -> T,
-    update : T.() -> Unit,
+    factory: () -> T,
+    update: T.() -> Unit,
     onDismissRequest: () -> Unit,
-    vararg updateKeys : Any?
+    vararg updateKeys: Any?,
 ) {
     val dark = CupertinoTheme.colorScheme.isDark
 
@@ -47,55 +44,53 @@ internal fun <T : UIViewController> PresentationController(
 
     val tController = remember { factory() }
 
-    val currentDelegate = tController.transitioningDelegate
-        ?: EmptyTransitioningDelegate
+    val currentDelegate =
+        tController.transitioningDelegate
+            ?: EmptyTransitioningDelegate
 
-    val delegate = remember(currentDelegate) {
-        object : NSObject(), UIViewControllerTransitioningDelegateProtocol {
+    val delegate =
+        remember(currentDelegate) {
+            object : NSObject(), UIViewControllerTransitioningDelegateProtocol {
+                override fun animationControllerForPresentedController(
+                    presented: UIViewController,
+                    presentingController: UIViewController,
+                    sourceController: UIViewController,
+                ): UIViewControllerAnimatedTransitioningProtocol? =
+                    currentDelegate
+                        .animationControllerForPresentedController(presented, presentingController, sourceController)
 
-            override fun animationControllerForPresentedController(
-                presented: UIViewController,
-                presentingController: UIViewController,
-                sourceController: UIViewController
-            ): UIViewControllerAnimatedTransitioningProtocol? {
-                return currentDelegate
-                    .animationControllerForPresentedController(presented, presentingController, sourceController)
-            }
+                override fun interactionControllerForPresentation(
+                    animator: UIViewControllerAnimatedTransitioningProtocol,
+                ): UIViewControllerInteractiveTransitioningProtocol? = currentDelegate.interactionControllerForPresentation(animator)
 
-            override fun interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioningProtocol): UIViewControllerInteractiveTransitioningProtocol? {
-                return currentDelegate.interactionControllerForPresentation(animator)
-            }
+                override fun presentationControllerForPresentedViewController(
+                    presented: UIViewController,
+                    presentingViewController: UIViewController?,
+                    sourceViewController: UIViewController,
+                ): UIPresentationController? =
+                    currentDelegate.presentationControllerForPresentedViewController(
+                        presented,
+                        presentingViewController,
+                        sourceViewController,
+                    )
 
-            override fun presentationControllerForPresentedViewController(
-                presented: UIViewController,
-                presentingViewController: UIViewController?,
-                sourceViewController: UIViewController
-            ): UIPresentationController? {
-                return currentDelegate.presentationControllerForPresentedViewController(
-                    presented,
-                    presentingViewController,
-                    sourceViewController
-                )
-            }
-            override fun animationControllerForDismissedController(
-                dismissed: UIViewController
-            ): UIViewControllerAnimatedTransitioningProtocol? {
-                updatedOnDismissRequest()
-                return currentDelegate.animationControllerForDismissedController(dismissed)
-            }
+                override fun animationControllerForDismissedController(
+                    dismissed: UIViewController,
+                ): UIViewControllerAnimatedTransitioningProtocol? {
+                    updatedOnDismissRequest()
+                    return currentDelegate.animationControllerForDismissedController(dismissed)
+                }
 
-            override fun hash(): NSUInteger {
-                return 1u
+                override fun hash(): NSUInteger = 1u
             }
         }
-    }
 
-    val controllerHolder = remember {
+    val controllerHolder =
+        remember {
+            tController.transitioningDelegate = delegate
 
-        tController.transitioningDelegate = delegate
-
-        ControllerHolder(tController, delegate)
-    }
+            ControllerHolder(tController, delegate)
+        }
 
     val controller = LocalUIViewController.current
 
