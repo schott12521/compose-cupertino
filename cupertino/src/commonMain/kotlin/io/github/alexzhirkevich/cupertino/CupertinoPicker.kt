@@ -3,7 +3,6 @@
 
 package io.github.alexzhirkevich.cupertino
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollScope

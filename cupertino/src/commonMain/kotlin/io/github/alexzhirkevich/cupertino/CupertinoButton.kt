@@ -39,7 +39,6 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import io.github.alexzhirkevich.cupertino.theme.DefaultAlpha
 import io.github.alexzhirkevich.cupertino.theme.Shapes
-import io.github.alexzhirkevich.cupertino.theme.Typography
 
 enum class CupertinoButtonSize(
     val shape: (Shapes) -> Shape,

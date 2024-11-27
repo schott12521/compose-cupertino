@@ -4,7 +4,6 @@ package io.github.alexzhirkevich.cupertino
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.PopupProperties
 

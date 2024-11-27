@@ -20,8 +20,6 @@ import platform.UIKit.UIAlertActionStyleDestructive
 import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleActionSheet
 import platform.UIKit.UIAlertControllerStyleAlert
-import platform.darwin.dispatch_async
-import platform.darwin.dispatch_get_main_queue
 
 @Composable
 @NonRestartableComposable
