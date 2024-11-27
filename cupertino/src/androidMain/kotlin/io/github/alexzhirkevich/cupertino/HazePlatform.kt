@@ -20,8 +20,9 @@ internal actual class HazeNode actual constructor(
     private var backgroundColor: Color,
     private var tint: Color,
     private var blurRadius: Dp,
-    private val density: Density
-) : Modifier.Node(), DrawModifierNode {
+    private val density: Density,
+) : Modifier.Node(),
+    DrawModifierNode {
     actual fun update(
         areas: List<Rect>,
         backgroundColor: Color,

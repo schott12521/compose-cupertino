@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 
-
 @Composable
 fun CupertinoCheckBox(
     checked: Boolean,
@@ -39,19 +38,20 @@ fun CupertinoCheckBox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     colors: CupertinoCheckboxColors = CupertinoCheckboxDefaults.colors(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     CupertinoTriStateCheckBox(
         state = ToggleableState(checked),
-        onClick = if (onCheckedChange != null) {
-            { onCheckedChange(!checked) }
-        } else {
-            null
-        },
+        onClick =
+            if (onCheckedChange != null) {
+                { onCheckedChange(!checked) }
+            } else {
+                null
+            },
         modifier = modifier,
         enabled = enabled,
         colors = colors,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
     )
 }
 
@@ -62,37 +62,37 @@ fun CupertinoTriStateCheckBox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     colors: CupertinoCheckboxColors = CupertinoCheckboxDefaults.colors(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val toggleableModifier =
-    if (onClick != null) {
-        @Suppress("DEPRECATION_ERROR")
-        Modifier.triStateToggleable(
-            state = state,
-            onClick = onClick,
-            enabled = enabled,
-            role = Role.Checkbox,
-            interactionSource = interactionSource,
-            indication = LocalIndication.current
-        )
-    } else {
-        Modifier
-    }
+        if (onClick != null) {
+            @Suppress("DEPRECATION_ERROR")
+            Modifier.triStateToggleable(
+                state = state,
+                onClick = onClick,
+                enabled = enabled,
+                role = Role.Checkbox,
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+            )
+        } else {
+            Modifier
+        }
     CheckboxImpl(
         enabled = enabled,
         value = state,
-        modifier = modifier
-            .defaultMinSize(24.dp, 24.dp)
-            .padding(4.dp)
-            .clip(CircleShape)
-            .then(toggleableModifier),
-        colors = colors
+        modifier =
+            modifier
+                .defaultMinSize(24.dp, 24.dp)
+                .padding(4.dp)
+                .clip(CircleShape)
+                .then(toggleableModifier),
+        colors = colors,
     )
 }
 
 @Stable
 object CupertinoCheckboxDefaults {
-
     @Composable
     fun colors(
         checkedCheckmarkColor: Color = CupertinoTheme.colorScheme.systemBackground,
@@ -106,23 +106,23 @@ object CupertinoCheckboxDefaults {
         uncheckedBorderColor: Color = CupertinoTheme.colorScheme.systemFill,
         disabledBorderColor: Color = checkedBorderColor,
         disabledUncheckedBorderColor: Color = CupertinoTheme.colorScheme.quaternarySystemFill,
-        disabledIndeterminateBorderColor: Color = disabledBorderColor
-    ) : CupertinoCheckboxColors = CupertinoCheckboxColors(
-        checkedCheckmarkColor = checkedCheckmarkColor,
-        uncheckedCheckmarkColor = uncheckedCheckmarkColor,
-        checkedBoxColor = checkedBoxColor,
-        uncheckedBoxColor = uncheckedBoxColor,
-        disabledCheckedBoxColor = disabledCheckedBoxColor,
-        disabledUncheckedBoxColor = disabledUncheckedBoxColor,
-        disabledIndeterminateBoxColor = disabledIndeterminateBoxColor,
-        checkedBorderColor = checkedBorderColor,
-        uncheckedBorderColor = uncheckedBorderColor,
-        disabledBorderColor = disabledBorderColor,
-        disabledUncheckedBorderColor = disabledUncheckedBorderColor,
-        disabledIndeterminateBorderColor = disabledIndeterminateBorderColor
-    )
+        disabledIndeterminateBorderColor: Color = disabledBorderColor,
+    ): CupertinoCheckboxColors =
+        CupertinoCheckboxColors(
+            checkedCheckmarkColor = checkedCheckmarkColor,
+            uncheckedCheckmarkColor = uncheckedCheckmarkColor,
+            checkedBoxColor = checkedBoxColor,
+            uncheckedBoxColor = uncheckedBoxColor,
+            disabledCheckedBoxColor = disabledCheckedBoxColor,
+            disabledUncheckedBoxColor = disabledUncheckedBoxColor,
+            disabledIndeterminateBoxColor = disabledIndeterminateBoxColor,
+            checkedBorderColor = checkedBorderColor,
+            uncheckedBorderColor = uncheckedBorderColor,
+            disabledBorderColor = disabledBorderColor,
+            disabledUncheckedBorderColor = disabledUncheckedBorderColor,
+            disabledIndeterminateBorderColor = disabledIndeterminateBorderColor,
+        )
 }
-
 
 /**
  * Represents the colors used by the three different sections (checkmark, box, and border) of a
@@ -160,7 +160,7 @@ class CupertinoCheckboxColors(
     val uncheckedBorderColor: Color,
     val disabledBorderColor: Color,
     val disabledUncheckedBorderColor: Color,
-    val disabledIndeterminateBorderColor: Color
+    val disabledIndeterminateBorderColor: Color,
 ) {
     /**
      * Returns a copy of this CheckboxColors, optionally overriding some of the values.
@@ -178,7 +178,7 @@ class CupertinoCheckboxColors(
         uncheckedBorderColor: Color = this.uncheckedBorderColor,
         disabledBorderColor: Color = this.disabledBorderColor,
         disabledUncheckedBorderColor: Color = this.disabledUncheckedBorderColor,
-        disabledIndeterminateBorderColor: Color = this.disabledIndeterminateBorderColor
+        disabledIndeterminateBorderColor: Color = this.disabledIndeterminateBorderColor,
     ) = CupertinoCheckboxColors(
         checkedCheckmarkColor.takeOrElse { this.checkedCheckmarkColor },
         uncheckedCheckmarkColor.takeOrElse { this.uncheckedCheckmarkColor },
@@ -201,11 +201,12 @@ class CupertinoCheckboxColors(
      */
     @Composable
     internal fun checkmarkColor(state: ToggleableState): State<Color> {
-        val target = if (state == ToggleableState.Off) {
-            uncheckedCheckmarkColor
-        } else {
-            checkedCheckmarkColor
-        }
+        val target =
+            if (state == ToggleableState.Off) {
+                uncheckedCheckmarkColor
+            } else {
+                checkedCheckmarkColor
+            }
 
         return rememberUpdatedState(target)
     }
@@ -218,20 +219,23 @@ class CupertinoCheckboxColors(
      * @param state the [ToggleableState] of the checkbox
      */
     @Composable
-    internal fun boxColor(enabled: Boolean, state: ToggleableState): State<Color> {
-        val target = if (enabled) {
-            when (state) {
-                ToggleableState.On, ToggleableState.Indeterminate -> checkedBoxColor
-                ToggleableState.Off -> uncheckedBoxColor
+    internal fun boxColor(
+        enabled: Boolean,
+        state: ToggleableState,
+    ): State<Color> {
+        val target =
+            if (enabled) {
+                when (state) {
+                    ToggleableState.On, ToggleableState.Indeterminate -> checkedBoxColor
+                    ToggleableState.Off -> uncheckedBoxColor
+                }
+            } else {
+                when (state) {
+                    ToggleableState.On -> disabledCheckedBoxColor
+                    ToggleableState.Indeterminate -> disabledIndeterminateBoxColor
+                    ToggleableState.Off -> disabledUncheckedBoxColor
+                }
             }
-        } else {
-            when (state) {
-                ToggleableState.On -> disabledCheckedBoxColor
-                ToggleableState.Indeterminate -> disabledIndeterminateBoxColor
-                ToggleableState.Off -> disabledUncheckedBoxColor
-            }
-        }
-
 
         return rememberUpdatedState(target)
     }
@@ -243,23 +247,27 @@ class CupertinoCheckboxColors(
      * @param state the [ToggleableState] of the checkbox
      */
     @Composable
-    internal fun borderColor(enabled: Boolean, state: ToggleableState): State<Color> {
-        val target = if (enabled) {
-            when (state) {
-                ToggleableState.On, ToggleableState.Indeterminate -> checkedBorderColor
-                ToggleableState.Off -> uncheckedBorderColor
+    internal fun borderColor(
+        enabled: Boolean,
+        state: ToggleableState,
+    ): State<Color> {
+        val target =
+            if (enabled) {
+                when (state) {
+                    ToggleableState.On, ToggleableState.Indeterminate -> checkedBorderColor
+                    ToggleableState.Off -> uncheckedBorderColor
+                }
+            } else {
+                when (state) {
+                    ToggleableState.Indeterminate -> disabledIndeterminateBorderColor
+                    ToggleableState.On -> disabledBorderColor
+                    ToggleableState.Off -> disabledUncheckedBorderColor
+                }
             }
-        } else {
-            when (state) {
-                ToggleableState.Indeterminate -> disabledIndeterminateBorderColor
-                ToggleableState.On -> disabledBorderColor
-                ToggleableState.Off -> disabledUncheckedBorderColor
-            }
-        }
 
         // If not enabled 'snap' to the disabled state, as there should be no animations between
         // enabled / disabled.
-        return  rememberUpdatedState(target)
+        return rememberUpdatedState(target)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -302,37 +310,38 @@ private fun CheckboxImpl(
     enabled: Boolean,
     value: ToggleableState,
     modifier: Modifier,
-    colors: CupertinoCheckboxColors
+    colors: CupertinoCheckboxColors,
 ) {
-
     val checkColor = colors.checkmarkColor(value)
     val boxColor = colors.boxColor(enabled, value)
     val borderColor = colors.borderColor(enabled, value)
 
     val checkCache = remember { CheckDrawingCache() }
 
-    val drawFraction = when (value) {
-        ToggleableState.On -> 1f
-        ToggleableState.Off -> 0f
-        ToggleableState.Indeterminate -> 1f
-    }
+    val drawFraction =
+        when (value) {
+            ToggleableState.On -> 1f
+            ToggleableState.Off -> 0f
+            ToggleableState.Indeterminate -> 1f
+        }
 
-    val checkCenterGravitationShiftFraction = when (value) {
-        ToggleableState.On -> 0f
-        ToggleableState.Off -> 0f
-        ToggleableState.Indeterminate -> 1f
-    }
+    val checkCenterGravitationShiftFraction =
+        when (value) {
+            ToggleableState.On -> 0f
+            ToggleableState.Off -> 0f
+            ToggleableState.Indeterminate -> 1f
+        }
     Canvas(
         modifier
             .wrapContentSize(Alignment.Center)
-            .requiredSize(24.dp)
+            .requiredSize(24.dp),
     ) {
         drawCircle(
-            color = boxColor.value
+            color = boxColor.value,
         )
         drawCircle(
             color = borderColor.value,
-            style = Stroke(width = 3.dp.toPx())
+            style = Stroke(width = 3.dp.toPx()),
         )
 
         drawCheck(
@@ -340,7 +349,7 @@ private fun CheckboxImpl(
             checkFraction = drawFraction,
             crossCenterGravitation = checkCenterGravitationShiftFraction,
             strokeWidthPx = 1.5.dp.toPx(),
-            drawingCache = checkCache
+            drawingCache = checkCache,
         )
     }
 }
@@ -349,7 +358,7 @@ private fun CheckboxImpl(
 private class CheckDrawingCache(
     val checkPath: Path = Path(),
     val pathMeasure: PathMeasure = PathMeasure(),
-    val pathToDraw: Path = Path()
+    val pathToDraw: Path = Path(),
 )
 
 private fun DrawScope.drawCheck(
@@ -357,7 +366,7 @@ private fun DrawScope.drawCheck(
     checkFraction: Float,
     crossCenterGravitation: Float,
     strokeWidthPx: Float,
-    drawingCache: CheckDrawingCache
+    drawingCache: CheckDrawingCache,
 ) {
     val stroke = Stroke(width = strokeWidthPx, cap = StrokeCap.Round)
     val width = size.width
@@ -383,7 +392,10 @@ private fun DrawScope.drawCheck(
         pathMeasure.setPath(checkPath, false)
         pathToDraw.reset()
         pathMeasure.getSegment(
-            0f, pathMeasure.length * checkFraction, pathToDraw, true
+            0f,
+            pathMeasure.length * checkFraction,
+            pathToDraw,
+            true,
         )
     }
     drawPath(drawingCache.pathToDraw, checkColor, style = stroke)

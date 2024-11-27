@@ -1,4 +1,4 @@
-package cupertino///*
+package cupertino // /*
 // * Copyright (c) 2023-2024. Compose Cupertino project and open source contributors.
 // *
 // *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,10 @@ package cupertino///*
 // *
 // */
 //
-//@file:OptIn(ExperimentalCupertinoApi::class, ExperimentalLayoutApi::class,
+// @file:OptIn(ExperimentalCupertinoApi::class, ExperimentalLayoutApi::class,
 //    ExperimentalStdlibApi::class
-//)
-///*
+// )
+// /*
 // * Copyright (c) 2023 Compose Cupertino project and open source contributors.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,165 +34,165 @@ package cupertino///*
 // * limitations under the License.
 // */
 //
-//package cupertino
+// package cupertino
 //
-//import IsIos
-//import RootComponent
-//import androidx.compose.animation.AnimatedContent
-//import androidx.compose.foundation.background
-//import androidx.compose.foundation.clickable
-//import androidx.compose.foundation.gestures.ScrollableState
-//import androidx.compose.foundation.layout.Arrangement
-//import androidx.compose.foundation.layout.Box
-//import androidx.compose.foundation.layout.ExperimentalLayoutApi
-//import androidx.compose.foundation.layout.PaddingValues
-//import androidx.compose.foundation.layout.Row
-//import androidx.compose.foundation.layout.Spacer
-//import androidx.compose.foundation.layout.calculateEndPadding
-//import androidx.compose.foundation.layout.calculateStartPadding
-//import androidx.compose.foundation.layout.fillMaxSize
-//import androidx.compose.foundation.layout.fillMaxWidth
-//import androidx.compose.foundation.layout.height
-//import androidx.compose.foundation.layout.imePadding
-//import androidx.compose.foundation.layout.padding
-//import androidx.compose.foundation.layout.width
-//import androidx.compose.foundation.lazy.LazyColumn
-//import androidx.compose.foundation.lazy.LazyListScope
-//import androidx.compose.foundation.lazy.LazyListState
-//import androidx.compose.foundation.lazy.rememberLazyListState
-//import androidx.compose.material3.Icon
-//import androidx.compose.material3.Text
-//import androidx.compose.runtime.Composable
-//import androidx.compose.runtime.LaunchedEffect
-//import androidx.compose.runtime.MutableState
-//import androidx.compose.runtime.derivedStateOf
-//import androidx.compose.runtime.getValue
-//import androidx.compose.runtime.mutableStateOf
-//import androidx.compose.runtime.remember
-//import androidx.compose.runtime.rememberCoroutineScope
-//import androidx.compose.runtime.setValue
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.graphics.Color
-//import androidx.compose.ui.input.nestedscroll.nestedScroll
-//import androidx.compose.ui.platform.LocalDensity
-//import androidx.compose.ui.platform.LocalFocusManager
-//import androidx.compose.ui.platform.LocalLayoutDirection
-//import androidx.compose.ui.state.ToggleableState
-//import androidx.compose.ui.unit.dp
-//import io.github.alexzhirkevich.cupertino.CupertinoActionSheet
-//import io.github.alexzhirkevich.cupertino.CupertinoActionSheetNative
-//import io.github.alexzhirkevich.cupertino.CupertinoActivityIndicator
-//import io.github.alexzhirkevich.cupertino.CupertinoAlertDialog
-//import io.github.alexzhirkevich.cupertino.CupertinoAlertDialogNative
-//import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetContent
-//import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffold
-//import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffoldDefaults
-//import io.github.alexzhirkevich.cupertino.CupertinoButton
-//import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
-//import io.github.alexzhirkevich.cupertino.CupertinoButtonSize
-//import io.github.alexzhirkevich.cupertino.CupertinoDatePicker
-//import io.github.alexzhirkevich.cupertino.CupertinoDatePickerNative
-//import io.github.alexzhirkevich.cupertino.CupertinoDatePickerState
-//import io.github.alexzhirkevich.cupertino.CupertinoDateTimePicker
-//import io.github.alexzhirkevich.cupertino.CupertinoDateTimePickerNative
-//import io.github.alexzhirkevich.cupertino.CupertinoDateTimePickerState
-//import io.github.alexzhirkevich.cupertino.CupertinoDropdownMenu
-//import io.github.alexzhirkevich.cupertino.CupertinoIcon
-//import io.github.alexzhirkevich.cupertino.CupertinoIconButton
-//import io.github.alexzhirkevich.cupertino.CupertinoIconDefaults
-//import io.github.alexzhirkevich.cupertino.MenuAction
-//import io.github.alexzhirkevich.cupertino.CupertinoNavigationBar
-//import io.github.alexzhirkevich.cupertino.CupertinoNavigationBarItem
-//import io.github.alexzhirkevich.cupertino.CupertinoWheelPicker
-//import io.github.alexzhirkevich.cupertino.CupertinoPickerState
-//import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
-//import io.github.alexzhirkevich.cupertino.CupertinoSearchTextFieldDefaults
-//import io.github.alexzhirkevich.cupertino.CupertinoSegmentedControl
-//import io.github.alexzhirkevich.cupertino.CupertinoSegmentedControlTab
-//import io.github.alexzhirkevich.cupertino.CupertinoSheetValue
-//import io.github.alexzhirkevich.cupertino.CupertinoSlider
-//import io.github.alexzhirkevich.cupertino.CupertinoSwitch
-//import io.github.alexzhirkevich.cupertino.CupertinoText
-//import io.github.alexzhirkevich.cupertino.CupertinoTimePicker
-//import io.github.alexzhirkevich.cupertino.CupertinoTimePickerNative
-//import io.github.alexzhirkevich.cupertino.CupertinoTimePickerState
-//import io.github.alexzhirkevich.cupertino.CupertinoTopAppBar
-//import io.github.alexzhirkevich.cupertino.MenuSection
-//import io.github.alexzhirkevich.cupertino.CupertinoBorderedTextField
-//import io.github.alexzhirkevich.cupertino.CupertinoBorderedTextFieldDefaults
-//import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffoldState
-//import io.github.alexzhirkevich.cupertino.CupertinoCheckBox
-//import io.github.alexzhirkevich.cupertino.CupertinoNavigationTitle
-//import io.github.alexzhirkevich.cupertino.CupertinoSwipeBox
-//import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxItem
-//import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxValue
-//import io.github.alexzhirkevich.cupertino.CupertinoTextField
-//import io.github.alexzhirkevich.cupertino.CupertinoTriStateCheckBox
-//import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-//import io.github.alexzhirkevich.cupertino.LocalContainerColor
-//import io.github.alexzhirkevich.cupertino.PresentationDetent
-//import io.github.alexzhirkevich.cupertino.PresentationStyle
-//import io.github.alexzhirkevich.cupertino.SwipeBoxBehavior
-//import io.github.alexzhirkevich.cupertino.adaptive.icons.AdaptiveIcons
-//import io.github.alexzhirkevich.cupertino.adaptive.icons.Add
-//import io.github.alexzhirkevich.cupertino.adaptive.icons.Settings
-//import io.github.alexzhirkevich.cupertino.adaptive.icons.Share
-//import io.github.alexzhirkevich.cupertino.cancel
-//import io.github.alexzhirkevich.cupertino.default
-//import io.github.alexzhirkevich.cupertino.destructive
-//import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
-//import io.github.alexzhirkevich.cupertino.icons.outlined.*
-//import io.github.alexzhirkevich.cupertino.icons.filled.*
-//import io.github.alexzhirkevich.cupertino.isNavigationBarTransparent
-//import io.github.alexzhirkevich.cupertino.isTopBarTransparent
-//import io.github.alexzhirkevich.cupertino.isTowardsEnd
-//import io.github.alexzhirkevich.cupertino.isTowardsStart
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoBottomSheetScaffoldState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoDatePickerState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoDateTimePickerState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoPickerState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoSearchTextFieldState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoSheetState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoSwipeBoxState
-//import io.github.alexzhirkevich.cupertino.rememberCupertinoTimePickerState
-//import io.github.alexzhirkevich.cupertino.section.CupertinoLinkIcon
-//import io.github.alexzhirkevich.cupertino.section.ProvideSectionStyle
-//import io.github.alexzhirkevich.cupertino.section.LazySectionScope
-//import io.github.alexzhirkevich.cupertino.section.SectionScope
-//import io.github.alexzhirkevich.cupertino.section.SectionState
-//import io.github.alexzhirkevich.cupertino.section.SectionStyle
-//import io.github.alexzhirkevich.cupertino.section.link
-//import io.github.alexzhirkevich.cupertino.section.rememberSectionState
-//import io.github.alexzhirkevich.cupertino.section.section
-//import io.github.alexzhirkevich.cupertino.section.sectionContainerBackground
-//import io.github.alexzhirkevich.cupertino.section.sectionTitle
-//import io.github.alexzhirkevich.cupertino.section.switch
-//import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-//import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-//import io.github.alexzhirkevich.cupertino.theme.systemBlue
-//import io.github.alexzhirkevich.cupertino.theme.systemCyan
-//import io.github.alexzhirkevich.cupertino.theme.systemGray
-//import io.github.alexzhirkevich.cupertino.theme.systemGreen
-//import io.github.alexzhirkevich.cupertino.theme.systemIndigo
-//import io.github.alexzhirkevich.cupertino.theme.systemOrange
-//import io.github.alexzhirkevich.cupertino.theme.systemPurple
-//import io.github.alexzhirkevich.cupertino.theme.systemRed
-//import kotlinx.coroutines.launch
-//import kotlinx.datetime.Instant
-//import kotlinx.datetime.TimeZone
-//import kotlinx.datetime.toLocalDateTime
-//import kotlin.reflect.KClass
+// import IsIos
+// import RootComponent
+// import androidx.compose.animation.AnimatedContent
+// import androidx.compose.foundation.background
+// import androidx.compose.foundation.clickable
+// import androidx.compose.foundation.gestures.ScrollableState
+// import androidx.compose.foundation.layout.Arrangement
+// import androidx.compose.foundation.layout.Box
+// import androidx.compose.foundation.layout.ExperimentalLayoutApi
+// import androidx.compose.foundation.layout.PaddingValues
+// import androidx.compose.foundation.layout.Row
+// import androidx.compose.foundation.layout.Spacer
+// import androidx.compose.foundation.layout.calculateEndPadding
+// import androidx.compose.foundation.layout.calculateStartPadding
+// import androidx.compose.foundation.layout.fillMaxSize
+// import androidx.compose.foundation.layout.fillMaxWidth
+// import androidx.compose.foundation.layout.height
+// import androidx.compose.foundation.layout.imePadding
+// import androidx.compose.foundation.layout.padding
+// import androidx.compose.foundation.layout.width
+// import androidx.compose.foundation.lazy.LazyColumn
+// import androidx.compose.foundation.lazy.LazyListScope
+// import androidx.compose.foundation.lazy.LazyListState
+// import androidx.compose.foundation.lazy.rememberLazyListState
+// import androidx.compose.material3.Icon
+// import androidx.compose.material3.Text
+// import androidx.compose.runtime.Composable
+// import androidx.compose.runtime.LaunchedEffect
+// import androidx.compose.runtime.MutableState
+// import androidx.compose.runtime.derivedStateOf
+// import androidx.compose.runtime.getValue
+// import androidx.compose.runtime.mutableStateOf
+// import androidx.compose.runtime.remember
+// import androidx.compose.runtime.rememberCoroutineScope
+// import androidx.compose.runtime.setValue
+// import androidx.compose.ui.Alignment
+// import androidx.compose.ui.Modifier
+// import androidx.compose.ui.graphics.Color
+// import androidx.compose.ui.input.nestedscroll.nestedScroll
+// import androidx.compose.ui.platform.LocalDensity
+// import androidx.compose.ui.platform.LocalFocusManager
+// import androidx.compose.ui.platform.LocalLayoutDirection
+// import androidx.compose.ui.state.ToggleableState
+// import androidx.compose.ui.unit.dp
+// import io.github.alexzhirkevich.cupertino.CupertinoActionSheet
+// import io.github.alexzhirkevich.cupertino.CupertinoActionSheetNative
+// import io.github.alexzhirkevich.cupertino.CupertinoActivityIndicator
+// import io.github.alexzhirkevich.cupertino.CupertinoAlertDialog
+// import io.github.alexzhirkevich.cupertino.CupertinoAlertDialogNative
+// import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetContent
+// import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffold
+// import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffoldDefaults
+// import io.github.alexzhirkevich.cupertino.CupertinoButton
+// import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
+// import io.github.alexzhirkevich.cupertino.CupertinoButtonSize
+// import io.github.alexzhirkevich.cupertino.CupertinoDatePicker
+// import io.github.alexzhirkevich.cupertino.CupertinoDatePickerNative
+// import io.github.alexzhirkevich.cupertino.CupertinoDatePickerState
+// import io.github.alexzhirkevich.cupertino.CupertinoDateTimePicker
+// import io.github.alexzhirkevich.cupertino.CupertinoDateTimePickerNative
+// import io.github.alexzhirkevich.cupertino.CupertinoDateTimePickerState
+// import io.github.alexzhirkevich.cupertino.CupertinoDropdownMenu
+// import io.github.alexzhirkevich.cupertino.CupertinoIcon
+// import io.github.alexzhirkevich.cupertino.CupertinoIconButton
+// import io.github.alexzhirkevich.cupertino.CupertinoIconDefaults
+// import io.github.alexzhirkevich.cupertino.MenuAction
+// import io.github.alexzhirkevich.cupertino.CupertinoNavigationBar
+// import io.github.alexzhirkevich.cupertino.CupertinoNavigationBarItem
+// import io.github.alexzhirkevich.cupertino.CupertinoWheelPicker
+// import io.github.alexzhirkevich.cupertino.CupertinoPickerState
+// import io.github.alexzhirkevich.cupertino.CupertinoSearchTextField
+// import io.github.alexzhirkevich.cupertino.CupertinoSearchTextFieldDefaults
+// import io.github.alexzhirkevich.cupertino.CupertinoSegmentedControl
+// import io.github.alexzhirkevich.cupertino.CupertinoSegmentedControlTab
+// import io.github.alexzhirkevich.cupertino.CupertinoSheetValue
+// import io.github.alexzhirkevich.cupertino.CupertinoSlider
+// import io.github.alexzhirkevich.cupertino.CupertinoSwitch
+// import io.github.alexzhirkevich.cupertino.CupertinoText
+// import io.github.alexzhirkevich.cupertino.CupertinoTimePicker
+// import io.github.alexzhirkevich.cupertino.CupertinoTimePickerNative
+// import io.github.alexzhirkevich.cupertino.CupertinoTimePickerState
+// import io.github.alexzhirkevich.cupertino.CupertinoTopAppBar
+// import io.github.alexzhirkevich.cupertino.MenuSection
+// import io.github.alexzhirkevich.cupertino.CupertinoBorderedTextField
+// import io.github.alexzhirkevich.cupertino.CupertinoBorderedTextFieldDefaults
+// import io.github.alexzhirkevich.cupertino.CupertinoBottomSheetScaffoldState
+// import io.github.alexzhirkevich.cupertino.CupertinoCheckBox
+// import io.github.alexzhirkevich.cupertino.CupertinoNavigationTitle
+// import io.github.alexzhirkevich.cupertino.CupertinoSwipeBox
+// import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxItem
+// import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxValue
+// import io.github.alexzhirkevich.cupertino.CupertinoTextField
+// import io.github.alexzhirkevich.cupertino.CupertinoTriStateCheckBox
+// import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
+// import io.github.alexzhirkevich.cupertino.LocalContainerColor
+// import io.github.alexzhirkevich.cupertino.PresentationDetent
+// import io.github.alexzhirkevich.cupertino.PresentationStyle
+// import io.github.alexzhirkevich.cupertino.SwipeBoxBehavior
+// import io.github.alexzhirkevich.cupertino.adaptive.icons.AdaptiveIcons
+// import io.github.alexzhirkevich.cupertino.adaptive.icons.Add
+// import io.github.alexzhirkevich.cupertino.adaptive.icons.Settings
+// import io.github.alexzhirkevich.cupertino.adaptive.icons.Share
+// import io.github.alexzhirkevich.cupertino.cancel
+// import io.github.alexzhirkevich.cupertino.default
+// import io.github.alexzhirkevich.cupertino.destructive
+// import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
+// import io.github.alexzhirkevich.cupertino.icons.outlined.*
+// import io.github.alexzhirkevich.cupertino.icons.filled.*
+// import io.github.alexzhirkevich.cupertino.isNavigationBarTransparent
+// import io.github.alexzhirkevich.cupertino.isTopBarTransparent
+// import io.github.alexzhirkevich.cupertino.isTowardsEnd
+// import io.github.alexzhirkevich.cupertino.isTowardsStart
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoBottomSheetScaffoldState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoDatePickerState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoDateTimePickerState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoPickerState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoSearchTextFieldState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoSheetState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoSwipeBoxState
+// import io.github.alexzhirkevich.cupertino.rememberCupertinoTimePickerState
+// import io.github.alexzhirkevich.cupertino.section.CupertinoLinkIcon
+// import io.github.alexzhirkevich.cupertino.section.ProvideSectionStyle
+// import io.github.alexzhirkevich.cupertino.section.LazySectionScope
+// import io.github.alexzhirkevich.cupertino.section.SectionScope
+// import io.github.alexzhirkevich.cupertino.section.SectionState
+// import io.github.alexzhirkevich.cupertino.section.SectionStyle
+// import io.github.alexzhirkevich.cupertino.section.link
+// import io.github.alexzhirkevich.cupertino.section.rememberSectionState
+// import io.github.alexzhirkevich.cupertino.section.section
+// import io.github.alexzhirkevich.cupertino.section.sectionContainerBackground
+// import io.github.alexzhirkevich.cupertino.section.sectionTitle
+// import io.github.alexzhirkevich.cupertino.section.switch
+// import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
+// import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+// import io.github.alexzhirkevich.cupertino.theme.systemBlue
+// import io.github.alexzhirkevich.cupertino.theme.systemCyan
+// import io.github.alexzhirkevich.cupertino.theme.systemGray
+// import io.github.alexzhirkevich.cupertino.theme.systemGreen
+// import io.github.alexzhirkevich.cupertino.theme.systemIndigo
+// import io.github.alexzhirkevich.cupertino.theme.systemOrange
+// import io.github.alexzhirkevich.cupertino.theme.systemPurple
+// import io.github.alexzhirkevich.cupertino.theme.systemRed
+// import kotlinx.coroutines.launch
+// import kotlinx.datetime.Instant
+// import kotlinx.datetime.TimeZone
+// import kotlinx.datetime.toLocalDateTime
+// import kotlin.reflect.KClass
 //
-//private enum class PickerTab {
+// private enum class PickerTab {
 //    Picker, Time, Date, DateTime
-//}
+// }
 //
-//@OptIn(ExperimentalCupertinoApi::class)
-//@Composable
-//fun CupertinoWidgetsScreen(
+// @OptIn(ExperimentalCupertinoApi::class)
+// @Composable
+// fun CupertinoWidgetsScreen(
 //    component: CupertinoWidgetsComponent
-//) {
+// ) {
 //
 //    val lazyListState = rememberLazyListState()
 //    val sheetListState = rememberLazyListState()
@@ -205,7 +205,7 @@ package cupertino///*
 //                    PresentationDetent.Fraction(.6f),
 //                ),
 //            )
-////            presentationStyle = PresentationStyle.Fullscreen
+// //            presentationStyle = PresentationStyle.Fullscreen
 //        )
 //    )
 //
@@ -265,16 +265,16 @@ package cupertino///*
 //            nativePickers = nativePickers
 //        )
 //    }
-//}
+// }
 //
-//@Composable
-//private fun Body(
+// @Composable
+// private fun Body(
 //    paddingValues: PaddingValues,
 //    lazyListState: LazyListState,
 //    component: CupertinoWidgetsComponent,
 //    scaffoldState: CupertinoBottomSheetScaffoldState,
 //    nativePickers : MutableState<Boolean>
-//) {
+// ) {
 //
 //    val coroutineScope = rememberCoroutineScope()
 //
@@ -375,7 +375,7 @@ package cupertino///*
 //                buttons()
 //                switchAndProgressBar()
 //            }
-////
+// //
 //
 //            section(
 //                state = popupsSectionState,
@@ -474,10 +474,10 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//@OptIn(ExperimentalCupertinoApi::class)
-//private fun LazySectionScope.swipeBox(scrollableState: ScrollableState) {
+// @OptIn(ExperimentalCupertinoApi::class)
+// private fun LazySectionScope.swipeBox(scrollableState: ScrollableState) {
 //    item {
 //        val state = rememberCupertinoSwipeBoxState(
 //            collapseOnScroll = scrollableState
@@ -587,14 +587,14 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//@Composable
-//private fun TopBarSample(
+// @Composable
+// private fun TopBarSample(
 //    lazyListState : LazyListState,
 //    nativePickers : Boolean,
 //    component : CupertinoWidgetsComponent
-//) {
+// ) {
 //    val density = LocalDensity.current
 //
 //    val isTransparent by remember(lazyListState, density) {
@@ -642,13 +642,13 @@ package cupertino///*
 //            CupertinoText("Cupertino")
 //        }
 //    )
-//}
+// }
 //
-//@Composable
-//private fun BottomBarSample(
+// @Composable
+// private fun BottomBarSample(
 //    lazyListState : LazyListState,
 //    nativePickers: Boolean
-//) {
+// ) {
 //    var tab by remember {
 //        mutableStateOf(0)
 //    }
@@ -687,14 +687,14 @@ package cupertino///*
 //            }
 //        )
 //    }
-//}
+// }
 //
-//@Composable
-//private fun SheetSample(
+// @Composable
+// private fun SheetSample(
 //    scaffoldState : CupertinoBottomSheetScaffoldState,
 //    sheetListState : LazyListState,
 //    sheetSectionColor : Color
-//) {
+// ) {
 //
 //    val coroutineScope = rememberCoroutineScope()
 //
@@ -740,10 +740,10 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//@Composable
-//private operator fun PaddingValues.plus(other : PaddingValues) : PaddingValues{
+// @Composable
+// private operator fun PaddingValues.plus(other : PaddingValues) : PaddingValues{
 //    val layoutDirection = LocalLayoutDirection.current
 //
 //    return PaddingValues(
@@ -752,13 +752,13 @@ package cupertino///*
 //        start = calculateStartPadding(layoutDirection) + other.calculateStartPadding(layoutDirection),
 //        end = calculateEndPadding(layoutDirection) + other.calculateEndPadding(layoutDirection)
 //    )
-//}
+// }
 //
-//@OptIn(ExperimentalCupertinoApi::class)
-//fun LazySectionScope.picker(
+// @OptIn(ExperimentalCupertinoApi::class)
+// fun LazySectionScope.picker(
 //    pickerValues: List<String>,
 //    pickerState: CupertinoPickerState
-//) {
+// ) {
 //
 //    item {
 //        CupertinoWheelPicker(
@@ -770,11 +770,11 @@ package cupertino///*
 //            CupertinoText(it)
 //        }
 //    }
-//}
+// }
 //
-//fun LazySectionScope.timePicker(
+// fun LazySectionScope.timePicker(
 //    state : CupertinoTimePickerState, native : Boolean
-//) {
+// ) {
 //    item {
 //        if (native) {
 //            CupertinoTimePickerNative(
@@ -788,11 +788,11 @@ package cupertino///*
 //            )
 //        }
 //    }
-//}
+// }
 //
-//fun LazySectionScope.datePicker(
+// fun LazySectionScope.datePicker(
 //    state: CupertinoDatePickerState, native: Boolean
-//) {
+// ) {
 //    item {
 //        if (native) {
 //            CupertinoDatePickerNative(
@@ -806,13 +806,13 @@ package cupertino///*
 //            )
 //        }
 //    }
-//}
+// }
 //
 //
-//@OptIn(ExperimentalCupertinoApi::class)
-//fun LazySectionScope.dateTimePicker(
+// @OptIn(ExperimentalCupertinoApi::class)
+// fun LazySectionScope.dateTimePicker(
 //    state : CupertinoDateTimePickerState, native: Boolean
-//) {
+// ) {
 //
 //    item {
 //        if (native) {
@@ -827,11 +827,11 @@ package cupertino///*
 //            )
 //        }
 //    }
-//}
+// }
 //
 //
 //
-//private fun LazySectionScope.switchAndProgressBar() {
+// private fun LazySectionScope.switchAndProgressBar() {
 //    item { pv ->
 //        Row(
 //            modifier = Modifier.padding(pv),
@@ -891,11 +891,11 @@ package cupertino///*
 //            CupertinoActivityIndicator(
 //                progress = b
 //            )
-////            Text(
-////                text = b.toString().take(4),
-////                modifier = Modifier.width(40.dp),
-////                maxLines = 1
-////            )
+// //            Text(
+// //                text = b.toString().take(4),
+// //                modifier = Modifier.width(40.dp),
+// //                maxLines = 1
+// //            )
 //        }
 //    }
 //
@@ -978,11 +978,11 @@ package cupertino///*
 //            },
 //        )
 //    }
-//}
+// }
 //
-//private fun LazySectionScope.colorButtons(
+// private fun LazySectionScope.colorButtons(
 //    onColorsChanged : (light : Color, dark : Color) -> Unit
-//) {
+// ) {
 //
 //
 //    item {
@@ -1073,9 +1073,9 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//private fun LazySectionScope.buttons() {
+// private fun LazySectionScope.buttons() {
 //
 //    item {
 //        Row(
@@ -1198,10 +1198,10 @@ package cupertino///*
 //        }
 //    }
 //
-//}
+// }
 //
-//@OptIn(ExperimentalCupertinoApi::class)
-//private fun LazySectionScope.dialogs(){
+// @OptIn(ExperimentalCupertinoApi::class)
+// private fun LazySectionScope.dialogs(){
 //    item {
 //
 //        var alertVisible by remember {
@@ -1284,9 +1284,9 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//private fun LazySectionScope.sheets(){
+// private fun LazySectionScope.sheets(){
 //    item {
 //
 //        var sheetVisible by remember {
@@ -1382,10 +1382,10 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
 //
-//private fun LazySectionScope.dropdown() {
+// private fun LazySectionScope.dropdown() {
 //
 //
 //    item { pv ->
@@ -1520,13 +1520,13 @@ package cupertino///*
 //            }
 //        }
 //    }
-//}
+// }
 //
-//private fun LazyListScope.linksWithIcons(
+// private fun LazyListScope.linksWithIcons(
 //    state: SectionState,
 //    onSheetClicked : () -> Unit,
 //    onNavigate: (KClass<out RootComponent.Child>) -> Unit,
-//) {
+// ) {
 //    section(
 //        state = state,
 //    ) {
@@ -1599,4 +1599,4 @@ package cupertino///*
 //            CupertinoText("Bottom Sheet")
 //        }
 //    }
-//}
+// }

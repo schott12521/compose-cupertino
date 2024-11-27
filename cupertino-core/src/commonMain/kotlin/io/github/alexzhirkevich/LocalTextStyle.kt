@@ -2,13 +2,11 @@
 
 package io.github.alexzhirkevich
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
-
 
 /**
  * Interoperable composition local for text style.
@@ -23,15 +21,16 @@ import androidx.compose.ui.text.TextStyle
  *
  * You can provide your own local (for ex. basic Material local) using [LocalTextStyleProvider]
  * */
-val LocalTextStyle : ProvidableCompositionLocal<TextStyle>
+val LocalTextStyle: ProvidableCompositionLocal<TextStyle>
     @Composable
     get() = LocalTextStyleProvider.current
 
+val LocalTextStyleProvider =
+    staticCompositionLocalOf {
+        EmptyLocalTextStyle
+    }
 
-val LocalTextStyleProvider = staticCompositionLocalOf {
-    EmptyLocalTextStyle
-}
-
-private val EmptyLocalTextStyle = compositionLocalOf {
-    TextStyle()
-}
+private val EmptyLocalTextStyle =
+    compositionLocalOf {
+        TextStyle()
+    }

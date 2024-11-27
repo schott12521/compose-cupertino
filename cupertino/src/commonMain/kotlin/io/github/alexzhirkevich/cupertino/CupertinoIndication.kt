@@ -23,18 +23,14 @@ import kotlinx.coroutines.launch
  * */
 @Composable
 @ExperimentalCupertinoApi
-fun rememberCupertinoIndication(
-    color: Color = CupertinoIndication.DefaultColor
-): Indication {
-    return remember(color) {
+fun rememberCupertinoIndication(color: Color = CupertinoIndication.DefaultColor): Indication =
+    remember(color) {
         CupertinoIndication(color)
     }
-}
 
 internal class CupertinoIndication(
-    private val color: Color
+    private val color: Color,
 ) : IndicationNodeFactory {
-
     companion object {
         val DefaultColor: Color
             @Composable
@@ -44,9 +40,7 @@ internal class CupertinoIndication(
         const val DefaultAlpha = 0.1f
     }
 
-    override fun create(interactionSource: InteractionSource): Modifier.Node {
-        return CupertinoIndicationNode(color, interactionSource)
-    }
+    override fun create(interactionSource: InteractionSource): Modifier.Node = CupertinoIndicationNode(color, interactionSource)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -54,17 +48,17 @@ internal class CupertinoIndication(
         return color == other.color
     }
 
-    override fun hashCode(): Int {
-        return color.hashCode()
-    }
+    override fun hashCode(): Int = color.hashCode()
 }
 
 internal class CupertinoIndicationNode(
     val color: Color,
-    val interactionSource: InteractionSource
-) : Modifier.Node(), DrawModifierNode {
-
-    private val animatedAlpha = androidx.compose.animation.core.Animatable(0f)
+    val interactionSource: InteractionSource,
+) : Modifier.Node(),
+    DrawModifierNode {
+    private val animatedAlpha =
+        androidx.compose.animation.core
+            .Animatable(0f)
 
     private val pressInteractions = mutableSetOf<PressInteraction.Press>()
     private val focusInteractions = mutableSetOf<FocusInteraction.Focus>()

@@ -19,11 +19,15 @@ import io.github.alexzhirkevich.cupertino.rememberCupertinoIndication
 @OptIn(InternalCupertinoApi::class, ExperimentalCupertinoApi::class)
 @Composable
 fun CupertinoTheme(
-    colorScheme: ColorScheme = if (isSystemInDarkTheme())
-        darkColorScheme() else lightColorScheme(),
+    colorScheme: ColorScheme =
+        if (isSystemInDarkTheme()) {
+            darkColorScheme()
+        } else {
+            lightColorScheme()
+        },
     shapes: Shapes = Shapes(),
     typography: Typography = Typography(),
-    content : @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     SystemBarAppearance(colorScheme.isDark)
     CompositionLocalProvider(
@@ -34,7 +38,7 @@ fun CupertinoTheme(
         LocalContentColor provides colorScheme.label,
         LocalIndication provides rememberCupertinoIndication(),
         LocalHapticFeedback provides rememberCupertinoHapticFeedback(),
-        content = content
+        content = content,
     )
 }
 

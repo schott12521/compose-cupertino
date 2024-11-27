@@ -26,16 +26,17 @@ import io.github.alexzhirkevich.cupertino.theme.darkColorScheme
 import io.github.alexzhirkevich.cupertino.theme.lightColorScheme
 import sections.SectionsScreen
 
-
 expect val IsIos: Boolean
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalAdaptiveApi::class)
 @Composable
 fun App(rootComponent: RootComponent) {
-
     val theme by derivedStateOf {
-        if (rootComponent.isMaterial.value)
-            Theme.Material3 else Theme.Cupertino
+        if (rootComponent.isMaterial.value) {
+            Theme.Material3
+        } else {
+            Theme.Cupertino
+        }
     }
 
     val (lightAccent, darkAccent) = rootComponent.accentColor.value
@@ -47,9 +48,11 @@ fun App(rootComponent: RootComponent) {
     val directionState by remember {
         derivedStateOf {
             if (rootComponent.isInvertLayoutDirection.value) {
-                if (direction == LayoutDirection.Rtl)
-                    LayoutDirection.Ltr else
+                if (direction == LayoutDirection.Rtl) {
+                    LayoutDirection.Ltr
+                } else {
                     LayoutDirection.Rtl
+                }
             } else {
                 direction
             }
@@ -58,28 +61,31 @@ fun App(rootComponent: RootComponent) {
 
     ActualPredictiveBackGestureOverlay(
         modifier = Modifier.fillMaxSize(),
-        backDispatcher = rootComponent.backDispatcher
+        backDispatcher = rootComponent.backDispatcher,
     ) {
         Children(
             stack = rootComponent.stack,
             modifier = Modifier.fillMaxSize(),
 //            onBack = rootComponent::onBack,
-            animation = cupertinoPredictiveBackAnimation(
-                backHandler = rootComponent.backHandler,
-                onBack = rootComponent::onBack,
-            ),
+            animation =
+                cupertinoPredictiveBackAnimation(
+                    backHandler = rootComponent.backHandler,
+                    onBack = rootComponent::onBack,
+                ),
         ) { child ->
             CompositionLocalProvider(
-                LocalLayoutDirection provides directionState
+                LocalLayoutDirection provides directionState,
             ) {
-
                 GeneratedAdaptiveTheme(
                     target = theme,
-                    primaryColor = if (isDark)
-                        lightAccent else darkAccent,
-                    useDarkTheme = isDark
+                    primaryColor =
+                        if (isDark) {
+                            lightAccent
+                        } else {
+                            darkAccent
+                        },
+                    useDarkTheme = isDark,
                 ) {
-
                     when (val c = child.instance) {
                         is RootComponent.Child.Cupertino -> CupertinoWidgetsScreen(c.component)
                         is RootComponent.Child.Adaptive -> AdaptiveWidgetsScreen(c.component)
@@ -99,36 +105,43 @@ fun GeneratedAdaptiveTheme(
     primaryColor: Color,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     shapes: Shapes = Shapes(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AdaptiveTheme(
         target = target,
-        material = MaterialThemeSpec.Default(
-            colorScheme = dynamicColorScheme(
-                seedColor = primaryColor,
-                isDark = useDarkTheme
+        material =
+            MaterialThemeSpec.Default(
+                colorScheme =
+                    dynamicColorScheme(
+                        seedColor = primaryColor,
+                        isDark = useDarkTheme,
+                    ),
+                shapes =
+                    androidx.compose.material3.Shapes(
+                        extraSmall = shapes.extraSmall,
+                        small = shapes.small,
+                        medium = shapes.medium,
+                        large = shapes.large,
+                        extraLarge = shapes.extraLarge,
+                    ),
             ),
-            shapes = androidx.compose.material3.Shapes(
-                extraSmall = shapes.extraSmall,
-                small = shapes.small,
-                medium = shapes.medium,
-                large = shapes.large,
-                extraLarge = shapes.extraLarge
-            )
-        ),
-        cupertino = CupertinoThemeSpec.Default(
-            colorScheme = if (useDarkTheme)
-                darkColorScheme(accent = primaryColor)
-            else lightColorScheme(accent = primaryColor),
-            shapes = io.github.alexzhirkevich.cupertino.theme.Shapes(
-                extraSmall = shapes.extraSmall,
-                small = shapes.small,
-                medium = shapes.medium,
-                large = shapes.large,
-                extraLarge = shapes.extraLarge
-            )
-        ),
-        content = content
+        cupertino =
+            CupertinoThemeSpec.Default(
+                colorScheme =
+                    if (useDarkTheme) {
+                        darkColorScheme(accent = primaryColor)
+                    } else {
+                        lightColorScheme(accent = primaryColor)
+                    },
+                shapes =
+                    io.github.alexzhirkevich.cupertino.theme.Shapes(
+                        extraSmall = shapes.extraSmall,
+                        small = shapes.small,
+                        medium = shapes.medium,
+                        large = shapes.large,
+                        extraLarge = shapes.extraLarge,
+                    ),
+            ),
+        content = content,
     )
 }
-

@@ -31,12 +31,13 @@ fun AdaptiveTopAppBar(
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable (RowScope.() -> Unit) = {},
     windowInsets: WindowInsets = CupertinoTopAppBarDefaults.windowInsets,
-    adaptation: AdaptationScope<CupertinoTopAppBarAdaptation, MaterialTopAppBarAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<CupertinoTopAppBarAdaptation, MaterialTopAppBarAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
-        adaptation = remember {
-            TopAppBarAdaptation()
-        },
+        adaptation =
+            remember {
+                TopAppBarAdaptation()
+            },
         adaptationScope = adaptation,
         cupertino = {
             CupertinoTopAppBar(
@@ -50,7 +51,7 @@ fun AdaptiveTopAppBar(
                 isTranslucent = it.isTranslucent,
                 divider = {
                     it.divider(it.isTransparent)
-                }
+                },
             )
         },
         material = {
@@ -64,7 +65,7 @@ fun AdaptiveTopAppBar(
                 windowInsets = windowInsets,
                 scrollBehavior = it.scrollBehavior,
             )
-        }
+        },
     )
 }
 
@@ -111,20 +112,20 @@ class MaterialTopAppBarAdaptation internal constructor(
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     var isCenterAligned: Boolean by mutableStateOf(isCenterAligned)
-    var colors : TopAppBarColors by mutableStateOf(colors)
-    var scrollBehavior : TopAppBarScrollBehavior? by mutableStateOf(scrollBehavior)
+    var colors: TopAppBarColors by mutableStateOf(colors)
+    var scrollBehavior: TopAppBarScrollBehavior? by mutableStateOf(scrollBehavior)
 }
 
 @Stable
 class CupertinoTopAppBarAdaptation internal constructor(
-    colors : CupertinoTopAppBarColors,
+    colors: CupertinoTopAppBarColors,
     isTransparent: Boolean = false,
     isTranslucent: Boolean = true,
-    divider : @Composable (isTransparent: Boolean) -> Unit = {
+    divider: @Composable (isTransparent: Boolean) -> Unit = {
         if (!it) {
             CupertinoTopAppBarDefaults.divider()
         }
-    }
+    },
 ) {
     var colors: CupertinoTopAppBarColors by mutableStateOf(colors)
     var isTransparent: Boolean by mutableStateOf(isTransparent)
@@ -134,16 +135,14 @@ class CupertinoTopAppBarAdaptation internal constructor(
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Stable
-private class TopAppBarAdaptation :
-    Adaptation<CupertinoTopAppBarAdaptation, MaterialTopAppBarAdaptation>() {
-
+private class TopAppBarAdaptation : Adaptation<CupertinoTopAppBarAdaptation, MaterialTopAppBarAdaptation>() {
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoTopAppBarAdaptation {
         val colors = CupertinoTopAppBarDefaults.topAppBarColors()
 
         return remember(colors) {
             CupertinoTopAppBarAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }
@@ -155,7 +154,7 @@ private class TopAppBarAdaptation :
 
         return remember(colors) {
             MaterialTopAppBarAdaptation(
-                colors = colors
+                colors = colors,
             )
         }
     }

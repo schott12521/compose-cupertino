@@ -19,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @InternalCupertinoApi
 @Composable
@@ -45,13 +44,14 @@ internal fun AnchorsEffect(
             // If there's 1 action item, the fullSwipeOffset should be 50%, if there's 2 or more it should be 90%
             val fullSwipeStartOffset = parentWidth * (if (amountOfStartActionItems >= 2) 0.85f else 0.5f) // TODO test this
             val fullSwipeEndOffset = parentWidth * (if (amountOfEndActionItems >= 2) 0.85f else 0.5f) // TODO test this
-            val anchors = DraggableAnchors {
-                SwipeBoxStates.Resting at 0f
-                if (isStartActionItemSupplied) SwipeBoxStates.StartVisible at startSwipeOffset
-                if (isEndActionItemSupplied) SwipeBoxStates.EndVisible at -endSwipeOffset
-                if (fullExpansionStart && isStartActionItemSupplied) SwipeBoxStates.StartFullyExpanded at fullSwipeStartOffset
-                if (fullExpansionEnd && isEndActionItemSupplied) SwipeBoxStates.EndFullyExpanded at -fullSwipeEndOffset
-            }
+            val anchors =
+                DraggableAnchors {
+                    SwipeBoxStates.Resting at 0f
+                    if (isStartActionItemSupplied) SwipeBoxStates.StartVisible at startSwipeOffset
+                    if (isEndActionItemSupplied) SwipeBoxStates.EndVisible at -endSwipeOffset
+                    if (fullExpansionStart && isStartActionItemSupplied) SwipeBoxStates.StartFullyExpanded at fullSwipeStartOffset
+                    if (fullExpansionEnd && isEndActionItemSupplied) SwipeBoxStates.EndFullyExpanded at -fullSwipeEndOffset
+                }
             swipeBoxState.updateAnchors(anchors)
             onAnchorsInitialized(true)
         }
@@ -69,7 +69,7 @@ internal fun HapticFeedbackEffect(
     swipeBoxState: AnchoredDraggableState<SwipeBoxStates>,
     hapticFeedback: HapticFeedback,
     hasTriggeredHapticFeedback: Boolean,
-    onHapticFeedbackTriggered: (Boolean) -> Unit
+    onHapticFeedbackTriggered: (Boolean) -> Unit,
 ) {
     LaunchedEffect(swipeBoxState.currentValue, swipeBoxState.targetValue) {
         if (fullExpansionStart) {
@@ -105,7 +105,7 @@ internal fun HapticFeedbackEffect(
 @Composable
 internal fun ScrollEffect(
     scrollableState: ScrollableState?,
-    swipeBoxState: AnchoredDraggableState<SwipeBoxStates>
+    swipeBoxState: AnchoredDraggableState<SwipeBoxStates>,
 ) {
     LaunchedEffect(scrollableState) {
         snapshotFlow { scrollableState?.isScrollInProgress }

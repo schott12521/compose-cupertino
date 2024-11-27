@@ -12,11 +12,11 @@ import androidx.compose.ui.unit.Dp
 actual fun CupertinoTimePickerNative(
     state: CupertinoTimePickerState,
     modifier: Modifier,
-    height : Dp,
-    containerColor : Color
+    height: Dp,
+    containerColor: Color,
 ) = CupertinoTimePicker(
     state = state,
     modifier = modifier,
     height = height,
-    containerColor = containerColor
+    containerColor = containerColor,
 )

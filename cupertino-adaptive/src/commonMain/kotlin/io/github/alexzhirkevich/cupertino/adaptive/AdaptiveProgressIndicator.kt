@@ -30,8 +30,8 @@ fun AdaptiveCircularProgressIndicator(
     modifier: Modifier = Modifier,
     adaptationScope: AdaptationScope<
         CupertinoCircularProgressIndicatorAdaptation,
-        MaterialCircularProgressIndicatorAdaptation
-    >.() -> Unit = {}
+        MaterialCircularProgressIndicatorAdaptation,
+    >.() -> Unit = {},
 ) {
     AdaptiveWidget(
         adaptation = remember { ProgressIndicatorAdaptation() },
@@ -42,7 +42,7 @@ fun AdaptiveCircularProgressIndicator(
                 color = it.color,
                 strokeWidth = it.strokeWidth,
                 trackColor = it.trackColor,
-                strokeCap = it.strokeCap
+                strokeCap = it.strokeCap,
             )
         },
         cupertino = {
@@ -55,9 +55,9 @@ fun AdaptiveCircularProgressIndicator(
                 innerRadius = it.innerRadius,
                 strokeWidth = it.strokeWidth,
                 animationSpec = it.animationSpec,
-                minAlpha = it.minAlpha
+                minAlpha = it.minAlpha,
             )
-        }
+        },
     )
 }
 
@@ -76,20 +76,22 @@ class MaterialCircularProgressIndicatorAdaptation internal constructor(
 
 @Stable
 class CupertinoCircularProgressIndicatorAdaptation internal constructor(
-    color : Color,
-    progress : Float = 1f,
-    size : Dp = CupertinoActivityIndicatorDefaults.MinSize,
+    color: Color,
+    progress: Float = 1f,
+    size: Dp = CupertinoActivityIndicatorDefaults.MinSize,
     count: Int = CupertinoActivityIndicatorDefaults.PathCount,
-    innerRadius : Float = 1/3f,
-    strokeWidth : Dp = Dp.Unspecified,
-    animationSpec: InfiniteRepeatableSpec<Float> = infiniteRepeatable(
-        animation = tween(
-            durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
-            easing = LinearEasing,
+    innerRadius: Float = 1 / 3f,
+    strokeWidth: Dp = Dp.Unspecified,
+    animationSpec: InfiniteRepeatableSpec<Float> =
+        infiniteRepeatable(
+            animation =
+                tween(
+                    durationMillis = CupertinoActivityIndicatorDefaults.DurationMillis,
+                    easing = LinearEasing,
+                ),
+            repeatMode = RepeatMode.Restart,
         ),
-        repeatMode = RepeatMode.Restart,
-    ),
-    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha
+    minAlpha: Float = CupertinoActivityIndicatorDefaults.MinAlpha,
 ) {
     var color: Color by mutableStateOf(color)
     var progress: Float by mutableStateOf(progress)
@@ -104,15 +106,13 @@ class CupertinoCircularProgressIndicatorAdaptation internal constructor(
 @OptIn(ExperimentalAdaptiveApi::class)
 private class ProgressIndicatorAdaptation :
     Adaptation<CupertinoCircularProgressIndicatorAdaptation, MaterialCircularProgressIndicatorAdaptation>() {
-
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoCircularProgressIndicatorAdaptation {
-
         val color = CupertinoActivityIndicatorDefaults.color
 
         return remember(color) {
             CupertinoCircularProgressIndicatorAdaptation(
-                color
+                color,
             )
         }
     }
@@ -125,7 +125,7 @@ private class ProgressIndicatorAdaptation :
         return remember(color, trackColor) {
             MaterialCircularProgressIndicatorAdaptation(
                 color = color,
-                trackColor = trackColor
+                trackColor = trackColor,
             )
         }
     }

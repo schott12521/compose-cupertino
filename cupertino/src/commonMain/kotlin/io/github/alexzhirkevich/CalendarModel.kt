@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 
-
 expect class CalendarLocale
 
 /**
@@ -36,13 +35,12 @@ internal expect fun currentLocale(): CalendarLocale
 internal fun formatWithSkeleton(
     utcTimeMillis: Long,
     skeleton: String,
-    locale: CalendarLocale
-): String = PlatformDateFormat
-    .formatWithSkeleton(utcTimeMillis, skeleton, locale)
-
+    locale: CalendarLocale,
+): String =
+    PlatformDateFormat
+        .formatWithSkeleton(utcTimeMillis, skeleton, locale)
 
 internal interface CalendarModel {
-
     /**
      * A [CalendarDate] representing the current day.
      */
@@ -125,8 +123,11 @@ internal interface CalendarModel {
      * @param year the month's year
      * @param month an integer representing a month (e.g. JANUARY as 1, December as 12)
      */
-    fun getDate(year: Int, month: Int, day : Int): CalendarDate
-
+    fun getDate(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): CalendarDate
 
     /**
      * Returns a day of week from a given [CalendarDate].
@@ -142,7 +143,10 @@ internal interface CalendarModel {
      * @param from the [CalendarMonth] to add to
      * @param addedMonthsCount the number of months to add
      */
-    fun plusMonths(from: CalendarMonth, addedMonthsCount: Int): CalendarMonth
+    fun plusMonths(
+        from: CalendarMonth,
+        addedMonthsCount: Int,
+    ): CalendarMonth
 
     /**
      * Returns a [CalendarMonth] that is computed by subtracting a number of months, given as
@@ -151,7 +155,10 @@ internal interface CalendarModel {
      * @param from the [CalendarMonth] to subtract from
      * @param subtractedMonthsCount the number of months to subtract
      */
-    fun minusMonths(from: CalendarMonth, subtractedMonthsCount: Int): CalendarMonth
+    fun minusMonths(
+        from: CalendarMonth,
+        subtractedMonthsCount: Int,
+    ): CalendarMonth
 
     /**
      * Formats a [CalendarMonth] into a string with a given date format skeleton.
@@ -163,9 +170,8 @@ internal interface CalendarModel {
     fun formatWithSkeleton(
         month: CalendarMonth,
         skeleton: String,
-        locale: CalendarLocale
-    ): String =
-        formatWithSkeleton(month.startUtcTimeMillis, skeleton, locale)
+        locale: CalendarLocale,
+    ): String = formatWithSkeleton(month.startUtcTimeMillis, skeleton, locale)
 
     /**
      * Formats a [CalendarDate] into a string with a given date format skeleton.
@@ -177,7 +183,7 @@ internal interface CalendarModel {
     fun formatWithSkeleton(
         date: CalendarDate,
         skeleton: String,
-        locale: CalendarLocale
+        locale: CalendarLocale,
     ): String = formatWithSkeleton(date.utcTimeMillis, skeleton, locale)
 
     /**
@@ -187,7 +193,11 @@ internal interface CalendarModel {
      * @param pattern a date format pattern
      * @param locale the [CalendarLocale] to use when formatting the given timestamp
      */
-    fun formatWithPattern(utcTimeMillis: Long, pattern: String, locale: CalendarLocale): String
+    fun formatWithPattern(
+        utcTimeMillis: Long,
+        pattern: String,
+        locale: CalendarLocale,
+    ): String
 
     /**
      * Parses a date string into a [CalendarDate].
@@ -196,7 +206,10 @@ internal interface CalendarModel {
      * @param pattern the expected date pattern to be used for parsing the date string
      * @return a [CalendarDate], or a `null` in case the parsing failed
      */
-    fun parse(date: String, pattern: String): CalendarDate?
+    fun parse(
+        date: String,
+        pattern: String,
+    ): CalendarDate?
 }
 
 /**
@@ -211,10 +224,9 @@ internal data class CalendarDate(
     val year: Int,
     val month: Int,
     val dayOfMonth: Int,
-    val utcTimeMillis: Long
+    val utcTimeMillis: Long,
 ) : Comparable<CalendarDate> {
-    override operator fun compareTo(other: CalendarDate): Int =
-        this.utcTimeMillis.compareTo(other.utcTimeMillis)
+    override operator fun compareTo(other: CalendarDate): Int = this.utcTimeMillis.compareTo(other.utcTimeMillis)
 
     /**
      * Formats the date into a string with the given skeleton format and a [CalendarLocale].
@@ -222,9 +234,8 @@ internal data class CalendarDate(
     fun format(
         calendarModel: CalendarModel,
         skeleton: String,
-        locale: CalendarLocale
-    ): String =
-        calendarModel.formatWithSkeleton(this, skeleton, locale)
+        locale: CalendarLocale,
+    ): String = calendarModel.formatWithSkeleton(this, skeleton, locale)
 }
 
 /**
@@ -242,9 +253,8 @@ internal data class CalendarMonth(
     val month: Int,
     val numberOfDays: Int,
     val daysFromStartOfWeekToFirstOfMonth: Int,
-    val startUtcTimeMillis: Long
+    val startUtcTimeMillis: Long,
 ) {
-
     /**
      * The last _UTC_ milliseconds from the epoch of the month (i.e. the last millisecond of the
      * last day of the month)
@@ -254,9 +264,7 @@ internal data class CalendarMonth(
     /**
      * Returns the position of a [CalendarMonth] within given years range.
      */
-    fun indexIn(years: IntRange): Int {
-        return (year - years.first) * 12 + month - 1
-    }
+    fun indexIn(years: IntRange): Int = (year - years.first) * 12 + month - 1
 
     /**
      * Formats the month into a string with the given skeleton format and a [CalendarLocale].
@@ -264,9 +272,8 @@ internal data class CalendarMonth(
     fun format(
         calendarModel: CalendarModel,
         skeleton: String,
-        locale: CalendarLocale
-    ): String =
-        calendarModel.formatWithSkeleton(this, skeleton, locale)
+        locale: CalendarLocale,
+    ): String = calendarModel.formatWithSkeleton(this, skeleton, locale)
 }
 
 /**
@@ -278,7 +285,7 @@ internal data class CalendarMonth(
 @Immutable
 internal data class DateInputFormat(
     val patternWithDelimiters: String,
-    val delimiter: Char
+    val delimiter: Char,
 ) {
     val patternWithoutDelimiters: String = patternWithDelimiters.replace(delimiter.toString(), "")
 }
@@ -302,19 +309,21 @@ internal data class DateInputFormat(
  *  - MM/dd/yyyy
  */
 internal fun datePatternAsInputFormat(localeFormat: String): DateInputFormat {
-    val patternWithDelimiters = localeFormat.replace(Regex("[^dMy/\\-.]"), "")
-        .replace(Regex("d{1,2}"), "dd")
-        .replace(Regex("M{1,2}"), "MM")
-        .replace(Regex("y{1,4}"), "yyyy")
-        .replace("My", "M/y") // Edge case for the Kako locale
-        .removeSuffix(".") // Removes a dot suffix that appears in some formats
+    val patternWithDelimiters =
+        localeFormat
+            .replace(Regex("[^dMy/\\-.]"), "")
+            .replace(Regex("d{1,2}"), "dd")
+            .replace(Regex("M{1,2}"), "MM")
+            .replace(Regex("y{1,4}"), "yyyy")
+            .replace("My", "M/y") // Edge case for the Kako locale
+            .removeSuffix(".") // Removes a dot suffix that appears in some formats
 
     val delimiterRegex = Regex("[/\\-.]")
     val delimiterMatchResult = delimiterRegex.find(patternWithDelimiters)
     val delimiter = delimiterMatchResult!!.groups[0]!!.value
     return DateInputFormat(
         patternWithDelimiters = patternWithDelimiters,
-        delimiter = delimiter[0]
+        delimiter = delimiter[0],
     )
 }
 

@@ -66,32 +66,31 @@ import kotlin.math.roundToInt
 /**
  * Return true if container can't scroll backward
  * */
-inline val ScrollableState.isTopBarTransparent : Boolean
+inline val ScrollableState.isTopBarTransparent: Boolean
     get() = !canScrollBackward
-
 
 /**
  * Return true if container scroll offset is smaller than [topPadding]
  * */
 @Composable
 @ExperimentalCupertinoApi
-fun LazyListState.isTopBarTransparent(topPadding : Dp = 0.dp) : Boolean {
-
-    val topPaddingPx = LocalDensity.current.run {
-        remember(topPadding) {
-            topPadding.toPx()
+fun LazyListState.isTopBarTransparent(topPadding: Dp = 0.dp): Boolean {
+    val topPaddingPx =
+        LocalDensity.current.run {
+            remember(topPadding) {
+                topPadding.toPx()
+            }
         }
-    }
 
     layoutInfo.visibleItemsInfo.first().offset
     return remember {
         derivedStateOf {
-            !canScrollBackward || firstVisibleItemIndex == 0 &&
-                    firstVisibleItemScrollOffset < topPaddingPx
+            !canScrollBackward ||
+                firstVisibleItemIndex == 0 &&
+                firstVisibleItemScrollOffset < topPaddingPx
         }
     }.value
 }
-
 
 /**
  * Top app bar itself does not produce cupertino thin material glass effect.
@@ -107,10 +106,14 @@ fun LazyListState.isTopBarTransparent(topPadding : Dp = 0.dp) : Boolean {
  * */
 @Composable
 @ExperimentalCupertinoApi
-fun cupertinoTranslucentTopBarColor(color: Color, isTranslucent: Boolean, isTransparent: Boolean) : Color {
-
-    if (!isTranslucent)
+fun cupertinoTranslucentTopBarColor(
+    color: Color,
+    isTranslucent: Boolean,
+    isTransparent: Boolean,
+): Color {
+    if (!isTranslucent) {
         return color
+    }
 
     val appBarsState = LocalAppBarsState.current ?: return color
 
@@ -156,15 +159,15 @@ fun CupertinoTopAppBar(
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable (RowScope.() -> Unit) = {},
     windowInsets: WindowInsets = LocalTopAppBarInsets.current ?: CupertinoTopAppBarDefaults.windowInsets,
-    isTransparent : Boolean = false,
-    isTranslucent : Boolean = LocalAppBarsState.current != null,
+    isTransparent: Boolean = false,
+    isTranslucent: Boolean = LocalAppBarsState.current != null,
     divider: @Composable () -> Unit = {
         if (!isTransparent) {
             CupertinoTopAppBarDefaults.divider()
         }
     },
     colors: CupertinoTopAppBarColors = CupertinoTopAppBarDefaults.topAppBarColors(),
-){
+) {
     val navTitleVisible by LocalNavigationTitleVisible.current
     val transparent = isTransparent || navTitleVisible
 
@@ -181,29 +184,27 @@ fun CupertinoTopAppBar(
     )
 }
 
-internal val LocalNavigationTitleVisible = compositionLocalOf {
-    mutableStateOf(false)
-}
+internal val LocalNavigationTitleVisible =
+    compositionLocalOf {
+        mutableStateOf(false)
+    }
 
 private class ClipShape(
-    private val offsetDifference : Float
+    private val offsetDifference: Float,
 ) : Shape {
-
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        return Outline.Rectangle(
+        density: Density,
+    ): Outline =
+        Outline.Rectangle(
             Rect(
                 top = offsetDifference.coerceAtMost(size.height),
                 left = 0f,
                 right = size.width,
-                bottom = size.height
-            )
+                bottom = size.height,
+            ),
         )
-    }
-
 }
 
 private const val NavTitleMaxFontScale = 1.1f
@@ -229,13 +230,12 @@ private val NavTitleMaxFontScaleDistance = 150.dp
 @Composable
 fun CupertinoNavigationTitle(
     modifier: Modifier = Modifier,
-    maxFontScale : Float = NavTitleMaxFontScale,
-    maxFontScaleDistance : Dp = NavTitleMaxFontScaleDistance,
+    maxFontScale: Float = NavTitleMaxFontScale,
+    maxFontScaleDistance: Dp = NavTitleMaxFontScaleDistance,
     paddingValues: PaddingValues = CupertinoSectionDefaults.PaddingValues,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-
-    require(maxFontScale >= 1){
+    require(maxFontScale >= 1) {
         "maxFontScale must be >= 1."
     }
     var visible by LocalNavigationTitleVisible.current
@@ -259,9 +259,10 @@ fun CupertinoNavigationTitle(
 //        }
 //    }
 
-    val offsetDifference = remember {
-        mutableStateOf(0f)
-    }
+    val offsetDifference =
+        remember {
+            mutableStateOf(0f)
+        }
 
 // TODO: nav title snap
 //
@@ -302,39 +303,37 @@ fun CupertinoNavigationTitle(
         }
     }
 
-    val font = CupertinoTheme.typography.largeTitle
-        .copy(fontWeight = FontWeight.Bold)
-
+    val font =
+        CupertinoTheme.typography.largeTitle
+            .copy(fontWeight = FontWeight.Bold)
 
     Box(
         modifier
             .padding(paddingValues)
             .let {
-                if (topAppBarExists)
+                if (topAppBarExists) {
                     it.clip(ClipShape(offsetDifference.value))
-                else it
-            }
-            .onGloballyPositioned {
-
-                val scaffoldTop =  (scaffoldCoordinates?.boundsInWindow()?.top ?: 0f)
-
+                } else {
+                    it
+                }
+            }.onGloballyPositioned {
+                val scaffoldTop = (scaffoldCoordinates?.boundsInWindow()?.top ?: 0f)
 
                 offsetDifference.value = (topBarHeightPx - it.boundsInWindow().top) + scaffoldTop
 
                 visible = !topAppBarExists || offsetDifference.value < it.size.height
-            }
+            },
     ) {
         CompositionLocalProvider(
-            LocalTextStyle provides font.copy(fontSize = font.fontSize * fontIncrease)
+            LocalTextStyle provides font.copy(fontSize = font.fontSize * fontIncrease),
         ) {
             content()
         }
     }
 }
 
-
-//@Composable
-//fun CupertinoLargeTopAppBar(
+// @Composable
+// fun CupertinoLargeTopAppBar(
 //    title: @Composable () -> Unit,
 //    modifier: Modifier = Modifier,
 //    navigationIcon: @Composable () -> Unit = {},
@@ -344,7 +343,7 @@ fun CupertinoNavigationTitle(
 //    scrollBehavior: TopAppBarScrollBehavior? = null,
 //    isTransparent : () -> Boolean = { false },
 //    withDivider : Boolean = !isTransparent()
-//) {
+// ) {
 //    val density = LocalDensity.current
 //
 //    val fontScale = remember {
@@ -392,10 +391,10 @@ fun CupertinoNavigationTitle(
 //        scrollBehavior = scrollBehavior,
 //        withDivider = withDivider,
 //    )
-//}
+// }
 
-//@Composable
-//private fun TwoRowsTopAppBar(
+// @Composable
+// private fun TwoRowsTopAppBar(
 //    modifier: Modifier = Modifier,
 //    title: @Composable () -> Unit,
 //    titleTextStyle: TextStyle,
@@ -409,7 +408,7 @@ fun CupertinoNavigationTitle(
 //    maxHeight: Dp,
 //    pinnedHeight: Dp,
 //    scrollBehavior: TopAppBarScrollBehavior?
-//) {
+// ) {
 //    if (maxHeight <= pinnedHeight) {
 //        throw IllegalArgumentException(
 //            "A TwoRowsTopAppBar max height should be greater than its pinned height"
@@ -507,7 +506,7 @@ fun CupertinoNavigationTitle(
 //            )
 //        }
 //    }
-//}
+// }
 
 @Stable
 class CupertinoTopAppBarColors internal constructor(
@@ -517,10 +516,8 @@ class CupertinoTopAppBarColors internal constructor(
     internal val titleContentColor: Color,
     internal val actionIconContentColor: Color,
 ) {
-
     @Composable
     internal fun containerColor(): Color = containerColor
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -546,9 +543,10 @@ class CupertinoTopAppBarColors internal constructor(
     }
 }
 
-internal val LocalTopAppBarInsets = compositionLocalOf<WindowInsets?> {
-    null
-}
+internal val LocalTopAppBarInsets =
+    compositionLocalOf<WindowInsets?> {
+        null
+    }
 
 @ExperimentalCupertinoApi
 @Composable
@@ -561,32 +559,32 @@ private fun InlineTopAppBar(
     colors: CupertinoTopAppBarColors,
     isTransparent: Boolean,
     isTranslucent: Boolean,
-    divider : @Composable () -> Unit
+    divider: @Composable () -> Unit,
 ) {
-
-    val containerColor = cupertinoTranslucentTopBarColor(
-        color = colors.containerColor(),
-        isTranslucent = isTranslucent,
-        isTransparent = isTransparent
-    )
+    val containerColor =
+        cupertinoTranslucentTopBarColor(
+            color = colors.containerColor(),
+            isTranslucent = isTranslucent,
+            isTransparent = isTransparent,
+        )
 
     val navTitleVisible by LocalNavigationTitleVisible.current
 
     Column {
         TopAppBarLayout(
-            modifier = modifier
-                .background(if (isTransparent) Color.Transparent else containerColor)
-                .windowInsetsPadding(windowInsets),
+            modifier =
+                modifier
+                    .background(if (isTransparent) Color.Transparent else containerColor)
+                    .windowInsetsPadding(windowInsets),
             heightPx = LocalDensity.current.run { TopAppBarHeight.toPx() },
             navigationIconContentColor = colors.navigationIconContentColor,
             titleContentColor = colors.titleContentColor,
             actionIconContentColor = colors.actionIconContentColor,
             title = {
-
                 AnimatedVisibility(
                     visible = !navTitleVisible,
                     enter = fadeIn(),
-                    exit = fadeOut()
+                    exit = fadeOut(),
                 ) {
                     title()
                 }
@@ -602,9 +600,9 @@ private fun InlineTopAppBar(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    content = actions
+                    content = actions,
                 )
-            }
+            },
         )
         divider()
     }
@@ -631,59 +629,65 @@ private fun TopAppBarLayout(
         {
             Box(
                 Modifier
-                    .layoutId("navigationIcon")
+                    .layoutId("navigationIcon"),
 //                    .padding(start = TopAppBarHorizontalPadding)
             ) {
                 CompositionLocalProvider(
                     LocalContentColor provides navigationIconContentColor,
-                    content = navigationIcon
+                    content = navigationIcon,
                 )
             }
             Box(
-                modifier = Modifier
-                    .layoutId("title")
-                    .padding(horizontal = TopAppBarHorizontalPadding)
-                    .graphicsLayer { alpha = titleAlpha }
-                    .then(if (hideTitleSemantics) Modifier.clearAndSetSemantics { } else Modifier)
+                modifier =
+                    Modifier
+                        .layoutId("title")
+                        .padding(horizontal = TopAppBarHorizontalPadding)
+                        .graphicsLayer { alpha = titleAlpha }
+                        .then(if (hideTitleSemantics) Modifier.clearAndSetSemantics { } else Modifier),
             ) {
                 ProvideTextStyle(value = titleTextStyle) {
                     CompositionLocalProvider(
                         LocalContentColor provides titleContentColor,
-                        content = title
+                        content = title,
                     )
                 }
             }
             Box(
-                modifier = Modifier
-                    .layoutId("actionIcons")
-                    .padding(end = TopAppBarHorizontalPadding)
+                modifier =
+                    Modifier
+                        .layoutId("actionIcons")
+                        .padding(end = TopAppBarHorizontalPadding),
             ) {
                 CompositionLocalProvider(
                     LocalContentColor provides actionIconContentColor,
-                    content = actions
+                    content = actions,
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     ) { measurables, constraints ->
         val navigationIconPlaceable =
-            measurables.first { it.layoutId == "navigationIcon" }
+            measurables
+                .first { it.layoutId == "navigationIcon" }
                 .measure(constraints.copy(minWidth = 0))
         val actionIconsPlaceable =
-            measurables.first { it.layoutId == "actionIcons" }
+            measurables
+                .first { it.layoutId == "actionIcons" }
                 .measure(constraints.copy(minWidth = 0))
 
-        val maxTitleWidth = if (constraints.maxWidth == Constraints.Infinity) {
-            constraints.maxWidth
-        } else {
-            (constraints.maxWidth - navigationIconPlaceable.width - actionIconsPlaceable.width)
-                .coerceAtLeast(0)
-        }
+        val maxTitleWidth =
+            if (constraints.maxWidth == Constraints.Infinity) {
+                constraints.maxWidth
+            } else {
+                (constraints.maxWidth - navigationIconPlaceable.width - actionIconsPlaceable.width)
+                    .coerceAtLeast(0)
+            }
 
         val layoutHeight = heightPx.roundToInt()
 
         val titlePlaceable =
-            measurables.first { it.layoutId == "title" }
+            measurables
+                .first { it.layoutId == "title" }
                 .measure(constraints.copy(minWidth = 0, maxWidth = maxTitleWidth))
 
         // Locate the title's baseline.
@@ -694,54 +698,58 @@ private fun TopAppBarLayout(
                 0
             }
 
-
         layout(constraints.maxWidth, layoutHeight) {
             // Navigation icon
             navigationIconPlaceable.placeRelative(
                 x = 0,
-                y = (layoutHeight - navigationIconPlaceable.height) / 2
+                y = (layoutHeight - navigationIconPlaceable.height) / 2,
             )
 
             // Title
             titlePlaceable.placeRelative(
-                x = when (titleHorizontalArrangement) {
-                    Arrangement.Center -> (constraints.maxWidth - titlePlaceable.width) / 2
-                    Arrangement.End ->
-                        constraints.maxWidth - titlePlaceable.width - actionIconsPlaceable.width
-                    // Arrangement.Start.
-                    // An TopAppBarTitleInset will make sure the title is offset in case the
-                    // navigation icon is missing.
-                    else -> max(TopAppBarTitleInset.roundToPx(), navigationIconPlaceable.width)
-                },
-                y = when (titleVerticalArrangement) {
-                    Arrangement.Center -> (layoutHeight - titlePlaceable.height) / 2
-                    // Apply bottom padding from the title's baseline only when the Arrangement is
-                    // "Bottom".
-                    Arrangement.Bottom ->
-                        if (titleBottomPadding == 0) layoutHeight - titlePlaceable.height
-                        else layoutHeight - titlePlaceable.height - max(
-                            0,
-                            titleBottomPadding - titlePlaceable.height + titleBaseline
-                        )
-                    // Arrangement.Top
-                    else -> 0
-                }
+                x =
+                    when (titleHorizontalArrangement) {
+                        Arrangement.Center -> (constraints.maxWidth - titlePlaceable.width) / 2
+                        Arrangement.End ->
+                            constraints.maxWidth - titlePlaceable.width - actionIconsPlaceable.width
+                        // Arrangement.Start.
+                        // An TopAppBarTitleInset will make sure the title is offset in case the
+                        // navigation icon is missing.
+                        else -> max(TopAppBarTitleInset.roundToPx(), navigationIconPlaceable.width)
+                    },
+                y =
+                    when (titleVerticalArrangement) {
+                        Arrangement.Center -> (layoutHeight - titlePlaceable.height) / 2
+                        // Apply bottom padding from the title's baseline only when the Arrangement is
+                        // "Bottom".
+                        Arrangement.Bottom ->
+                            if (titleBottomPadding == 0) {
+                                layoutHeight - titlePlaceable.height
+                            } else {
+                                layoutHeight - titlePlaceable.height -
+                                    max(
+                                        0,
+                                        titleBottomPadding - titlePlaceable.height + titleBaseline,
+                                    )
+                            }
+                        // Arrangement.Top
+                        else -> 0
+                    },
             )
 
             // Action icons
             actionIconsPlaceable.placeRelative(
                 x = constraints.maxWidth - actionIconsPlaceable.width,
-                y = (layoutHeight - actionIconsPlaceable.height) / 2
+                y = (layoutHeight - actionIconsPlaceable.height) / 2,
             )
         }
     }
 }
 
-//internal val TopTitleAlphaEasing = CubicBezierEasing(.8f, 0f, .8f, .15f)
+// internal val TopTitleAlphaEasing = CubicBezierEasing(.8f, 0f, .8f, .15f)
 
 private val TopAppBarHorizontalPadding = 4.dp
 private val TopAppBarHeight = 44.dp
-
 
 // A title inset when the App-Bar is a Medium or Large one. Also used to size a spacer when the
 // navigation icon is missing.
@@ -749,16 +757,15 @@ private val TopAppBarTitleInset = 16.dp - TopAppBarHorizontalPadding
 
 @Immutable
 object CupertinoTopAppBarDefaults {
-
     /**
      * Default insets to be used and consumed by the top app bars
      */
     val windowInsets: WindowInsets
+        //        @ReadOnlyComposable
         @Composable
-//        @ReadOnlyComposable
-        get() = WindowInsets.systemBars
-            .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
-
+        get() =
+            WindowInsets.systemBars
+                .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
 
     @Composable
     fun divider() {
@@ -797,7 +804,6 @@ object CupertinoTopAppBarDefaults {
             scrolledContainerColor,
             navigationIconContentColor,
             titleContentColor,
-            actionIconContentColor
+            actionIconContentColor,
         )
-
 }

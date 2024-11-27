@@ -34,7 +34,7 @@ internal actual fun defaultLocale(): CalendarLocale = Locale.current
 
 internal actual fun currentLocale(): CalendarLocale = Locale.current
 
-internal actual object PlatformDateFormat  {
+internal actual object PlatformDateFormat {
     actual val firstDayOfWeek: Int
         get() = firstDayOfWeek()
 
@@ -45,39 +45,196 @@ internal actual object PlatformDateFormat  {
 
     private val firstDaysOfWeekByRegionCode: Map<String, Int> by lazy {
         listOf(
-            7 to listOf("TH", "ET", "SG", "JM", "BT", "IN", "US", "MO", "KE", "DO", "AU", "IL", "AS", "TW", "MZ", "MM", "CN", "PR", "PK", "BD", "NP", "HN", "BR", "HK", "TT", "ZA", "VE", "MT", "PH", "PE", "ID", "DM", "WS", "ZW", "UM", "LA", "BZ", "JP", "SV", "SA", "CO", "GT", "BW", "KR", "PA", "YE", "BS", "MX", "MH", "GU", "PY", "AG", "CA", "KH", "PT", "VI", "NI"),
-            6 to listOf("EG", "AF", "SY", "IR", "OM", "IQ", "DZ", "DJ", "AE", "SD", "KW", "JO", "BH", "QA", "LY")
+            7 to
+                listOf(
+                    "TH",
+                    "ET",
+                    "SG",
+                    "JM",
+                    "BT",
+                    "IN",
+                    "US",
+                    "MO",
+                    "KE",
+                    "DO",
+                    "AU",
+                    "IL",
+                    "AS",
+                    "TW",
+                    "MZ",
+                    "MM",
+                    "CN",
+                    "PR",
+                    "PK",
+                    "BD",
+                    "NP",
+                    "HN",
+                    "BR",
+                    "HK",
+                    "TT",
+                    "ZA",
+                    "VE",
+                    "MT",
+                    "PH",
+                    "PE",
+                    "ID",
+                    "DM",
+                    "WS",
+                    "ZW",
+                    "UM",
+                    "LA",
+                    "BZ",
+                    "JP",
+                    "SV",
+                    "SA",
+                    "CO",
+                    "GT",
+                    "BW",
+                    "KR",
+                    "PA",
+                    "YE",
+                    "BS",
+                    "MX",
+                    "MH",
+                    "GU",
+                    "PY",
+                    "AG",
+                    "CA",
+                    "KH",
+                    "PT",
+                    "VI",
+                    "NI",
+                ),
+            6 to listOf("EG", "AF", "SY", "IR", "OM", "IQ", "DZ", "DJ", "AE", "SD", "KW", "JO", "BH", "QA", "LY"),
         ).map { (day, tags) -> tags.map { it to day } }.flatten().toMap()
     }
 
     private val regionsWith12HourFormat by lazy {
-        listOf("AE", "AG", "AL", "AS", "AU", "BB", "BD", "BH", "BM", "BN", "BS", "BT", "CA", "CN", "CO", "CY", "DJ", "DM", "DO", "DZ", "EG", "EH", "ER", "ET", "FJ", "FM", "GD", "GH", "GM", "GR", "GU", "GY", "HK", "IN", "IQ", "JM", "JO", "KH", "KI", "KN", "KP", "KR", "KW", "KY", "LB", "LC", "LR", "LS", "LY", "MH", "MO", "MP", "MR", "MW", "MY", "NA", "NZ", "OM", "PA", "PG", "PH", "PK", "PR", "PS", "PW", "QA", "SA", "SB", "SD", "SG", "SL", "SO", "SS", "SY", "SZ", "TC", "TD", "TN", "TO", "TT", "TW", "UM", "US", "VC", "VE", "VG", "VI", "VU", "WS", "YE", "ZM")
+        listOf(
+            "AE",
+            "AG",
+            "AL",
+            "AS",
+            "AU",
+            "BB",
+            "BD",
+            "BH",
+            "BM",
+            "BN",
+            "BS",
+            "BT",
+            "CA",
+            "CN",
+            "CO",
+            "CY",
+            "DJ",
+            "DM",
+            "DO",
+            "DZ",
+            "EG",
+            "EH",
+            "ER",
+            "ET",
+            "FJ",
+            "FM",
+            "GD",
+            "GH",
+            "GM",
+            "GR",
+            "GU",
+            "GY",
+            "HK",
+            "IN",
+            "IQ",
+            "JM",
+            "JO",
+            "KH",
+            "KI",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "LB",
+            "LC",
+            "LR",
+            "LS",
+            "LY",
+            "MH",
+            "MO",
+            "MP",
+            "MR",
+            "MW",
+            "MY",
+            "NA",
+            "NZ",
+            "OM",
+            "PA",
+            "PG",
+            "PH",
+            "PK",
+            "PR",
+            "PS",
+            "PW",
+            "QA",
+            "SA",
+            "SB",
+            "SD",
+            "SG",
+            "SL",
+            "SO",
+            "SS",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TN",
+            "TO",
+            "TT",
+            "TW",
+            "UM",
+            "US",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VU",
+            "WS",
+            "YE",
+            "ZM",
+        )
     }
 
-    //TODO: replace formatting with kotlinx datetime when supported (see https://github.com/Kotlin/kotlinx-datetime/pull/251)
+    // TODO: replace formatting with kotlinx datetime when supported (see https://github.com/Kotlin/kotlinx-datetime/pull/251)
     actual fun formatWithPattern(
         utcTimeMillis: Long,
         pattern: String,
-        locale: CalendarLocale
+        locale: CalendarLocale,
     ): String {
-
-        val date = Instant
-            .fromEpochMilliseconds(utcTimeMillis)
-            .toLocalDateTime(TimeZone.UTC)
+        val date =
+            Instant
+                .fromEpochMilliseconds(utcTimeMillis)
+                .toLocalDateTime(TimeZone.UTC)
 
         val jsDate = Date(utcTimeMillis.toDouble())
 
-        val monthShort = jsDate.toLocaleDateString(
-            locales = locale.toLanguageTag(),
-            options = dateLocaleOptions {
-                month = SHORT
-            })
+        val monthShort =
+            jsDate.toLocaleDateString(
+                locales = locale.toLanguageTag(),
+                options =
+                    dateLocaleOptions {
+                        month = SHORT
+                    },
+            )
 
-        val monthLong = jsDate.toLocaleDateString(
-            locales = locale.toLanguageTag(),
-            options = dateLocaleOptions {
-                month = LONG
-            })
+        val monthLong =
+            jsDate.toLocaleDateString(
+                locales = locale.toLanguageTag(),
+                options =
+                    dateLocaleOptions {
+                        month = LONG
+                    },
+            )
 
         return pattern
             .replace("yyyy", date.year.toString(), ignoreCase = true)
@@ -96,124 +253,137 @@ internal actual object PlatformDateFormat  {
             .replace("s", date.second.toString(), ignoreCase = true)
     }
 
-
     actual fun formatWithSkeleton(
         utcTimeMillis: Long,
         skeleton: String,
-        locale: CalendarLocale
+        locale: CalendarLocale,
     ): String {
         val jsDate = Date(utcTimeMillis.toDouble())
 
         return jsDate.toLocaleDateString(
             locales = locale.toLanguageTag(),
-            options = dateLocaleOptions {
-                when {
-                    skeleton.contains("y", true) -> NUMERIC
-                    else -> null
-                }?.also { year = it }
+            options =
+                dateLocaleOptions {
+                    when {
+                        skeleton.contains("y", true) -> NUMERIC
+                        else -> null
+                    }?.also { year = it }
 
-                when {
-                    skeleton.contains("MMMM", true) -> LONG
-                    skeleton.contains("MMM", true) -> SHORT
-                    skeleton.contains("M", true) -> NUMERIC
-                    else -> null
-                }?.also { month = it }
+                    when {
+                        skeleton.contains("MMMM", true) -> LONG
+                        skeleton.contains("MMM", true) -> SHORT
+                        skeleton.contains("M", true) -> NUMERIC
+                        else -> null
+                    }?.also { month = it }
 
-                when {
-                    skeleton.contains("eeee", true) -> LONG
-                    skeleton.contains("eee", true) -> SHORT
-                    skeleton.contains("e", true) -> NARROW
-                    else -> null
-                }?.also { weekday = it }
+                    when {
+                        skeleton.contains("eeee", true) -> LONG
+                        skeleton.contains("eee", true) -> SHORT
+                        skeleton.contains("e", true) -> NARROW
+                        else -> null
+                    }?.also { weekday = it }
 
-                when {
-                    skeleton.contains("d", true) -> NUMERIC
-                    else -> null
-                }?.also { day = it }
+                    when {
+                        skeleton.contains("d", true) -> NUMERIC
+                        else -> null
+                    }?.also { day = it }
 
-                when {
-                    skeleton.contains("h", true) -> NUMERIC
-                    else -> null
-                }?.also { hour = it }
+                    when {
+                        skeleton.contains("h", true) -> NUMERIC
+                        else -> null
+                    }?.also { hour = it }
 
-                when {
-                    skeleton.contains("i", true) -> NUMERIC
-                    else -> null
-                }?.also { minute = it }
+                    when {
+                        skeleton.contains("i", true) -> NUMERIC
+                        else -> null
+                    }?.also { minute = it }
 
-                when {
-                    skeleton.contains("s", true) -> NUMERIC
-                    else -> null
-                }?.also { second = it }
-            }
+                    when {
+                        skeleton.contains("s", true) -> NUMERIC
+                        else -> null
+                    }?.also { second = it }
+                },
         )
     }
 
     actual fun parse(
         date: String,
-        pattern: String
+        pattern: String,
     ): CalendarDate? {
-        val year = parseSegment(date, pattern, "yyyy")
-            ?: return null
+        val year =
+            parseSegment(date, pattern, "yyyy")
+                ?: return null
 
-        val month = parseSegment(date, pattern, "mm")
-            ?: parseSegment(date, pattern, "m")
-            ?: return null
+        val month =
+            parseSegment(date, pattern, "mm")
+                ?: parseSegment(date, pattern, "m")
+                ?: return null
 
-        val day = parseSegment(date, pattern, "dd")
-            ?: parseSegment(date, pattern, "d")
-            ?: 1
+        val day =
+            parseSegment(date, pattern, "dd")
+                ?: parseSegment(date, pattern, "d")
+                ?: 1
 
         return LocalDate(
-            year, month, day
+            year,
+            month,
+            day,
         ).atTime(Midnight)
             .toInstant(TimeZone.UTC)
             .toCalendarDate(TimeZone.UTC)
     }
 
-    private fun parseSegment(date: String, pattern: String, segmentPattern: String): Int? {
-        val index = pattern
-            .indexOf(segmentPattern, ignoreCase = true)
-            .takeIf { it >= 0 } ?: return null
+    private fun parseSegment(
+        date: String,
+        pattern: String,
+        segmentPattern: String,
+    ): Int? {
+        val index =
+            pattern
+                .indexOf(segmentPattern, ignoreCase = true)
+                .takeIf { it >= 0 } ?: return null
 
-        return date.substring(index, index + segmentPattern.length)
+        return date
+            .substring(index, index + segmentPattern.length)
             .toIntOrNull()
     }
 
-    actual fun getDateInputFormat(
-        locale: CalendarLocale
-    ): DateInputFormat {
-
+    actual fun getDateInputFormat(locale: CalendarLocale): DateInputFormat {
         val date = Date(year = 2000, month = 10, day = 23)
 
         val shortDate = date.toLocaleDateString(locale.toLanguageTag())
 
-        val pattern = shortDate
-            .replace("2000", "yyyy")
-            .replace("11", "MM") //10 -> 11 not an error. month is index
-            .replace("23", "dd")
+        val pattern =
+            shortDate
+                .replace("2000", "yyyy")
+                .replace("11", "MM") // 10 -> 11 not an error. month is index
+                .replace("23", "dd")
 
         return datePatternAsInputFormat(pattern)
     }
 
-    actual fun weekdayNames(locale: CalendarLocale): List<Pair<String, String>>  {
+    actual fun weekdayNames(locale: CalendarLocale): List<Pair<String, String>> {
         val now = Date.now()
 
-        val week = List(DaysInWeek) {
-            Date(now + MillisecondsIn24Hours * it)
-        }.sortedBy { it.getDay() } // sunday to saturday
+        val week =
+            List(DaysInWeek) {
+                Date(now + MillisecondsIn24Hours * it)
+            }.sortedBy { it.getDay() } // sunday to saturday
 
         val mondayToSunday = week.drop(1) + week.first()
 
-        val longAndShortWeekDays = listOf(LONG, NARROW).map { format ->
-            mondayToSunday.map {
-                it.toLocaleDateString(
-                    locales = locale.toLanguageTag(),
-                    options = dateLocaleOptions {
-                        weekday = format
-                    })
+        val longAndShortWeekDays =
+            listOf(LONG, NARROW).map { format ->
+                mondayToSunday.map {
+                    it.toLocaleDateString(
+                        locales = locale.toLanguageTag(),
+                        options =
+                            dateLocaleOptions {
+                                weekday = format
+                            },
+                    )
+                }
             }
-        }
         return longAndShortWeekDays[0].zip(longAndShortWeekDays[1])
     }
 
@@ -229,15 +399,9 @@ internal actual object PlatformDateFormat  {
         }
     }
 
-    private fun fallbackFirstDayOfWeek(
-        locale: CalendarLocale
-    ) : Int {
-        return firstDaysOfWeekByRegionCode[locale.region.uppercase()] ?: 1
-    }
+    private fun fallbackFirstDayOfWeek(locale: CalendarLocale): Int = firstDaysOfWeekByRegionCode[locale.region.uppercase()] ?: 1
 
-    actual fun is24HourFormat(
-        locale: CalendarLocale
-    ): Boolean {
+    actual fun is24HourFormat(locale: CalendarLocale): Boolean {
         val localeTag = locale.toLanguageTag()
 
         return try {
@@ -250,7 +414,7 @@ internal actual object PlatformDateFormat  {
         }
     }
 
-    private fun fallbackIs24HourFormat(locale: CalendarLocale) : Boolean {
+    private fun fallbackIs24HourFormat(locale: CalendarLocale): Boolean {
         val region = locale.region.uppercase()
         return regionsWith12HourFormat.binarySearch {
             it.compareTo(region)
@@ -258,40 +422,41 @@ internal actual object PlatformDateFormat  {
     }
 
     actual fun monthsNames(locale: CalendarLocale): List<String> {
-        val year = List(12) {
-            Date(1970, it, 1)
-        } // sunday to saturday
-
+        val year =
+            List(12) {
+                Date(1970, it, 1)
+            } // sunday to saturday
 
         return year.map {
             it.toLocaleDateString(
                 locales = locale.toLanguageTag(),
-                options = dateLocaleOptions {
-                    month = LONG
-                })
+                options =
+                    dateLocaleOptions {
+                        month = LONG
+                    },
+            )
         }
     }
 }
 
-private fun Int.toStringWithLeadingZero(): String{
-    return if (this >= 10) toString() else "0$this"
-}
+private fun Int.toStringWithLeadingZero(): String = if (this >= 10) toString() else "0$this"
 
 @Suppress("UnsafeCastFromDynamic")
 // handle an exception in js because it's not propagated to wasm
 internal fun getFirstDayOfWeek(locale: String): Int =
-    js("""{ try {
+    js(
+        """{ try {
            return new Intl.Locale(locale).weekInfo.firstDay;
         } catch (error) {
            return -1;
-      }}"""
+      }}""",
     )
-
 
 @Suppress("UnsafeCastFromDynamic")
 // returns 1 if true, 0 if false, or -1 if failed to detect
 internal fun getIs24HourFormat(localeTag: String): Int =
-    js("""{
+    js(
+        """{
             var locale = new Intl.Locale(localeTag);
             // Check for the hourCycles property first
             if (locale.hourCycles) {
@@ -303,9 +468,8 @@ internal fun getIs24HourFormat(localeTag: String): Int =
                 return locale.hourCycle === 'h23' || locale.hourCycle === 'h24' ? 1 : 0;
             }
             return -1;
-        }"""
+        }""",
     )
-
 
 /**
  * This is an incomplete declaration of js Date:
@@ -318,8 +482,13 @@ internal fun getIs24HourFormat(localeTag: String): Int =
 private external class Date() {
     constructor(milliseconds: Double)
     constructor(year: Int, month: Int, day: Int)
+
     fun getDay(): Int
-    fun toLocaleDateString(locales: String, options: LocaleOptions = definedExternally): String
+
+    fun toLocaleDateString(
+        locales: String,
+        options: LocaleOptions = definedExternally,
+    ): String
 
     companion object {
         fun now(): Double

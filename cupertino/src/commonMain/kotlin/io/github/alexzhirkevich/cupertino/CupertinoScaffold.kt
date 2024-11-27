@@ -81,35 +81,37 @@ fun CupertinoScaffold(
     appBarsBlurAlpha: Float = CupertinoScaffoldDefaults.AppBarsBlurAlpha,
     appBarsBlurRadius: Dp = CupertinoScaffoldDefaults.AppBarsBlurRadius,
     hasNavigationTitle: Boolean = false,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
-
-    val scaffoldCoordinates = remember {
-        mutableStateOf<LayoutCoordinates?>(null)
-    }
-    val topBarHeight = remember {
-        mutableStateOf(0f)
-    }
+    val scaffoldCoordinates =
+        remember {
+            mutableStateOf<LayoutCoordinates?>(null)
+        }
+    val topBarHeight =
+        remember {
+            mutableStateOf(0f)
+        }
 
     CupertinoSurface(
-        modifier = modifier.onGloballyPositioned {
-            scaffoldCoordinates.value = it
-        },
+        modifier =
+            modifier.onGloballyPositioned {
+                scaffoldCoordinates.value = it
+            },
         color = containerColor,
-        contentColor = contentColor
+        contentColor = contentColor,
     ) {
-
         val appbarState = remember { AppBarsState() }
 
         CompositionLocalProvider(
-            LocalNavigationTitleVisible provides rememberSaveable {
-                mutableStateOf(
-                    hasNavigationTitle
-                )
-            },
+            LocalNavigationTitleVisible provides
+                rememberSaveable {
+                    mutableStateOf(
+                        hasNavigationTitle,
+                    )
+                },
             LocalScaffoldCoordinates provides scaffoldCoordinates,
             LocalTopBarHeight provides topBarHeight,
-            LocalScaffoldInsets provides contentWindowInsets
+            LocalScaffoldInsets provides contentWindowInsets,
         ) {
             ScaffoldLayout(
                 topBarHeightLocal = topBarHeight,
@@ -118,14 +120,14 @@ fun CupertinoScaffold(
                     CompositionLocalProvider(
                         LocalContainerColor provides Color.Transparent,
                         LocalAppBarsState provides appbarState,
-                        content = topBar
+                        content = topBar,
                     )
                 },
                 bottomBar = {
                     CompositionLocalProvider(
                         LocalContainerColor provides Color.Transparent,
                         LocalAppBarsState provides appbarState,
-                        content = bottomBar
+                        content = bottomBar,
                     )
                 },
                 content = content,
@@ -134,12 +136,11 @@ fun CupertinoScaffold(
                 fab = floatingActionButton,
                 appBarsAlpha = appBarsBlurAlpha,
                 appBarsBlurRadius = appBarsBlurRadius,
-                appBarsState = appbarState
+                appBarsState = appbarState,
             )
         }
     }
 }
-
 
 @Composable
 private fun ScaffoldLayout(
@@ -153,7 +154,7 @@ private fun ScaffoldLayout(
     contentWindowInsets: WindowInsets,
     appBarsAlpha: Float,
     appBarsBlurRadius: Dp,
-    bottomBar: @Composable () -> Unit
+    bottomBar: @Composable () -> Unit,
 ) {
     SubcomposeLayout { constraints ->
         val layoutWidth = constraints.maxWidth
@@ -162,27 +163,31 @@ private fun ScaffoldLayout(
         val looseConstraints = constraints.copy(minWidth = 0, minHeight = 0)
 
         layout(layoutWidth, layoutHeight) {
-            val topBarPlaceables = subcompose(ScaffoldLayoutContent.TopBar, topBar).fastMap {
-                it.measure(looseConstraints)
-            }
+            val topBarPlaceables =
+                subcompose(ScaffoldLayoutContent.TopBar, topBar).fastMap {
+                    it.measure(looseConstraints)
+                }
 
             val topBarHeight = topBarPlaceables.fastMaxOfOrNull { it.height } ?: 0
             topBarHeightLocal.value = topBarHeight.toFloat()
-            val snackbarPlaceables = subcompose(ScaffoldLayoutContent.Snackbar, snackbar).fastMap {
-                // respect only bottom and horizontal for snackbar and fab
-                val leftInset = contentWindowInsets
-                    .getLeft(this@SubcomposeLayout, layoutDirection)
-                val rightInset = contentWindowInsets
-                    .getRight(this@SubcomposeLayout, layoutDirection)
-                val bottomInset = contentWindowInsets.getBottom(this@SubcomposeLayout)
-                // offset the snackbar constraints by the insets values
-                it.measure(
-                    looseConstraints.offset(
-                        -leftInset - rightInset,
-                        -bottomInset
+            val snackbarPlaceables =
+                subcompose(ScaffoldLayoutContent.Snackbar, snackbar).fastMap {
+                    // respect only bottom and horizontal for snackbar and fab
+                    val leftInset =
+                        contentWindowInsets
+                            .getLeft(this@SubcomposeLayout, layoutDirection)
+                    val rightInset =
+                        contentWindowInsets
+                            .getRight(this@SubcomposeLayout, layoutDirection)
+                    val bottomInset = contentWindowInsets.getBottom(this@SubcomposeLayout)
+                    // offset the snackbar constraints by the insets values
+                    it.measure(
+                        looseConstraints.offset(
+                            -leftInset - rightInset,
+                            -bottomInset,
+                        ),
                     )
-                )
-            }
+                }
 
             val snackbarHeight = snackbarPlaceables.fastMaxOfOrNull { it.height } ?: 0
             val snackbarWidth = snackbarPlaceables.fastMaxOfOrNull { it.width } ?: 0
@@ -195,152 +200,183 @@ private fun ScaffoldLayout(
                     val rightInset =
                         contentWindowInsets.getRight(this@SubcomposeLayout, layoutDirection)
                     val bottomInset = contentWindowInsets.getBottom(this@SubcomposeLayout)
-                    measurable.measure(
-                        looseConstraints.offset(
-                            -leftInset - rightInset,
-                            -bottomInset
-                        )
-                    ).takeIf { it.height != 0 && it.width != 0 }
+                    measurable
+                        .measure(
+                            looseConstraints.offset(
+                                -leftInset - rightInset,
+                                -bottomInset,
+                            ),
+                        ).takeIf { it.height != 0 && it.width != 0 }
                 }
 
-            val fabPlacement = if (fabPlaceables.isNotEmpty()) {
-                val fabWidth = fabPlaceables.fastMaxOfOrNull { it.width } ?: 0
-                val fabHeight = fabPlaceables.fastMaxOfOrNull { it.height } ?: 0
-                // FAB distance from the left of the layout, taking into account LTR / RTL
-                val fabLeftOffset = if (fabPosition == FabPosition.End) {
-                    if (layoutDirection == LayoutDirection.Ltr) {
-                        layoutWidth - FabSpacing.roundToPx() - fabWidth
-                    } else {
-                        FabSpacing.roundToPx()
-                    }
+            val fabPlacement =
+                if (fabPlaceables.isNotEmpty()) {
+                    val fabWidth = fabPlaceables.fastMaxOfOrNull { it.width } ?: 0
+                    val fabHeight = fabPlaceables.fastMaxOfOrNull { it.height } ?: 0
+                    // FAB distance from the left of the layout, taking into account LTR / RTL
+                    val fabLeftOffset =
+                        if (fabPosition == FabPosition.End) {
+                            if (layoutDirection == LayoutDirection.Ltr) {
+                                layoutWidth - FabSpacing.roundToPx() - fabWidth
+                            } else {
+                                FabSpacing.roundToPx()
+                            }
+                        } else {
+                            (layoutWidth - fabWidth) / 2
+                        }
+
+                    FabPlacement(
+                        left = fabLeftOffset,
+                        width = fabWidth,
+                        height = fabHeight,
+                    )
                 } else {
-                    (layoutWidth - fabWidth) / 2
+                    null
                 }
 
-                FabPlacement(
-                    left = fabLeftOffset,
-                    width = fabWidth,
-                    height = fabHeight
-                )
-            } else {
-                null
-            }
-
-            val bottomBarPlaceables = subcompose(ScaffoldLayoutContent.BottomBar) {
-                CompositionLocalProvider(
-                    LocalFabPlacement provides fabPlacement,
-                    content = bottomBar
-                )
-            }.fastMap { it.measure(looseConstraints) }
+            val bottomBarPlaceables =
+                subcompose(ScaffoldLayoutContent.BottomBar) {
+                    CompositionLocalProvider(
+                        LocalFabPlacement provides fabPlacement,
+                        content = bottomBar,
+                    )
+                }.fastMap { it.measure(looseConstraints) }
 
             val bottomBarHeight = bottomBarPlaceables.fastMaxOfOrNull { it.height }
-            val fabOffsetFromBottom = fabPlacement?.let {
-                if (bottomBarHeight == null) {
-                    it.height + FabSpacing.roundToPx() +
+            val fabOffsetFromBottom =
+                fabPlacement?.let {
+                    if (bottomBarHeight == null) {
+                        it.height + FabSpacing.roundToPx() +
                             contentWindowInsets.getBottom(this@SubcomposeLayout)
+                    } else {
+                        // Total height is the bottom bar height + the FAB height + the padding
+                        // between the FAB and bottom bar
+                        bottomBarHeight + it.height + FabSpacing.roundToPx()
+                    }
+                }
+
+            val snackbarOffsetFromBottom =
+                if (snackbarHeight != 0) {
+                    snackbarHeight +
+                        (
+                            fabOffsetFromBottom ?: bottomBarHeight
+                                ?: contentWindowInsets.getBottom(this@SubcomposeLayout)
+                        )
                 } else {
-                    // Total height is the bottom bar height + the FAB height + the padding
-                    // between the FAB and bottom bar
-                    bottomBarHeight + it.height + FabSpacing.roundToPx()
-                }
-            }
-
-            val snackbarOffsetFromBottom = if (snackbarHeight != 0) {
-                snackbarHeight +
-                        (fabOffsetFromBottom ?: bottomBarHeight
-                        ?: contentWindowInsets.getBottom(this@SubcomposeLayout))
-            } else {
-                0
-            }
-
-            val bodyContentPlaceables = subcompose(ScaffoldLayoutContent.MainContent) {
-                val insets = contentWindowInsets.asPaddingValues(this@SubcomposeLayout)
-                val innerPadding = PaddingValues(
-                    top =
-                    if (topBarPlaceables.isEmpty()) {
-                        insets.calculateTopPadding()
-                    } else {
-                        topBarHeight.toDp()
-                    },
-                    bottom =
-                    if (bottomBarPlaceables.isEmpty() || bottomBarHeight == null) {
-                        insets.calculateBottomPadding()
-                    } else {
-                        bottomBarHeight.toDp()
-                    },
-                    start = insets.calculateStartPadding((this@SubcomposeLayout).layoutDirection),
-                    end = insets.calculateEndPadding((this@SubcomposeLayout).layoutDirection)
-                )
-
-                val isTopBarTransparent =
-                    appBarsState.isTopBarTransparent.value
-
-                val isBottomBarTransparent =
-                    appBarsState.isBottomBarTransparent.value
-
-                val topBarColor = appBarsState.topBarColor.value.takeIf {
-                    it.isSpecified
+                    0
                 }
 
-                val bottomBarColor = appBarsState.bottomBarColor.value.takeIf {
-                    it.isSpecified
-                }
+            val bodyContentPlaceables =
+                subcompose(ScaffoldLayoutContent.MainContent) {
+                    val insets = contentWindowInsets.asPaddingValues(this@SubcomposeLayout)
+                    val innerPadding =
+                        PaddingValues(
+                            top =
+                                if (topBarPlaceables.isEmpty()) {
+                                    insets.calculateTopPadding()
+                                } else {
+                                    topBarHeight.toDp()
+                                },
+                            bottom =
+                                if (bottomBarPlaceables.isEmpty() || bottomBarHeight == null) {
+                                    insets.calculateBottomPadding()
+                                } else {
+                                    bottomBarHeight.toDp()
+                                },
+                            start = insets.calculateStartPadding((this@SubcomposeLayout).layoutDirection),
+                            end = insets.calculateEndPadding((this@SubcomposeLayout).layoutDirection),
+                        )
 
-                val topColor = if (topBarColor != null) {
-                    if (isTopBarTransparent) topBarColor.copy(alpha = 0f)
-                    else topBarColor.copy(alpha = appBarsAlpha)
+                    val isTopBarTransparent =
+                        appBarsState.isTopBarTransparent.value
 
-                } else null
+                    val isBottomBarTransparent =
+                        appBarsState.isBottomBarTransparent.value
 
-                val bottomColor = if (bottomBarColor != null) {
-                    if (isBottomBarTransparent)
-                        bottomBarColor.copy(alpha = 0f)
-                    else bottomBarColor.copy(alpha = appBarsAlpha)
-                } else null
+                    val topBarColor =
+                        appBarsState.topBarColor.value.takeIf {
+                            it.isSpecified
+                        }
 
-                val topModifier = if (
-                    appBarsAlpha < Float.MIN_VALUE ||
-                    isTopBarTransparent ||
-                    topBarColor == null ||
-                    topColor == null
-                ) Modifier
-                else Modifier.haze(
-                    Rect(
-                        left = 0f,
-                        top = 0f,
-                        right = layoutWidth.toFloat(),
-                        bottom = topBarHeight.toFloat()
-                    ),
-                    backgroundColor = topBarColor,
-                    tint = topColor,
-                    blurRadius = appBarsBlurRadius
-                )
+                    val bottomBarColor =
+                        appBarsState.bottomBarColor.value.takeIf {
+                            it.isSpecified
+                        }
 
-                val bottomModifier = if (
-                    appBarsAlpha < Float.MIN_VALUE ||
-                    isBottomBarTransparent ||
-                    bottomBarColor == null ||
-                    bottomColor == null
-                ) Modifier
-                else Modifier.haze(
-                    Rect(
-                        left = 0f,
-                        top = layoutHeight - (bottomBarHeight ?: 0f).toFloat(),
-                        right = layoutWidth.toFloat(),
-                        bottom = layoutHeight.toFloat()
-                    ),
-                    backgroundColor = bottomBarColor,
-                    tint = bottomColor,
-                    blurRadius = appBarsBlurRadius,
-                )
+                    val topColor =
+                        if (topBarColor != null) {
+                            if (isTopBarTransparent) {
+                                topBarColor.copy(alpha = 0f)
+                            } else {
+                                topBarColor.copy(alpha = appBarsAlpha)
+                            }
+                        } else {
+                            null
+                        }
 
-                Box(
-                    modifier = topModifier
-                        .then(bottomModifier)
-                ) {
-                    content(innerPadding)
-                }
-            }.fastMap { it.measure(looseConstraints) }
+                    val bottomColor =
+                        if (bottomBarColor != null) {
+                            if (isBottomBarTransparent) {
+                                bottomBarColor.copy(alpha = 0f)
+                            } else {
+                                bottomBarColor.copy(alpha = appBarsAlpha)
+                            }
+                        } else {
+                            null
+                        }
+
+                    val topModifier =
+                        if (
+                            appBarsAlpha < Float.MIN_VALUE ||
+                            isTopBarTransparent ||
+                            topBarColor == null ||
+                            topColor == null
+                        ) {
+                            Modifier
+                        } else {
+                            Modifier.haze(
+                                Rect(
+                                    left = 0f,
+                                    top = 0f,
+                                    right = layoutWidth.toFloat(),
+                                    bottom = topBarHeight.toFloat(),
+                                ),
+                                backgroundColor = topBarColor,
+                                tint = topColor,
+                                blurRadius = appBarsBlurRadius,
+                            )
+                        }
+
+                    val bottomModifier =
+                        if (
+                            appBarsAlpha < Float.MIN_VALUE ||
+                            isBottomBarTransparent ||
+                            bottomBarColor == null ||
+                            bottomColor == null
+                        ) {
+                            Modifier
+                        } else {
+                            Modifier.haze(
+                                Rect(
+                                    left = 0f,
+                                    top = layoutHeight - (bottomBarHeight ?: 0f).toFloat(),
+                                    right = layoutWidth.toFloat(),
+                                    bottom = layoutHeight.toFloat(),
+                                ),
+                                backgroundColor = bottomBarColor,
+                                tint = bottomColor,
+                                blurRadius = appBarsBlurRadius,
+                            )
+                        }
+
+                    Box(
+                        modifier =
+                            topModifier
+                                .then(bottomModifier),
+                    ) {
+                        content(innerPadding)
+                    }
+                }.fastMap { it.measure(looseConstraints) }
 
             // Placing to control drawing order to match default elevation of each placeable
 
@@ -353,8 +389,8 @@ private fun ScaffoldLayout(
             snackbarPlaceables.fastForEach {
                 it.place(
                     (layoutWidth - snackbarWidth) / 2 +
-                            contentWindowInsets.getLeft(this@SubcomposeLayout, layoutDirection),
-                    layoutHeight - snackbarOffsetFromBottom
+                        contentWindowInsets.getLeft(this@SubcomposeLayout, layoutDirection),
+                    layoutHeight - snackbarOffsetFromBottom,
                 )
             }
             // The bottom bar is always at the bottom of the layout
@@ -376,12 +412,19 @@ private fun ScaffoldLayout(
  */
 @Immutable
 object CupertinoScaffoldDefaults {
+    val AppBarsBlurAlpha =
+        if (Accessibility.isReduceTransparencyEnabled) {
+            .85f
+        } else {
+            .5f
+        }
 
-    val AppBarsBlurAlpha = if (Accessibility.isReduceTransparencyEnabled)
-        .85f else .5f
-
-    val AppBarsBlurRadius = if (Accessibility.isReduceTransparencyEnabled)
-        50.dp else 40.dp
+    val AppBarsBlurRadius =
+        if (Accessibility.isReduceTransparencyEnabled) {
+            50.dp
+        } else {
+            40.dp
+        }
 
     /**
      * Default insets to be used and consumed by the scaffold content slot
@@ -405,7 +448,9 @@ object CupertinoScaffoldDefaults {
  * The possible positions for a [FloatingActionButton] attached to a [Scaffold].
  */
 @kotlin.jvm.JvmInline
-value class FabPosition internal constructor(@Suppress("unused") private val value: Int) {
+value class FabPosition internal constructor(
+    @Suppress("unused") private val value: Int,
+) {
     companion object {
         /**
          * Position FAB at the bottom of the screen in the center, above the [NavigationBar] (if it
@@ -420,14 +465,12 @@ value class FabPosition internal constructor(@Suppress("unused") private val val
         val End = FabPosition(1)
     }
 
-    override fun toString(): String {
-        return when (this) {
+    override fun toString(): String =
+        when (this) {
             Center -> "FabPosition.Center"
             else -> "FabPosition.End"
         }
-    }
 }
-
 
 /**
  * Placement information for a [FloatingActionButton] inside a [Scaffold].
@@ -441,26 +484,28 @@ value class FabPosition internal constructor(@Suppress("unused") private val val
 internal class FabPlacement(
     val left: Int,
     val width: Int,
-    val height: Int
+    val height: Int,
 )
-
 
 /**
  * CompositionLocal containing a [FabPlacement] that is used to calculate the FAB bottom offset.
  */
 internal val LocalFabPlacement = staticCompositionLocalOf<FabPlacement?> { null }
 
-internal val LocalScaffoldInsets = compositionLocalOf<WindowInsets?> {
-    null
-}
+internal val LocalScaffoldInsets =
+    compositionLocalOf<WindowInsets?> {
+        null
+    }
 
-internal val LocalScaffoldCoordinates = compositionLocalOf<State<LayoutCoordinates?>> {
-    mutableStateOf(null)
-}
+internal val LocalScaffoldCoordinates =
+    compositionLocalOf<State<LayoutCoordinates?>> {
+        mutableStateOf(null)
+    }
 
-internal val LocalTopBarHeight = compositionLocalOf<State<Float?>> {
-    mutableStateOf(null)
-}
+internal val LocalTopBarHeight =
+    compositionLocalOf<State<Float?>> {
+        mutableStateOf(null)
+    }
 
 // FAB spacing above the bottom bar / bottom of the Scaffold
 private val FabSpacing = 16.dp
@@ -471,22 +516,25 @@ internal class AppBarsState(
     val isTopBarTransparent: MutableState<Boolean> = mutableStateOf(true),
     val isBottomBarTransparent: MutableState<Boolean> = mutableStateOf(true),
     val topBarColor: MutableState<Color> = mutableStateOf(Color.Unspecified),
-    val bottomBarColor: MutableState<Color> = mutableStateOf(Color.Unspecified)
+    val bottomBarColor: MutableState<Color> = mutableStateOf(Color.Unspecified),
 )
 
-internal val LocalAppBarsState = compositionLocalOf<AppBarsState?> {
-    null
-}
+internal val LocalAppBarsState =
+    compositionLocalOf<AppBarsState?> {
+        null
+    }
 
-val LocalContainerColor = compositionLocalOf {
-    Color.Unspecified
-}
+val LocalContainerColor =
+    compositionLocalOf {
+        Color.Unspecified
+    }
 
-internal val LocalAppBarsBlurAlpha = compositionLocalOf {
-    CupertinoScaffoldDefaults.AppBarsBlurAlpha
-}
+internal val LocalAppBarsBlurAlpha =
+    compositionLocalOf {
+        CupertinoScaffoldDefaults.AppBarsBlurAlpha
+    }
 
-internal val LocalAppBarsBlurRadius = compositionLocalOf {
-    CupertinoScaffoldDefaults.AppBarsBlurRadius
-
-}
+internal val LocalAppBarsBlurRadius =
+    compositionLocalOf {
+        CupertinoScaffoldDefaults.AppBarsBlurRadius
+    }

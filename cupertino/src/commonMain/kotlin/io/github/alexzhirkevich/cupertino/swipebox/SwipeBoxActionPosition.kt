@@ -9,7 +9,7 @@ import androidx.compose.runtime.compositionLocalOf
  */
 internal enum class CupertinoSwipeActionPosition {
     Start,
-    End
+    End,
 }
 
 internal val LocalSwipeBoxItemFullSwipe = compositionLocalOf { false }
@@ -17,6 +17,7 @@ internal val LocalSwipeBoxItemFullSwipe = compositionLocalOf { false }
 internal val LocalSwipeActionPosition = compositionLocalOf { CupertinoSwipeActionPosition.Start }
 
 @OptIn(ExperimentalFoundationApi::class)
-internal val LocalSwipeBoxState = compositionLocalOf<AnchoredDraggableState<SwipeBoxStates>> {
-    error("No SwipeBoxState provided")
-}
+internal val LocalSwipeBoxState =
+    compositionLocalOf<AnchoredDraggableState<SwipeBoxStates>> {
+        error("No SwipeBoxState provided")
+    }

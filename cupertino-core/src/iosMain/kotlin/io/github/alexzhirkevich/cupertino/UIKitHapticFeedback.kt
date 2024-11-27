@@ -14,7 +14,7 @@ import platform.UIKit.UINotificationFeedbackType
 import platform.UIKit.UISelectionFeedbackGenerator
 
 @Composable
-actual fun rememberCupertinoHapticFeedback() : HapticFeedback {
+actual fun rememberCupertinoHapticFeedback(): HapticFeedback {
     val current = LocalHapticFeedback.current
 
     return remember(current) {
@@ -22,11 +22,9 @@ actual fun rememberCupertinoHapticFeedback() : HapticFeedback {
     }
 }
 
-
 internal class UIKitHapticFeedback(
-    private val delegate : HapticFeedback
+    private val delegate: HapticFeedback,
 ) : HapticFeedback {
-
     private val notificationFeedbackGenerator by lazy {
         UINotificationFeedbackGenerator()
     }
@@ -38,7 +36,6 @@ internal class UIKitHapticFeedback(
     @OptIn(InternalCupertinoApi::class)
     override fun performHapticFeedback(hapticFeedbackType: HapticFeedbackType) {
         when (hapticFeedbackType) {
-
             HapticFeedbackType.LongPress, HapticFeedbackType.TextHandleMove -> {
                 delegate.performHapticFeedback(hapticFeedbackType)
             }
@@ -49,9 +46,10 @@ internal class UIKitHapticFeedback(
 
             CupertinoHapticFeedback.Warning,
             CupertinoHapticFeedback.Success,
-            CupertinoHapticFeedback.Error -> {
+            CupertinoHapticFeedback.Error,
+            -> {
                 notificationFeedbackGenerator.notificationOccurred(
-                    NotificationFeedbackMapping[hapticFeedbackType]!!
+                    NotificationFeedbackMapping[hapticFeedbackType]!!,
                 )
             }
 
@@ -59,9 +57,10 @@ internal class UIKitHapticFeedback(
             CupertinoHapticFeedback.ImpactMedium,
             CupertinoHapticFeedback.ImpactHeavy,
             CupertinoHapticFeedback.ImpactRigid,
-            CupertinoHapticFeedback.ImpactSoft -> {
+            CupertinoHapticFeedback.ImpactSoft,
+            -> {
                 UIImpactFeedbackGenerator(
-                    ImpactFeedbackMapping[hapticFeedbackType]!!
+                    ImpactFeedbackMapping[hapticFeedbackType]!!,
                 ).impactOccurred()
             }
         }

@@ -10,7 +10,6 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 
-
 /**
  * Native children will use UINavigationController on iOS and [Children] on other platforms
  *

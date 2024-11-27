@@ -20,16 +20,15 @@ import com.arkivanov.decompose.ComponentContext
  * limitations under the License.
  */
 
-
 interface SectionsComponent {
     fun onNavigateBack()
 }
 
 class DefaultSectionsComponent(
     context: ComponentContext,
-    private val onNavigateBack : () -> Unit,
-) : SectionsComponent, ComponentContext by context {
-
+    private val onNavigateBack: () -> Unit,
+) : SectionsComponent,
+    ComponentContext by context {
     override fun onNavigateBack() {
         onNavigateBack.invoke()
     }

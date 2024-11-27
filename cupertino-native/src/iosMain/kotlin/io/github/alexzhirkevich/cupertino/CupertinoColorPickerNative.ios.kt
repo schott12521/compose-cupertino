@@ -28,25 +28,25 @@ import platform.darwin.NSObject
 @Composable
 @ExperimentalCupertinoApi
 fun CupertinoColorPickerNative(
-    color : Color,
-    onColorChanged : (Color) -> Unit,
-    onDismissRequest : () -> Unit,
-    supportsAlpha : Boolean = true,
+    color: Color,
+    onColorChanged: (Color) -> Unit,
+    onDismissRequest: () -> Unit,
+    supportsAlpha: Boolean = true,
 ) {
-
     val updatedOnColorChanged by rememberUpdatedState(onColorChanged)
     val updatedOnDismissRequest by rememberUpdatedState(onDismissRequest)
 
-    val delegate = remember {
-        ColorPickerDelegate(
-            onColorChanged = {
-                updatedOnColorChanged(it)
-            },
-            onDismissRequest = {
-                updatedOnDismissRequest()
-            }
-        )
-    }
+    val delegate =
+        remember {
+            ColorPickerDelegate(
+                onColorChanged = {
+                    updatedOnColorChanged(it)
+                },
+                onDismissRequest = {
+                    updatedOnDismissRequest()
+                },
+            )
+        }
 
     PresentationController(
         factory = {
@@ -60,23 +60,21 @@ fun CupertinoColorPickerNative(
             this.supportsAlpha = supportsAlpha
         },
         onDismissRequest = updatedOnDismissRequest,
-        color, supportsAlpha
+        color,
+        supportsAlpha,
     )
 }
 
 private class ColorPickerDelegate(
     private val onColorChanged: (Color) -> Unit,
-    private val onDismissRequest: () -> Unit
-) : NSObject(), UIColorPickerViewControllerDelegateProtocol {
-    override fun colorPickerViewControllerDidSelectColor(
-        viewController: UIColorPickerViewController
-    ) {
+    private val onDismissRequest: () -> Unit,
+) : NSObject(),
+    UIColorPickerViewControllerDelegateProtocol {
+    override fun colorPickerViewControllerDidSelectColor(viewController: UIColorPickerViewController) {
         onColorChanged(viewController.selectedColor.toComposeColor())
     }
 
-    override fun colorPickerViewControllerDidFinish(
-        viewController: UIColorPickerViewController
-    ) {
+    override fun colorPickerViewControllerDidFinish(viewController: UIColorPickerViewController) {
         onDismissRequest()
     }
 }

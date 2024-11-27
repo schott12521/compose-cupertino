@@ -18,7 +18,6 @@ class Shapes(
     val large: CornerBasedShape = ShapeDefaults.Large,
     val extraLarge: CornerBasedShape = ShapeDefaults.ExtraLarge,
 ) {
-
     fun copy(
         extraSmall: CornerBasedShape = this.extraSmall,
         small: CornerBasedShape = this.small,
@@ -30,13 +29,12 @@ class Shapes(
         small = small,
         medium = medium,
         large = large,
-        extraLarge = extraLarge
+        extraLarge = extraLarge,
     )
 }
 
 @InternalCupertinoApi
 val LocalShapes = staticCompositionLocalOf { Shapes() }
-
 
 @Immutable
 object ShapeDefaults {

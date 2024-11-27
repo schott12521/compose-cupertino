@@ -14,21 +14,23 @@ import io.github.alexzhirkevich.cupertino.theme.isDark
  * */
 object Accessibility
 
-expect val Accessibility.isHighContrastEnabled : Boolean
+expect val Accessibility.isHighContrastEnabled: Boolean
 
-expect val Accessibility.isReduceTransparencyEnabled : Boolean
+expect val Accessibility.isReduceTransparencyEnabled: Boolean
 
 /**
  * Adjust color contrast if corresponding OS accessibility system preference is enabled
  * */
-val Color.accessible : Color
-@Composable
+val Color.accessible: Color
+    @Composable
     get() = accessible(isDark())
 
 /**
  * Adjust color contrast if corresponding accessibility system preference is enabled
  * */
-fun Color.accessible(isDark : Boolean) : Color =
-    if (Accessibility.isHighContrastEnabled)
+fun Color.accessible(isDark: Boolean): Color =
+    if (Accessibility.isHighContrastEnabled) {
         lerp(this, if (isDark) CupertinoColors.White else Color.Black, .2f)
-    else this
+    } else {
+        this
+    }

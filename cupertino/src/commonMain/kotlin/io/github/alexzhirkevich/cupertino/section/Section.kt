@@ -23,7 +23,6 @@ import io.github.alexzhirkevich.cupertino.CupertinoSurface
 import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 
-
 /**
  * iOS-like list section.
  *
@@ -48,32 +47,38 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 @Composable
 @ExperimentalCupertinoApi
 fun CupertinoSection(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     style: SectionStyle = LocalSectionStyle.current,
     state: SectionState = rememberSectionState(canCollapse = true),
     enterTransition: EnterTransition = CupertinoSectionDefaults.EnterTransition,
     exitTransition: ExitTransition = CupertinoSectionDefaults.ExitTransition,
-    shape : CornerBasedShape = CupertinoSectionDefaults.shape(style),
-    color: Color = if (style.grouped)
-        CupertinoSectionDefaults.Color
-    else Color.Transparent,
-    dividerPadding: PaddingValues = PaddingValues(
-        start = CupertinoSectionDefaults.DividerPadding
-    ),
-    contentPadding : PaddingValues = CupertinoSectionDefaults.paddingValues(
-        style = style,
-        includePaddingBetweenSections = true
-    ),
-    title : (@Composable () -> Unit)? = null,
-    caption : (@Composable () -> Unit)? = null,
-    content : @Composable SectionScope.() -> Unit
+    shape: CornerBasedShape = CupertinoSectionDefaults.shape(style),
+    color: Color =
+        if (style.grouped) {
+            CupertinoSectionDefaults.Color
+        } else {
+            Color.Transparent
+        },
+    dividerPadding: PaddingValues =
+        PaddingValues(
+            start = CupertinoSectionDefaults.DividerPadding,
+        ),
+    contentPadding: PaddingValues =
+        CupertinoSectionDefaults.paddingValues(
+            style = style,
+            includePaddingBetweenSections = true,
+        ),
+    title: (@Composable () -> Unit)? = null,
+    caption: (@Composable () -> Unit)? = null,
+    content: @Composable SectionScope.() -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalSectionStyle provides style
+        LocalSectionStyle provides style,
     ) {
         Column(
-            modifier = modifier
-                .padding(contentPadding)
+            modifier =
+                modifier
+                    .padding(contentPadding),
         ) {
             if (title != null) {
                 SectionTitle(
@@ -82,11 +87,11 @@ fun CupertinoSection(
                     state = state,
                     content = {
                         title()
-                    }
+                    },
                 )
                 SectionDivider(
                     modifier = Modifier.background(color),
-                    style = style
+                    style = style,
                 )
             }
 
@@ -94,34 +99,36 @@ fun CupertinoSection(
                 style = style,
                 state = state,
                 enterTransition = enterTransition,
-                exitTransition = exitTransition
+                exitTransition = exitTransition,
             ) {
                 Column {
                     CupertinoSurface(
                         shape = shape,
-                        color = color
+                        color = color,
                     ) {
-                        val showDivider = CupertinoTheme.colorScheme.separator
-                            .let { it.isSpecified && it != Color.Transparent }
+                        val showDivider =
+                            CupertinoTheme.colorScheme.separator
+                                .let { it.isSpecified && it != Color.Transparent }
 
                         SubcomposeLayout { constraints ->
                             val measurables = subcompose(null) { content(SectionScopeImpl) }
 
-                            val dividers = subcompose(Unit) {
-                                if (showDivider) {
-                                    repeat(measurables.size - 1) {
-                                        CupertinoHorizontalDivider(
-                                            modifier = Modifier.padding(dividerPadding)
-                                        )
+                            val dividers =
+                                subcompose(Unit) {
+                                    if (showDivider) {
+                                        repeat(measurables.size - 1) {
+                                            CupertinoHorizontalDivider(
+                                                modifier = Modifier.padding(dividerPadding),
+                                            )
+                                        }
                                     }
-                                }
-                            }.fastMap { it.measure(constraints) }
+                                }.fastMap { it.measure(constraints) }
 
                             val placeables = measurables.fastMap { it.measure(constraints) }
 
                             layout(
                                 width = constraints.maxWidth,
-                                height = (placeables + dividers).fastSumBy { it.height }
+                                height = (placeables + dividers).fastSumBy { it.height },
                             ) {
                                 var h = 0
                                 placeables.fastForEachIndexed { i, p ->
@@ -139,15 +146,14 @@ fun CupertinoSection(
 
                     SectionDivider(
                         modifier = Modifier.background(color),
-                        style = style
+                        style = style,
                     )
 
                     if (caption != null) {
-
                         SectionCaption(
                             style = style,
                             lazy = false,
-                            content = caption
+                            content = caption,
                         )
                         if (!style.grouped) {
                             SectionDivider(style)
@@ -158,4 +164,3 @@ fun CupertinoSection(
         }
     }
 }
-

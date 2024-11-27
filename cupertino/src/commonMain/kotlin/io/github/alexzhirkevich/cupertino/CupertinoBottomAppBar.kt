@@ -23,20 +23,20 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 @Composable
 fun CupertinoBottomAppBar(
     modifier: Modifier = Modifier,
-    isTranslucent : Boolean = true,
-    isTransparent : Boolean = false,
+    isTranslucent: Boolean = true,
+    isTransparent: Boolean = false,
     containerColor: Color = CupertinoNavigationBarDefaults.containerColor,
     contentColor: Color = CupertinoTheme.colorScheme.accent,
     contentPadding: PaddingValues = CupertinoSectionDefaults.PaddingValues,
     windowInsets: WindowInsets = WindowInsets.navigationBars,
     content: @Composable RowScope.() -> Unit,
 ) {
-
-    val actualContainerColor  = cupertinoTranslucentBottomBarColor(
-        color = containerColor,
-        isTranslucent = isTranslucent,
-        isTransparent = isTransparent
-    )
+    val actualContainerColor =
+        cupertinoTranslucentBottomBarColor(
+            color = containerColor,
+            isTranslucent = isTranslucent,
+            isTransparent = isTransparent,
+        )
 
     Column {
         if (!isTransparent) {
@@ -45,7 +45,7 @@ fun CupertinoBottomAppBar(
         CupertinoSurface(
             modifier = modifier,
             color = actualContainerColor,
-            contentColor = contentColor
+            contentColor = contentColor,
         ) {
             Row(
                 Modifier
@@ -54,7 +54,7 @@ fun CupertinoBottomAppBar(
                     .padding(contentPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                content = content
+                content = content,
             )
         }
     }

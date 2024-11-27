@@ -20,17 +20,15 @@ import com.arkivanov.decompose.ComponentContext
  * limitations under the License.
  */
 
-
 interface IconsComponent {
-
     fun onNavigateBack()
 }
 
 class DefaultIconsComponent(
     context: ComponentContext,
-    private val onNavigateBack : () -> Unit,
-) : IconsComponent, ComponentContext by context {
-
+    private val onNavigateBack: () -> Unit,
+) : IconsComponent,
+    ComponentContext by context {
     override fun onNavigateBack() {
         onNavigateBack.invoke()
     }

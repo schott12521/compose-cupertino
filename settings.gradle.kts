@@ -24,8 +24,8 @@ if (gradle.startParameter.taskNames.none { it.startsWith(":example:composeApp") 
             ":example:composeApp:assembleDebug",
             ":example:composeApp:assembleDebugUnitTest",
             ":example:composeApp:assembleDebugAndroidTest",
-            ":example:composeApp:assemble"
-        )
+            ":example:composeApp:assemble",
+        ),
     )
 }
 
@@ -36,5 +36,5 @@ include(
     ":cupertino-adaptive",
     ":cupertino-decompose",
     ":cupertino-icons-extended",
-    ":example:composeApp"
+    ":example:composeApp",
 )

@@ -72,10 +72,8 @@ import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import io.github.alexzhirkevich.cupertino.toStringWithLeadingZero
 import io.github.alexzhirkevich.defaultLocale
 
-
 @Stable
-sealed interface LazySectionScope  {
-
+sealed interface LazySectionScope {
     /**
      * Plain section item without additional controls
      *
@@ -89,8 +87,8 @@ sealed interface LazySectionScope  {
     fun item(
         key: Any? = null,
         contentType: Any? = null,
-        dividerPadding : Dp = CupertinoSectionDefaults.DividerPadding,
-        content: @Composable (padding : PaddingValues) -> Unit
+        dividerPadding: Dp = CupertinoSectionDefaults.DividerPadding,
+        content: @Composable (padding: PaddingValues) -> Unit,
     )
 }
 
@@ -116,13 +114,16 @@ fun LazySectionScope.link(
     key: Any? = null,
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
     onClickLabel: String? = null,
     interactionSource: MutableInteractionSource? = null,
-    caption : @Composable () -> Unit = {},
-    trailingIcon : @Composable () -> Unit = {
+    caption: @Composable () -> Unit = {},
+    trailingIcon: @Composable () -> Unit = {
         CupertinoSectionDefaults.LabelChevron()
     },
     title: @Composable () -> Unit,
@@ -140,7 +141,6 @@ fun LazySectionScope.link(
     interactionSource = interactionSource,
     title = title,
 )
-
 
 /**
  * Popup dropdown menu with [title], optional [icon] and [selectedLabel].
@@ -161,21 +161,24 @@ fun LazySectionScope.link(
 @ExperimentalCupertinoApi
 fun LazySectionScope.dropdownMenu(
     expanded: Boolean,
-    onDismissRequest : () -> Unit,
+    onDismissRequest: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     key: Any? = null,
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
     width: Dp = CupertinoDropdownMenuDefaults.SmallWidth,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
     onClickLabel: String? = null,
     interactionSource: MutableInteractionSource? = null,
-    selectedLabel : @Composable () -> Unit = {},
+    selectedLabel: @Composable () -> Unit = {},
     title: @Composable () -> Unit,
-    content : @Composable CupertinoMenuScope.() -> Unit
+    content: @Composable CupertinoMenuScope.() -> Unit,
 ) = labelWithCustomChevron(
     chevron = {
         LabelCaption(selectedLabel)
@@ -184,31 +187,36 @@ fun LazySectionScope.dropdownMenu(
             CupertinoDropdownMenu(
                 modifier = modifier,
                 width = width,
-                paddingValues = p.copy(
-                    top = p.calculateTopPadding() +
-                            CupertinoSectionTokens.VerticalPadding,
-                    bottom =  p.calculateBottomPadding() +
-                            CupertinoSectionTokens.VerticalPadding,
-                    start = 0.dp,
-                    end = 0.dp
-                ),
+                paddingValues =
+                    p.copy(
+                        top =
+                            p.calculateTopPadding() +
+                                CupertinoSectionTokens.VerticalPadding,
+                        bottom =
+                            p.calculateBottomPadding() +
+                                CupertinoSectionTokens.VerticalPadding,
+                        start = 0.dp,
+                        end = 0.dp,
+                    ),
                 expanded = expanded,
                 onDismissRequest = onDismissRequest,
-                content = content
+                content = content,
             )
             CupertinoIcon(
                 imageVector = CupertinoIcons.Default.ChevronUp,
                 contentDescription = null,
                 tint = CupertinoTheme.colorScheme.tertiaryLabel,
-                modifier = Modifier
-                    .size(8.dp)
+                modifier =
+                    Modifier
+                        .size(8.dp),
             )
             CupertinoIcon(
                 imageVector = CupertinoIcons.Default.ChevronDown,
                 contentDescription = null,
                 tint = CupertinoTheme.colorScheme.tertiaryLabel,
-                modifier = Modifier
-                    .size(8.dp)
+                modifier =
+                    Modifier
+                        .size(8.dp),
             )
         }
     },
@@ -246,11 +254,14 @@ fun LazySectionScope.switch(
     modifier: Modifier = Modifier,
     key: Any? = null,
     enabled: Boolean = true,
-    colors : CupertinoSwitchColors ?= null,
+    colors: CupertinoSwitchColors? = null,
     icon: (@Composable () -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
     interactionSource: MutableInteractionSource? = null,
     thumbContent: @Composable (() -> Unit)? = null,
     title: @Composable () -> Unit,
@@ -262,8 +273,9 @@ fun LazySectionScope.switch(
         if (icon != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement
-                    .spacedBy(CupertinoSectionTokens.HorizontalPadding)
+                horizontalArrangement =
+                    Arrangement
+                        .spacedBy(CupertinoSectionTokens.HorizontalPadding),
             ) {
                 icon.invoke()
                 title.invoke()
@@ -280,30 +292,31 @@ fun LazySectionScope.switch(
             thumbContent = thumbContent,
             colors = colors ?: CupertinoSwitchDefaults.colors(),
             onCheckedChange = onCheckedChange,
-            interactionSource = interactionSource ?: remember { MutableInteractionSource() }
+            interactionSource = interactionSource ?: remember { MutableInteractionSource() },
         )
-    }
+    },
 )
-
-
 
 @ExperimentalCupertinoApi
 fun LazySectionScope.datePicker(
     state: CupertinoDatePickerState,
-    expanded : Boolean,
-    onExpandedChange : (Boolean) -> Unit,
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    style : DatePickerStyle? = null,
+    style: DatePickerStyle? = null,
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
-    buttonColor : Color = Color.Unspecified,
-    button : @Composable (
-        buttonModifier : Modifier,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
+    buttonColor: Color = Color.Unspecified,
+    button: @Composable (
+        buttonModifier: Modifier,
         titleModifier: Modifier,
-        text : String
+        text: String,
     ) -> Unit = { buttonModifier, titleModifier, text ->
         CupertinoSectionDefaults.PickerButton(
             modifier = buttonModifier,
@@ -312,9 +325,9 @@ fun LazySectionScope.datePicker(
             title = {
                 CupertinoText(
                     text = text,
-                    modifier = titleModifier
+                    modifier = titleModifier,
                 )
-            }
+            },
         )
     },
     title: @Composable () -> Unit,
@@ -335,20 +348,21 @@ fun LazySectionScope.datePicker(
                     .format(
                         state.stateData.calendarModel,
                         CupertinoDatePickerDefaults.YearAbbrMonthDaySkeleton,
-                        locale
+                        locale,
                     )
             }
         }.value
     },
     content = {
         CupertinoDatePicker(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 6.dp),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 6.dp),
             state = state,
-            style = style ?: DatePickerStyle.Pager()
+            style = style ?: DatePickerStyle.Pager(),
         )
-    }
+    },
 )
 
 @ExperimentalCupertinoApi
@@ -358,11 +372,16 @@ fun LazySectionScope.timePicker(
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    icon: @Composable() (() -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
-    buttonColor : Color = Color.Unspecified,
+    icon:
+        @Composable()
+        (() -> Unit)? = null,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
+    buttonColor: Color = Color.Unspecified,
     button: @Composable (buttonModifier: Modifier, titleModifier: Modifier, text: String) -> Unit = { buttonModifier, titleModifier, text ->
         CupertinoSectionDefaults.PickerButton(
             modifier = buttonModifier,
@@ -371,9 +390,9 @@ fun LazySectionScope.timePicker(
             title = {
                 CupertinoText(
                     text = text,
-                    modifier = titleModifier
+                    modifier = titleModifier,
                 )
-            }
+            },
         )
     },
     title: @Composable () -> Unit,
@@ -388,11 +407,12 @@ fun LazySectionScope.timePicker(
     text = {
         remember(state) {
             derivedStateOf {
-                "${state.hour % if (state.is24Hour) 24 else 12}:${state.minute.toStringWithLeadingZero()}" + when {
-                    state.is24Hour -> ""
-                    state.isEvening -> " PM"
-                    else -> " AM"
-                }
+                "${state.hour % if (state.is24Hour) 24 else 12}:${state.minute.toStringWithLeadingZero()}" +
+                    when {
+                        state.is24Hour -> ""
+                        state.isEvening -> " PM"
+                        else -> " AM"
+                    }
             }
         }.value
     },
@@ -401,9 +421,8 @@ fun LazySectionScope.timePicker(
             modifier = modifier.fillMaxWidth(),
             state = state,
         )
-    }
+    },
 )
-
 
 fun LazySectionScope.textField(
     value: String,
@@ -422,7 +441,7 @@ fun LazySectionScope.textField(
             visible = focused && value.isNotEmpty(),
             onClick = {
                 updatedValueChange.invoke("")
-            }
+            },
         )
     },
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -440,15 +459,15 @@ fun LazySectionScope.textField(
     dividerPadding = dividerPadding,
     title = {
         ProvideTextStyle(
-            textStyle ?: CupertinoTheme.typography.body
+            textStyle ?: CupertinoTheme.typography.body,
         ) {
             Box(
-                contentAlignment = Alignment.CenterStart
+                contentAlignment = Alignment.CenterStart,
             ) {
-
-                val actualInteractionSource = interactionSource ?: remember {
-                    MutableInteractionSource()
-                }
+                val actualInteractionSource =
+                    interactionSource ?: remember {
+                        MutableInteractionSource()
+                    }
 
                 CupertinoTextField(
                     value = value,
@@ -465,9 +484,10 @@ fun LazySectionScope.textField(
                     minLines = minLines,
                     placeholder = placeholder,
                     interactionSource = actualInteractionSource,
-                    trailingIcon = trailingIcon?.let {
-                        { it(actualInteractionSource) }
-                    }
+                    trailingIcon =
+                        trailingIcon?.let {
+                            { it(actualInteractionSource) }
+                        },
                 )
             }
         }
@@ -484,11 +504,11 @@ fun LazySectionScope.textField(
  * @param content item content
  * */
 inline fun LazySectionScope.items(
-    count : Int,
+    count: Int,
     key: (Int) -> Any? = { null },
     contentType: (Int) -> Any? = { null },
-    dividerPadding : Dp = CupertinoSectionDefaults.DividerPadding,
-    crossinline content: @Composable (idx : Int, padding : PaddingValues) -> Unit
+    dividerPadding: Dp = CupertinoSectionDefaults.DividerPadding,
+    crossinline content: @Composable (idx: Int, padding: PaddingValues) -> Unit,
 ) = repeat(count) {
     item(
         key = key(it),
@@ -509,11 +529,11 @@ inline fun LazySectionScope.items(
  * @param content item content
  * */
 inline fun <T> LazySectionScope.items(
-    items : Collection<T>,
+    items: Collection<T>,
     key: (T) -> Any? = { null },
     contentType: (T) -> Any? = { null },
-    dividerPadding : Dp = CupertinoSectionDefaults.DividerPadding,
-    crossinline content: @Composable (item : T, padding : PaddingValues) -> Unit
+    dividerPadding: Dp = CupertinoSectionDefaults.DividerPadding,
+    crossinline content: @Composable (item: T, padding: PaddingValues) -> Unit,
 ) = items.forEach {
     item(
         key = key(it),
@@ -530,10 +550,15 @@ private fun LazySectionScope.labelWithCustomChevron(
     onClick: () -> Unit,
     key: Any? = null,
     enabled: Boolean = true,
-    icon: @Composable() (() -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
+    icon:
+        @Composable()
+        (() -> Unit)? = null,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
     onClickLabel: String? = null,
     interactionSource: MutableInteractionSource? = null,
     title: @Composable () -> Unit,
@@ -549,22 +574,25 @@ private fun LazySectionScope.labelWithCustomChevron(
                 role = Role.Button,
                 onClickLabel = onClickLabel,
                 interactionSource = interactionSource ?: remember { MutableInteractionSource() },
-                indication = LocalIndication.current
+                indication = LocalIndication.current,
             )
     },
     title = {
-
-        val color = if (enabled)
-            CupertinoTheme.colorScheme.label
-        else CupertinoTheme.colorScheme.secondaryLabel
+        val color =
+            if (enabled) {
+                CupertinoTheme.colorScheme.label
+            } else {
+                CupertinoTheme.colorScheme.secondaryLabel
+            }
 
         CompositionLocalProvider(
-            LocalContentColor provides color
+            LocalContentColor provides color,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement
-                    .spacedBy(CupertinoSectionTokens.HorizontalPadding)
+                horizontalArrangement =
+                    Arrangement
+                        .spacedBy(CupertinoSectionTokens.HorizontalPadding),
             ) {
                 icon?.invoke()
                 title()
@@ -575,15 +603,15 @@ private fun LazySectionScope.labelWithCustomChevron(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CupertinoSectionTokens.InlinePadding),
-            content = chevron
+            content = chevron,
         )
-    }
+    },
 )
 
 @Composable
 private fun LabelCaption(content: @Composable () -> Unit) {
     CompositionLocalProvider(
-        LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel
+        LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel,
     ) {
         ProvideTextStyle(CupertinoTheme.typography.body, content = content)
     }
@@ -595,21 +623,22 @@ private fun LazySectionScope.row(
     dividerPadding: Dp,
     modifier: @Composable () -> Modifier = { Modifier },
     endContent: @Composable () -> Unit = {},
-    title: @Composable () -> Unit
+    title: @Composable () -> Unit,
 ) = item(
     key = key,
     contentType = contentType,
-    dividerPadding = dividerPadding
+    dividerPadding = dividerPadding,
 ) {
     CompositionLocalProvider(
-        LocalContentColor provides CupertinoTheme.colorScheme.label
+        LocalContentColor provides CupertinoTheme.colorScheme.label,
     ) {
         ProvideTextStyle(CupertinoTheme.typography.body) {
             Row(
-                modifier = modifier()
-                    .heightIn(min = CupertinoSectionTokens.MinHeight)
-                    .fillMaxWidth()
-                    .padding(it),
+                modifier =
+                    modifier()
+                        .heightIn(min = CupertinoSectionTokens.MinHeight)
+                        .fillMaxWidth()
+                        .padding(it),
                 verticalAlignment = Alignment.CenterVertically,
 //        horizontalArrangement = Arrangement.spacedBy(CupertinoSectionTokens.SplitPadding)
             ) {
@@ -618,25 +647,26 @@ private fun LazySectionScope.row(
                 }
                 CompositionLocalProvider(
                     LocalContentColor provides CupertinoTheme.colorScheme.secondaryLabel,
-                    endContent
+                    endContent,
                 )
             }
         }
     }
 }
+
 private fun LazySectionScope.expandableRow(
     key: Any?,
     contentType: Any?,
     dividerPadding: Dp,
-    modifier : @Composable () -> Modifier = { Modifier },
+    modifier: @Composable () -> Modifier = { Modifier },
     title: @Composable () -> Unit,
-    belowContentExpanded : Boolean,
-    belowContent : @Composable () -> Unit,
-    endContent : @Composable () -> Unit
+    belowContentExpanded: Boolean,
+    belowContent: @Composable () -> Unit,
+    endContent: @Composable () -> Unit,
 ) = item(
     key = key,
     contentType = contentType,
-    dividerPadding = dividerPadding
+    dividerPadding = dividerPadding,
 ) { padding ->
 
     var expandedBeforeAnimation by rememberSaveable {
@@ -645,43 +675,46 @@ private fun LazySectionScope.expandableRow(
 
     Column {
         Row(
-            modifier = modifier()
-                .fillMaxWidth()
-                .heightIn(min = CupertinoSectionTokens.MinHeight)
-                .padding(
-                    padding.copy(
-                        top = padding.calculateTopPadding() / 2,
-                        bottom = padding.calculateBottomPadding() / 2
-                    )
-                ),
+            modifier =
+                modifier()
+                    .fillMaxWidth()
+                    .heightIn(min = CupertinoSectionTokens.MinHeight)
+                    .padding(
+                        padding.copy(
+                            top = padding.calculateTopPadding() / 2,
+                            bottom = padding.calculateBottomPadding() / 2,
+                        ),
+                    ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             title()
             endContent()
         }
         if (belowContentExpanded || expandedBeforeAnimation) {
             CupertinoHorizontalDivider(
-                modifier = Modifier
-                    .padding(start = CupertinoSectionDefaults.DividerPadding)
+                modifier =
+                    Modifier
+                        .padding(start = CupertinoSectionDefaults.DividerPadding),
             )
         }
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .animateContentSize(
-                    animationSpec = cupertinoTween(),
-                    finishedListener = { _, _ ->
-                        expandedBeforeAnimation = belowContentExpanded
-                    }
-                )
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .animateContentSize(
+                        animationSpec = cupertinoTween(),
+                        finishedListener = { _, _ ->
+                            expandedBeforeAnimation = belowContentExpanded
+                        },
+                    ),
         ) {
             if (belowContentExpanded) {
                 Box(
                     Modifier.padding(
                         top = padding.calculateTopPadding(),
-                        bottom = padding.calculateBottomPadding()
-                    )
+                        bottom = padding.calculateBottomPadding(),
+                    ),
                 ) {
                     belowContent()
                 }
@@ -693,18 +726,21 @@ private fun LazySectionScope.expandableRow(
 @ExperimentalCupertinoApi
 private fun LazySectionScope.picker(
     contentType: Any?,
-    expanded : Boolean,
-    text : @Composable () -> String,
-    onExpandedChange : (Boolean) -> Unit,
+    expanded: Boolean,
+    text: @Composable () -> String,
+    onExpandedChange: (Boolean) -> Unit,
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
-    dividerPadding: Dp = if (icon != null)
-        CupertinoSectionDefaults.DividerPaddingWithIcon
-    else CupertinoSectionDefaults.DividerPadding,
-    button : @Composable (
-        buttonModifier : Modifier,
+    dividerPadding: Dp =
+        if (icon != null) {
+            CupertinoSectionDefaults.DividerPaddingWithIcon
+        } else {
+            CupertinoSectionDefaults.DividerPadding
+        },
+    button: @Composable (
+        buttonModifier: Modifier,
         titleModifier: Modifier,
-        text : String
+        text: String,
     ) -> Unit = { buttonModifier, titleModifier, text ->
         CupertinoSectionDefaults.PickerButton(
             modifier = buttonModifier,
@@ -712,12 +748,12 @@ private fun LazySectionScope.picker(
             title = {
                 CupertinoText(
                     text = text,
-                    modifier = titleModifier
+                    modifier = titleModifier,
                 )
-            }
+            },
         )
     },
-    content : @Composable () -> Unit,
+    content: @Composable () -> Unit,
     title: @Composable () -> Unit,
 ) = expandableRow(
     key = null,
@@ -725,14 +761,14 @@ private fun LazySectionScope.picker(
     dividerPadding = dividerPadding,
     title = title,
     belowContentExpanded = expanded,
-    belowContent = content
+    belowContent = content,
 ) {
-
     val updatedOnExpandedChange by rememberUpdatedState(onExpandedChange)
 
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
+    val interactionSource =
+        remember {
+            MutableInteractionSource()
+        }
 
     val pressed by interactionSource.collectIsPressedAsState()
 
@@ -741,7 +777,7 @@ private fun LazySectionScope.picker(
     val animatedTextAlpha by animateFloatAsState(
         targetValue = if (pressed) CupertinoButtonTokens.PressedPlainButonAlpha else 1f,
         animationSpec = spring(stiffness = Spring.StiffnessLow),
-        label = "Section Date picker fade animation"
+        label = "Section Date picker fade animation",
     )
     button(
         Modifier.clickable(
@@ -750,18 +786,21 @@ private fun LazySectionScope.picker(
             indication = null,
             onClick = {
                 updatedOnExpandedChange(!expanded)
-            }
+            },
         ),
         Modifier.graphicsLayer {
             alpha = animatedTextAlpha
         },
-        titleText
+        titleText,
     )
 }
 
 private object ContentTypeLabel
+
 private object ContentTypeToggle
+
 private object ContentTypeDatePicker
+
 private object ContentTypeTimePicker
 
 private object ContentTypeTextField

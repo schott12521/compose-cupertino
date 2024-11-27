@@ -129,7 +129,7 @@ fun CupertinoSlider(
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
     colors: CupertinoSliderColors = CupertinoSliderDefaults.defaultColorsFor(steps),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     require(steps >= 0) { "steps should be >= 0" }
 
@@ -146,16 +146,16 @@ fun CupertinoSlider(
             CupertinoSliderDefaults.Thumb(
                 interactionSource = interactionSource,
                 colors = colors,
-                enabled = enabled
+                enabled = enabled,
             )
         },
         track = { sliderPositions ->
             CupertinoSliderDefaults.Track(
                 colors = colors,
                 enabled = enabled,
-                sliderPositions = sliderPositions
+                sliderPositions = sliderPositions,
             )
-        }
+        },
     )
 }
 
@@ -207,17 +207,17 @@ fun CupertinoSlider(
         CupertinoSliderDefaults.Thumb(
             interactionSource = interactionSource,
             colors = colors,
-            enabled = enabled
+            enabled = enabled,
         )
     },
     track: @Composable (SliderPositions) -> Unit = { sliderPositions ->
         CupertinoSliderDefaults.Track(
             colors = colors,
             enabled = enabled,
-            sliderPositions = sliderPositions
+            sliderPositions = sliderPositions,
         )
     },
-    /*@IntRange(from = 0)*/
+    // @IntRange(from = 0)
 ) {
     require(steps >= 0) { "steps should be >= 0" }
 
@@ -231,7 +231,7 @@ fun CupertinoSlider(
         onValueChangeFinished = onValueChangeFinished,
         interactionSource = interactionSource,
         thumb = thumb,
-        track = track
+        track = track,
     )
 }
 
@@ -264,10 +264,10 @@ fun CupertinoRangeSlider(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    /*@IntRange(from = 0)*/
+    // @IntRange(from = 0)
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
-    colors: CupertinoSliderColors = CupertinoSliderDefaults.defaultColorsFor(steps)
+    colors: CupertinoSliderColors = CupertinoSliderDefaults.defaultColorsFor(steps),
 ) {
     val startInteractionSource: MutableInteractionSource = remember { MutableInteractionSource() }
     val endInteractionSource: MutableInteractionSource = remember { MutableInteractionSource() }
@@ -288,23 +288,23 @@ fun CupertinoRangeSlider(
             CupertinoSliderDefaults.Thumb(
                 interactionSource = startInteractionSource,
                 colors = colors,
-                enabled = enabled
+                enabled = enabled,
             )
         },
         endThumb = {
             CupertinoSliderDefaults.Thumb(
                 interactionSource = endInteractionSource,
                 colors = colors,
-                enabled = enabled
+                enabled = enabled,
             )
         },
         track = { sliderPositions ->
             CupertinoSliderDefaults.Track(
                 colors = colors,
                 enabled = enabled,
-                sliderPositions = sliderPositions
+                sliderPositions = sliderPositions,
             )
-        }
+        },
     )
 }
 
@@ -361,21 +361,21 @@ fun CupertinoRangeSlider(
         CupertinoSliderDefaults.Thumb(
             interactionSource = startInteractionSource,
             colors = colors,
-            enabled = enabled
+            enabled = enabled,
         )
     },
     endThumb: @Composable (SliderPositions) -> Unit = {
         CupertinoSliderDefaults.Thumb(
             interactionSource = endInteractionSource,
             colors = colors,
-            enabled = enabled
+            enabled = enabled,
         )
     },
     track: @Composable (SliderPositions) -> Unit = { sliderPositions ->
         CupertinoSliderDefaults.Track(
             colors = colors,
             enabled = enabled,
-            sliderPositions = sliderPositions
+            sliderPositions = sliderPositions,
         )
     },
 ) {
@@ -393,7 +393,7 @@ fun CupertinoRangeSlider(
         endInteractionSource = endInteractionSource,
         startThumb = startThumb,
         endThumb = endThumb,
-        track = track
+        track = track,
     )
 }
 
@@ -409,43 +409,53 @@ private fun SliderImpl(
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
     thumb: @Composable (SliderPositions) -> Unit,
-    track: @Composable (SliderPositions) -> Unit
+    track: @Composable (SliderPositions) -> Unit,
 ) {
-    val onValueChangeState = rememberUpdatedState<(Float) -> Unit> {
-        if (it != value) {
-            onValueChange(it)
+    val onValueChangeState =
+        rememberUpdatedState<(Float) -> Unit> {
+            if (it != value) {
+                onValueChange(it)
+            }
         }
-    }
 
-    val tickFractions = remember(steps) {
-        stepsToTickFractions(steps)
-    }
+    val tickFractions =
+        remember(steps) {
+            stepsToTickFractions(steps)
+        }
 
     val thumbWidth = remember { mutableStateOf(ThumbWidth.value) }
     val totalWidth = remember { mutableStateOf(0) }
 
-    fun scaleToUserValue(minPx: Float, maxPx: Float, offset: Float) =
-        scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
+    fun scaleToUserValue(
+        minPx: Float,
+        maxPx: Float,
+        offset: Float,
+    ) = scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
 
-    fun scaleToOffset(minPx: Float, maxPx: Float, userValue: Float) =
-        scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
+    fun scaleToOffset(
+        minPx: Float,
+        maxPx: Float,
+        userValue: Float,
+    ) = scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
 
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
-    val rawOffset = remember {
-        lazy {
-            val maxPx = max(totalWidth.value - thumbWidth.value / 2, 0f)
-            val minPx = min(thumbWidth.value / 2, maxPx)
-            mutableStateOf(scaleToOffset(minPx, maxPx, value))
+    val rawOffset =
+        remember {
+            lazy {
+                val maxPx = max(totalWidth.value - thumbWidth.value / 2, 0f)
+                val minPx = min(thumbWidth.value / 2, maxPx)
+                mutableStateOf(scaleToOffset(minPx, maxPx, value))
+            }
         }
-    }
     val pressOffset = remember { mutableStateOf(0f) }
     val coerced = value.coerceIn(valueRange.start, valueRange.endInclusive)
 
     val positionFraction = calcFraction(valueRange.start, valueRange.endInclusive, coerced)
-    val sliderPositions = remember {
-        SliderPositions(0f..positionFraction, tickFractions)
-    }
+    val sliderPositions =
+        remember {
+            SliderPositions(0f..positionFraction, tickFractions)
+        }
     sliderPositions.activeRange = 0f..positionFraction
     sliderPositions.tickFractions = tickFractions
 
@@ -455,89 +465,97 @@ private fun SliderImpl(
         mutableStateOf(value)
     }
 
-    val draggableState = remember(valueRange) {
-        SliderDraggableState {
-            val maxPx = max(totalWidth.value - thumbWidth.value / 2, 0f)
-            val minPx = min(thumbWidth.value / 2, maxPx)
-            rawOffset.value.value = (rawOffset.value.value + it + pressOffset.value).coerceIn(0f, totalWidth.value.toFloat())
-            pressOffset.value = 0f
+    val draggableState =
+        remember(valueRange) {
+            SliderDraggableState {
+                val maxPx = max(totalWidth.value - thumbWidth.value / 2, 0f)
+                val minPx = min(thumbWidth.value / 2, maxPx)
+                rawOffset.value.value = (rawOffset.value.value + it + pressOffset.value).coerceIn(0f, totalWidth.value.toFloat())
+                pressOffset.value = 0f
 
-            val offsetInTrack = snapValueToTick(rawOffset.value.value, tickFractions, minPx, maxPx)
-            val new = scaleToUserValue(minPx, maxPx, offsetInTrack)
+                val offsetInTrack = snapValueToTick(rawOffset.value.value, tickFractions, minPx, maxPx)
+                val new = scaleToUserValue(minPx, maxPx, offsetInTrack)
 
-            if (steps > 0) {
-                if (prevValue != new) {
-                    prevValue = new
-                    haptic.performHapticFeedback(CupertinoHapticFeedback.SelectionChanged)
+                if (steps > 0) {
+                    if (prevValue != new) {
+                        prevValue = new
+                        haptic.performHapticFeedback(CupertinoHapticFeedback.SelectionChanged)
+                    }
                 }
+
+                onValueChangeState.value.invoke(new)
             }
-
-            onValueChangeState.value.invoke(new)
         }
-    }
 
-    val gestureEndAction = rememberUpdatedState {
-        if (!draggableState.isDragging) {
-            // check isDragging in case the change is still in progress (touch -> drag case)
-            onValueChangeFinished?.invoke()
+    val gestureEndAction =
+        rememberUpdatedState {
+            if (!draggableState.isDragging) {
+                // check isDragging in case the change is still in progress (touch -> drag case)
+                onValueChangeFinished?.invoke()
+            }
         }
-    }
 
-    val press = Modifier.sliderTapModifier(
-        draggableState,
-        interactionSource,
-        totalWidth.value,
-        isRtl,
-        rawOffset,
-        gestureEndAction,
-        pressOffset,
-        enabled
-    )
+    val press =
+        Modifier.sliderTapModifier(
+            draggableState,
+            interactionSource,
+            totalWidth.value,
+            isRtl,
+            rawOffset,
+            gestureEndAction,
+            pressOffset,
+            enabled,
+        )
 
-    val drag = Modifier.draggable(
-        orientation = Orientation.Horizontal,
-        reverseDirection = isRtl,
-        enabled = enabled,
-        interactionSource = interactionSource,
-        onDragStopped = { _ -> gestureEndAction.value.invoke() },
-        startDragImmediately = draggableState.isDragging,
-        state = draggableState
-    )
+    val drag =
+        Modifier.draggable(
+            orientation = Orientation.Horizontal,
+            reverseDirection = isRtl,
+            enabled = enabled,
+            interactionSource = interactionSource,
+            onDragStopped = { _ -> gestureEndAction.value.invoke() },
+            startDragImmediately = draggableState.isDragging,
+            state = draggableState,
+        )
 
     Layout(
         {
-            Box(modifier = Modifier.layoutId(SliderComponents.THUMB)) { Box(drag){ thumb(sliderPositions) } }
+            Box(modifier = Modifier.layoutId(SliderComponents.THUMB)) { Box(drag) { thumb(sliderPositions) } }
             Box(modifier = Modifier.layoutId(SliderComponents.TRACK)) { track(sliderPositions) }
         },
-        modifier = modifier
-            .requiredSizeIn(
-                minWidth = SliderTokens.HandleWidth,
-                minHeight = SliderTokens.HandleHeight
-            )
-            .sliderSemantics(
-                value = value,
-                enabled = enabled,
-                onValueChange = onValueChange,
-                onValueChangeFinished = onValueChangeFinished,
-                valueRange = valueRange,
-                steps = steps
-            )
-            .focusable(enabled, interactionSource)
-            .then(press)
+        modifier =
+            modifier
+                .requiredSizeIn(
+                    minWidth = SliderTokens.HandleWidth,
+                    minHeight = SliderTokens.HandleHeight,
+                ).sliderSemantics(
+                    value = value,
+                    enabled = enabled,
+                    onValueChange = onValueChange,
+                    onValueChangeFinished = onValueChangeFinished,
+                    valueRange = valueRange,
+                    steps = steps,
+                ).focusable(enabled, interactionSource)
+                .then(press),
 //            .then(drag)
     ) { measurables, constraints ->
 
-        val thumbPlaceable = measurables.first {
-            it.layoutId == SliderComponents.THUMB
-        }.measure(constraints)
+        val thumbPlaceable =
+            measurables
+                .first {
+                    it.layoutId == SliderComponents.THUMB
+                }.measure(constraints)
 
-        val trackPlaceable = measurables.first {
-            it.layoutId == SliderComponents.TRACK
-        }.measure(
-            constraints.offset(
-                horizontal = - thumbPlaceable.width
-            ).copy(minHeight = 0)
-        )
+        val trackPlaceable =
+            measurables
+                .first {
+                    it.layoutId == SliderComponents.TRACK
+                }.measure(
+                    constraints
+                        .offset(
+                            horizontal = -thumbPlaceable.width,
+                        ).copy(minHeight = 0),
+                )
 
         val sliderWidth = thumbPlaceable.width + trackPlaceable.width
         val sliderHeight = max(trackPlaceable.height, thumbPlaceable.height)
@@ -552,15 +570,15 @@ private fun SliderImpl(
 
         layout(
             sliderWidth,
-            sliderHeight
+            sliderHeight,
         ) {
             trackPlaceable.placeRelative(
                 trackOffsetX,
-                trackOffsetY
+                trackOffsetY,
             )
             thumbPlaceable.placeRelative(
                 thumbOffsetX,
-                thumbOffsetY
+                thumbOffsetY,
             )
         }
     }
@@ -579,17 +597,19 @@ private fun RangeSliderImpl(
     endInteractionSource: MutableInteractionSource,
     startThumb: @Composable ((SliderPositions) -> Unit),
     endThumb: @Composable ((SliderPositions) -> Unit),
-    track: @Composable ((SliderPositions) -> Unit)
+    track: @Composable ((SliderPositions) -> Unit),
 ) {
-    val onValueChangeState = rememberUpdatedState<(ClosedFloatingPointRange<Float>) -> Unit> {
-        if (it != value) {
-            onValueChange(it)
+    val onValueChangeState =
+        rememberUpdatedState<(ClosedFloatingPointRange<Float>) -> Unit> {
+            if (it != value) {
+                onValueChange(it)
+            }
         }
-    }
 
-    val tickFractions = remember(steps) {
-        stepsToTickFractions(steps)
-    }
+    val tickFractions =
+        remember(steps) {
+            stepsToTickFractions(steps)
+        }
 
     var startThumbWidth by remember { mutableStateOf(ThumbWidth.value) }
     var endThumbWidth by remember { mutableStateOf(ThumbWidth.value) }
@@ -598,145 +618,172 @@ private fun RangeSliderImpl(
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
     // scales range offset from within minPx..maxPx to within valueRange.start..valueRange.end
-    fun scaleToUserValue(minPx: Float, maxPx: Float, offset: ClosedFloatingPointRange<Float>) =
-        scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
+    fun scaleToUserValue(
+        minPx: Float,
+        maxPx: Float,
+        offset: ClosedFloatingPointRange<Float>,
+    ) = scale(minPx, maxPx, offset, valueRange.start, valueRange.endInclusive)
 
     // scales float userValue within valueRange.start..valueRange.end to within minPx..maxPx
-    fun scaleToOffset(minPx: Float, maxPx: Float, userValue: Float) =
-        scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
+    fun scaleToOffset(
+        minPx: Float,
+        maxPx: Float,
+        userValue: Float,
+    ) = scale(valueRange.start, valueRange.endInclusive, userValue, minPx, maxPx)
 
     val obtainedMeasurements = remember { mutableStateOf(false) }
     val rawOffsetStart = remember { mutableStateOf(0f) }
     val rawOffsetEnd = remember { mutableStateOf(0f) }
 
-    val gestureEndAction = rememberUpdatedState<(Boolean) -> Unit> {
-        onValueChangeFinished?.invoke()
-    }
-
-    val onDrag = rememberUpdatedState<(Boolean, Float) -> Unit> { isStart, offset ->
-        val maxPx = max(totalWidth - endThumbWidth / 2, 0f)
-        val minPx = min(startThumbWidth / 2, maxPx)
-        val offsetRange = if (isStart) {
-            rawOffsetStart.value = (rawOffsetStart.value + offset)
-            rawOffsetEnd.value = scaleToOffset(minPx, maxPx, value.endInclusive)
-            val offsetEnd = rawOffsetEnd.value
-            var offsetStart = rawOffsetStart.value.coerceIn(minPx, offsetEnd)
-            offsetStart = snapValueToTick(offsetStart, tickFractions, minPx, maxPx)
-            offsetStart..offsetEnd
-        } else {
-            rawOffsetEnd.value = (rawOffsetEnd.value + offset)
-            rawOffsetStart.value = scaleToOffset(minPx, maxPx, value.start)
-            val offsetStart = rawOffsetStart.value
-            var offsetEnd = rawOffsetEnd.value.coerceIn(offsetStart, maxPx)
-            offsetEnd = snapValueToTick(offsetEnd, tickFractions, minPx, maxPx)
-            offsetStart..offsetEnd
+    val gestureEndAction =
+        rememberUpdatedState<(Boolean) -> Unit> {
+            onValueChangeFinished?.invoke()
         }
 
-        onValueChangeState.value.invoke(scaleToUserValue(minPx, maxPx, offsetRange))
-    }
+    val onDrag =
+        rememberUpdatedState<(Boolean, Float) -> Unit> { isStart, offset ->
+            val maxPx = max(totalWidth - endThumbWidth / 2, 0f)
+            val minPx = min(startThumbWidth / 2, maxPx)
+            val offsetRange =
+                if (isStart) {
+                    rawOffsetStart.value = (rawOffsetStart.value + offset)
+                    rawOffsetEnd.value = scaleToOffset(minPx, maxPx, value.endInclusive)
+                    val offsetEnd = rawOffsetEnd.value
+                    var offsetStart = rawOffsetStart.value.coerceIn(minPx, offsetEnd)
+                    offsetStart = snapValueToTick(offsetStart, tickFractions, minPx, maxPx)
+                    offsetStart..offsetEnd
+                } else {
+                    rawOffsetEnd.value = (rawOffsetEnd.value + offset)
+                    rawOffsetStart.value = scaleToOffset(minPx, maxPx, value.start)
+                    val offsetStart = rawOffsetStart.value
+                    var offsetEnd = rawOffsetEnd.value.coerceIn(offsetStart, maxPx)
+                    offsetEnd = snapValueToTick(offsetEnd, tickFractions, minPx, maxPx)
+                    offsetStart..offsetEnd
+                }
 
-    val pressDrag = Modifier.rangeSliderPressDragModifier(
-        startInteractionSource,
-        endInteractionSource,
-        rawOffsetStart,
-        rawOffsetEnd,
-        enabled,
-        isRtl,
-        totalWidth,
-        valueRange,
-        gestureEndAction,
-        onDrag,
-    )
+            onValueChangeState.value.invoke(scaleToUserValue(minPx, maxPx, offsetRange))
+        }
+
+    val pressDrag =
+        Modifier.rangeSliderPressDragModifier(
+            startInteractionSource,
+            endInteractionSource,
+            rawOffsetStart,
+            rawOffsetEnd,
+            enabled,
+            isRtl,
+            totalWidth,
+            valueRange,
+            gestureEndAction,
+            onDrag,
+        )
 
     // The positions of the thumbs are dependant on each other.
     val coercedStart = value.start.coerceIn(valueRange.start, value.endInclusive)
     val coercedEnd = value.endInclusive.coerceIn(value.start, valueRange.endInclusive)
-    val positionFractionStart = calcFraction(
-        valueRange.start,
-        valueRange.endInclusive,
-        coercedStart
-    )
+    val positionFractionStart =
+        calcFraction(
+            valueRange.start,
+            valueRange.endInclusive,
+            coercedStart,
+        )
     val positionFractionEnd = calcFraction(valueRange.start, valueRange.endInclusive, coercedEnd)
 
-    val sliderPositions = remember {
-        SliderPositions(
-            positionFractionStart..positionFractionEnd,
-            tickFractions
-        )
-    }
+    val sliderPositions =
+        remember {
+            SliderPositions(
+                positionFractionStart..positionFractionEnd,
+                tickFractions,
+            )
+        }
     sliderPositions.activeRange = positionFractionStart..positionFractionEnd
     sliderPositions.tickFractions = tickFractions
 
     val startSteps = floor(steps * positionFractionEnd).toInt()
     val endSteps = floor(steps * (1f - positionFractionStart)).toInt()
 
-    val startThumbSemantics = Modifier.sliderSemantics(
-        coercedStart,
-        enabled,
-        { changedVal -> onValueChangeState.value.invoke(changedVal..coercedEnd) },
-        onValueChangeFinished,
-        valueRange.start..coercedEnd,
-        startSteps
-    )
-    val endThumbSemantics = Modifier.sliderSemantics(
-        coercedEnd,
-        enabled,
-        { changedVal -> onValueChangeState.value.invoke(coercedStart..changedVal) },
-        onValueChangeFinished,
-        coercedStart..valueRange.endInclusive,
-        endSteps
-    )
+    val startThumbSemantics =
+        Modifier.sliderSemantics(
+            coercedStart,
+            enabled,
+            { changedVal -> onValueChangeState.value.invoke(changedVal..coercedEnd) },
+            onValueChangeFinished,
+            valueRange.start..coercedEnd,
+            startSteps,
+        )
+    val endThumbSemantics =
+        Modifier.sliderSemantics(
+            coercedEnd,
+            enabled,
+            { changedVal -> onValueChangeState.value.invoke(coercedStart..changedVal) },
+            onValueChangeFinished,
+            coercedStart..valueRange.endInclusive,
+            endSteps,
+        )
 
     Layout(
         {
-            Box(modifier = Modifier
-                .layoutId(RangeSliderComponents.STARTTHUMB)
-                .focusable(enabled, startInteractionSource)
-                .then(startThumbSemantics)
+            Box(
+                modifier =
+                    Modifier
+                        .layoutId(RangeSliderComponents.STARTTHUMB)
+                        .focusable(enabled, startInteractionSource)
+                        .then(startThumbSemantics),
             ) { startThumb(sliderPositions) }
-            Box(modifier = Modifier
-                .layoutId(RangeSliderComponents.ENDTHUMB)
-                .focusable(enabled, endInteractionSource)
-                .then(endThumbSemantics)
+            Box(
+                modifier =
+                    Modifier
+                        .layoutId(RangeSliderComponents.ENDTHUMB)
+                        .focusable(enabled, endInteractionSource)
+                        .then(endThumbSemantics),
             ) { endThumb(sliderPositions) }
             Box(modifier = Modifier.layoutId(RangeSliderComponents.TRACK)) {
                 track(sliderPositions)
             }
         },
-        modifier = modifier
-            .requiredSizeIn(
-                minWidth = SliderTokens.HandleWidth,
-                minHeight = SliderTokens.HandleHeight
-            )
-            .then(pressDrag)
+        modifier =
+            modifier
+                .requiredSizeIn(
+                    minWidth = SliderTokens.HandleWidth,
+                    minHeight = SliderTokens.HandleHeight,
+                ).then(pressDrag),
     ) { measurables, constraints ->
-        val startThumbPlaceable = measurables.first {
-            it.layoutId == RangeSliderComponents.STARTTHUMB
-        }.measure(
-            constraints
-        )
+        val startThumbPlaceable =
+            measurables
+                .first {
+                    it.layoutId == RangeSliderComponents.STARTTHUMB
+                }.measure(
+                    constraints,
+                )
 
-        val endThumbPlaceable = measurables.first {
-            it.layoutId == RangeSliderComponents.ENDTHUMB
-        }.measure(
-            constraints
-        )
+        val endThumbPlaceable =
+            measurables
+                .first {
+                    it.layoutId == RangeSliderComponents.ENDTHUMB
+                }.measure(
+                    constraints,
+                )
 
-        val trackPlaceable = measurables.first {
-            it.layoutId == RangeSliderComponents.TRACK
-        }.measure(
-            constraints.offset(
-                horizontal = - (startThumbPlaceable.width + endThumbPlaceable.width) / 2
-            ).copy(minHeight = 0)
-        )
+        val trackPlaceable =
+            measurables
+                .first {
+                    it.layoutId == RangeSliderComponents.TRACK
+                }.measure(
+                    constraints
+                        .offset(
+                            horizontal = -(startThumbPlaceable.width + endThumbPlaceable.width) / 2,
+                        ).copy(minHeight = 0),
+                )
 
-        val sliderWidth = trackPlaceable.width +
+        val sliderWidth =
+            trackPlaceable.width +
                 (startThumbPlaceable.width + endThumbPlaceable.width) / 2
-        val sliderHeight = maxOf(
-            trackPlaceable.height,
-            startThumbPlaceable.height,
-            endThumbPlaceable.height
-        )
+        val sliderHeight =
+            maxOf(
+                trackPlaceable.height,
+                startThumbPlaceable.height,
+                endThumbPlaceable.height,
+            )
 
         startThumbWidth = startThumbPlaceable.width.toFloat()
         endThumbWidth = endThumbPlaceable.width.toFloat()
@@ -748,16 +795,18 @@ private fun RangeSliderImpl(
         if (!obtainedMeasurements.value) {
             val finalizedMaxPx = max(totalWidth - endThumbWidth / 2, 0f)
             val finalizedMinPx = min(startThumbWidth / 2, finalizedMaxPx)
-            rawOffsetStart.value = scaleToOffset(
-                finalizedMinPx,
-                finalizedMaxPx,
-                value.start
-            )
-            rawOffsetEnd.value = scaleToOffset(
-                finalizedMinPx,
-                finalizedMaxPx,
-                value.endInclusive
-            )
+            rawOffsetStart.value =
+                scaleToOffset(
+                    finalizedMinPx,
+                    finalizedMaxPx,
+                    value.start,
+                )
+            rawOffsetEnd.value =
+                scaleToOffset(
+                    finalizedMinPx,
+                    finalizedMaxPx,
+                    value.endInclusive,
+                )
             obtainedMeasurements.value = true
         }
 
@@ -774,19 +823,19 @@ private fun RangeSliderImpl(
 
         layout(
             sliderWidth,
-            sliderHeight
+            sliderHeight,
         ) {
             trackPlaceable.placeRelative(
                 trackOffsetX,
-                trackOffsetY
+                trackOffsetY,
             )
             startThumbPlaceable.placeRelative(
                 startThumbOffsetX,
-                startThumbOffsetY
+                startThumbOffsetY,
             )
             endThumbPlaceable.placeRelative(
                 endThumbOffsetX,
-                endThumbOffsetY
+                endThumbOffsetY,
             )
         }
     }
@@ -797,7 +846,6 @@ private fun RangeSliderImpl(
  */
 @Stable
 object CupertinoSliderDefaults {
-
     /**
      * Creates a [CupertinoSliderColors] that represents the different colors used in parts of the
      * [CupertinoSlider] in different states.
@@ -837,19 +885,20 @@ object CupertinoSliderDefaults {
         disabledActiveTrackColor: Color = activeTrackColor.copy(alpha = .5f),
         disabledActiveTickColor: Color = activeTickColor,
         disabledInactiveTrackColor: Color = inactiveTrackColor.copy(alpha = .5f),
-        disabledInactiveTickColor: Color = activeTickColor
-    ): CupertinoSliderColors = CupertinoSliderColors(
-        thumbColor = thumbColor,
-        activeTrackColor = activeTrackColor,
-        activeTickColor = activeTickColor,
-        inactiveTrackColor = inactiveTrackColor,
-        inactiveTickColor = inactiveTickColor,
-        disabledThumbColor = disabledThumbColor,
-        disabledActiveTrackColor = disabledActiveTrackColor,
-        disabledActiveTickColor = disabledActiveTickColor,
-        disabledInactiveTrackColor = disabledInactiveTrackColor,
-        disabledInactiveTickColor = disabledInactiveTickColor
-    )
+        disabledInactiveTickColor: Color = activeTickColor,
+    ): CupertinoSliderColors =
+        CupertinoSliderColors(
+            thumbColor = thumbColor,
+            activeTrackColor = activeTrackColor,
+            activeTickColor = activeTickColor,
+            inactiveTrackColor = inactiveTrackColor,
+            inactiveTickColor = inactiveTickColor,
+            disabledThumbColor = disabledThumbColor,
+            disabledActiveTrackColor = disabledActiveTrackColor,
+            disabledActiveTickColor = disabledActiveTickColor,
+            disabledInactiveTrackColor = disabledInactiveTrackColor,
+            disabledInactiveTickColor = disabledInactiveTickColor,
+        )
 
     /**
      * Creates a [CupertinoSliderColors] that represents the different colors used in parts of the
@@ -890,26 +939,28 @@ object CupertinoSliderDefaults {
         disabledActiveTrackColor: Color = activeTrackColor,
         disabledActiveTickColor: Color = activeTickColor,
         disabledInactiveTrackColor: Color = inactiveTrackColor,
-        disabledInactiveTickColor: Color = activeTickColor
-    ): CupertinoSliderColors = CupertinoSliderColors(
-        thumbColor = thumbColor,
-        activeTrackColor = activeTrackColor,
-        activeTickColor = activeTickColor,
-        inactiveTrackColor = inactiveTrackColor,
-        inactiveTickColor = inactiveTickColor,
-        disabledThumbColor = disabledThumbColor,
-        disabledActiveTrackColor = disabledActiveTrackColor,
-        disabledActiveTickColor = disabledActiveTickColor,
-        disabledInactiveTrackColor = disabledInactiveTrackColor,
-        disabledInactiveTickColor = disabledInactiveTickColor
-    )
+        disabledInactiveTickColor: Color = activeTickColor,
+    ): CupertinoSliderColors =
+        CupertinoSliderColors(
+            thumbColor = thumbColor,
+            activeTrackColor = activeTrackColor,
+            activeTickColor = activeTickColor,
+            inactiveTrackColor = inactiveTrackColor,
+            inactiveTickColor = inactiveTickColor,
+            disabledThumbColor = disabledThumbColor,
+            disabledActiveTrackColor = disabledActiveTrackColor,
+            disabledActiveTickColor = disabledActiveTickColor,
+            disabledInactiveTrackColor = disabledInactiveTrackColor,
+            disabledInactiveTickColor = disabledInactiveTickColor,
+        )
 
     @Composable
     fun defaultColorsFor(steps: Int) =
-        if (steps == 0)
+        if (steps == 0) {
             colors()
-        else
+        } else {
             colorsSteps()
+        }
 
     /**
      * The Default thumb for [CupertinoSlider] and [CupertinoRangeSlider]
@@ -930,7 +981,7 @@ object CupertinoSliderDefaults {
         modifier: Modifier = Modifier,
         colors: CupertinoSliderColors = colors(),
         enabled: Boolean = true,
-        thumbSize: DpSize = ThumbSize
+        thumbSize: DpSize = ThumbSize,
     ) {
         val interactions = remember { mutableStateListOf<Interaction>() }
         LaunchedEffect(interactionSource) {
@@ -953,7 +1004,7 @@ object CupertinoSliderDefaults {
                 .size(thumbSize)
                 .hoverable(interactionSource = interactionSource)
                 .shadow(if (enabled) SliderTokens.ThumbElevation else 0.dp, shape, clip = false)
-                .background(colors.thumbColor(enabled).value, shape)
+                .background(colors.thumbColor(enabled).value, shape),
         )
     }
 
@@ -980,9 +1031,10 @@ object CupertinoSliderDefaults {
         val activeTrackColor = colors.trackColor(enabled, active = true)
         val inactiveTickColor = colors.tickColor(enabled, active = false)
         val activeTickColor = colors.tickColor(enabled, active = true)
-        Canvas(modifier
-            .fillMaxWidth()
-            .height(TrackHeight)
+        Canvas(
+            modifier
+                .fillMaxWidth()
+                .height(TrackHeight),
         ) {
             val isRtl = layoutDirection == LayoutDirection.Rtl
             val sliderLeft = Offset(0f, center.y)
@@ -996,42 +1048,45 @@ object CupertinoSliderDefaults {
                 start = sliderStart,
                 end = sliderEnd,
                 strokeWidth = trackStrokeWidth,
-                cap = StrokeCap.Round
+                cap = StrokeCap.Round,
             )
-            val sliderValueEnd = Offset(
-                sliderStart.x +
+            val sliderValueEnd =
+                Offset(
+                    sliderStart.x +
                         (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.endInclusive,
-                center.y
-            )
+                    center.y,
+                )
 
-            val sliderValueStart = Offset(
-                sliderStart.x +
+            val sliderValueStart =
+                Offset(
+                    sliderStart.x +
                         (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.start,
-                center.y
-            )
+                    center.y,
+                )
 
             drawLine(
                 color = activeTrackColor.value,
                 start = sliderValueStart,
                 end = sliderValueEnd,
                 strokeWidth = trackStrokeWidth,
-                cap = StrokeCap.Round
+                cap = StrokeCap.Round,
             )
-            sliderPositions.tickFractions.groupBy {
-                it > sliderPositions.activeRange.endInclusive ||
+            sliderPositions.tickFractions
+                .groupBy {
+                    it > sliderPositions.activeRange.endInclusive ||
                         it < sliderPositions.activeRange.start
-            }.forEach { (outsideFraction, list) ->
+                }.forEach { (outsideFraction, list) ->
 
-                list.fastForEach {
-                    drawLine(
-                        color = (if (outsideFraction) inactiveTickColor else activeTickColor).value,
-                        start = Offset(lerp(sliderStart, sliderEnd, it).x, center.y - 2.dp.toPx()),
-                        end = Offset(lerp(sliderStart, sliderEnd, it).x, center.y + 2.dp.toPx()),
-                        strokeWidth = tickSize,
-                        cap = StrokeCap.Square
-                    )
+                    list.fastForEach {
+                        drawLine(
+                            color = (if (outsideFraction) inactiveTickColor else activeTickColor).value,
+                            start = Offset(lerp(sliderStart, sliderEnd, it).x, center.y - 2.dp.toPx()),
+                            end = Offset(lerp(sliderStart, sliderEnd, it).x, center.y + 2.dp.toPx()),
+                            strokeWidth = tickSize,
+                            cap = StrokeCap.Square,
+                        )
+                    }
                 }
-            }
         }
     }
 }
@@ -1040,7 +1095,7 @@ private fun snapValueToTick(
     current: Float,
     tickFractions: FloatArray,
     minPx: Float,
-    maxPx: Float
+    maxPx: Float,
 ): Float {
     // target is a closest anchor to the `current`, if exists
     return tickFractions
@@ -1051,7 +1106,7 @@ private fun snapValueToTick(
 
 private suspend fun AwaitPointerEventScope.awaitSlop(
     id: PointerId,
-    type: PointerType
+    type: PointerType,
 ): Pair<PointerInputChange, Float>? {
     var initialDelta = 0f
     val postPointerSlop = { pointerInput: PointerInputChange, offset: Float ->
@@ -1062,21 +1117,39 @@ private suspend fun AwaitPointerEventScope.awaitSlop(
     return if (afterSlopResult != null) afterSlopResult to initialDelta else null
 }
 
-private fun stepsToTickFractions(steps: Int): FloatArray {
-    return if (steps == 0) floatArrayOf() else FloatArray(steps + 2) { it.toFloat() / (steps + 1) }
-}
+private fun stepsToTickFractions(steps: Int): FloatArray =
+    if (steps == 0) {
+        floatArrayOf()
+    } else {
+        FloatArray(steps + 2) {
+            it.toFloat() / (steps + 1)
+        }
+    }
 
 // Scale x1 from a1..b1 range to a2..b2 range
-private fun scale(a1: Float, b1: Float, x1: Float, a2: Float, b2: Float) =
-    lerp(a2, b2, calcFraction(a1, b1, x1))
+private fun scale(
+    a1: Float,
+    b1: Float,
+    x1: Float,
+    a2: Float,
+    b2: Float,
+) = lerp(a2, b2, calcFraction(a1, b1, x1))
 
 // Scale x.start, x.endInclusive from a1..b1 range to a2..b2 range
-private fun scale(a1: Float, b1: Float, x: ClosedFloatingPointRange<Float>, a2: Float, b2: Float) =
-    scale(a1, b1, x.start, a2, b2)..scale(a1, b1, x.endInclusive, a2, b2)
+private fun scale(
+    a1: Float,
+    b1: Float,
+    x: ClosedFloatingPointRange<Float>,
+    a2: Float,
+    b2: Float,
+) = scale(a1, b1, x.start, a2, b2)..scale(a1, b1, x.endInclusive, a2, b2)
 
 // Calculate the 0..1 fraction that `pos` value represents between `a` and `b`
-private fun calcFraction(a: Float, b: Float, pos: Float) =
-    (if (b - a == 0f) 0f else (pos - a) / (b - a)).coerceIn(0f, 1f)
+private fun calcFraction(
+    a: Float,
+    b: Float,
+    pos: Float,
+) = (if (b - a == 0f) 0f else (pos - a) / (b - a)).coerceIn(0f, 1f)
 
 private fun Modifier.sliderSemantics(
     value: Float,
@@ -1084,7 +1157,7 @@ private fun Modifier.sliderSemantics(
     onValueChange: (Float) -> Unit,
     onValueChangeFinished: (() -> Unit)? = null,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    steps: Int = 0
+    steps: Int = 0,
 ): Modifier {
     val coerced = value.coerceIn(valueRange.start, valueRange.endInclusive)
     return semantics {
@@ -1093,23 +1166,25 @@ private fun Modifier.sliderSemantics(
             action = { targetValue ->
                 var newValue = targetValue.coerceIn(valueRange.start, valueRange.endInclusive)
                 val originalVal = newValue
-                val resolvedValue = if (steps > 0) {
-                    var distance: Float = newValue
-                    for (i in 0..steps + 1) {
-                        val stepValue = lerp(
-                            valueRange.start,
-                            valueRange.endInclusive,
-                            i.toFloat() / (steps + 1)
-                        )
-                        if (abs(stepValue - originalVal) <= distance) {
-                            distance = abs(stepValue - originalVal)
-                            newValue = stepValue
+                val resolvedValue =
+                    if (steps > 0) {
+                        var distance: Float = newValue
+                        for (i in 0..steps + 1) {
+                            val stepValue =
+                                lerp(
+                                    valueRange.start,
+                                    valueRange.endInclusive,
+                                    i.toFloat() / (steps + 1),
+                                )
+                            if (abs(stepValue - originalVal) <= distance) {
+                                distance = abs(stepValue - originalVal)
+                                newValue = stepValue
+                            }
                         }
+                        newValue
+                    } else {
+                        newValue
                     }
-                    newValue
-                } else {
-                    newValue
-                }
 
                 // This is to keep it consistent with AbsSeekbar.java: return false if no
                 // change from current.
@@ -1120,7 +1195,7 @@ private fun Modifier.sliderSemantics(
                     onValueChangeFinished?.invoke()
                     true
                 }
-            }
+            },
         )
     }.progressSemantics(value, valueRange, steps)
 }
@@ -1133,11 +1208,10 @@ private fun Modifier.sliderTapModifier(
     rawOffset: Lazy<State<Float>>,
     gestureEndAction: State<() -> Unit>,
     pressOffset: MutableState<Float>,
-    enabled: Boolean
+    enabled: Boolean,
 ) = composed(
     factory = {
         if (enabled) {
-
             val scope = rememberCoroutineScope()
             pointerInput(draggableState, interactionSource, maxPx, isRtl) {
                 awaitEachGesture {
@@ -1146,17 +1220,19 @@ private fun Modifier.sliderTapModifier(
                     val slop = viewConfiguration.pointerSlop(event.type)
 
                     if (abs((event.position.x - end.position.x)) < slop) {
-
-                        val offset = if (isRtl)
-                            maxPx - end.position.x
-                        else end.position.x
+                        val offset =
+                            if (isRtl) {
+                                maxPx - end.position.x
+                            } else {
+                                end.position.x
+                            }
 
                         scope.launch {
                             animateToTarget(
                                 draggableState,
                                 rawOffset.value.value,
                                 offset,
-                                0f
+                                0f,
                             )
                             gestureEndAction.value.invoke()
                         }
@@ -1167,31 +1243,35 @@ private fun Modifier.sliderTapModifier(
             this
         }
     },
-    inspectorInfo = debugInspectorInfo {
-        name = "sliderTapModifier"
-        properties["draggableState"] = draggableState
-        properties["interactionSource"] = interactionSource
-        properties["maxPx"] = maxPx
-        properties["isRtl"] = isRtl
-        properties["rawOffset"] = rawOffset
-        properties["gestureEndAction"] = gestureEndAction
-        properties["pressOffset"] = pressOffset
-        properties["enabled"] = enabled
-    }
+    inspectorInfo =
+        debugInspectorInfo {
+            name = "sliderTapModifier"
+            properties["draggableState"] = draggableState
+            properties["interactionSource"] = interactionSource
+            properties["maxPx"] = maxPx
+            properties["isRtl"] = isRtl
+            properties["rawOffset"] = rawOffset
+            properties["gestureEndAction"] = gestureEndAction
+            properties["pressOffset"] = pressOffset
+            properties["enabled"] = enabled
+        },
 )
 
 private suspend fun animateToTarget(
     draggableState: DraggableState,
     current: Float,
     target: Float,
-    velocity: Float
+    velocity: Float,
 ) {
     draggableState.drag {
         var latestValue = current
 
-        val anim = if (target > current)
-            SliderToTickAnimationForward
-        else SliderToTickAnimationBackward
+        val anim =
+            if (target > current) {
+                SliderToTickAnimationForward
+            } else {
+                SliderToTickAnimationBackward
+            }
 
         Animatable(initialValue = current).animateTo(target, anim, velocity) {
             dragBy(this.value - latestValue)
@@ -1214,28 +1294,31 @@ private fun Modifier.rangeSliderPressDragModifier(
 ): Modifier =
     if (enabled) {
         pointerInput(startInteractionSource, endInteractionSource, maxPx, isRtl, valueRange) {
-            val rangeSliderLogic = RangeSliderLogic(
-                startInteractionSource,
-                endInteractionSource,
-                rawOffsetStart,
-                rawOffsetEnd,
-                onDrag
-            )
+            val rangeSliderLogic =
+                RangeSliderLogic(
+                    startInteractionSource,
+                    endInteractionSource,
+                    rawOffsetStart,
+                    rawOffsetEnd,
+                    onDrag,
+                )
             coroutineScope {
                 awaitEachGesture {
                     val event = awaitFirstDown(requireUnconsumed = false)
                     val interaction = DragInteraction.Start()
                     var posX = if (isRtl) maxPx - event.position.x else event.position.x
                     val compare = rangeSliderLogic.compareOffsets(posX)
-                    var draggingStart = if (compare != 0) {
-                        compare < 0
-                    } else {
-                        rawOffsetStart.value > posX
-                    }
+                    var draggingStart =
+                        if (compare != 0) {
+                            compare < 0
+                        } else {
+                            rawOffsetStart.value > posX
+                        }
 
                     awaitSlop(event.id, event.type)?.let {
                         val slop = viewConfiguration.pointerSlop(event.type)
-                        val shouldUpdateCapturedThumb = abs(rawOffsetEnd.value - posX) < slop &&
+                        val shouldUpdateCapturedThumb =
+                            abs(rawOffsetEnd.value - posX) < slop &&
                                 abs(rawOffsetStart.value - posX) < slop
                         if (shouldUpdateCapturedThumb) {
                             val dir = it.second
@@ -1248,22 +1331,24 @@ private fun Modifier.rangeSliderPressDragModifier(
                         draggingStart,
                         posX,
                         interaction,
-                        this@coroutineScope
+                        this@coroutineScope,
                     )
 
-                    val finishInteraction = try {
-                        val success = horizontalDrag(pointerId = event.id) {
-                            val deltaX = it.positionChange().x
-                            onDrag.value.invoke(draggingStart, if (isRtl) -deltaX else deltaX)
-                        }
-                        if (success) {
-                            DragInteraction.Stop(interaction)
-                        } else {
+                    val finishInteraction =
+                        try {
+                            val success =
+                                horizontalDrag(pointerId = event.id) {
+                                    val deltaX = it.positionChange().x
+                                    onDrag.value.invoke(draggingStart, if (isRtl) -deltaX else deltaX)
+                                }
+                            if (success) {
+                                DragInteraction.Stop(interaction)
+                            } else {
+                                DragInteraction.Cancel(interaction)
+                            }
+                        } catch (e: CancellationException) {
                             DragInteraction.Cancel(interaction)
                         }
-                    } catch (e: CancellationException) {
-                        DragInteraction.Cancel(interaction)
-                    }
 
                     gestureEndAction.value.invoke(draggingStart)
                     launch {
@@ -1298,11 +1383,11 @@ private class RangeSliderLogic(
         draggingStart: Boolean,
         posX: Float,
         interaction: Interaction,
-        scope: CoroutineScope
+        scope: CoroutineScope,
     ) {
         onDrag.value.invoke(
             draggingStart,
-            posX - if (draggingStart) rawOffsetStart.value else rawOffsetEnd.value
+            posX - if (draggingStart) rawOffsetStart.value else rawOffsetEnd.value,
         )
         scope.launch {
             activeInteraction(draggingStart).emit(interaction)
@@ -1321,35 +1406,36 @@ class CupertinoSliderColors internal constructor(
     private val disabledActiveTrackColor: Color,
     private val disabledActiveTickColor: Color,
     private val disabledInactiveTrackColor: Color,
-    private val disabledInactiveTickColor: Color
+    private val disabledInactiveTickColor: Color,
 ) {
+    @Composable
+    internal fun thumbColor(enabled: Boolean): State<Color> = rememberUpdatedState(if (enabled) thumbColor else disabledThumbColor)
 
     @Composable
-    internal fun thumbColor(enabled: Boolean): State<Color> {
-        return rememberUpdatedState(if (enabled) thumbColor else disabledThumbColor)
-    }
-
-    @Composable
-    internal fun trackColor(enabled: Boolean, active: Boolean): State<Color> {
-        return rememberUpdatedState(
+    internal fun trackColor(
+        enabled: Boolean,
+        active: Boolean,
+    ): State<Color> =
+        rememberUpdatedState(
             if (enabled) {
                 if (active) activeTrackColor else inactiveTrackColor
             } else {
                 if (active) disabledActiveTrackColor else disabledInactiveTrackColor
-            }
+            },
         )
-    }
 
     @Composable
-    internal fun tickColor(enabled: Boolean, active: Boolean): State<Color> {
-        return rememberUpdatedState(
+    internal fun tickColor(
+        enabled: Boolean,
+        active: Boolean,
+    ): State<Color> =
+        rememberUpdatedState(
             if (enabled) {
                 if (active) activeTickColor else inactiveTickColor
             } else {
                 if (active) disabledActiveTickColor else disabledInactiveTickColor
-            }
+            },
         )
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -1397,41 +1483,40 @@ private val SliderToTickAnimationForward = tween<Float>(durationMillis = 180, ea
 private val SliderToTickAnimationBackward = tween<Float>(durationMillis = 80, easing = LinearEasing)
 
 private class SliderDraggableState(
-    val onDelta: (Float) -> Unit
+    val onDelta: (Float) -> Unit,
 ) : DraggableState {
-
     var isDragging by mutableStateOf(false)
         private set
 
-    private val dragScope: DragScope = object : DragScope {
-        override fun dragBy(pixels: Float): Unit = onDelta(pixels)
-    }
+    private val dragScope: DragScope =
+        object : DragScope {
+            override fun dragBy(pixels: Float): Unit = onDelta(pixels)
+        }
 
     private val scrollMutex = MutatorMutex()
 
     override suspend fun drag(
         dragPriority: MutatePriority,
-        block: suspend DragScope.() -> Unit
-    ): Unit = coroutineScope {
-        isDragging = true
-        scrollMutex.mutateWith(dragScope, dragPriority, block)
-        isDragging = false
-    }
+        block: suspend DragScope.() -> Unit,
+    ): Unit =
+        coroutineScope {
+            isDragging = true
+            scrollMutex.mutateWith(dragScope, dragPriority, block)
+            isDragging = false
+        }
 
-    override fun dispatchRawDelta(delta: Float) {
-        return onDelta(delta)
-    }
+    override fun dispatchRawDelta(delta: Float) = onDelta(delta)
 }
 
 private enum class SliderComponents {
     THUMB,
-    TRACK
+    TRACK,
 }
 
 private enum class RangeSliderComponents {
     ENDTHUMB,
     STARTTHUMB,
-    TRACK
+    TRACK,
 }
 
 /**
@@ -1441,7 +1526,7 @@ private enum class RangeSliderComponents {
 @Stable
 class SliderPositions(
     initialActiveRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    initialTickFractions: FloatArray = floatArrayOf()
+    initialTickFractions: FloatArray = floatArrayOf(),
 ) {
     /**
      * [ClosedFloatingPointRange] that indicates the current active range for the
@@ -1478,19 +1563,19 @@ class SliderPositions(
 internal suspend fun AwaitPointerEventScope.awaitHorizontalPointerSlopOrCancellation(
     pointerId: PointerId,
     pointerType: PointerType,
-    onPointerSlopReached: (change: PointerInputChange, overSlop: Float) -> Unit
+    onPointerSlopReached: (change: PointerInputChange, overSlop: Float) -> Unit,
 ) = awaitPointerSlopOrCancellation(
     pointerId = pointerId,
     pointerType = pointerType,
     onPointerSlopReached = onPointerSlopReached,
-    getDragDirectionValue = { it.x }
+    getDragDirectionValue = { it.x },
 )
 
 private suspend inline fun AwaitPointerEventScope.awaitPointerSlopOrCancellation(
     pointerId: PointerId,
     pointerType: PointerType,
     onPointerSlopReached: (PointerInputChange, Float) -> Unit,
-    getDragDirectionValue: (Offset) -> Float
+    getDragDirectionValue: (Offset) -> Float,
 ): PointerInputChange? {
     if (currentEvent.isPointerUp(pointerId)) {
         return null // The pointer has already been lifted, so the gesture is canceled
@@ -1515,7 +1600,8 @@ private suspend inline fun AwaitPointerEventScope.awaitPointerSlopOrCancellation
         } else {
             val currentPosition = dragEvent.position
             val previousPosition = dragEvent.previousPosition
-            val positionChange = getDragDirectionValue(currentPosition) -
+            val positionChange =
+                getDragDirectionValue(currentPosition) -
                     getDragDirectionValue(previousPosition)
             totalPositionChange += positionChange
 
@@ -1529,7 +1615,7 @@ private suspend inline fun AwaitPointerEventScope.awaitPointerSlopOrCancellation
             } else {
                 onPointerSlopReached(
                     dragEvent,
-                    totalPositionChange - (sign(totalPositionChange) * touchSlop)
+                    totalPositionChange - (sign(totalPositionChange) * touchSlop),
                 )
                 if (dragEvent.isConsumed) {
                     return dragEvent
@@ -1541,19 +1627,17 @@ private suspend inline fun AwaitPointerEventScope.awaitPointerSlopOrCancellation
     }
 }
 
-private fun PointerEvent.isPointerUp(pointerId: PointerId): Boolean =
-    changes.fastFirstOrNull { it.id == pointerId }?.pressed != true
+private fun PointerEvent.isPointerUp(pointerId: PointerId): Boolean = changes.fastFirstOrNull { it.id == pointerId }?.pressed != true
 
 private val mouseSlop = 0.125.dp
 private val defaultTouchSlop = 18.dp // The default touch slop on Android devices
 private val mouseToTouchSlopRatio = mouseSlop / defaultTouchSlop
 
-internal fun ViewConfiguration.pointerSlop(pointerType: PointerType): Float {
-    return when (pointerType) {
+internal fun ViewConfiguration.pointerSlop(pointerType: PointerType): Float =
+    when (pointerType) {
         PointerType.Mouse -> touchSlop * mouseToTouchSlopRatio
         else -> touchSlop
     }
-}
 
 internal object SliderTokens {
     val ThumbElevation = 8.dp

@@ -26,7 +26,7 @@ fun AdaptiveCheckbox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    adaptation : AdaptationScope<CupertinoCheckBoxAdaptation,MaterialCheckBoxAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<CupertinoCheckBoxAdaptation, MaterialCheckBoxAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
         adaptation = remember { CheckBoxAdaptation() },
@@ -38,7 +38,7 @@ fun AdaptiveCheckbox(
                 modifier = modifier,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
         },
         cupertino = {
@@ -48,9 +48,9 @@ fun AdaptiveCheckbox(
                 modifier = modifier,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
@@ -62,7 +62,7 @@ fun AdaptiveTriStateCheckbox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    adaptation : AdaptationScope<CupertinoCheckBoxAdaptation,MaterialCheckBoxAdaptation>.() -> Unit = {}
+    adaptation: AdaptationScope<CupertinoCheckBoxAdaptation, MaterialCheckBoxAdaptation>.() -> Unit = {},
 ) {
     AdaptiveWidget(
         adaptation = remember { CheckBoxAdaptation() },
@@ -74,7 +74,7 @@ fun AdaptiveTriStateCheckbox(
                 modifier = modifier,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
         },
         cupertino = {
@@ -84,30 +84,29 @@ fun AdaptiveTriStateCheckbox(
                 modifier = modifier,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                colors = it.colors
+                colors = it.colors,
             )
-        }
+        },
     )
 }
 
 @Stable
 class MaterialCheckBoxAdaptation(
-    colors: CheckboxColors
+    colors: CheckboxColors,
 ) {
     var colors: CheckboxColors by mutableStateOf(colors)
 }
 
 @Stable
 class CupertinoCheckBoxAdaptation(
-    colors : CupertinoCheckboxColors
-){
-    var colors : CupertinoCheckboxColors by mutableStateOf(colors)
+    colors: CupertinoCheckboxColors,
+) {
+    var colors: CupertinoCheckboxColors by mutableStateOf(colors)
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Stable
-private class CheckBoxAdaptation : Adaptation<CupertinoCheckBoxAdaptation,MaterialCheckBoxAdaptation>(){
-
+private class CheckBoxAdaptation : Adaptation<CupertinoCheckBoxAdaptation, MaterialCheckBoxAdaptation>() {
     @Composable
     override fun rememberCupertinoAdaptation(): CupertinoCheckBoxAdaptation {
         val colors = CupertinoCheckboxDefaults.colors()
@@ -125,5 +124,4 @@ private class CheckBoxAdaptation : Adaptation<CupertinoCheckBoxAdaptation,Materi
             MaterialCheckBoxAdaptation(colors)
         }
     }
-
 }

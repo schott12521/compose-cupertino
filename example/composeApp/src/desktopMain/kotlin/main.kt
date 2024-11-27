@@ -6,18 +6,18 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.extensions.compose.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 
-
-
 fun main() {
     val lifecycle = LifecycleRegistry()
 
-    val component = DefaultRootComponent(
-        DefaultComponentContext(lifecycle = lifecycle)
-    )
+    val component =
+        DefaultRootComponent(
+            DefaultComponentContext(lifecycle = lifecycle),
+        )
 
-    val windowState = WindowState(
-        size = DpSize(400.dp, 800.dp)
-    )
+    val windowState =
+        WindowState(
+            size = DpSize(400.dp, 800.dp),
+        )
 
     singleWindowApplication(windowState) {
         LifecycleController(lifecycle, windowState)
