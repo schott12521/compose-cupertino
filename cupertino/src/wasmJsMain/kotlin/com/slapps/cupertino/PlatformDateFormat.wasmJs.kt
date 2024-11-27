@@ -30,7 +30,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
-import kotlin.js.Date
 
 actual typealias CalendarLocale = Locale
 
@@ -286,10 +285,10 @@ private fun Int.toStringWithLeadingZero(): String{
 @Suppress("UnsafeCastFromDynamic")
 // handle an exception in js because it's not propagated to wasm
 internal fun getFirstDayOfWeek(locale: String): Int =
-    js("""{ try { 
-           return new Intl.Locale(locale).weekInfo.firstDay; 
-        } catch (error) { 
-           return -1; 
+    js("""{ try {
+           return new Intl.Locale(locale).weekInfo.firstDay;
+        } catch (error) {
+           return -1;
       }}"""
     )
 
@@ -303,7 +302,7 @@ internal fun getIs24HourFormat(localeTag: String): Int =
             if (locale.hourCycles) {
                 return locale.hourCycles.includes('h23') || locale.hourCycles.includes('h24') ? 1 : 0;
             }
-        
+
             // Fallback to hourCycle property
             if (locale.hourCycle) {
                 return locale.hourCycle === 'h23' || locale.hourCycle === 'h24' ? 1 : 0;
@@ -313,3 +312,45 @@ internal fun getIs24HourFormat(localeTag: String): Int =
     )
 
 
+/**
+ * This is an incomplete declaration of js Date:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+ * It's copy-pasted with some modifications from kotlin.js.Date, which is not available for k/wasm.
+ * The modifications allow to make it reusable for both k/js and k/wasm.
+ *
+ * It contains only required methods.
+ */
+private external class Date() {
+    constructor(milliseconds: Double)
+    constructor(year: Int, month: Int, day: Int)
+    fun getDay(): Int
+    fun toLocaleDateString(locales: String, options: LocaleOptions = definedExternally): String
+
+    companion object {
+        fun now(): Double
+    }
+
+    interface LocaleOptions {
+        var localeMatcher: String?
+        var timeZone: String?
+        var hour12: Boolean?
+        var formatMatcher: String?
+        var weekday: String?
+        var era: String?
+        var year: String?
+        var month: String?
+        var day: String?
+        var hour: String?
+        var minute: String?
+        var second: String?
+        var timeZoneName: String?
+    }
+}
+
+private fun emptyLocaleOptions(): Date.LocaleOptions = js("new Object()")
+
+private inline fun dateLocaleOptions(init: Date.LocaleOptions.() -> Unit): Date.LocaleOptions {
+    val result = emptyLocaleOptions()
+    init(result)
+    return result
+}
