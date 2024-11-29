@@ -65,17 +65,16 @@ import androidx.compose.ui.util.fastSumBy
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
-import io.github.alexzhirkevich.cupertino.icons.outlined.Checkmark
-import io.github.alexzhirkevich.cupertino.section.CupertinoSectionDefaults
-import io.github.alexzhirkevich.cupertino.section.CupertinoSectionTokens
-import io.github.alexzhirkevich.cupertino.section.SectionStyle
-import io.github.alexzhirkevich.cupertino.theme.BrightSeparatorColor
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.systemGray7
-import io.github.alexzhirkevich.cupertino.theme.systemRed
+import com.slapps.cupertino.icons.CupertinoIcons
+import com.slapps.cupertino.icons.outlined.Checkmark
+import com.slapps.cupertino.section.CupertinoSectionDefaults
+import com.slapps.cupertino.section.CupertinoSectionTokens
+import com.slapps.cupertino.section.SectionStyle
+import com.slapps.cupertino.theme.BrightSeparatorColor
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.systemGray7
+import com.slapps.cupertino.theme.systemRed
 import kotlin.math.max
 import kotlin.math.min
 

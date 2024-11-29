@@ -24,7 +24,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.LocalContentColor
 
 /**
  * A Material Design icon component that draws [imageVector] using [tint], with a default value

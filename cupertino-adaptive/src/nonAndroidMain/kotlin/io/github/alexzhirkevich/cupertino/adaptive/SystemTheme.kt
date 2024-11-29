@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.alexzhirkevich.cupertino.adaptive
+package com.slapps.cupertino.adaptive
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable

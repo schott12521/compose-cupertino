@@ -19,11 +19,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.CupertinoIcon
-import io.github.alexzhirkevich.cupertino.CupertinoIconDefaults
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.White
+import com.slapps.cupertino.CupertinoIcon
+import com.slapps.cupertino.CupertinoIconDefaults
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.White
 
 /**
  * Icon with colored background and rounded corners often used in [CupertinoSection] label

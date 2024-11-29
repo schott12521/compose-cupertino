@@ -11,8 +11,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import io.github.alexzhirkevich.cupertino.ProvideTextStyle
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.ProvideTextStyle
+import com.slapps.cupertino.theme.CupertinoTheme
 
 internal class SectionItem(
     val key: Any? = null,

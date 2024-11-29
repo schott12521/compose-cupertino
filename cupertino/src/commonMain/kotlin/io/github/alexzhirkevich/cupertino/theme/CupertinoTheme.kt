@@ -8,13 +8,13 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalHapticFeedback
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.LocalTextStyle
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.InternalCupertinoApi
-import io.github.alexzhirkevich.cupertino.SystemBarAppearance
-import io.github.alexzhirkevich.cupertino.rememberCupertinoHapticFeedback
-import io.github.alexzhirkevich.cupertino.rememberCupertinoIndication
+import com.slapps.cupertino.LocalContentColor
+import com.slapps.cupertino.LocalTextStyle
+import com.slapps.cupertino.ExperimentalCupertinoApi
+import com.slapps.cupertino.InternalCupertinoApi
+import com.slapps.cupertino.SystemBarAppearance
+import com.slapps.cupertino.rememberCupertinoHapticFeedback
+import com.slapps.cupertino.rememberCupertinoIndication
 
 @OptIn(InternalCupertinoApi::class, ExperimentalCupertinoApi::class)
 @Composable

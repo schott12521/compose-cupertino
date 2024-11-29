@@ -34,8 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.CupertinoTheme
 
 /**
  * Return true if container can't scroll forward

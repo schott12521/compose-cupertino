@@ -46,11 +46,10 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.Gray
-import io.github.alexzhirkevich.cupertino.theme.systemGreen
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.Gray
+import com.slapps.cupertino.theme.systemGreen
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 

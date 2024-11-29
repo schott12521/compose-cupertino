@@ -33,13 +33,13 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.filledButtonColors
-import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.plainButtonColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.DefaultAlpha
-import io.github.alexzhirkevich.cupertino.theme.Shapes
-import io.github.alexzhirkevich.cupertino.theme.Typography
+import com.slapps.cupertino.CupertinoButtonDefaults.filledButtonColors
+import com.slapps.cupertino.CupertinoButtonDefaults.plainButtonColors
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.DefaultAlpha
+import com.slapps.cupertino.theme.Shapes
+import com.slapps.cupertino.theme.Typography
 
 enum class CupertinoButtonSize(
     val shape: (Shapes) -> Shape,
@@ -301,7 +301,7 @@ object CupertinoButtonDefaults {
         "Use filledButtonColors instead",
         replaceWith = ReplaceWith(
             "filledButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-            "io.github.alexzhirkevich.cupertino.filledButtonColors"
+            "com.slapps.cupertino.filledButtonColors"
         )
     )
     fun borderedProminentButtonColors(
@@ -325,7 +325,7 @@ object CupertinoButtonDefaults {
         "Use tintedButtonColors instead",
         replaceWith = ReplaceWith(
             "tintedButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-            "io.github.alexzhirkevich.cupertino.tintedButtonColors"
+            "com.slapps.cupertino.tintedButtonColors"
         )
     )
     @Composable
@@ -351,7 +351,7 @@ object CupertinoButtonDefaults {
         "Use plainButtonColors instead",
         replaceWith = ReplaceWith(
             "plainButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-            "io.github.alexzhirkevich.cupertino.plainButtonColors"
+            "com.slapps.cupertino.plainButtonColors"
         )
     )
     @Composable
@@ -377,7 +377,7 @@ object CupertinoButtonDefaults {
         "Use grayButtonColors instead",
         replaceWith = ReplaceWith(
             "grayButtonColors(contentColor,containerColor,disabledContentColor,disabledContainerColor,indicationColor)",
-            "io.github.alexzhirkevich.cupertino.grayButtonColors"
+            "com.slapps.cupertino.grayButtonColors"
         )
     )
     @Composable

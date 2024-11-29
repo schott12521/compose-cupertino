@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import io.github.alexzhirkevich.cupertino.section.CupertinoSectionDefaults
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.section.CupertinoSectionDefaults
+import com.slapps.cupertino.theme.CupertinoTheme
 
 @ExperimentalCupertinoApi
 @Composable
