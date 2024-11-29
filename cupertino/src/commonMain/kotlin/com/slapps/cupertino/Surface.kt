@@ -24,8 +24,7 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.CupertinoTheme
 
 
 @Composable
@@ -104,7 +103,7 @@ fun CupertinoSurface(
     "Use CupertinoSurface instead",
     replaceWith = ReplaceWith(
         "CupertinoSurface(modifier,shape,color,shadowElevation,contentColor,content)",
-        "io.github.alexzhirkevich.cupertino.CupertinoSurface"
+        "com.slapps.cupertino.CupertinoSurface"
     )
 )
 @Composable
@@ -128,7 +127,7 @@ fun Surface(
     "Use CupertinoSurface instead",
     replaceWith = ReplaceWith(
         "CupertinoSurface(onClick,modifier,enabled,shape,color,contentColor,border,indication,interactionSource,content)",
-        "io.github.alexzhirkevich.cupertino.CupertinoSurface"
+        "com.slapps.cupertino.CupertinoSurface"
     )
 )
 @Composable

@@ -37,17 +37,17 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.section.CupertinoSectionDefaults
-import io.github.alexzhirkevich.cupertino.swipebox.AnchorsEffect
-import io.github.alexzhirkevich.cupertino.swipebox.DismissFullyExpandedEffect
-import io.github.alexzhirkevich.cupertino.swipebox.HapticFeedbackEffect
-import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeActionPosition
-import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeBoxState
-import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeActionPosition
-import io.github.alexzhirkevich.cupertino.swipebox.CupertinoSwipeBoxActionsBuilder
-import io.github.alexzhirkevich.cupertino.swipebox.LocalSwipeBoxItemFullSwipe
-import io.github.alexzhirkevich.cupertino.swipebox.SwipeBoxStates
-import io.github.alexzhirkevich.cupertino.swipebox.rememberCupertinoSwipeBoxState
+import com.slapps.cupertino.section.CupertinoSectionDefaults
+import com.slapps.cupertino.swipebox.AnchorsEffect
+import com.slapps.cupertino.swipebox.DismissFullyExpandedEffect
+import com.slapps.cupertino.swipebox.HapticFeedbackEffect
+import com.slapps.cupertino.swipebox.LocalSwipeActionPosition
+import com.slapps.cupertino.swipebox.LocalSwipeBoxState
+import com.slapps.cupertino.swipebox.CupertinoSwipeActionPosition
+import com.slapps.cupertino.swipebox.CupertinoSwipeBoxActionsBuilder
+import com.slapps.cupertino.swipebox.LocalSwipeBoxItemFullSwipe
+import com.slapps.cupertino.swipebox.SwipeBoxStates
+import com.slapps.cupertino.swipebox.rememberCupertinoSwipeBoxState
 import kotlin.math.roundToInt
 
 // TODO clean this up

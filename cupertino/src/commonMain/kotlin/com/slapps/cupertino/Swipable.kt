@@ -30,10 +30,10 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import io.github.alexzhirkevich.cupertino.SwipeableDefaults.AnimationSpec
-import io.github.alexzhirkevich.cupertino.SwipeableDefaults.StandardResistanceFactor
-import io.github.alexzhirkevich.cupertino.SwipeableDefaults.VelocityThreshold
-import io.github.alexzhirkevich.cupertino.SwipeableDefaults.resistanceConfig
+import com.slapps.cupertino.SwipeableDefaults.AnimationSpec
+import com.slapps.cupertino.SwipeableDefaults.StandardResistanceFactor
+import com.slapps.cupertino.SwipeableDefaults.VelocityThreshold
+import com.slapps.cupertino.SwipeableDefaults.resistanceConfig
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter

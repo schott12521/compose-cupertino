@@ -27,9 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
-import io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.LocalContainerColor
+import com.slapps.cupertino.CupertinoHorizontalDivider
+import com.slapps.cupertino.ExperimentalCupertinoApi
+import com.slapps.cupertino.LocalContainerColor
 
 
 /**

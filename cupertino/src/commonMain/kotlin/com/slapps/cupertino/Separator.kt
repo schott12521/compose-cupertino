@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.CupertinoTheme
 
 internal val LocalSeparatorColor = compositionLocalOf {
     Color.Unspecified
@@ -28,7 +28,7 @@ internal val LocalSeparatorColor = compositionLocalOf {
 @Deprecated(
     replaceWith = ReplaceWith(
         "CupertinoHorizontalDivider(modifier,thickness,color)",
-        "io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider"
+        "com.slapps.cupertino.CupertinoHorizontalDivider"
     ),
     message = "Use CupertinoHorizontalDivider instead")
 fun CupertinoDivider(

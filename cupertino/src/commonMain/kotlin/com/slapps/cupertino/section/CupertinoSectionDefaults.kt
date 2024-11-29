@@ -36,15 +36,15 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.CupertinoIcon
-import io.github.alexzhirkevich.cupertino.CupertinoIconDefaults
-import io.github.alexzhirkevich.cupertino.copy
-import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
-import io.github.alexzhirkevich.cupertino.icons.filled.XmarkCircle
-import io.github.alexzhirkevich.cupertino.icons.outlined.ChevronBackward
-import io.github.alexzhirkevich.cupertino.icons.outlined.ChevronForward
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.LocalContentColor
+import com.slapps.cupertino.CupertinoIcon
+import com.slapps.cupertino.CupertinoIconDefaults
+import com.slapps.cupertino.copy
+import com.slapps.cupertino.icons.CupertinoIcons
+import com.slapps.cupertino.icons.filled.XmarkCircle
+import com.slapps.cupertino.icons.outlined.ChevronBackward
+import com.slapps.cupertino.icons.outlined.ChevronForward
+import com.slapps.cupertino.theme.CupertinoTheme
 
 @Immutable
 object CupertinoSectionDefaults {
@@ -108,7 +108,7 @@ object CupertinoSectionDefaults {
                 fontWeight = FontWeight.Bold
             )
             style.grouped -> CupertinoTheme.typography.footnote
-            else ->CupertinoTheme.typography.subhead
+            else -> CupertinoTheme.typography.subhead
                 .copy(fontWeight = FontWeight.SemiBold)
         }
 

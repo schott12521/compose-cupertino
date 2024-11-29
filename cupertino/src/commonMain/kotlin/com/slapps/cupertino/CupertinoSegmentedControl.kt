@@ -49,12 +49,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
-import io.github.alexzhirkevich.cupertino.section.CupertinoSectionDefaults
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.White
-import io.github.alexzhirkevich.cupertino.theme.isDark
-import io.github.alexzhirkevich.cupertino.theme.systemGray8
+import com.slapps.cupertino.theme.isDark
+import com.slapps.cupertino.section.CupertinoSectionDefaults
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.White
+import com.slapps.cupertino.theme.isDark
+import com.slapps.cupertino.theme.systemGray8
 
 
 /**

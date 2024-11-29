@@ -18,10 +18,10 @@ import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.util.fastForEachIndexed
 import androidx.compose.ui.util.fastMap
 import androidx.compose.ui.util.fastSumBy
-import io.github.alexzhirkevich.cupertino.CupertinoHorizontalDivider
-import io.github.alexzhirkevich.cupertino.CupertinoSurface
-import io.github.alexzhirkevich.cupertino.ExperimentalCupertinoApi
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.CupertinoHorizontalDivider
+import com.slapps.cupertino.CupertinoSurface
+import com.slapps.cupertino.ExperimentalCupertinoApi
+import com.slapps.cupertino.theme.CupertinoTheme
 
 
 /**

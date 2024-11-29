@@ -35,7 +35,7 @@ import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMap
 import androidx.compose.ui.util.fastMapNotNull
 import androidx.compose.ui.util.fastMaxOfOrNull
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.CupertinoTheme
 
 /**
  * Scaffold implements the basic cupertino and material design visual layout structure.

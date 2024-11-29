@@ -50,11 +50,10 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.util.fastMap
-import io.github.alexzhirkevich.LocalContentColor
-import io.github.alexzhirkevich.cupertino.theme.Black
-import io.github.alexzhirkevich.cupertino.theme.CupertinoColors
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
-import io.github.alexzhirkevich.cupertino.theme.DefaultAlpha
+import com.slapps.cupertino.theme.Black
+import com.slapps.cupertino.theme.CupertinoColors
+import com.slapps.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.theme.DefaultAlpha
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.roundToInt

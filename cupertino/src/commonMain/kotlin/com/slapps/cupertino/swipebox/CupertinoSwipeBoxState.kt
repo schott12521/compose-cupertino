@@ -11,8 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalDensity
-import io.github.alexzhirkevich.cupertino.InternalCupertinoApi
-import io.github.alexzhirkevich.cupertino.CupertinoSwipeBoxDefaults
+import com.slapps.cupertino.InternalCupertinoApi
+import com.slapps.cupertino.CupertinoSwipeBoxDefaults
 import kotlinx.coroutines.CoroutineScope
 
 enum class SwipeBoxStates {

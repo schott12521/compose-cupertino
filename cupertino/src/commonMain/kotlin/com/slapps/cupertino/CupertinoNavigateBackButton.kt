@@ -18,11 +18,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults.plainButtonColors
-import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
-import io.github.alexzhirkevich.cupertino.icons.outlined.ChevronBackward
-import io.github.alexzhirkevich.cupertino.icons.outlined.ChevronForward
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
+import com.slapps.cupertino.CupertinoButtonDefaults.plainButtonColors
+import com.slapps.cupertino.icons.CupertinoIcons
+import com.slapps.cupertino.icons.outlined.ChevronBackward
+import com.slapps.cupertino.icons.outlined.ChevronForward
+import com.slapps.cupertino.theme.CupertinoTheme
 
 @Composable
 @ExperimentalCupertinoApi
