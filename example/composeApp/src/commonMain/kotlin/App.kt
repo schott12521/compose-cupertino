@@ -15,28 +15,27 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.materialkolor.dynamicColorScheme
 import cupertino.CupertinoWidgetsScreen
 import icons.IconsScreen
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTheme
-import io.github.alexzhirkevich.cupertino.adaptive.CupertinoThemeSpec
-import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
-import io.github.alexzhirkevich.cupertino.adaptive.MaterialThemeSpec
-import io.github.alexzhirkevich.cupertino.adaptive.Shapes
-import io.github.alexzhirkevich.cupertino.adaptive.Theme
-import io.github.alexzhirkevich.cupertino.decompose.cupertinoPredictiveBackAnimation
-import io.github.alexzhirkevich.cupertino.theme.darkColorScheme
-import io.github.alexzhirkevich.cupertino.theme.lightColorScheme
+import com.slapps.cupertino.adaptive.AdaptiveTheme
+import com.slapps.cupertino.adaptive.CupertinoThemeSpec
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.adaptive.MaterialThemeSpec
+import com.slapps.cupertino.adaptive.Shapes
+import com.slapps.cupertino.adaptive.Theme
+import com.slapps.cupertino.decompose.cupertinoPredictiveBackAnimation
+import com.slapps.cupertino.theme.darkColorScheme
+import com.slapps.cupertino.theme.lightColorScheme
 import sections.SectionsScreen
+
 
 expect val IsIos: Boolean
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalAdaptiveApi::class)
 @Composable
 fun App(rootComponent: RootComponent) {
+
     val theme by derivedStateOf {
-        if (rootComponent.isMaterial.value) {
-            Theme.Material3
-        } else {
-            Theme.Cupertino
-        }
+        if (rootComponent.isMaterial.value)
+            Theme.Material3 else Theme.Cupertino
     }
 
     val (lightAccent, darkAccent) = rootComponent.accentColor.value
@@ -48,11 +47,9 @@ fun App(rootComponent: RootComponent) {
     val directionState by remember {
         derivedStateOf {
             if (rootComponent.isInvertLayoutDirection.value) {
-                if (direction == LayoutDirection.Rtl) {
-                    LayoutDirection.Ltr
-                } else {
+                if (direction == LayoutDirection.Rtl)
+                    LayoutDirection.Ltr else
                     LayoutDirection.Rtl
-                }
             } else {
                 direction
             }
@@ -61,31 +58,28 @@ fun App(rootComponent: RootComponent) {
 
     ActualPredictiveBackGestureOverlay(
         modifier = Modifier.fillMaxSize(),
-        backDispatcher = rootComponent.backDispatcher,
+        backDispatcher = rootComponent.backDispatcher
     ) {
         Children(
             stack = rootComponent.stack,
             modifier = Modifier.fillMaxSize(),
 //            onBack = rootComponent::onBack,
-            animation =
-                cupertinoPredictiveBackAnimation(
-                    backHandler = rootComponent.backHandler,
-                    onBack = rootComponent::onBack,
-                ),
+            animation = cupertinoPredictiveBackAnimation(
+                backHandler = rootComponent.backHandler,
+                onBack = rootComponent::onBack,
+            ),
         ) { child ->
             CompositionLocalProvider(
-                LocalLayoutDirection provides directionState,
+                LocalLayoutDirection provides directionState
             ) {
+
                 GeneratedAdaptiveTheme(
                     target = theme,
-                    primaryColor =
-                        if (isDark) {
-                            lightAccent
-                        } else {
-                            darkAccent
-                        },
-                    useDarkTheme = isDark,
+                    primaryColor = if (isDark)
+                        lightAccent else darkAccent,
+                    useDarkTheme = isDark
                 ) {
+
                     when (val c = child.instance) {
                         is RootComponent.Child.Cupertino -> CupertinoWidgetsScreen(c.component)
                         is RootComponent.Child.Adaptive -> AdaptiveWidgetsScreen(c.component)
@@ -104,44 +98,37 @@ fun GeneratedAdaptiveTheme(
     target: Theme,
     primaryColor: Color,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    shapes: Shapes = Shapes(),
-    content: @Composable () -> Unit,
+    shapes: com.slapps.cupertino.adaptive.Shapes = com.slapps.cupertino.adaptive.Shapes(),
+    content: @Composable () -> Unit
 ) {
     AdaptiveTheme(
         target = target,
-        material =
-            MaterialThemeSpec.Default(
-                colorScheme =
-                    dynamicColorScheme(
-                        seedColor = primaryColor,
-                        isDark = useDarkTheme,
-                    ),
-                shapes =
-                    androidx.compose.material3.Shapes(
-                        extraSmall = shapes.extraSmall,
-                        small = shapes.small,
-                        medium = shapes.medium,
-                        large = shapes.large,
-                        extraLarge = shapes.extraLarge,
-                    ),
+        material = MaterialThemeSpec.Default(
+            colorScheme = dynamicColorScheme(
+                seedColor = primaryColor,
+                isDark = useDarkTheme
             ),
-        cupertino =
-            CupertinoThemeSpec.Default(
-                colorScheme =
-                    if (useDarkTheme) {
-                        darkColorScheme(accent = primaryColor)
-                    } else {
-                        lightColorScheme(accent = primaryColor)
-                    },
-                shapes =
-                    io.github.alexzhirkevich.cupertino.theme.Shapes(
-                        extraSmall = shapes.extraSmall,
-                        small = shapes.small,
-                        medium = shapes.medium,
-                        large = shapes.large,
-                        extraLarge = shapes.extraLarge,
-                    ),
-            ),
-        content = content,
+            shapes = androidx.compose.material3.Shapes(
+                extraSmall = shapes.extraSmall,
+                small = shapes.small,
+                medium = shapes.medium,
+                large = shapes.large,
+                extraLarge = shapes.extraLarge
+            )
+        ),
+        cupertino = CupertinoThemeSpec.Default(
+            colorScheme = if (useDarkTheme)
+                darkColorScheme(accent = primaryColor)
+            else lightColorScheme(accent = primaryColor),
+            shapes = com.slapps.cupertino.theme.Shapes(
+                extraSmall = shapes.extraSmall,
+                small = shapes.small,
+                medium = shapes.medium,
+                large = shapes.large,
+                extraLarge = shapes.extraLarge
+            )
+        ),
+        content = content
     )
 }
+

@@ -92,7 +92,7 @@ kotlin {
 }
 
 android {
-    namespace = "io.github.alexzhirkevich.${name.filter { it.isLetter() }}"
+    namespace = "com.slapps.cupertino${name.filter { it.isLetter() }}"
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
 
     defaultConfig {
