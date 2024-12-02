@@ -49,7 +49,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
-import com.slapps.cupertino.theme.isDark
 import com.slapps.cupertino.section.CupertinoSectionDefaults
 import com.slapps.cupertino.theme.CupertinoColors
 import com.slapps.cupertino.theme.CupertinoTheme

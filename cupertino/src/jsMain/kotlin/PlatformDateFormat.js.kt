@@ -19,11 +19,6 @@ package com.slapps.cupertino
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.text.intl.Locale
-import com.slapps.cupertino.CalendarDate
-import com.slapps.cupertino.DateInputFormat
-import com.slapps.cupertino.DaysInWeek
-import com.slapps.cupertino.MillisecondsIn24Hours
-import com.slapps.cupertino.datePatternAsInputFormat
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone

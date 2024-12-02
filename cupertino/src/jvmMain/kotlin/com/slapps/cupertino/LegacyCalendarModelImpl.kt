@@ -2,12 +2,6 @@
 
 package com.slapps.cupertino
 
-import com.slapps.cupertino.CalendarDate
-import com.slapps.cupertino.CalendarModel
-import com.slapps.cupertino.CalendarMonth
-import com.slapps.cupertino.DateInputFormat
-import com.slapps.cupertino.DaysInWeek
-import com.slapps.cupertino.datePatternAsInputFormat
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.text.ParseException

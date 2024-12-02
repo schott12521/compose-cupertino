@@ -6,7 +6,6 @@ import androidx.compose.ui.graphics.Color
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
 import platform.CoreGraphics.CGFloatVar
 import platform.UIKit.UIColor
