@@ -1,0 +1,54 @@
+# Workflow for deploying WasmJS App to GitHub Pages
+name: Deploy WasmJS App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: read  # Required to fetch the repository content
+  pages: write    # Allow deployment to GitHub Pages
+  id-token: write # Required by actions/configure-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: "✅ Checkout code"
+        uses: actions/checkout@v4
+
+      # 2. Set up JDK 21
+      - name: "⚙️ Set up JDK 21"
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # 3. Set up Gradle
+      - name: "⚙️ Setup Gradle"
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.9
+
+      # 4. Build the WasmJS App
+      - name: "🛠️ Build WasmJS App"
+        run: gradle :example:composeApp:wasmJsBrowserDistribution
+
+      # 5. Set up GitHub Pages
+      - name: "📄 Configure GitHub Pages"
+        uses: actions/configure-pages@v5
+
+      # 6. Upload the built artifact to Pages
+      - name: "📤 Upload GitHub Pages artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./example/composeApp/build/dist/wasmJs/productionExecutable
+
+      # 7. Deploy to GitHub Pages
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
