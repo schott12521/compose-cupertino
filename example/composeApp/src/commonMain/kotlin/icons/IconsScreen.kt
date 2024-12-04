@@ -953,7 +953,7 @@ fun IconsScreen(
                 },
                 message = {
                     CupertinoText(
-                        selectedIcon!!.name
+                        "CupertinoIcon.${if (isOutlined) "Outlined" else "Filled"}.${selectedIcon!!.name}"
                     )
                 },
                 onDismissRequest = {
