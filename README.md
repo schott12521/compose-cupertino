@@ -31,3 +31,7 @@ cupertino-icons-extended = { module = "com.slapps.cupertino:cupertino-icons-exte
 ```
 
 Note this repo is not officially supported in any capacity; changes will be applied upstream when applicable ([example1](https://github.com/alexzhirkevich/compose-cupertino/pull/74), [example2](https://github.com/alexzhirkevich/compose-cupertino/pull/77))
+
+## Try it
+
+Wanna see what the library feels like? The latest version builds and deploys the Kotlin/WasmJS target to github pages: https://schott12521.github.io/compose-cupertino/
