@@ -19,7 +19,7 @@ jobs:
 
       - name: "🤔 Infer release with Nyx, make changelog"
         id: nyx
-        uses: mooltiverse/nyx-github-action@main
+        uses: mooltiverse/nyx-github-action@v3
         env:
           NYX_VERBOSITY: 'WARN'
         with:
