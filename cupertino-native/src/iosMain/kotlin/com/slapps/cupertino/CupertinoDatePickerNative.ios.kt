@@ -8,12 +8,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
 import com.slapps.cupertino.theme.CupertinoTheme
@@ -63,7 +61,7 @@ actual fun CupertinoDatePickerNative(
     )
 }
 
-@OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalForeignApi::class)
 @Composable
 internal fun CupertinoDatePickerNativeImpl(
     millis: Long,
@@ -111,12 +109,13 @@ internal fun CupertinoDatePickerNativeImpl(
                     is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
                 }
             it.setDate(NSDate.dateWithTimeIntervalSince1970(millis / 1000.0), animated = false)
+//            it.date = NSDate.dateWithTimeIntervalSince1970(millis / 1000.0)
             (it.subviews.firstOrNull() as UIView?)?.backgroundColor = containerColor.toUIColor()
             it.applyTheme(dark)
         },
         properties =
             UIKitInteropProperties(
-                interactionMode = UIKitInteropInteractionMode.NonCooperative,
+                isInteractive = true,
                 isNativeAccessibilityEnabled = true,
             ),
     )
@@ -145,6 +144,7 @@ private class DatePicker(
                 is DatePickerStyle.Wheel -> UIDatePickerStyle.UIDatePickerStyleWheels
                 is DatePickerStyle.Pager -> UIDatePickerStyle.UIDatePickerStyleInline
             }
+//                setFrame(sizeThatFits(cValue { CGSizeZero }))
         addTarget(
             target = this,
             action = NSSelectorFromString("changed:"),
