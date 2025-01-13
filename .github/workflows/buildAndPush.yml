@@ -70,13 +70,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: "⬇️ Install GPG"
-        env:
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-        run: |
-          brew install gpg
-          echo "$SIGNING_KEY" | gpg --dearmor > ${HOME}/secring.gpg
-
       - name: "⚙️ Setup Gradle"
         uses: gradle/actions/setup-gradle@v3
         with:
