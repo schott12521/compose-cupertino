@@ -70,6 +70,13 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: "⬇️ Install GPG"
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          brew install gpg
+          echo "$SIGNING_KEY" | gpg --dearmor > ${HOME}/secring.gpg
+
       - name: "⚙️ Setup Gradle"
         uses: gradle/actions/setup-gradle@v3
         with:
@@ -81,3 +88,7 @@ jobs:
           VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}

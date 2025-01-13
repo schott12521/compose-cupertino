@@ -4,30 +4,25 @@ This is a fork of [alexzhirkevich/compose-cupertino](https://github.com/alexzhir
 
 Additionally this repo has automated builds to enable faster releases, to take advantage of new compose multiplatform features as they become available.
 
+## New features (compared to the OG `compose-cupertino`)
+
+- Updated SwipeBox
+- Fixed Cupertino Date Picker implementations to interact with scrolling correctly
+
 # Usage
 
-For now this package is only available via github packages.
+This package is updated to both MavenCentral and GitHub Packages.
 
-Add the following to your settings.gradle.kts, making sure that you have set or provided mavenUser and mavenPassword to your github username and a Personal Access Token.
-```
-maven {
-    url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
-    credentials {
-        username = mavenUser
-        password = mavenPassword
-    }
-}
-```
-Then you can depend on the [latest version](https://github.com/schott12521/compose-cupertino/releases) of the library (including my SwipeBox changes), in libs.versions.toml:
+Depend on the [latest version](https://github.com/schott12521/compose-cupertino/releases) by declaring this in libs.versions.toml:
 
 ```
 cupertino = "$latestVersion"
 
-cupertino = { group = "com.slapps.cupertino", name = "cupertino", version.ref = "cupertino" }
-cupertino-adaptive = { group = "com.slapps.cupertino", name = "cupertino-adaptive", version.ref = "cupertino" }
-cupertino-decompose = { group = "com.slapps.cupertino", name = "cupertino-decompose", version.ref = "cupertino" }
-cupertino-native = { group = "com.slapps.cupertino", name = "cupertino-native", version.ref = "cupertino" }
-cupertino-icons-extended = { module = "com.slapps.cupertino:cupertino-icons-extended", version.ref = "cupertino" }
+cupertino = { group = "io.github.schott12521", name = "cupertino", version.ref = "cupertino" }
+cupertino-adaptive = { group = "io.github.schott12521", name = "cupertino-adaptive", version.ref = "cupertino" }
+cupertino-decompose = { group = "io.github.schott12521", name = "cupertino-decompose", version.ref = "cupertino" }
+cupertino-native = { group = "io.github.schott12521", name = "cupertino-native", version.ref = "cupertino" }
+cupertino-icons-extended = { group = "io.github.schott12521", name = "cupertino-icons-extended", version.ref = "cupertino" }
 ```
 
 Note this repo is not officially supported in any capacity; changes will be applied upstream when applicable ([example1](https://github.com/alexzhirkevich/compose-cupertino/pull/74), [example2](https://github.com/alexzhirkevich/compose-cupertino/pull/77))
