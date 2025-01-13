@@ -14,20 +14,11 @@ val publishProperties = Properties().apply {
 // Check if we’re on GitHub Actions
 val isGithubActions = System.getenv("GITHUB_ACTIONS") == "true"
 
-val computedVersion = if (isGithubActions) {
-    val ref = System.getenv("GITHUB_REF") ?: ""
-    if (ref.startsWith("refs/tags/")) {
-        // e.g. "refs/tags/1.2.3" -> "1.2.3"
-        ref.removePrefix("refs/tags/")
-    } else {
-        // On a push to a non-tag branch, or something else
+version = System.getenv("VERSION") ?:
+    if (isGithubActions)
+        error("VERSION must be set for GitHub Actions")
+    else
         "0.0.0-LOCAL"
-    }
-} else {
-    // Local build fallback
-    "0.0.0-LOCAL"
-}
-version = computedVersion
 
 // Create Javadoc JAR (even if it's empty)
 val javadocJar by tasks.registering(Jar::class) {
