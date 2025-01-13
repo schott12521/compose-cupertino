@@ -1,6 +1,6 @@
 [versions]
-agp = "8.7.2"
-gradle = "8.7.2"
+agp = "8.7.3"
+gradle = "8.7.3"
 kotlin = "2.0.21"
 androidx-activityCompose = "1.9.3"
 
