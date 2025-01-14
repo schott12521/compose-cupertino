@@ -25,6 +25,7 @@ essenty = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" 
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 atomicfu= { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech-mavenPublish" }
+vanniktech-maven-publish-gradle-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "vanniktech-mavenPublish" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
