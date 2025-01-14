@@ -1,4 +1,5 @@
-import com.android.build.gradle.internal.scope.publishArtifactToConfiguration
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.kotlin.dsl.*
 import java.util.Properties
@@ -22,13 +23,21 @@ version = System.getenv("VERSION") ?:
     else
         "0.0.0-LOCAL"
 
-// Create Javadoc JAR (even if it's empty)
+// TODO use Dokka and fix this
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+
+    coordinates(project.group as String, project.name, project.version as String)
+    configure(
+        KotlinMultiplatform(
+            javadocJar = JavadocJar.Empty(),
+            sourcesJar = true,
+        )
+    )
 
 //    publishing {
 //        repositories {
@@ -73,43 +82,6 @@ mavenPublishing {
             connection.set("scm:git:https://github.com/schott12521/compose-cupertino.git")
             developerConnection.set("scm:git:ssh://github.com/schott12521/compose-cupertino.git")
             url.set("https://github.com/schott12521/compose-cupertino")
-        }
-    }
-}
-
-// 2) Only configure remote repositories & signing if we're in GitHub Actions
-if (isGithubActions) {
-
-    // Repositories
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-            maven {
-                name = "MavenCentral"
-                url = uri("https://repo1.maven.org/maven2/")
-                credentials {
-                    username = System.getenv("OSSRH_USERNAME")
-                    password = System.getenv("OSSRH_PASSWORD")
-                }
-            }
-        }
-    }
-
-    // Signing
-    signing {
-        val signingKey = System.getenv("SIGNING_KEY")
-        val signingPassword = System.getenv("SIGNING_PASSWORD")
-
-        if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
-            sign(publishing.publications)
         }
     }
 }
