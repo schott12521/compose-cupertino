@@ -12,4 +12,5 @@ dependencies {
     implementation(gradleApi())
     implementation(libs.gradle)
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.vanniktech.mavenPublish)
 }

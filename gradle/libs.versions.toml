@@ -11,6 +11,7 @@ essenty = "2.2.1"
 serialization="1.7.3"
 atomicfu="0.23.2"
 jetbrainsCompose="1.7.3"
+vanniktech-mavenPublish="0.30.0"
 
 [libraries]
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
@@ -23,6 +24,7 @@ decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", ver
 essenty = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 atomicfu= { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
+vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech-mavenPublish" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
