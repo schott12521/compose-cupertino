@@ -11,7 +11,7 @@ Additionally this repo has automated builds to enable faster releases, to take a
 
 # Usage
 
-This package is published to Maven Packages: // TODO include link
+This package is published to Maven Central Repository: [cupertino-core on Maven Central](https://central.sonatype.com/artifact/io.github.schott12521/cupertino-core)
 
 Depend on the [latest version](https://github.com/schott12521/compose-cupertino/releases) by declaring this in libs.versions.toml:
 
@@ -25,8 +25,43 @@ cupertino-native = { group = "io.github.schott12521", name = "cupertino-native",
 cupertino-icons-extended = { group = "io.github.schott12521", name = "cupertino-icons-extended", version.ref = "cupertino" }
 ```
 
-Note this repo is not officially supported in any capacity; changes will be applied upstream when applicable ([example1](https://github.com/alexzhirkevich/compose-cupertino/pull/74), [example2](https://github.com/alexzhirkevich/compose-cupertino/pull/77))
+This package is also available via GitHub packages.
 
 ## Try it
 
 Wanna see what the library feels like? The latest version builds and deploys the Kotlin/WasmJS target to github pages: https://schott12521.github.io/compose-cupertino/
+
+# License
+
+Note: As of release 2.0.8, this forked library has been updated copyright headers to fully comply with the Apache 2.0 license copied from the original: https://github.com/alexzhirkevich/compose-cupertino/blob/master/LICENSE.txt
+
+# Contributions
+
+Contribution is always appreciated! Since builds to maven central go through GitHub Actions, we can get your changes in quickly. 
+
+Ensure that the copyright information is included in your file(s):
+
+```
+/*
+ * Copyright (c) 2023-2024. Compose Cupertino project and open source contributors.
+ * Copyright (c) 2025. Scott Lanoue.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+```
+
+Ideally you set up Android Studio / IDE to handle copyright notices for you: https://stackoverflow.com/a/48718711/1730421
+
+# Disclaimer
+
+Note this repo is not officially supported in any capacity; changes will be applied upstream when applicable ([example1](https://github.com/alexzhirkevich/compose-cupertino/pull/74), [example2](https://github.com/alexzhirkevich/compose-cupertino/pull/77))
