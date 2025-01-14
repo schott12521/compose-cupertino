@@ -76,7 +76,7 @@ jobs:
           gradle-version: 8.9
 
       - name: "🌎 Publish with Gradle"
-        run: ./gradlew publishToMavenCentral --no-configuration-cache -Pversion=$VERSION --build-cache --daemon --parallel --scan
+        run: ./gradlew publish --no-configuration-cache -Pversion=$VERSION --build-cache --daemon --parallel --scan
         env:
           VERSION: ${{ needs.infer-release.outputs.version }}
           GITHUB_ACTOR: ${{ github.actor }}
