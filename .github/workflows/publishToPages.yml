@@ -37,6 +37,8 @@ jobs:
       # 4. Build the WasmJS App
       - name: "🛠️ Build WasmJS App"
         run: gradle :example:composeApp:wasmJsBrowserDistribution
+        env:
+          VERSION: "0.0.0-LOCAL"
 
       # 5. Set up GitHub Pages
       - name: "📄 Configure GitHub Pages"
