@@ -11,7 +11,7 @@ Additionally this repo has automated builds to enable faster releases, to take a
 
 # Usage
 
-This package is updated to both MavenCentral and GitHub Packages.
+This package is published to Maven Packages: // TODO include link
 
 Depend on the [latest version](https://github.com/schott12521/compose-cupertino/releases) by declaring this in libs.versions.toml:
 
