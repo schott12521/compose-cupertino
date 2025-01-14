@@ -1,8 +1,10 @@
+import com.android.build.gradle.internal.scope.publishArtifactToConfiguration
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.kotlin.dsl.*
 import java.util.Properties
 
 plugins {
-    `maven-publish`
+    id("com.vanniktech.maven.publish")
     signing
 }
 
@@ -25,14 +27,29 @@ val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-publishing.publications.withType<MavenPublication> {
-    artifact(javadocJar.get())
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
 
-    // If your code can also run locally, set up the pom:
+//    publishing {
+//        repositories {
+//            maven {
+//                name = "GitHubPackages"
+//                url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
+//                credentials {
+//                    username = System.getenv("GITHUB_ACTOR")
+//                    password = System.getenv("GITHUB_TOKEN")
+//                }
+//            }
+//        }
+//    }
+
+    if (isGithubActions)
+        signAllPublications()
+
     pom {
         name.set(project.name)
         description.set(publishProperties.getProperty("description"))
-        url.set("https://github.com/schott12521/ExampleLibrary")
+        url.set("https://github.com/schott12521/compose-cupertino")
 
         licenses {
             license {
@@ -53,9 +70,9 @@ publishing.publications.withType<MavenPublication> {
             }
         }
         scm {
-            connection.set("scm:git:https://github.com/schott12521/ExampleLibrary.git")
-            developerConnection.set("scm:git:ssh://github.com/schott12521/ExampleLibrary.git")
-            url.set("https://github.com/schott12521/ExampleLibrary")
+            connection.set("scm:git:https://github.com/schott12521/compose-cupertino.git")
+            developerConnection.set("scm:git:ssh://github.com/schott12521/compose-cupertino.git")
+            url.set("https://github.com/schott12521/compose-cupertino")
         }
     }
 }
@@ -76,7 +93,7 @@ if (isGithubActions) {
             }
             maven {
                 name = "MavenCentral"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                url = uri("https://repo1.maven.org/maven2/")
                 credentials {
                     username = System.getenv("OSSRH_USERNAME")
                     password = System.getenv("OSSRH_PASSWORD")
