@@ -1,0 +1,15 @@
+=========================================================================
+==  NOTICE file for use with the Apache License, Version 2.0,          ==
+==  in this case for the Apache httpd-2.5.0 distribution.              ==
+=========================================================================
+
+Compose-Cupertino
+Copyright (c) 2023-2024. Compose Cupertino project and open source contributors.
+Copyright (c) 2025. Scott Lanoue.
+
+This library includes software originally developed at
+alexzhirkevich/compose-cupertino (https://github.com/alexzhirkevich/compose-cupertino).
+
+This software library was forked, and the original code has been modified.
+The library is being worked on at
+schott12521/compose-cupertino (https://github.com/schott12521/compose-cupertino).
