@@ -215,12 +215,7 @@ fun CupertinoWidgetsScreen(
 
     val scaffoldState = rememberCupertinoBottomSheetScaffoldState(
         rememberCupertinoSheetState(
-            presentationStyle = PresentationStyle.Modal(
-                detents = setOf(
-                    PresentationDetent.Fraction(.6f),
-                ),
-            )
-//            presentationStyle = PresentationStyle.Fullscreen
+            presentationStyle = PresentationStyle.Modal()
         )
     )
 

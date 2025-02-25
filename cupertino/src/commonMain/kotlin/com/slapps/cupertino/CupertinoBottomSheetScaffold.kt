@@ -20,6 +20,7 @@
 
 package com.slapps.cupertino
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -123,6 +124,7 @@ fun CupertinoBottomSheetScaffold(
     appBarsBlurAlpha: Float = CupertinoScaffoldDefaults.AppBarsBlurAlpha,
     appBarsBlurRadius: Dp = CupertinoScaffoldDefaults.AppBarsBlurRadius,
     hasNavigationTitle: Boolean = false,
+    applyContentScaling: Boolean = CupertinoBottomSheetScaffoldDefaults.ApplyContentScaling,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     BottomSheetScaffoldLayout(
@@ -175,6 +177,7 @@ fun CupertinoBottomSheetScaffold(
         colors = colors,
         sheetShape = sheetShape,
         contentWindowInsets = windowInsets,
+        applyContentScaling = applyContentScaling
     )
 }
 
@@ -217,6 +220,9 @@ class CupertinoBottomSheetScaffoldColors internal constructor(
 
 @Immutable
 object CupertinoBottomSheetScaffoldDefaults {
+
+    const val ApplyContentScaling = true
+
     @Composable
     fun colors(
         sheetContainerColor: Color = CupertinoBottomSheetDefaults.containerColor,
@@ -462,6 +468,7 @@ private fun BottomSheetScaffoldLayout(
     appBarsBlurAlpha: Float = CupertinoScaffoldDefaults.AppBarsBlurAlpha,
     appBarsBlurRadius: Dp = CupertinoScaffoldDefaults.AppBarsBlurRadius,
     hasNavigationTitle: Boolean = false,
+    applyContentScaling: Boolean = true
 ) {
     val density = LocalDensity.current
 
@@ -528,7 +535,7 @@ private fun BottomSheetScaffoldLayout(
                         }
                     }.background(colors.scaledScaffoldBackgroundColor)
                     .graphicsLayer {
-                        if (hasLargeDetent && scaffoldSize.width <= BottomSheetMaxWidth) {
+                        if (applyContentScaling && hasLargeDetent && scaffoldSize.width <= BottomSheetMaxWidth) {
                             val (sub, div) =
                                 if (!sheetState.hasPartiallyExpandedState) {
                                     0f to ScaleMultiplier
