@@ -7,7 +7,7 @@ on:
 
 jobs:
   infer-release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       version: ${{ steps.nyx.outputs.version }}
 
