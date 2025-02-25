@@ -69,7 +69,6 @@ import kotlin.math.roundToInt
 
 // TODO clean this up
 object CupertinoSwipeBoxDefaults {
-    const val enableHapticFeedback = true // TODO
     val allowFullSwipe = true
     val velocityThreshold = Float.POSITIVE_INFINITY
     val actionItemWidth = 84.dp
