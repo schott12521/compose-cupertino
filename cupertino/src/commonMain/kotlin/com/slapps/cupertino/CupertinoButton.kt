@@ -21,6 +21,7 @@ package com.slapps.cupertino
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -108,8 +109,7 @@ fun CupertinoButton(
         else 1f
     )
 
-
-    val indicationColor by rememberUpdatedState(colors.indicationColor)
+    val indication = if (colors.isPlain) null else LocalIndication.current
 
     CupertinoSurface(
         onClick = onClick,
@@ -119,7 +119,8 @@ fun CupertinoButton(
         color = colors.containerColor(enabled).value,
         contentColor = colors.contentColor(enabled).value,
         border = border,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        indication = indication
     ) {
         ProvideTextStyle(value = size.textStyle(CupertinoTheme.typography)) {
             Row(
