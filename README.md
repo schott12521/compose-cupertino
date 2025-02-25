@@ -41,7 +41,7 @@ Note: As of release 2.0.8, this forked library has been updated copyright header
 
 # Contributions
 
-Contribution is always appreciated! Since builds to maven central go through GitHub Actions, we can get your changes in quickly. 
+Contributions are always appreciated! Since builds to maven central go through GitHub Actions, we can get your changes in quickly. 
 
 Ensure that the copyright information is included in your file(s):
 
