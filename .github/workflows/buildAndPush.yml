@@ -7,7 +7,7 @@ on:
 
 jobs:
   infer-release:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.nyx.outputs.version }}
 
@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-publish:
-    runs-on: macos-13
+    runs-on: self-hosted
     needs: infer-release
 
     steps:
