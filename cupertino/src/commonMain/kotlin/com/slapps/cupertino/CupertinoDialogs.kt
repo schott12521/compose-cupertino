@@ -82,9 +82,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import com.slapps.cupertino.theme.isDark
 import com.slapps.cupertino.CupertinoDialogsTokens.AlertDialogTitleMessageSpacing
 import com.slapps.cupertino.section.CupertinoSectionTokens
@@ -280,35 +279,6 @@ fun CupertinoAlertDialog(
     }
 }
 
-// @Composable
-// @ExperimentalCupertinoApi
-// fun CupertinoPickerActionSheet(
-//    onDismissRequest : () -> Unit,
-//    title : (@Composable () -> Unit)? = null,
-//    message : (@Composable () -> Unit)? = null,
-//    containerColor : Color = CupertinoDialogsDefaults.containerColor,
-//    secondaryContainerColor : Color = CupertinoTheme.colorScheme.tertiarySystemBackground,
-//    properties: DialogProperties = DialogProperties(),
-//    buttons : AlertDialogButtonsScope.() -> Unit = {},
-//    picker : @Composable () -> Unit,
-// ) = CupertinoActionSheet(
-//    onDismissRequest = onDismissRequest,
-//    title = title,
-//    message = message,
-//    containerColor = containerColor,
-//    secondaryContainerColor = secondaryContainerColor,
-//    properties = properties,
-//    content = {
-//        CompositionLocalProvider(
-//            LocalContainerColor provides containerColor
-//        ){
-//            picker()
-//        }
-//    },
-//    buttons = buttons
-// )
-//
-
 /**
  * Compose alert dialog with iOS action sheet style.
  *
@@ -444,7 +414,7 @@ internal expect fun FullscreenPopupProperties(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = false,
     usePlatformDefaultWidth: Boolean = true,
-): PopupProperties
+): DialogProperties
 
 expect val DialogProperties.platformInsets: Boolean
 
@@ -458,7 +428,7 @@ private fun AnimatedDialog(
 ) {
     val haptic = LocalHapticFeedback.current
 
-    Popup(
+    Dialog(
         onDismissRequest = onDismissRequest,
         properties =
             FullscreenPopupProperties(
@@ -560,7 +530,7 @@ private fun AnimatedSheet(
 
     if (expandedStates.currentState || expandedStates.targetState) {
         val haptic = LocalHapticFeedback.current
-        Popup(
+        Dialog(
             onDismissRequest = onDismissRequest,
             properties =
                 FullscreenPopupProperties(

@@ -32,13 +32,12 @@ actual fun FullscreenPopupProperties(
     dismissOnBackPress: Boolean,
     dismissOnClickOutside: Boolean,
     usePlatformDefaultWidth: Boolean,
-): PopupProperties =
-    PopupProperties(
-        focusable = true,
+): DialogProperties =
+    DialogProperties(
+        usePlatformInsets = false,
         dismissOnClickOutside = dismissOnClickOutside,
         dismissOnBackPress = dismissOnBackPress,
         usePlatformDefaultWidth = usePlatformDefaultWidth,
-        usePlatformInsets = false,
     )
 
 actual val DialogProperties.platformInsets: Boolean get() = usePlatformInsets
