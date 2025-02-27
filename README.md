@@ -12,6 +12,8 @@ Additionally this repo has automated builds to enable faster releases, to take a
 
 - Updated SwipeBox
 - Fixed Cupertino Date Picker implementations to interact with scrolling correctly
+- Disable content scaling on CupertinoBottomSheetScaffold (https://github.com/alexzhirkevich/compose-cupertino/issues/80)
+- Using Dialogs instead of Popups for CupertinoDialogs (https://github.com/alexzhirkevich/compose-cupertino/issues/78)
 
 # Usage
 
