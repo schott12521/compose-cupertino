@@ -10,7 +10,7 @@ decompose = "3.2.2"
 essenty = "2.2.1"
 serialization="1.7.3"
 atomicfu="0.23.2"
-jetbrainsCompose="1.7.3"
+jetbrainsCompose="1.8.0-alpha03"
 vanniktech-mavenPublish="0.30.0"
 
 [libraries]
