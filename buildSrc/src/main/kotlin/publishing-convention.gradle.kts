@@ -45,23 +45,6 @@ val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-plugins.withType<MavenPublishPlugin>().configureEach {
-    /* Publish locally to the 'build/repository' folder. Can be useful to check publication issues locally */
-    extensions.configure<PublishingExtension> {
-        /* Publish to GitHub packages */
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/schott12521/compose-cupertino")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-    }
-}
-
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
 
