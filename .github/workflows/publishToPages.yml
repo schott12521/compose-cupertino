@@ -32,7 +32,7 @@ jobs:
       - name: "⚙️ Setup Gradle"
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.9
+          gradle-version: 8.10.2
 
       # 4. Build the WasmJS App
       - name: "🛠️ Build WasmJS App"
