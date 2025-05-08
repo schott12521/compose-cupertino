@@ -69,7 +69,6 @@ fun <C : Any, T : Any> UIKitChildren(
     modifier: Modifier = Modifier,
     configuration: ComposeUIViewControllerConfiguration.() -> Unit = {
         onFocusBehavior = OnFocusBehavior.DoNothing
-        platformLayers = false
     },
     content: @Composable (child: Child.Created<C, T>) -> Unit,
 ) {

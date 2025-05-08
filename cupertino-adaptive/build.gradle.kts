@@ -35,6 +35,7 @@ kotlin {
             implementation(projects.cupertinoCore)
             implementation(compose.runtime)
             implementation(compose.foundation)
+            implementation(compose.materialIconsExtended)
             implementation(compose("org.jetbrains.compose.ui:ui-util"))
         }
     }
