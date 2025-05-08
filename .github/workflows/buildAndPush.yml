@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-publish:
-    runs-on: self-hosted
+    runs-on: macos-latest
     needs: infer-release
 
     steps:
