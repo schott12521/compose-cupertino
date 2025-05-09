@@ -32,6 +32,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -108,9 +111,9 @@ fun AdaptiveWidgetsScreen(component: AdaptiveWidgetsComponent) {
                                 Icon(
                                     imageVector =
                                         if (LocalLayoutDirection.current == LayoutDirection.Ltr) {
-                                            Icons.AutoMirrored.Filled.ArrowBack
+                                            Icons.AutoMirrored.Default.ArrowBack
                                         } else {
-                                            Icons.AutoMirrored.Filled.ArrowForward
+                                            Icons.AutoMirrored.Default.ArrowForward
                                         },
                                     contentDescription = "Back",
                                 )
