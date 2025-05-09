@@ -233,12 +233,6 @@ fun CupertinoWidgetsScreen(
         }
     }
 
-    LaunchedEffect(scaffoldState.bottomSheetState.targetValue) {
-        if (scaffoldState.bottomSheetState.targetValue == CupertinoSheetValue.Hidden) {
-            focusManager.clearFocus(force = true)
-        }
-    }
-
     CupertinoBottomSheetScaffold(
         hasNavigationTitle = true,
         colors = CupertinoBottomSheetScaffoldDefaults.colors(
