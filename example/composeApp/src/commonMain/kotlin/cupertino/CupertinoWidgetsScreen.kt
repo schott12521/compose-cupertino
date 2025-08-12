@@ -16,7 +16,6 @@
  */
 
 
-
 @file:OptIn(
     ExperimentalCupertinoApi::class
 )
@@ -38,8 +37,6 @@
 
 package cupertino
 
-import com.slapps.cupertino.swipebox.CupertinoSwipeBoxItem
-import com.slapps.cupertino.swipebox.rememberCupertinoSwipeBoxState
 import IsIos
 import RootComponent
 import androidx.compose.animation.AnimatedContent
@@ -118,7 +115,6 @@ import com.slapps.cupertino.CupertinoSearchTextField
 import com.slapps.cupertino.CupertinoSearchTextFieldDefaults
 import com.slapps.cupertino.CupertinoSegmentedControl
 import com.slapps.cupertino.CupertinoSegmentedControlTab
-import com.slapps.cupertino.CupertinoSheetValue
 import com.slapps.cupertino.CupertinoSlider
 import com.slapps.cupertino.CupertinoSwipeBox
 import com.slapps.cupertino.CupertinoSwitch
@@ -133,7 +129,6 @@ import com.slapps.cupertino.CupertinoWheelPicker
 import com.slapps.cupertino.ExperimentalCupertinoApi
 import com.slapps.cupertino.MenuAction
 import com.slapps.cupertino.MenuSection
-import com.slapps.cupertino.PresentationDetent
 import com.slapps.cupertino.PresentationStyle
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.Add
@@ -182,7 +177,9 @@ import com.slapps.cupertino.section.link
 import com.slapps.cupertino.section.section
 import com.slapps.cupertino.section.sectionContainerBackground
 import com.slapps.cupertino.section.sectionTitle
+import com.slapps.cupertino.swipebox.CupertinoSwipeBoxItem
 import com.slapps.cupertino.swipebox.SwipeBoxStates
+import com.slapps.cupertino.swipebox.rememberCupertinoSwipeBoxState
 import com.slapps.cupertino.theme.CupertinoColors
 import com.slapps.cupertino.theme.CupertinoTheme
 import com.slapps.cupertino.theme.systemBlue
@@ -195,10 +192,10 @@ import com.slapps.cupertino.theme.systemPurple
 import com.slapps.cupertino.theme.systemRed
 import com.slapps.cupertino.theme.systemYellow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.reflect.KClass
+import kotlin.time.Instant
 
 private enum class PickerTab {
     Picker, Time, Date, DateTime
@@ -507,7 +504,8 @@ private fun SwipeBoxExample(scrollableState: ScrollableState) {
         println("Action triggered with message: $message")
     }
 
-    val openSwipeBoxState = remember { mutableStateOf<AnchoredDraggableState<SwipeBoxStates>?>(null) }
+    val openSwipeBoxState =
+        remember { mutableStateOf<AnchoredDraggableState<SwipeBoxStates>?>(null) }
 
     val state0 = rememberCupertinoSwipeBoxState(
         key = "swipeBox0",
