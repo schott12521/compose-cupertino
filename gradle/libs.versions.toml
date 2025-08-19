@@ -1,16 +1,16 @@
 [versions]
-agp = "8.7.3"
-gradle = "8.8.2"
-kotlin = "2.1.0"
+agp = "8.12.0"
+gradle = "8.12.0"
+kotlin = "2.2.0"
 androidx-activityCompose = "1.10.1"
 
-datetime = "0.6.1"
+datetime = "0.7.1"
 material-kolor = "1.4.4"
-decompose = "3.2.2"
-essenty = "2.2.1"
+decompose = "3.3.0"
+essenty = "2.5.0"
 serialization="1.7.3"
 atomicfu="0.23.2"
-jetbrainsCompose="1.8.0"
+jetbrainsCompose="1.8.2"
 vanniktech-mavenPublish="0.30.0"
 
 [libraries]

@@ -58,7 +58,7 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName = "composeApp"
         browser {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
@@ -108,6 +108,8 @@ kotlin {
             implementation(compose.desktop.currentOs)
         }
     }
+
+    compilerOptions.freeCompilerArgs.add("-Xopt-in=kotlin.time.ExperimentalTime")
 }
 
 android {

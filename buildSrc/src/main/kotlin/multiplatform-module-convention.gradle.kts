@@ -106,6 +106,8 @@ kotlin {
             androidMain.get().dependsOn(this)
         }
     }
+
+    compilerOptions.freeCompilerArgs.add("-Xopt-in=kotlin.time.ExperimentalTime")
 }
 
 android {
